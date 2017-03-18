@@ -148,10 +148,12 @@
     <ClCompile Include="cell_eval.cpp" />
     <ClCompile Include="cell_extract.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="table_extract.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cell_eval.h" />
     <ClInclude Include="cell_extract.h" />
+    <ClInclude Include="table_extract.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

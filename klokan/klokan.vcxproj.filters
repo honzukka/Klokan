@@ -24,12 +24,18 @@
     <ClCompile Include="cell_extract.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="table_extract.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cell_eval.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cell_extract.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="table_extract.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
