@@ -2,6 +2,7 @@
 #include "opencv2\highgui\highgui.hpp"
 #include "opencv2\imgproc\imgproc.hpp"
 
+#include "cell_extract.h"
 #include "cell_eval.h"
 
 #include <iostream>
@@ -12,6 +13,7 @@ using namespace cv;
 
 int main()
 {
+	/*
 	for (size_t i = 1; i < 12; i++)
 	{
 		stringstream ss;
@@ -35,7 +37,7 @@ int main()
 			cout << i << ": no" << endl;
 		}
 		
-		/*
+		
 		// draw lines
 		for (size_t i = 0; i < lines.size(); i++)
 		{
@@ -60,19 +62,53 @@ int main()
 		ss << i << " detected lines";
 		namedWindow(ss.str());
 		imshow(ss.str(), linesImage);
-		*/
+		
+	}
+	*/
+
+	Mat tableImage = imread("test_answer_table_filled.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+
+	if (tableImage.empty())
+	{
+		cerr << "Image not loaded!" << endl;
+		return 1;
 	}
 
+	const int numberOfColumns = 6;
+	const int numberOfRows = 9;
 
+	auto tableCells = extract_cells(tableImage, numberOfRows, numberOfColumns);
 
+	int i = 0;
+	for (auto&& row : tableCells)
+	{
+		for (Mat cell : row)
+		{
+			stringstream ss;
+			ss << i;
+			namedWindow(ss.str());
+			imshow(ss.str(), cell);
+			i++;
+			
+			if (is_cell_crossed(cell))
+			{
+				cout << "X";
+			}
+			else
+			{
+				cout << " ";
+			}
+		}
 
+		cout << ";" << endl;
+	}
 	// show the result
 	//namedWindow("canny");
 	//imshow("source", source);
 	//imshow("canny", binaryImage);
 	//imshow("detected lines", linesImage);
 
-	//waitKey(0);
+	waitKey(0);
 
 	return 0;
 }

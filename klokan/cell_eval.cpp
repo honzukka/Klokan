@@ -26,7 +26,7 @@ bool is_cell_crossed(cv::Mat cellImage)
 
 	// find all the lines in the image
 	std::vector<cv::Vec2f> lines;
-	cv::HoughLines(cellWorkingCopy, lines, 1, 5 * (CV_PI / 180), 15);
+	cv::HoughLines(cellWorkingCopy, lines, 1, 5 * (CV_PI / 180), 50);
 
 	if (lines.empty())
 	{
