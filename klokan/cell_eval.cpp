@@ -1,4 +1,5 @@
 #include "cell_eval.h"
+#include "debug.h"
 
 #include <vector>
 
@@ -26,7 +27,7 @@ bool is_cell_crossed(cv::Mat cellImage)
 
 	// find all the lines in the image
 	std::vector<cv::Vec2f> lines;
-	cv::HoughLines(cellWorkingCopy, lines, 1, 5 * (CV_PI / 180), 50);
+	cv::HoughLines(cellWorkingCopy, lines, 1, 5 * (CV_PI / 180), 60);
 
 	if (lines.empty())
 	{
@@ -64,6 +65,7 @@ bool is_cell_crossed(cv::Mat cellImage)
 	}
 	else
 	{
+		//debug::show_lines(lines, debug::DEBUG_CELL, "cell");
 		return false;
 	}
 }
