@@ -20,14 +20,16 @@ bool is_cell_crossed(cv::Mat cellImage)
 	cv::resize(cellWorkingCopy, cellWorkingCopy, cv::Size(workingCopyWidth, workingCopyHeight));
 
 	// convert cell image to a binary image
+	// NECESSARY BECAUSE EXTRACT TABLE FLOODS WITH GREY
 	cv::threshold(cellWorkingCopy, cellWorkingCopy, 200, 255, CV_THRESH_BINARY);
 
 	// invert the colors (needed for HoughLines)
-	cv::bitwise_not(cellWorkingCopy, cellWorkingCopy);
+	// NOT NECESSARY AFTER EXTRACT_TABLES
+	//cv::bitwise_not(cellWorkingCopy, cellWorkingCopy);
 
 	// find all the lines in the image
 	std::vector<cv::Vec2f> lines;
-	cv::HoughLines(cellWorkingCopy, lines, 1, 5 * (CV_PI / 180), 60);
+	cv::HoughLines(cellWorkingCopy, lines, 1, 5 * (CV_PI / 180), 50);
 
 	if (lines.empty())
 	{
@@ -57,15 +59,17 @@ bool is_cell_crossed(cv::Mat cellImage)
 		}
 	}
 
+	// debug
+	debug::draw_lines_and_show(cellWorkingCopy, lines, "" + lines.size());
+
 	// decide
 	if (topLeftBottomRightCount > 0 && bottomLeftTopRightCount > 0 &&
-		otherCount <= 3)
+		otherCount <= 6)
 	{
 		return true;
 	}
 	else
 	{
-		//debug::show_lines(lines, debug::DEBUG_CELL, "cell");
 		return false;
 	}
 }

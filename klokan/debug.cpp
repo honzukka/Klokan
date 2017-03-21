@@ -78,9 +78,11 @@ namespace debug
 		imshow(windowName, image);
 	}
 
-	void draw_lines(cv::Mat source, cv::Mat destination, std::vector<cv::Vec2f> lines)
+	void draw_lines_and_show(cv::Mat source, std::vector<cv::Vec2f> lines, std::string windowName)
 	{
-		cv::cvtColor(source, destination, CV_GRAY2BGR);
+		cv::Mat output;
+		
+		cv::cvtColor(source, output, CV_GRAY2BGR);
 
 		// draw lines
 		for (size_t i = 0; i < lines.size(); i++)
@@ -96,7 +98,9 @@ namespace debug
 			pt1.y = cvRound(y0 + 1000 * (a));
 			pt2.x = cvRound(x0 - 1000 * (-b));
 			pt2.y = cvRound(y0 - 1000 * (a));
-			line(destination, pt1, pt2, cv::Scalar(255, 0, 0), 1, CV_AA);
+			line(output, pt1, pt2, cv::Scalar(255, 0, 0), 1, CV_AA);
 		}
+
+		cv::imshow(windowName, output);
 	}
 }

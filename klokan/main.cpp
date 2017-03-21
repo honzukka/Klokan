@@ -24,7 +24,7 @@ int main()
 		return 1;
 	}
 
-	std::vector<Mat> tables = extract_tables(sheetImage, 3);
+	std::vector<Mat> tables = extract_tables(sheetImage, 2);
 	
 	int i = 1;
 	for (auto&& table : tables)
@@ -56,14 +56,14 @@ int main()
 		i++;
 	}
 
-	/*
-	int i = 1;
+	
+	i = 1;
 	for (auto&& table : tables)
 	{
 		debug::show_image(table, "table " + i);
 		i++;
 	}
-	*/
+	
 
 	waitKey(0);
 

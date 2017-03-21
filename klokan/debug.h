@@ -14,7 +14,7 @@ namespace debug
 	void show_lines(std::vector<cv::Vec2f> lines, cv::Mat image, std::string windowName);
 	void show_points(std::vector<cv::Point> points, cv::Mat image, std::string windowName);
 
-	void draw_lines(cv::Mat source, cv::Mat destination, std::vector<cv::Vec2f> lines);
+	void draw_lines_and_show(cv::Mat source, std::vector<cv::Vec2f> lines, std::string windowName);
 }
 
 

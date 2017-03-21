@@ -24,6 +24,8 @@ std::vector<cv::Mat> extract_tables(cv::Mat image, int numberOfTables)
 	
 	for (int i = 0; i < numberOfTables; i++)
 	{
+		// TODO: sort tables according to x-coordinate of the blob point!!!
+		
 		cv::Point maxBlobPoint = find_largest_blob(dilatedImage, 255 - (i * 5), 255 - ((i + 1) * 5));
 
 		cv::Mat workingCopyImage = dilatedImage.clone();
@@ -42,7 +44,7 @@ std::vector<cv::Mat> extract_tables(cv::Mat image, int numberOfTables)
 		tables.push_back(table);
 
 		// hide the processed blob (table)
-		cv::floodFill(image, maxBlobPoint, 0);
+		cv::floodFill(dilatedImage, maxBlobPoint, 0);
 	}
 
 	return tables;
