@@ -7,6 +7,21 @@
 
 #include <vector>
 
-std::vector<cv::Mat> extract_tables(cv::Mat image, int numberOfTables);
+#define DLLExport __declspec(dllexport)
+
+struct DLLExport Table
+{
+	cv::Mat image;
+	cv::Point origin;
+};
+
+class DLLExport TableComparer
+{
+public:
+	TableComparer() {}
+	bool operator() (const Table& table1, const Table& table2);
+};
+
+DLLExport std::vector<Table> extract_tables(cv::Mat image, int numberOfTables);
 
 #endif // !TABLE_EXTRACT_

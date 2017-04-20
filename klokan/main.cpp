@@ -1,7 +1,7 @@
-#include "opencv2\core\core.hpp"
-#include "opencv2\highgui\highgui.hpp"
-#include "opencv2\imgproc\imgproc.hpp"
-#include "opencv2\opencv.hpp"
+//#include "opencv2\core\core.hpp"
+//#include "opencv2\highgui\highgui.hpp"
+//#include "opencv2\imgproc\imgproc.hpp"
+//#include "opencv2\opencv.hpp"
 
 #include "table_extract.h"
 #include "cell_extract.h"
@@ -16,7 +16,7 @@ using namespace cv;
 
 int main()
 {
-	Mat sheetImage = imread("test_answer_sheet_filled.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+	Mat sheetImage = imread("01-varying_size.jpeg", CV_LOAD_IMAGE_GRAYSCALE);
 
 	if (sheetImage.empty())
 	{
@@ -24,14 +24,14 @@ int main()
 		return 1;
 	}
 
-	std::vector<Mat> tables = extract_tables(sheetImage, 2);
+	std::vector<Table> tables = extract_tables(sheetImage, 3);
 	
 	int i = 1;
 	for (auto&& table : tables)
 	{
-		auto tableCells = extract_cells(table, 9, 6);
+		auto tableCells = extract_cells(table.image, 9, 6);
 
-		debug::show_cells(tableCells, "cells");
+		//debug::show_cells(tableCells, "cells");
 
 		cout << "Table " << i << ":" << endl;
 		
@@ -56,14 +56,14 @@ int main()
 		i++;
 	}
 
-	
+	/*
 	i = 1;
 	for (auto&& table : tables)
 	{
-		debug::show_image(table, "table " + i);
+		debug::show_image(table.image, "table " + i);
 		i++;
 	}
-	
+	*/
 
 	waitKey(0);
 

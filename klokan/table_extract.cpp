@@ -9,9 +9,34 @@ cv::Mat crop_fix_perspective(cv::Mat image, std::vector<cv::Point> cornerPoints)
 void find_extreme_lines(std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::Vec2f& bottomEdge, cv::Vec2f& leftEdge, cv::Vec2f& rightEdge);
 cv::Point find_intersection(cv::Vec2f line1, cv::Vec2f line2);
 
-std::vector<cv::Mat> extract_tables(cv::Mat image, int numberOfTables)
+// order first by y-coordinate and then by x-coordinate
+bool TableComparer::operator() (const Table& table1, const Table& table2)
 {
-	std::vector<cv::Mat> tables;
+	if (table1.origin.y < table2.origin.y)
+	{
+		return true;
+	}
+	else if (table1.origin.y > table2.origin.y)
+	{
+		return false;
+	}
+	// if they are in the same row
+	else
+	{
+		if (table1.origin.x < table2.origin.x)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
+
+std::vector<Table> extract_tables(cv::Mat image, int numberOfTables)
+{
+	std::vector<Table> tables;
 	
 	cv::threshold(image, image, 200, 255, CV_THRESH_BINARY);
 	cv::bitwise_not(image, image);
@@ -24,28 +49,30 @@ std::vector<cv::Mat> extract_tables(cv::Mat image, int numberOfTables)
 	
 	for (int i = 0; i < numberOfTables; i++)
 	{
-		// TODO: sort tables according to x-coordinate of the blob point!!!
-		
 		cv::Point maxBlobPoint = find_largest_blob(dilatedImage, 255 - (i * 5), 255 - ((i + 1) * 5));
 
 		cv::Mat workingCopyImage = dilatedImage.clone();
 		std::vector<cv::Vec2f> lines = find_blob_lines(workingCopyImage, maxBlobPoint);
 
 		// debug
-		//debug::show_lines(lines, debug::DEBUG_BINARY, "all blob lines " + i);
+		//debug::show_lines(lines, dilatedImage, "all blob lines " + i);
 
 		std::vector<cv::Point> cornerPoints = find_corners_of_table(lines);
 
 		// debug
-		//debug::show_points(cornerPoints, debug::DEBUG_BINARY, "corner points " + i);
+		//debug::show_points(cornerPoints, dilatedImage, "corner points " + i);
 
-		cv::Mat table = crop_fix_perspective(dilatedImage, cornerPoints);
+		cv::Mat table_image = crop_fix_perspective(dilatedImage, cornerPoints);
 
-		tables.push_back(table);
+		Table table{ table_image, maxBlobPoint };
+		tables.push_back(std::move(table));
 
 		// hide the processed blob (table)
 		cv::floodFill(dilatedImage, maxBlobPoint, 0);
 	}
+
+	// sort the tables
+	sort(tables.begin(), tables.end(), TableComparer());
 
 	return tables;
 }
@@ -117,7 +144,7 @@ std::vector<cv::Point> find_corners_of_table(std::vector<cv::Vec2f>& lines)
 	find_extreme_lines(lines, topEdge, bottomEdge, leftEdge, rightEdge);
 
 	// debug
-	//debug::show_lines(std::vector<cv::Vec2f>{ topEdge, bottomEdge, leftEdge, rightEdge }, debug::DEBUG_BINARY, "edges");
+	//debug::show_lines(std::vector<cv::Vec2f>{ topEdge, bottomEdge, leftEdge, rightEdge }, "edges");
 
 	// find their intersections
 	cv::Point topLeftCorner = find_intersection(topEdge, leftEdge);
@@ -221,29 +248,15 @@ cv::Point find_intersection(cv::Vec2f line1, cv::Vec2f line2)
 	float rho2 = line2[0], theta2 = line2[1];
 	cv::Point intersection(0, 0);
 	
+	// lineXContribution is a vector perpendicular to the line, starting at the origin and ending at the line
+	// this way, when we add both contributions together, we get the intersections of both lines
 	cv::Point line1Contribution;
-	if (rho1 < 0)
-	{
-		line1Contribution.x = -rho1 * cos(-theta1);
-		line1Contribution.y = -rho1 * sin(-theta1);
-	}
-	else
-	{
-		line1Contribution.x = rho1 * cos(theta1);
-		line1Contribution.y = rho1 * sin(theta1);
-	}
+	line1Contribution.x = rho1 * cos(theta1);
+	line1Contribution.y = rho1 * sin(theta1);
 
 	cv::Point line2Contribution;
-	if (rho2 < 0)
-	{
-		line2Contribution.x = -rho2 * cos(-theta2);
-		line2Contribution.y = -rho2 * sin(-theta2);
-	}
-	else
-	{
-		line2Contribution.x = rho2 * cos(theta2);
-		line2Contribution.y = rho2 * sin(theta2);
-	}
+	line2Contribution.x = rho2 * cos(theta2);
+	line2Contribution.y = rho2 * sin(theta2);
 
 	intersection = intersection + line1Contribution + line2Contribution;
 

@@ -60,7 +60,7 @@ bool is_cell_crossed(cv::Mat cellImage)
 	}
 
 	// debug
-	debug::draw_lines_and_show(cellWorkingCopy, lines, "" + lines.size());
+	//debug::draw_lines_and_show(cellWorkingCopy, lines, "" + lines.size());
 
 	// decide
 	if (topLeftBottomRightCount > 0 && bottomLeftTopRightCount > 0 &&

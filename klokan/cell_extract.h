@@ -7,6 +7,8 @@
 
 #include <vector>
 
-std::vector<std::vector<cv::Mat>> extract_cells(cv::Mat tableImage, int numberOfRows, int numberOfColumns);
+#define DLLExport __declspec(dllexport)
+
+DLLExport std::vector<std::vector<cv::Mat>> extract_cells(cv::Mat tableImage, int numberOfRows, int numberOfColumns);
 
 #endif // !CELL_EXTRACT_
