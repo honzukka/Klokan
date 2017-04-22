@@ -22,7 +22,7 @@ namespace UnitTests
 	TEST_CLASS(UnitTest1)
 	{
 	public:
-
+		/*
 		TEST_METHOD(TestMethodTest)
 		{
 			cv::Mat sheetImage = cv::imread("D:\\Projects\\OpenCV\\Klokan\\klokan\\UnitTests\\test_answer_sheet_filled.jpg", CV_LOAD_IMAGE_GRAYSCALE);
@@ -79,7 +79,7 @@ namespace UnitTests
 				i++;
 			}
 		}
-
+		*/
 		TEST_METHOD(TestBigCrosses)
 		{
 			cv::Mat sheetImage = cv::imread("D:\\Projects\\OpenCV\\Klokan\\klokan\\UnitTests\\01-varying_size.jpeg", CV_LOAD_IMAGE_GRAYSCALE);
@@ -629,6 +629,75 @@ namespace UnitTests
 				} };
 
 			auto tableCells = extract_cells(tables[1].image, table_rows, table_columns);
+			assert_table(tableCells, results);
+		}
+
+		TEST_METHOD(TestFullColumnCrossesRotated)
+		{
+			cv::Mat sheetImage = cv::imread("D:\\Projects\\OpenCV\\Klokan\\klokan\\UnitTests\\09-full_column_rotated.jpeg", CV_LOAD_IMAGE_GRAYSCALE);
+			Assert::AreEqual(sheetImage.empty(), false, L"Image not loaded.");
+
+			std::vector<Table> tables = extract_tables(sheetImage, 3);
+
+			// correct results for table 1
+			result_array results{ {
+				{ false, true, false, false, false },
+				{ false, true, false, false, false },
+				{ false, true, false, false, false },
+				{ false, true, false, false, false },
+				{ false, true, false, false, false },
+				{ false, true, false, false, false },
+				{ false, true, false, false, false },
+				{ false, true, false, false, false }
+				} };
+
+			auto tableCells = extract_cells(tables[0].image, table_rows, table_columns);
+			assert_table(tableCells, results);
+		}
+
+		TEST_METHOD(TestFullColumnCorrectionsMiddleRotated)
+		{
+			cv::Mat sheetImage = cv::imread("D:\\Projects\\OpenCV\\Klokan\\klokan\\UnitTests\\09-full_column_rotated.jpeg", CV_LOAD_IMAGE_GRAYSCALE);
+			Assert::AreEqual(sheetImage.empty(), false, L"Image not loaded.");
+
+			std::vector<Table> tables = extract_tables(sheetImage, 3);
+
+			// correct results for table 2
+			result_array results{ {
+				{ false, false, false, false, true },
+				{ false, true, false, false, false },
+				{ true, false, false, false, false },
+				{ false, true, false, false, false },
+				{ false, false, false, true, false },
+				{ false, true, false, false, false },
+				{ false, false, false, true, false },
+				{ true, false, false, false, false }
+				} };
+
+			auto tableCells = extract_cells(tables[1].image, table_rows, table_columns);
+			assert_table(tableCells, results);
+		}
+
+		TEST_METHOD(TestFullColumnCorrectionsRightRotated)
+		{
+			cv::Mat sheetImage = cv::imread("D:\\Projects\\OpenCV\\Klokan\\klokan\\UnitTests\\09-full_column_rotated.jpeg", CV_LOAD_IMAGE_GRAYSCALE);
+			Assert::AreEqual(sheetImage.empty(), false, L"Image not loaded.");
+
+			std::vector<Table> tables = extract_tables(sheetImage, 3);
+
+			// correct results for table 3
+			result_array results{ {
+				{ false, true, false, false, false },
+				{ false, false, true, false, false },
+				{ false, false, true, false, false },
+				{ false, false, false, true, false },
+				{ false, true, false, false, false },
+				{ true, false, false, false, false },
+				{ true, false, false, false, false },
+				{ false, false, true, false, false }
+				} };
+
+			auto tableCells = extract_cells(tables[2].image, table_rows, table_columns);
 			assert_table(tableCells, results);
 		}
 	};

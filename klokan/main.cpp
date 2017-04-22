@@ -16,7 +16,10 @@ using namespace cv;
 
 int main()
 {
-	Mat sheetImage = imread("01-varying_size.jpeg", CV_LOAD_IMAGE_GRAYSCALE);
+	Mat sheetImage = imread("09-full_column_rotated.jpeg", CV_LOAD_IMAGE_GRAYSCALE);
+
+	const int sheetRows = 9;
+	const int sheetColumns = 6;
 
 	if (sheetImage.empty())
 	{
@@ -26,26 +29,33 @@ int main()
 
 	std::vector<Table> tables = extract_tables(sheetImage, 3);
 	
-	int i = 1;
+	int tableNumber = 1;
 	for (auto&& table : tables)
 	{
-		auto tableCells = extract_cells(table.image, 9, 6);
+		auto tableCells = extract_cells(table.image, sheetRows, sheetColumns);
 
-		//debug::show_cells(tableCells, "cells");
+		// debug
+		//debug::show_cells(tableCells, "cells" + tableNumber);
 
-		cout << "Table " << i << ":" << endl;
+		cout << "Table " << tableNumber << ":" << endl;
+		cout << "-----------------------" << endl;
+		cout << "\tA B C D E" << endl;
 		
-		for (auto&& row : tableCells)
+		for (size_t i = 1; i < sheetRows; i++)
 		{
-			for (auto&& cell : row)
+			cout << (tableNumber - 1) * 8 + i << "\t";
+			
+			for (size_t j = 1; j < sheetColumns; j++)
 			{
+				auto&& cell = tableCells[i][j];
+				
 				if (is_cell_crossed(cell))
 				{
-					cout << "X";
+					cout << "X ";
 				}
 				else
 				{
-					cout << " ";
+					cout << "  ";
 				}
 			}
 
@@ -53,7 +63,7 @@ int main()
 		}
 
 		cout << endl;
-		i++;
+		tableNumber++;
 	}
 
 	/*

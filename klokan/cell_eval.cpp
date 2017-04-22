@@ -1,4 +1,5 @@
 #include "cell_eval.h"
+#include "parameters.h"
 #include "debug.h"
 
 #include <vector>
@@ -29,7 +30,7 @@ bool is_cell_crossed(cv::Mat cellImage)
 
 	// find all the lines in the image
 	std::vector<cv::Vec2f> lines;
-	cv::HoughLines(cellWorkingCopy, lines, 1, 5 * (CV_PI / 180), 50);
+	cv::HoughLines(cellWorkingCopy, lines, 1, 5 * (CV_PI / 180), CROSS_LINE_LENGTH);
 
 	if (lines.empty())
 	{
@@ -64,12 +65,14 @@ bool is_cell_crossed(cv::Mat cellImage)
 
 	// decide
 	if (topLeftBottomRightCount > 0 && bottomLeftTopRightCount > 0 &&
-		otherCount <= 6)
+		otherCount <= RUBBISH_LINES_LIMIT)
 	{
 		return true;
 	}
 	else
 	{
+		// debug
+		//debug::draw_lines_and_show(cellWorkingCopy, lines, "" + lines.size());
 		return false;
 	}
 }

@@ -155,6 +155,7 @@
     <ClInclude Include="cell_eval.h" />
     <ClInclude Include="cell_extract.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="parameters.h" />
     <ClInclude Include="table_extract.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

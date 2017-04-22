@@ -55,10 +55,10 @@ namespace debug
 			double b = sin(theta);
 			double x0 = a * rho;
 			double y0 = b * rho;
-			pt1.x = cvRound(x0 + 1000 * (-b));
-			pt1.y = cvRound(y0 + 1000 * (a));
-			pt2.x = cvRound(x0 - 1000 * (-b));
-			pt2.y = cvRound(y0 - 1000 * (a));
+			pt1.x = cvRound(x0 + 2000 * (-b));
+			pt1.y = cvRound(y0 + 2000 * (a));
+			pt2.x = cvRound(x0 - 2000 * (-b));
+			pt2.y = cvRound(y0 - 2000 * (a));
 			line(image, pt1, pt2, cv::Scalar(255, 0, 0), 1, CV_AA);
 		}
 

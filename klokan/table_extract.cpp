@@ -1,4 +1,5 @@
 #include "table_extract.h"
+#include "parameters.h"
 #include "debug.h"
 
 cv::Point find_largest_blob(cv::Mat image, int threshold, int newThreshold);
@@ -9,28 +10,16 @@ cv::Mat crop_fix_perspective(cv::Mat image, std::vector<cv::Point> cornerPoints)
 void find_extreme_lines(std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::Vec2f& bottomEdge, cv::Vec2f& leftEdge, cv::Vec2f& rightEdge);
 cv::Point find_intersection(cv::Vec2f line1, cv::Vec2f line2);
 
-// order first by y-coordinate and then by x-coordinate
+// order by x-coordinate
 bool TableComparer::operator() (const Table& table1, const Table& table2)
 {
-	if (table1.origin.y < table2.origin.y)
+	if (table1.origin.x < table2.origin.x)
 	{
 		return true;
 	}
-	else if (table1.origin.y > table2.origin.y)
-	{
-		return false;
-	}
-	// if they are in the same row
 	else
 	{
-		if (table1.origin.x < table2.origin.x)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 }
 
@@ -38,14 +27,14 @@ std::vector<Table> extract_tables(cv::Mat image, int numberOfTables)
 {
 	std::vector<Table> tables;
 	
-	cv::threshold(image, image, 200, 255, CV_THRESH_BINARY);
+	cv::threshold(image, image, BLACK_WHITE_THRESHOLD, 255, CV_THRESH_BINARY);
 	cv::bitwise_not(image, image);
 
 	// make the lines in the image thicker
 	cv::Mat kernel = (cv::Mat_<uchar>(3, 3) << 0, 1, 0, 1, 1, 1, 0, 1, 0);
 	
 	cv::Mat dilatedImage;
-	dilate(image, dilatedImage, kernel);
+	cv::dilate(image, dilatedImage, kernel);
 	
 	for (int i = 0; i < numberOfTables; i++)
 	{
@@ -55,12 +44,12 @@ std::vector<Table> extract_tables(cv::Mat image, int numberOfTables)
 		std::vector<cv::Vec2f> lines = find_blob_lines(workingCopyImage, maxBlobPoint);
 
 		// debug
-		//debug::show_lines(lines, dilatedImage, "all blob lines " + i);
+		debug::show_lines(lines, dilatedImage, "all blob lines " + i);
 
 		std::vector<cv::Point> cornerPoints = find_corners_of_table(lines);
 
 		// debug
-		//debug::show_points(cornerPoints, dilatedImage, "corner points " + i);
+		debug::show_points(cornerPoints, dilatedImage, "corner points " + i);
 
 		cv::Mat table_image = crop_fix_perspective(dilatedImage, cornerPoints);
 
@@ -128,7 +117,7 @@ std::vector<cv::Vec2f> find_blob_lines(cv::Mat blobImage, cv::Point blobPoint)
 
 	// find the lines
 	std::vector<cv::Vec2f> lines;
-	cv::HoughLines(blobImage, lines, 1, 5 * (CV_PI / 180), 200);
+	cv::HoughLines(blobImage, lines, 1, (CV_PI / 180), TABLE_LINE_LENGTH);
 
 	return lines;
 }
@@ -142,9 +131,6 @@ std::vector<cv::Point> find_corners_of_table(std::vector<cv::Vec2f>& lines)
 	cv::Vec2f rightEdge;
 
 	find_extreme_lines(lines, topEdge, bottomEdge, leftEdge, rightEdge);
-
-	// debug
-	//debug::show_lines(std::vector<cv::Vec2f>{ topEdge, bottomEdge, leftEdge, rightEdge }, "edges");
 
 	// find their intersections
 	cv::Point topLeftCorner = find_intersection(topEdge, leftEdge);
@@ -183,16 +169,23 @@ cv::Mat crop_fix_perspective(cv::Mat image, std::vector<cv::Point> cornerPoints)
 void find_extreme_lines(std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::Vec2f& bottomEdge, cv::Vec2f& leftEdge, cv::Vec2f& rightEdge)
 {
 	// initialize the edges with unrealistic rho and theta respectively
-	topEdge[0] = 10000, topEdge[1] = 10000;
-	bottomEdge[0] = -10000, bottomEdge[1] = -10000;
-	leftEdge[0] = 10000, leftEdge[1] = 10000;
-	rightEdge[0] = -10000, rightEdge[1] = -10000;
+	//topEdge[0] = 10000, topEdge[1] = 10000;
+	//bottomEdge[0] = -10000, bottomEdge[1] = -10000;
+	//leftEdge[0] = 10000, leftEdge[1] = 10000;
+	//rightEdge[0] = -10000, rightEdge[1] = -10000;
 
+	/*
 	// initialize intersections with axes of these edges with unrealistic values as well
 	double topYIntersection = 100000;
 	double bottomYIntersection = -100000;
 	double leftXIntersection = 100000;
 	double rightXIntersection = -100000;
+	*/
+
+	double topNormal = 100000;
+	double bottomNormal = -100000;
+	double leftNormal = 100000;
+	double rightNormal = -100000;
 
 	// find the all the edges
 	for (auto&& line : lines)
@@ -201,11 +194,26 @@ void find_extreme_lines(std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::V
 		float theta = line[1];
 
 		// if line is "horizontal"
-		if (theta > CV_PI / 4 && theta < 3 * CV_PI / 4)
+		if (theta > CV_PI / 2 - TABLE_LINE_ECCENTRICITY_LIMIT && theta < CV_PI / 2 + TABLE_LINE_ECCENTRICITY_LIMIT)
 		{
 			// get the intersection of the line with y-axis
-			double yIntersection = rho / sin(theta);
+			//double yIntersection = rho / sin(theta);
 
+			// if the line is higher up
+			if (abs(rho) < topNormal)
+			{
+				topEdge = line;
+				topNormal = abs(rho);
+			}
+			
+			// line is lower down
+			if (abs(rho) > bottomNormal)
+			{
+				bottomEdge = line;
+				bottomNormal = abs(rho);
+			}
+
+			/*
 			// line is higher up
 			if (yIntersection < topYIntersection)
 			{
@@ -218,13 +226,29 @@ void find_extreme_lines(std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::V
 				bottomEdge = line;
 				bottomYIntersection = yIntersection;
 			}
+			*/
 		}
 		// line is "vertical"
-		else
+		else if (theta > -TABLE_LINE_ECCENTRICITY_LIMIT && theta < TABLE_LINE_ECCENTRICITY_LIMIT)
 		{
 			// get intersection of the line with x-axis
-			double xIntersection = rho / cos(theta);
+			//double xIntersection = rho / cos(theta);
 
+			// line is further to the left
+			if (abs(rho) < leftNormal)
+			{
+				leftEdge = line;
+				leftNormal = abs(rho);
+			}
+			
+			// line is further to the right
+			if (abs(rho) > rightNormal)
+			{
+				rightEdge = line;
+				rightNormal = abs(rho);
+			}
+
+			/*
 			// line is further left
 			if (xIntersection < leftXIntersection)
 			{
@@ -237,6 +261,7 @@ void find_extreme_lines(std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::V
 				rightEdge = line;
 				rightXIntersection = xIntersection;
 			}
+			*/
 		}
 	}
 }
