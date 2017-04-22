@@ -25,6 +25,14 @@ bool TableComparer::operator() (const Table& table1, const Table& table2)
 
 std::vector<Table> extract_tables(cv::Mat image, int numberOfTables)
 {
+	/*
+	// resize the image
+	const int defaultImageWidth = 1000;
+	float heightToWidthRatio = image.rows / image.cols;
+	cv::Size newSize(defaultImageWidth, defaultImageWidth * heightToWidthRatio);
+	cv::resize(image, image, newSize, 0.0, 0.0);
+	*/
+
 	std::vector<Table> tables;
 	
 	cv::threshold(image, image, BLACK_WHITE_THRESHOLD, 255, CV_THRESH_BINARY);
@@ -49,7 +57,7 @@ std::vector<Table> extract_tables(cv::Mat image, int numberOfTables)
 		std::vector<cv::Point> cornerPoints = find_corners_of_table(lines);
 
 		// debug
-		debug::show_points(cornerPoints, dilatedImage, "corner points " + i);
+		//debug::show_points(cornerPoints, dilatedImage, "corner points " + i);
 
 		cv::Mat table_image = crop_fix_perspective(dilatedImage, cornerPoints);
 
@@ -266,13 +274,40 @@ void find_extreme_lines(std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::V
 	}
 }
 
-// return an intersection of two lines assuming they're perpendicular (ideal for the edges of a table...)
+// return an intersection of two lines
 cv::Point find_intersection(cv::Vec2f line1, cv::Vec2f line2)
 {
 	float rho1 = line1[0], theta1 = line1[1];
 	float rho2 = line2[0], theta2 = line2[1];
+	float cosTheta1 = cos(theta1);
+	float cosTheta2 = cos(theta2);
+	float sinTheta1 = sin(theta1);
+	float sinTheta2 = sin(theta2);
+
 	cv::Point intersection(0, 0);
+
+	// calculate the intersection using homogenous coordinates
+	// coordinates of line 1
+	float a1 = cosTheta1;
+	float b1 = sinTheta1;
+	float c1 = -rho1;
+
+	// coordinates of line 2
+	float a2 = cosTheta2;
+	float b2 = sinTheta2;
+	float c2 = -rho2;
+
+	// the intersection (i1, i2, i3) is the cross-product of the two vectors (a1, b1, c1) and (a2, b2, c2)
+	float i1 = b1 * c2 - b2 * c1;
+	float i2 = a2 * c1 - a1 * c2;
+	float i3 = a1 * b2 - a2 * b1;
+
+	// convert back to Euclidian coordinates
+	intersection.x = i1 / i3;
+	intersection.y = i2 / i3;
+
 	
+	/*
 	// lineXContribution is a vector perpendicular to the line, starting at the origin and ending at the line
 	// this way, when we add both contributions together, we get the intersections of both lines
 	cv::Point line1Contribution;
@@ -284,6 +319,6 @@ cv::Point find_intersection(cv::Vec2f line1, cv::Vec2f line2)
 	line2Contribution.y = rho2 * sin(theta2);
 
 	intersection = intersection + line1Contribution + line2Contribution;
-
+	*/
 	return intersection;
 }

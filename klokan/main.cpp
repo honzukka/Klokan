@@ -16,7 +16,7 @@ using namespace cv;
 
 int main()
 {
-	Mat sheetImage = imread("09-full_column_rotated.jpeg", CV_LOAD_IMAGE_GRAYSCALE);
+	Mat sheetImage = imread("01-varying_size.jpeg", CV_LOAD_IMAGE_GRAYSCALE);
 
 	const int sheetRows = 9;
 	const int sheetColumns = 6;
