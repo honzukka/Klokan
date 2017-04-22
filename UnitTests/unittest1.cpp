@@ -22,8 +22,8 @@ namespace UnitTests
 	TEST_CLASS(UnitTest1)
 	{
 	public:
-		/*
-		TEST_METHOD(TestMethodTest)
+		
+		TEST_METHOD(TestMethodDigitalSheetFilled)
 		{
 			cv::Mat sheetImage = cv::imread("D:\\Projects\\OpenCV\\Klokan\\klokan\\UnitTests\\test_answer_sheet_filled.jpg", CV_LOAD_IMAGE_GRAYSCALE);
 			Assert::AreEqual(sheetImage.empty(), false, L"Image not loaded.");
@@ -35,7 +35,7 @@ namespace UnitTests
 			result_array results1{ {
 				{ true, false, false, false, false },
 				{ false, true, false, false, false },
-				{ false, true, false, false, false },
+				{ false, false, false, true, false },
 				{ false, false, false, false, false },
 				{ false, false, false, false, false },
 				{ false, false, false, false, false },
@@ -48,7 +48,7 @@ namespace UnitTests
 				{ false, false, false, false, false },
 				{ false, false, false, false, false },
 				{ false, false, false, false, false },
-				{ false, false, false, false, false },
+				{ false, true, false, false, false },
 				{ false, false, false, false, false },
 				{ false, false, false, false, false },
 				{ false, false, false, false, false },
@@ -60,11 +60,11 @@ namespace UnitTests
 				{ false, false, false, false, false },
 				{ false, false, false, false, false },
 				{ false, false, false, false, false },
-				{ false, false, false, false, false },
-				{ false, false, false, false, false },
 				{ false, true, false, false, false },
-				{ false, false, false, false, true },
-				{ true, false, false, false, false }
+				{ false, false, true, false, false },
+				{ false, false, false, true, false },
+				{ false, false, false, false, false },
+				{ false, false, false, false, false }
 			} };
 			
 			results.push_back(results1);
@@ -79,7 +79,7 @@ namespace UnitTests
 				i++;
 			}
 		}
-		*/
+		
 		TEST_METHOD(TestBigCrosses)
 		{
 			cv::Mat sheetImage = cv::imread("D:\\Projects\\OpenCV\\Klokan\\klokan\\UnitTests\\01-varying_size.jpeg", CV_LOAD_IMAGE_GRAYSCALE);

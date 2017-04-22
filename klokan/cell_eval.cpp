@@ -10,15 +10,11 @@ bool is_line_top_right(cv::Vec2f line, int imageWidth, int imageHeight);
 bool is_line_bottom_right(cv::Vec2f line, int imageWidth, int imageHeight);
 
 bool is_cell_crossed(cv::Mat cellImage)
-{
-	// default size of the working copy
-	const int workingCopyWidth = 80;
-	const int workingCopyHeight = 40;
-	
+{	
 	cv::Mat cellWorkingCopy = cellImage.clone();
 
 	// resize the working copy
-	cv::resize(cellWorkingCopy, cellWorkingCopy, cv::Size(workingCopyWidth, workingCopyHeight));
+	cv::resize(cellWorkingCopy, cellWorkingCopy, cv::Size(DEFAULT_CELL_WIDTH, DEFAULT_CELL_HEIGHT));
 
 	// convert cell image to a binary image
 	// NECESSARY BECAUSE EXTRACT TABLE FLOODS WITH GREY
@@ -30,7 +26,7 @@ bool is_cell_crossed(cv::Mat cellImage)
 
 	// find all the lines in the image
 	std::vector<cv::Vec2f> lines;
-	cv::HoughLines(cellWorkingCopy, lines, 1, 5 * (CV_PI / 180), CROSS_LINE_LENGTH);
+	cv::HoughLines(cellWorkingCopy, lines, 1, CROSS_LINE_CURVATURE_LIMIT * (CV_PI / 180), CROSS_LINE_LENGTH);
 
 	if (lines.empty())
 	{
@@ -44,13 +40,13 @@ bool is_cell_crossed(cv::Mat cellImage)
 
 	for (size_t i = 0; i < lines.size(); i++)
 	{
-		if (is_line_top_left(lines[i], workingCopyWidth, workingCopyHeight) &&
-			is_line_bottom_right(lines[i], workingCopyWidth, workingCopyHeight))
+		if (is_line_top_left(lines[i], cellWorkingCopy.cols, cellWorkingCopy.rows) &&
+			is_line_bottom_right(lines[i], cellWorkingCopy.cols, cellWorkingCopy.rows))
 		{
 			topLeftBottomRightCount++;
 		}
-		else if (is_line_bottom_left(lines[i], workingCopyWidth, workingCopyHeight) &&
-			is_line_top_right(lines[i], workingCopyWidth, workingCopyHeight))
+		else if (is_line_bottom_left(lines[i], cellWorkingCopy.cols, cellWorkingCopy.rows) &&
+			is_line_top_right(lines[i], cellWorkingCopy.cols, cellWorkingCopy.rows))
 		{
 			bottomLeftTopRightCount++;
 		}
@@ -61,7 +57,7 @@ bool is_cell_crossed(cv::Mat cellImage)
 	}
 
 	// debug
-	//debug::draw_lines_and_show(cellWorkingCopy, lines, "" + lines.size());
+	//debug::draw_lines_and_show(cellWorkingCopy, lines, "" + (int)lines[0][0]);
 
 	// decide
 	if (topLeftBottomRightCount > 0 && bottomLeftTopRightCount > 0 &&

@@ -25,14 +25,11 @@ bool TableComparer::operator() (const Table& table1, const Table& table2)
 
 std::vector<Table> extract_tables(cv::Mat image, int numberOfTables)
 {
-	/*
-	// resize the image
-	const int defaultImageWidth = 1000;
-	float heightToWidthRatio = image.rows / image.cols;
-	cv::Size newSize(defaultImageWidth, defaultImageWidth * heightToWidthRatio);
+	// resize the working copy
+	float heightToWidthRatio = (float)image.rows / (float)image.cols;
+	cv::Size newSize(DEFAULT_SHEET_WIDTH, DEFAULT_SHEET_WIDTH * heightToWidthRatio);
 	cv::resize(image, image, newSize, 0.0, 0.0);
-	*/
-
+	
 	std::vector<Table> tables;
 	
 	cv::threshold(image, image, BLACK_WHITE_THRESHOLD, 255, CV_THRESH_BINARY);
@@ -52,7 +49,7 @@ std::vector<Table> extract_tables(cv::Mat image, int numberOfTables)
 		std::vector<cv::Vec2f> lines = find_blob_lines(workingCopyImage, maxBlobPoint);
 
 		// debug
-		debug::show_lines(lines, dilatedImage, "all blob lines " + i);
+		//debug::show_lines(lines, dilatedImage, "all blob lines " + i);
 
 		std::vector<cv::Point> cornerPoints = find_corners_of_table(lines);
 
@@ -125,7 +122,7 @@ std::vector<cv::Vec2f> find_blob_lines(cv::Mat blobImage, cv::Point blobPoint)
 
 	// find the lines
 	std::vector<cv::Vec2f> lines;
-	cv::HoughLines(blobImage, lines, 1, (CV_PI / 180), TABLE_LINE_LENGTH);
+	cv::HoughLines(blobImage, lines, 1, TABLE_LINE_CURVATURE_LIMIT * (CV_PI / 180), TABLE_LINE_LENGTH);
 
 	return lines;
 }
@@ -237,7 +234,8 @@ void find_extreme_lines(std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::V
 			*/
 		}
 		// line is "vertical"
-		else if (theta > -TABLE_LINE_ECCENTRICITY_LIMIT && theta < TABLE_LINE_ECCENTRICITY_LIMIT)
+		else if (theta >= 0 && theta < TABLE_LINE_ECCENTRICITY_LIMIT
+					|| theta < CV_PI && theta > CV_PI - TABLE_LINE_ECCENTRICITY_LIMIT)
 		{
 			// get intersection of the line with x-axis
 			//double xIntersection = rho / cos(theta);
