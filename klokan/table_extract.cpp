@@ -2,15 +2,13 @@
 #include "parameters.h"
 #include "debug.h"
 
-cv::Point find_largest_blob(cv::Mat image, int threshold, int newThreshold);
-std::vector<cv::Vec2f> find_blob_lines(cv::Mat blobImage, cv::Point blobPoint);
-std::vector<cv::Point> find_corners_of_table(std::vector<cv::Vec2f>& lines);
-cv::Mat crop_fix_perspective(cv::Mat image, std::vector<cv::Point> cornerPoints);
-
-void find_extreme_lines(std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::Vec2f& bottomEdge, cv::Vec2f& leftEdge, cv::Vec2f& rightEdge);
+cv::Point find_largest_blob(cv::Mat& image, int threshold, int newThreshold);
+std::vector<cv::Vec2f> find_blob_lines(cv::Mat& blobImage, cv::Point blobPoint);
+std::vector<cv::Point> find_corners_of_table(const std::vector<cv::Vec2f>& lines);
+void find_extreme_lines(const std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::Vec2f& bottomEdge, cv::Vec2f& leftEdge, cv::Vec2f& rightEdge);
 cv::Point find_intersection(cv::Vec2f line1, cv::Vec2f line2);
+cv::Mat crop_fix_perspective(const cv::Mat& image, const std::vector<cv::Point>& cornerPoints);
 
-// order by x-coordinate
 bool TableComparer::operator() (const Table& table1, const Table& table2)
 {
 	if (table1.origin.x < table2.origin.x)
@@ -23,56 +21,56 @@ bool TableComparer::operator() (const Table& table1, const Table& table2)
 	}
 }
 
-std::vector<Table> extract_tables(cv::Mat image, int numberOfTables)
+std::vector<Table> extract_tables(cv::Mat& sheetImage, int numberOfTables)
 {
-	// resize the working copy
-	float heightToWidthRatio = (float)image.rows / (float)image.cols;
+	// resize the sheet
+	float heightToWidthRatio = (float)sheetImage.rows / (float)sheetImage.cols;
 	cv::Size newSize(DEFAULT_SHEET_WIDTH, DEFAULT_SHEET_WIDTH * heightToWidthRatio);
-	cv::resize(image, image, newSize, 0.0, 0.0);
+	cv::resize(sheetImage, sheetImage, newSize, 0.0, 0.0);
 	
 	std::vector<Table> tables;
 	
-	cv::threshold(image, image, BLACK_WHITE_THRESHOLD, 255, CV_THRESH_BINARY);
-	cv::bitwise_not(image, image);
+	// convert the image to a binary image and invert it
+	cv::threshold(sheetImage, sheetImage, BLACK_WHITE_THRESHOLD, 255, CV_THRESH_BINARY);
+	cv::bitwise_not(sheetImage, sheetImage);
 
 	// make the lines in the image thicker
 	cv::Mat kernel = (cv::Mat_<uchar>(3, 3) << 0, 1, 0, 1, 1, 1, 0, 1, 0);
+	cv::dilate(sheetImage, sheetImage, kernel);
 	
-	cv::Mat dilatedImage;
-	cv::dilate(image, dilatedImage, kernel);
-	
+	// find tables one by one
 	for (int i = 0; i < numberOfTables; i++)
 	{
-		cv::Point maxBlobPoint = find_largest_blob(dilatedImage, 255 - (i * 5), 255 - ((i + 1) * 5));
+		cv::Point maxBlobPoint = find_largest_blob(sheetImage, 255 - (i * 5), 255 - ((i + 1) * 5));
 
-		cv::Mat workingCopyImage = dilatedImage.clone();
-		std::vector<cv::Vec2f> lines = find_blob_lines(workingCopyImage, maxBlobPoint);
+		cv::Mat sheetImageCopy = sheetImage.clone();
+		std::vector<cv::Vec2f> lines = find_blob_lines(sheetImageCopy, maxBlobPoint);
 
-		// debug
-		//debug::show_lines(lines, dilatedImage, "all blob lines " + i);
+		//debug::show_lines(sheetImage, lines, "all blob lines " + i);
 
 		std::vector<cv::Point> cornerPoints = find_corners_of_table(lines);
 
-		// debug
-		//debug::show_points(cornerPoints, dilatedImage, "corner points " + i);
+		//debug::show_points(sheetImage, cornerPoints, "corner points " + i);
 
-		cv::Mat table_image = crop_fix_perspective(dilatedImage, cornerPoints);
+		cv::Mat tableImage = crop_fix_perspective(sheetImage, cornerPoints);
 
-		Table table{ table_image, maxBlobPoint };
+		// save the table
+		Table table{ tableImage, maxBlobPoint };
 		tables.push_back(std::move(table));
 
 		// hide the processed blob (table)
-		cv::floodFill(dilatedImage, maxBlobPoint, 0);
+		cv::floodFill(sheetImage, maxBlobPoint, 0);
 	}
 
-	// sort the tables
+	// sort the tables by the x-coordinate
 	sort(tables.begin(), tables.end(), TableComparer());
 
 	return tables;
 }
 
-
-cv::Point find_largest_blob(cv::Mat image, int threshold, int newThreshold)
+// returns the upper left corner of the largest white blob in the image (it is expected to be a table)
+// modifies the input image - white parts (of colour threshold) will be flooded with a newThreshold colour
+cv::Point find_largest_blob(cv::Mat& image, int threshold, int newThreshold)
 {
 	int maxArea = -1;
 	cv::Point maxBlobPoint;
@@ -82,10 +80,12 @@ cv::Point find_largest_blob(cv::Mat image, int threshold, int newThreshold)
 		uchar* row = image.ptr(y);
 		for (int x = 0; x < image.size().width; x++)
 		{
+			// if we see a white pixel that hasn't been flooded yet (=> has to be the upper left corner of an isolated blob)
 			if (row[x] >= threshold)
 			{
 				int area = cv::floodFill(image, cv::Point(x, y), newThreshold);
 
+				// if it's the largest we've seen so far
 				if (area > maxArea)
 				{
 					maxBlobPoint = cv::Point(x, y);
@@ -99,9 +99,10 @@ cv::Point find_largest_blob(cv::Mat image, int threshold, int newThreshold)
 }
 
 // finds all lines in a blob (presumably table) in the input image
-// the input image will be modified
-std::vector<cv::Vec2f> find_blob_lines(cv::Mat blobImage, cv::Point blobPoint)
+// modifies the input image
+std::vector<cv::Vec2f> find_blob_lines(cv::Mat& blobImage, cv::Point blobPoint)
 {
+	// make the largest blob white again
 	cv::floodFill(blobImage, blobPoint, 255);
 	
 	// hide the rest of the image (flood it with black)
@@ -117,7 +118,6 @@ std::vector<cv::Vec2f> find_blob_lines(cv::Mat blobImage, cv::Point blobPoint)
 		}
 	}
 
-	// debug
 	//debug::show_image(blobImage, "looking for lines here");
 
 	// find the lines
@@ -127,9 +127,10 @@ std::vector<cv::Vec2f> find_blob_lines(cv::Mat blobImage, cv::Point blobPoint)
 	return lines;
 }
 
-std::vector<cv::Point> find_corners_of_table(std::vector<cv::Vec2f>& lines)
+// finds the intersections of the extreme lines of the collection
+// returns them in a specific order
+std::vector<cv::Point> find_corners_of_table(const std::vector<cv::Vec2f>& lines)
 {
-	// initialize the edges with unrealistic rho and theta respectively
 	cv::Vec2f topEdge;
 	cv::Vec2f bottomEdge;
 	cv::Vec2f leftEdge;
@@ -146,47 +147,10 @@ std::vector<cv::Point> find_corners_of_table(std::vector<cv::Vec2f>& lines)
 	return std::vector<cv::Point>{ topLeftCorner, topRightCorner, bottomLeftCorner, bottomRightCorner };
 }
 
-cv::Mat crop_fix_perspective(cv::Mat image, std::vector<cv::Point> cornerPoints)
+// returns the edges of the table
+void find_extreme_lines(const std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::Vec2f& bottomEdge, cv::Vec2f& leftEdge, cv::Vec2f& rightEdge)
 {
-	// TODO: pass the points differently so that you don't have to rely on their order?
-	// get the top edge length
-	int topLength = sqrt((cornerPoints[1].x - cornerPoints[0].x) * (cornerPoints[1].x - cornerPoints[0].x) +
-		(cornerPoints[1].y - cornerPoints[0].y) * (cornerPoints[1].y - cornerPoints[0].y));
-
-	// get the side edge length
-	int sideLength = sqrt((cornerPoints[2].x - cornerPoints[0].x) * (cornerPoints[2].x - cornerPoints[0].x) +
-		(cornerPoints[2].y - cornerPoints[0].y) * (cornerPoints[2].y - cornerPoints[0].y));
-
-	cv::Point2f source[4], destination[4];
-
-	source[0] = cornerPoints[0];	source[1] = cornerPoints[1];
-	source[2] = cornerPoints[2];	source[3] = cornerPoints[3];
-
-	destination[0] = cv::Point2f(0, 0);						destination[1] = cv::Point2f(topLength - 1, 0);
-	destination[2] = cv::Point2f(0, sideLength - 1);		destination[3] = cv::Point2f(topLength - 1, sideLength - 1);
-
-	cv::Mat fixed = cv::Mat(cv::Size(topLength, sideLength), CV_8UC1);
-	cv::warpPerspective(image, fixed, cv::getPerspectiveTransform(source, destination), cv::Size(topLength, sideLength));
-	
-	return fixed;
-}
-
-void find_extreme_lines(std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::Vec2f& bottomEdge, cv::Vec2f& leftEdge, cv::Vec2f& rightEdge)
-{
-	// initialize the edges with unrealistic rho and theta respectively
-	//topEdge[0] = 10000, topEdge[1] = 10000;
-	//bottomEdge[0] = -10000, bottomEdge[1] = -10000;
-	//leftEdge[0] = 10000, leftEdge[1] = 10000;
-	//rightEdge[0] = -10000, rightEdge[1] = -10000;
-
-	/*
-	// initialize intersections with axes of these edges with unrealistic values as well
-	double topYIntersection = 100000;
-	double bottomYIntersection = -100000;
-	double leftXIntersection = 100000;
-	double rightXIntersection = -100000;
-	*/
-
+	// set impossible values
 	double topNormal = 100000;
 	double bottomNormal = -100000;
 	double leftNormal = 100000;
@@ -195,15 +159,12 @@ void find_extreme_lines(std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::V
 	// find the all the edges
 	for (auto&& line : lines)
 	{
-		float rho = line[0];
-		float theta = line[1];
+		float rho = line[0];		// the length of the normal (can be negative)
+		float theta = line[1];		// the angle that (rho, 0) vector has to be rotated to the right by to get the normal
 
 		// if line is "horizontal"
 		if (theta > CV_PI / 2 - TABLE_LINE_ECCENTRICITY_LIMIT && theta < CV_PI / 2 + TABLE_LINE_ECCENTRICITY_LIMIT)
 		{
-			// get the intersection of the line with y-axis
-			//double yIntersection = rho / sin(theta);
-
 			// if the line is higher up
 			if (abs(rho) < topNormal)
 			{
@@ -217,29 +178,11 @@ void find_extreme_lines(std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::V
 				bottomEdge = line;
 				bottomNormal = abs(rho);
 			}
-
-			/*
-			// line is higher up
-			if (yIntersection < topYIntersection)
-			{
-				topEdge = line;
-				topYIntersection = yIntersection;
-			}
-			// line is lower down
-			else if (yIntersection > bottomYIntersection)
-			{
-				bottomEdge = line;
-				bottomYIntersection = yIntersection;
-			}
-			*/
 		}
 		// line is "vertical"
 		else if (theta >= 0 && theta < TABLE_LINE_ECCENTRICITY_LIMIT
 					|| theta < CV_PI && theta > CV_PI - TABLE_LINE_ECCENTRICITY_LIMIT)
 		{
-			// get intersection of the line with x-axis
-			//double xIntersection = rho / cos(theta);
-
 			// line is further to the left
 			if (abs(rho) < leftNormal)
 			{
@@ -253,26 +196,11 @@ void find_extreme_lines(std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::V
 				rightEdge = line;
 				rightNormal = abs(rho);
 			}
-
-			/*
-			// line is further left
-			if (xIntersection < leftXIntersection)
-			{
-				leftEdge = line;
-				leftXIntersection = xIntersection;
-			}
-			// line is further right
-			else if (xIntersection > rightXIntersection)
-			{
-				rightEdge = line;
-				rightXIntersection = xIntersection;
-			}
-			*/
 		}
 	}
 }
 
-// return an intersection of two lines
+// returns an intersection of two lines
 cv::Point find_intersection(cv::Vec2f line1, cv::Vec2f line2)
 {
 	float rho1 = line1[0], theta1 = line1[1];
@@ -304,19 +232,33 @@ cv::Point find_intersection(cv::Vec2f line1, cv::Vec2f line2)
 	intersection.x = i1 / i3;
 	intersection.y = i2 / i3;
 
-	
-	/*
-	// lineXContribution is a vector perpendicular to the line, starting at the origin and ending at the line
-	// this way, when we add both contributions together, we get the intersections of both lines
-	cv::Point line1Contribution;
-	line1Contribution.x = rho1 * cos(theta1);
-	line1Contribution.y = rho1 * sin(theta1);
-
-	cv::Point line2Contribution;
-	line2Contribution.x = rho2 * cos(theta2);
-	line2Contribution.y = rho2 * sin(theta2);
-
-	intersection = intersection + line1Contribution + line2Contribution;
-	*/
 	return intersection;
+}
+
+// transforms image into a square image which it then returns
+// corner points have to be passed in a specific order!
+cv::Mat crop_fix_perspective(const cv::Mat& image, const std::vector<cv::Point>& cornerPoints)
+{
+	// get the top edge length
+	int topLength = sqrt((cornerPoints[1].x - cornerPoints[0].x) * (cornerPoints[1].x - cornerPoints[0].x) +
+		(cornerPoints[1].y - cornerPoints[0].y) * (cornerPoints[1].y - cornerPoints[0].y));
+
+	// get the side edge length
+	int sideLength = sqrt((cornerPoints[2].x - cornerPoints[0].x) * (cornerPoints[2].x - cornerPoints[0].x) +
+		(cornerPoints[2].y - cornerPoints[0].y) * (cornerPoints[2].y - cornerPoints[0].y));
+
+	cv::Point2f source[4], destination[4];
+
+	// source points of the corners of the image
+	source[0] = cornerPoints[0];	source[1] = cornerPoints[1];
+	source[2] = cornerPoints[2];	source[3] = cornerPoints[3];
+
+	// destination points of the corners of the image
+	destination[0] = cv::Point2f(0, 0);						destination[1] = cv::Point2f(topLength - 1, 0);
+	destination[2] = cv::Point2f(0, sideLength - 1);		destination[3] = cv::Point2f(topLength - 1, sideLength - 1);
+
+	cv::Mat squareImage = cv::Mat(cv::Size(topLength, sideLength), CV_8UC1);
+	cv::warpPerspective(image, squareImage, cv::getPerspectiveTransform(source, destination), cv::Size(topLength, sideLength));
+
+	return squareImage;
 }

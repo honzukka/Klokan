@@ -7,6 +7,7 @@
 
 #define DLLExport __declspec(dllexport)
 
-DLLExport bool is_cell_crossed(cv::Mat cellImage);
+// returns if a cell is crossed (true) or if it's empty or corrected (false)
+DLLExport bool is_cell_crossed(const cv::Mat& cellImage);
 
 #endif // !CELL_EVAL_

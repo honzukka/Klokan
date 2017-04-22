@@ -2,12 +2,13 @@
 
 namespace debug
 {
-	void show_image(cv::Mat image, std::string windowName)
+	void show_image(const cv::Mat& image, const std::string& windowName)
 	{
+		// show the image
 		cv::imshow(windowName, image);
 	}
 
-	void show_cells(std::vector<std::vector<cv::Mat>> table, std::string windowName)
+	void show_cells(const std::vector<std::vector<cv::Mat>>& table, const std::string& windowName)
 	{
 		const int gap = 5;
 		
@@ -22,12 +23,10 @@ namespace debug
 		int outputWidth = (numberOfColumns * cellWidth) + extraWidth;
 		int outputHeight = (numberOfRows * cellHeight) + extraHeight;
 
-		// new image with 3 channels
-		//cv::Mat output = cv::Mat(cv::Size(outputWidth, outputHeight), CV_8UC3);
-
-		// new image with 1 channel
+		// new 1-channel image
 		cv::Mat output = cv::Mat(cv::Size(outputWidth, outputHeight), CV_8UC1, cv::Scalar(128));
 
+		// copy cells into the output image one by one
 		for (size_t i = 0; i < numberOfRows; i++)
 		{
 			for (size_t j = 0; j < numberOfColumns; j++)
@@ -38,12 +37,15 @@ namespace debug
 			}
 		}
 
-		imshow(windowName, output);
+		// show the image
+		cv::imshow(windowName, output);
 	}
 
-	void show_lines(std::vector<cv::Vec2f> lines, cv::Mat image, std::string windowName)
+	void show_lines(const cv::Mat& source, const std::vector<cv::Vec2f>& lines, const std::string& windowName)
 	{
-		cv::cvtColor(image, image, CV_GRAY2BGR);
+		cv::Mat output;
+
+		cv::cvtColor(source, output, CV_GRAY2BGR);
 
 		// draw lines
 		for (size_t i = 0; i < lines.size(); i++)
@@ -59,48 +61,26 @@ namespace debug
 			pt1.y = cvRound(y0 + 2000 * (a));
 			pt2.x = cvRound(x0 - 2000 * (-b));
 			pt2.y = cvRound(y0 - 2000 * (a));
-			line(image, pt1, pt2, cv::Scalar(255, 0, 0), 1, CV_AA);
+			line(output, pt1, pt2, cv::Scalar(255, 0, 0), 1, CV_AA);
 		}
 
-		imshow(windowName, image);
+		// show the image
+		cv::imshow(windowName, output);
 	}
 
-	void show_points(std::vector<cv::Point> points, cv::Mat image, std::string windowName)
-	{
-		cv::cvtColor(image, image, CV_GRAY2BGR);
-
-		// draw points
-		for (auto&& point : points)
-		{
-			cv::circle(image, point, 10, cv::Scalar(0, 0, 255), -1);
-		}
-
-		imshow(windowName, image);
-	}
-
-	void draw_lines_and_show(cv::Mat source, std::vector<cv::Vec2f> lines, std::string windowName)
+	void show_points(const cv::Mat& source, const std::vector<cv::Point>& points, const std::string& windowName)
 	{
 		cv::Mat output;
 		
 		cv::cvtColor(source, output, CV_GRAY2BGR);
 
-		// draw lines
-		for (size_t i = 0; i < lines.size(); i++)
+		// draw points
+		for (auto&& point : points)
 		{
-			float rho = lines[i][0];
-			float theta = lines[i][1];
-			cv::Point pt1, pt2;
-			double a = cos(theta);
-			double b = sin(theta);
-			double x0 = a * rho;
-			double y0 = b * rho;
-			pt1.x = cvRound(x0 + 1000 * (-b));
-			pt1.y = cvRound(y0 + 1000 * (a));
-			pt2.x = cvRound(x0 - 1000 * (-b));
-			pt2.y = cvRound(y0 - 1000 * (a));
-			line(output, pt1, pt2, cv::Scalar(255, 0, 0), 1, CV_AA);
+			cv::circle(output, point, 10, cv::Scalar(0, 0, 255), -1);
 		}
 
+		// show the image
 		cv::imshow(windowName, output);
 	}
 }

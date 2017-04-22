@@ -1,6 +1,6 @@
 #include "cell_extract.h"
 
-std::vector<std::vector<cv::Mat>> extract_cells(cv::Mat tableImage, int numberOfRows, int numberOfColumns)
+std::vector<std::vector<cv::Mat>> extract_cells(const cv::Mat& tableImage, int numberOfRows, int numberOfColumns)
 {
 	std::vector<std::vector<cv::Mat>> tableCells;
 	

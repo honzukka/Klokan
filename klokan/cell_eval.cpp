@@ -9,7 +9,7 @@ bool is_line_bottom_left(cv::Vec2f line, int imageWidth, int imageHeight);
 bool is_line_top_right(cv::Vec2f line, int imageWidth, int imageHeight);
 bool is_line_bottom_right(cv::Vec2f line, int imageWidth, int imageHeight);
 
-bool is_cell_crossed(cv::Mat cellImage)
+bool is_cell_crossed(const cv::Mat& cellImage)
 {	
 	cv::Mat cellWorkingCopy = cellImage.clone();
 
@@ -22,22 +22,24 @@ bool is_cell_crossed(cv::Mat cellImage)
 
 	// invert the colors (needed for HoughLines)
 	// NOT NECESSARY AFTER EXTRACT_TABLES
-	//cv::bitwise_not(cellWorkingCopy, cellWorkingCopy);
+	// cv::bitwise_not(cellWorkingCopy, cellWorkingCopy);
 
 	// find all the lines in the image
 	std::vector<cv::Vec2f> lines;
 	cv::HoughLines(cellWorkingCopy, lines, 1, CROSS_LINE_CURVATURE_LIMIT * (CV_PI / 180), CROSS_LINE_LENGTH);
 
+	// if cell is empty
 	if (lines.empty())
 	{
 		return false;
 	}
 
-	// check if lines form a cross
+	// counters for lines that form a cross and others
 	int topLeftBottomRightCount = 0;
 	int bottomLeftTopRightCount = 0;
 	int otherCount = 0;
 
+	// for each line check where it belongs
 	for (size_t i = 0; i < lines.size(); i++)
 	{
 		if (is_line_top_left(lines[i], cellWorkingCopy.cols, cellWorkingCopy.rows) &&
@@ -56,10 +58,9 @@ bool is_cell_crossed(cv::Mat cellImage)
 		}
 	}
 
-	// debug
-	//debug::draw_lines_and_show(cellWorkingCopy, lines, "" + (int)lines[0][0]);
+	//debug::show_lines(cellWorkingCopy, lines, "" + (int)lines[0][0]);
 
-	// decide
+	// decide if a cell is crossed or not
 	if (topLeftBottomRightCount > 0 && bottomLeftTopRightCount > 0 &&
 		otherCount <= RUBBISH_LINES_LIMIT)
 	{
@@ -67,17 +68,16 @@ bool is_cell_crossed(cv::Mat cellImage)
 	}
 	else
 	{
-		// debug
-		//debug::draw_lines_and_show(cellWorkingCopy, lines, "" + lines.size());
+		//debug::show_lines(cellWorkingCopy, lines, "" + lines.size());
 		return false;
 	}
 }
 
-// returns true of the line intersects with the image border in the top left corner, false otherwise
+// returns true if the line intersects the cell image border in the top left corner, false otherwise
 bool is_line_top_left(cv::Vec2f line, int imageWidth, int imageHeight)
 {
-	float rho = line[0];		// perpendicular distance from the origin
-	float theta = line[1];		// angle between x-axis and normal vector
+	float rho = line[0];		// the length of the normal (can be negative)
+	float theta = line[1];		// the angle that (rho, 0) vector has to be rotated to the right by to get the normal
 
 	// find x for y = 0
 	double xTopIntersecton = rho / cos(theta);
@@ -104,11 +104,11 @@ bool is_line_top_left(cv::Vec2f line, int imageWidth, int imageHeight)
 	}
 }
 
-// returns true of the line intersects with the image border in the bottom left corner, false otherwise
+// returns true if the line intersects the cell image border in the bottom left corner, false otherwise
 bool is_line_bottom_left(cv::Vec2f line, int imageWidth, int imageHeight)
 {
-	float rho = line[0];		// perpendicular distance from the origin
-	float theta = line[1];		// angle between x-axis and normal vector
+	float rho = line[0];		// the length of the normal (can be negative)
+	float theta = line[1];		// the angle that (rho, 0) vector has to be rotated to the right by to get the normal
 
 	// find x for y = imageHeight
 	double xBottomIntersecton = (rho - imageHeight * sin(theta)) / cos(theta);
@@ -135,11 +135,11 @@ bool is_line_bottom_left(cv::Vec2f line, int imageWidth, int imageHeight)
 	}
 }
 
-// returns true of the line intersects with the image border in the top right corner, false otherwise
+// returns true if the line intersects the cell image border in the top right corner, false otherwise
 bool is_line_top_right(cv::Vec2f line, int imageWidth, int imageHeight)
 {
-	float rho = line[0];		// perpendicular distance from the origin
-	float theta = line[1];		// angle between x-axis and normal vector
+	float rho = line[0];		// the length of the normal (can be negative)
+	float theta = line[1];		// the angle that (rho, 0) vector has to be rotated to the right by to get the normal
 
 	// find x for y = 0
 	double xTopIntersection = rho / cos(theta);
@@ -166,11 +166,11 @@ bool is_line_top_right(cv::Vec2f line, int imageWidth, int imageHeight)
 	}
 }
 
-// returns true of the line intersects with the image border in the bottom right corner, false otherwise
+// returns true if the line intersects the cell image border in the bottom right corner, false otherwise
 bool is_line_bottom_right(cv::Vec2f line, int imageWidth, int imageHeight)
 {
-	float rho = line[0];		// perpendicular distance from the origin
-	float theta = line[1];		// angle between x-axis and normal vector
+	float rho = line[0];		// the length of the normal (can be negative)
+	float theta = line[1];		// the angle that (rho, 0) vector has to be rotated to the right by to get the normal
 
 	// find x for y = imageHeight
 	double xBottomIntersection = (rho - imageHeight * sin(theta)) / cos(theta);

@@ -9,12 +9,17 @@
 
 namespace debug 
 {
-	void show_image(cv::Mat image, std::string windowName);
-	void show_cells(std::vector<std::vector<cv::Mat>> table, std::string windowName);
-	void show_lines(std::vector<cv::Vec2f> lines, cv::Mat image, std::string windowName);
-	void show_points(std::vector<cv::Point> points, cv::Mat image, std::string windowName);
+	// simply shows the image given
+	void show_image(const cv::Mat& image, const std::string& windowName);
+	
+	// shows cells in a single 1-channel image with a gap in between them
+	void show_cells(const std::vector<std::vector<cv::Mat>>& table, const std::string& windowName);
 
-	void draw_lines_and_show(cv::Mat source, std::vector<cv::Vec2f> lines, std::string windowName);
+	// copies the source, draws colourful lines into it and shows it
+	void show_lines(const cv::Mat& source, const std::vector<cv::Vec2f>& lines, const std::string& windowName);
+
+	// copies the source, draws colourful points into the image and shows it
+	void show_points(const cv::Mat& source, const std::vector<cv::Point>& points, const std::string& windowName);
 }
 
 
