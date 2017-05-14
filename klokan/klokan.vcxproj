@@ -148,6 +148,7 @@
     <ClCompile Include="cell_eval.cpp" />
     <ClCompile Include="cell_extract.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="klokan.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="table_extract.cpp" />
   </ItemGroup>
@@ -155,6 +156,7 @@
     <ClInclude Include="cell_eval.h" />
     <ClInclude Include="cell_extract.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="klokan.h" />
     <ClInclude Include="parameters.h" />
     <ClInclude Include="table_extract.h" />
   </ItemGroup>

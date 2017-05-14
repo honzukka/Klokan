@@ -1,6 +1,11 @@
 #ifndef PARAMETERS_
 #define PARAMATERS_
 
+// parameters describing the tables in the answer sheet
+const int TABLE_ROWS = 9;
+const int TABLE_COLUMNS = 6;
+const int TABLE_COUNT = 3;
+
 // parameters used to prepare a sheet image for processing
 const int DEFAULT_SHEET_WIDTH = 1700;	// every sheet will be resized accordingly (preserving aspect ratio) before the tables are extracted
 const int BLACK_WHITE_THRESHOLD = 230;	// how bright a shade of grey can be to be recognized as black (the rest will be white)
