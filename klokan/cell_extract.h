@@ -11,6 +11,6 @@
 
 // splits the tableImage into cells based on the number of rows and columns
 // cells returned are only contain pointers to the original tableImage!
-DLLExport std::vector<std::vector<cv::Mat>> extract_cells(const cv::Mat& tableImage, int numberOfRows, int numberOfColumns);
+DLLExport std::vector<std::vector<cv::Mat>> extract_cells(const cv::Mat& tableImage);
 
 #endif // !CELL_EXTRACT_

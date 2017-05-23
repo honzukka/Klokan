@@ -2,7 +2,6 @@
 #include "table_extract.h"
 #include "cell_extract.h"
 #include "cell_eval.h"
-#include "parameters.h"
 
 void Klokan::run(const std::string& correctAnswerSheetName, const std::vector<std::string>& answerSheetNames)
 {
@@ -53,14 +52,14 @@ sheetAnswers Klokan::extract_answers(cv::Mat& sheetImage)
 	sheetAnswers answers;
 	
 	// extract tables ordered by x-coordinate
-	std::vector<Table> tables = extract_tables(sheetImage, TABLE_COUNT);
+	std::vector<Table> tables = extract_tables(sheetImage, parameters_);
 
 	// evaluate tables one by one
 	size_t tableNumber = 0;
 	for (auto&& table : tables)
 	{
 		// exracts the cells of the table
-		auto tableCells = extract_cells(table.image, TABLE_ROWS, TABLE_COLUMNS);
+		auto tableCells = extract_cells(table.image);
 
 		// for each cell output if it's crossed of not and save the answer
 		// the first row and the first column do not contain answers
@@ -70,7 +69,7 @@ sheetAnswers Klokan::extract_answers(cv::Mat& sheetImage)
 			{
 				auto&& cell = tableCells[row][col];
 
-				if (is_cell_crossed(cell))
+				if (is_cell_crossed(cell, parameters_))
 				{
 					answers[tableNumber][row - 1][col - 1] = true;
 				}

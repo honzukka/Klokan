@@ -33,6 +33,9 @@
     <ClCompile Include="klokan.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="parameters.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cell_eval.h">

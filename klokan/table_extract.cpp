@@ -3,9 +3,9 @@
 #include "debug.h"
 
 cv::Point find_largest_blob(cv::Mat& image, int threshold, int newThreshold);
-std::vector<cv::Vec2f> find_blob_lines(cv::Mat& blobImage, cv::Point blobPoint);
-std::vector<cv::Point> find_corners_of_table(const std::vector<cv::Vec2f>& lines);
-void find_extreme_lines(const std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::Vec2f& bottomEdge, cv::Vec2f& leftEdge, cv::Vec2f& rightEdge);
+std::vector<cv::Vec2f> find_blob_lines(cv::Mat& blobImage, cv::Point blobPoint, const Parameters& parameters);
+std::vector<cv::Point> find_corners_of_table(const std::vector<cv::Vec2f>& lines, const Parameters& parameters);
+void find_extreme_lines(const std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::Vec2f& bottomEdge, cv::Vec2f& leftEdge, cv::Vec2f& rightEdge, const Parameters& parameters);
 cv::Point find_intersection(cv::Vec2f line1, cv::Vec2f line2);
 cv::Mat crop_fix_perspective(const cv::Mat& image, const std::vector<cv::Point>& cornerPoints);
 
@@ -21,17 +21,17 @@ bool TableComparer::operator() (const Table& table1, const Table& table2)
 	}
 }
 
-std::vector<Table> extract_tables(cv::Mat& sheetImage, int numberOfTables)
+std::vector<Table> extract_tables(cv::Mat& sheetImage, const Parameters& parameters)
 {
 	// resize the sheet
 	float heightToWidthRatio = (float)sheetImage.rows / (float)sheetImage.cols;
-	cv::Size newSize(DEFAULT_SHEET_WIDTH, DEFAULT_SHEET_WIDTH * heightToWidthRatio);
+	cv::Size newSize(parameters.default_sheet_width, parameters.default_sheet_width * heightToWidthRatio);
 	cv::resize(sheetImage, sheetImage, newSize, 0.0, 0.0);
 	
 	std::vector<Table> tables;
 	
 	// convert the image to a binary image and invert it
-	cv::threshold(sheetImage, sheetImage, BLACK_WHITE_THRESHOLD, 255, CV_THRESH_BINARY);
+	cv::threshold(sheetImage, sheetImage, parameters.black_white_threshold, 255, CV_THRESH_BINARY);
 	cv::bitwise_not(sheetImage, sheetImage);
 
 	// make the lines in the image thicker
@@ -39,16 +39,16 @@ std::vector<Table> extract_tables(cv::Mat& sheetImage, int numberOfTables)
 	cv::dilate(sheetImage, sheetImage, kernel);
 	
 	// find tables one by one
-	for (int i = 0; i < numberOfTables; i++)
+	for (int i = 0; i < TABLE_COUNT; i++)
 	{
 		cv::Point maxBlobPoint = find_largest_blob(sheetImage, 255 - (i * 5), 255 - ((i + 1) * 5));
 
 		cv::Mat sheetImageCopy = sheetImage.clone();
-		std::vector<cv::Vec2f> lines = find_blob_lines(sheetImageCopy, maxBlobPoint);
+		std::vector<cv::Vec2f> lines = find_blob_lines(sheetImageCopy, maxBlobPoint, parameters);
 
 		//debug::show_lines(sheetImage, lines, "all blob lines " + i);
 
-		std::vector<cv::Point> cornerPoints = find_corners_of_table(lines);
+		std::vector<cv::Point> cornerPoints = find_corners_of_table(lines, parameters);
 
 		//debug::show_points(sheetImage, cornerPoints, "corner points " + i);
 
@@ -100,7 +100,7 @@ cv::Point find_largest_blob(cv::Mat& image, int threshold, int newThreshold)
 
 // finds all lines in a blob (presumably table) in the input image
 // modifies the input image
-std::vector<cv::Vec2f> find_blob_lines(cv::Mat& blobImage, cv::Point blobPoint)
+std::vector<cv::Vec2f> find_blob_lines(cv::Mat& blobImage, cv::Point blobPoint, const Parameters& parameters)
 {
 	// make the largest blob white again
 	cv::floodFill(blobImage, blobPoint, 255);
@@ -122,21 +122,21 @@ std::vector<cv::Vec2f> find_blob_lines(cv::Mat& blobImage, cv::Point blobPoint)
 
 	// find the lines
 	std::vector<cv::Vec2f> lines;
-	cv::HoughLines(blobImage, lines, 1, TABLE_LINE_CURVATURE_LIMIT * (CV_PI / 180), TABLE_LINE_LENGTH);
+	cv::HoughLines(blobImage, lines, 1, parameters.table_line_curvature_limit * (CV_PI / 180), parameters.table_line_length);
 
 	return lines;
 }
 
 // finds the intersections of the extreme lines of the collection
 // returns them in a specific order
-std::vector<cv::Point> find_corners_of_table(const std::vector<cv::Vec2f>& lines)
+std::vector<cv::Point> find_corners_of_table(const std::vector<cv::Vec2f>& lines, const Parameters& parameters)
 {
 	cv::Vec2f topEdge;
 	cv::Vec2f bottomEdge;
 	cv::Vec2f leftEdge;
 	cv::Vec2f rightEdge;
 
-	find_extreme_lines(lines, topEdge, bottomEdge, leftEdge, rightEdge);
+	find_extreme_lines(lines, topEdge, bottomEdge, leftEdge, rightEdge, parameters);
 
 	// find their intersections
 	cv::Point topLeftCorner = find_intersection(topEdge, leftEdge);
@@ -148,7 +148,7 @@ std::vector<cv::Point> find_corners_of_table(const std::vector<cv::Vec2f>& lines
 }
 
 // returns the edges of the table
-void find_extreme_lines(const std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::Vec2f& bottomEdge, cv::Vec2f& leftEdge, cv::Vec2f& rightEdge)
+void find_extreme_lines(const std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::Vec2f& bottomEdge, cv::Vec2f& leftEdge, cv::Vec2f& rightEdge, const Parameters& parameters)
 {
 	// set impossible values
 	double topNormal = 100000;
@@ -163,7 +163,7 @@ void find_extreme_lines(const std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge,
 		float theta = line[1];		// the angle that (rho, 0) vector has to be rotated to the right by to get the normal
 
 		// if line is "horizontal"
-		if (theta > CV_PI / 2 - TABLE_LINE_ECCENTRICITY_LIMIT && theta < CV_PI / 2 + TABLE_LINE_ECCENTRICITY_LIMIT)
+		if (theta > CV_PI / 2 - parameters.table_line_eccentricity_limit && theta < CV_PI / 2 + parameters.table_line_eccentricity_limit)
 		{
 			// if the line is higher up
 			if (abs(rho) < topNormal)
@@ -180,8 +180,8 @@ void find_extreme_lines(const std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge,
 			}
 		}
 		// line is "vertical"
-		else if (theta >= 0 && theta < TABLE_LINE_ECCENTRICITY_LIMIT
-					|| theta < CV_PI && theta > CV_PI - TABLE_LINE_ECCENTRICITY_LIMIT)
+		else if (theta >= 0 && theta < parameters.table_line_eccentricity_limit
+					|| theta < CV_PI && theta > CV_PI - parameters.table_line_eccentricity_limit)
 		{
 			// line is further to the left
 			if (abs(rho) < leftNormal)

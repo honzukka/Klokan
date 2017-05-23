@@ -150,6 +150,7 @@
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="klokan.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="parameters.cpp" />
     <ClCompile Include="table_extract.cpp" />
   </ItemGroup>
   <ItemGroup>

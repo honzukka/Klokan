@@ -1,25 +1,38 @@
 #ifndef PARAMETERS_
 #define PARAMETERS_
 
+#include "opencv2\core\core.hpp"
+
+#include <string>
+#include <fstream>
+#include <exception>
+
 // parameters describing the tables in the answer sheet
 const int TABLE_ROWS = 9;
 const int TABLE_COLUMNS = 6;
 const int TABLE_COUNT = 3;
 
-// parameters used to prepare a sheet image for processing
-const int DEFAULT_SHEET_WIDTH = 1700;	// every sheet will be resized accordingly (preserving aspect ratio) before the tables are extracted
-const int BLACK_WHITE_THRESHOLD = 230;	// how bright a shade of grey can be to be recognized as black (the rest will be white)
+struct Parameters
+{
+	Parameters();
 
-// parameters of the table extraction process
-const int TABLE_LINE_LENGTH = 350;			// the length of lines to be detected
-const float TABLE_LINE_ECCENTRICITY_LIMIT = CV_PI / 8;		// how slanted a line can be to be recognized as either horizontal or vertical (in radians)
-const int TABLE_LINE_CURVATURE_LIMIT = 1;	// how curved a line can be to still be recognized as a straight line (1 is minimum)
+	bool update_from_file(const std::string& filename);
+	
+	// parameters used to prepare a sheet image for processing
+	int default_sheet_width;		// every sheet will be resized accordingly (preserving aspect ratio) before the tables are extracted
+	int black_white_threshold;		// how bright a shade of grey can be to be recognized as black (the rest will be white)
 
-// parameters of the cell evaluation process
-const int DEFAULT_CELL_WIDTH = 80;			// every cell will be resized to have this width
-const int DEFAULT_CELL_HEIGHT = 40;			// every cell will be resized to have this height
-const int CROSS_LINE_LENGTH = 35;			// the length of lines to be detected
-const int CROSS_LINE_CURVATURE_LIMIT = 5;	// how curved a line can be to still be recognized as a straight line (1 is minimum)
-const int RUBBISH_LINES_LIMIT = 10;			// amount of lines that don't form a cross that will be ignored and not considered as a correction
+	// parameters of the table extraction process
+	int table_line_length;					// the length of lines to be detected
+	float table_line_eccentricity_limit;	// how slanted a line can be to be recognized as either horizontal or vertical (in radians)
+	int table_line_curvature_limit;			// how curved a line can be to still be recognized as a straight line (1 is minimum)
+
+	// parameters of the cell evaluation process
+	int default_cell_width;			// every cell will be resized to have this width
+	int default_cell_height;		// every cell will be resized to have this height
+	int cross_line_length;			// the length of lines to be detected
+	int cross_line_curvature_limit;	// how curved a line can be to still be recognized as a straight line (1 is minimum)
+	int rubbish_lines_limit;		// amount of lines that don't form a cross that will be ignored and not considered as a correction
+};
 
 #endif // !PARAMETERS_

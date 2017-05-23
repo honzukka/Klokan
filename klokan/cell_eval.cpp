@@ -1,5 +1,4 @@
 #include "cell_eval.h"
-#include "parameters.h"
 #include "debug.h"
 
 #include <vector>
@@ -9,12 +8,12 @@ bool is_line_bottom_left(cv::Vec2f line, int imageWidth, int imageHeight);
 bool is_line_top_right(cv::Vec2f line, int imageWidth, int imageHeight);
 bool is_line_bottom_right(cv::Vec2f line, int imageWidth, int imageHeight);
 
-bool is_cell_crossed(const cv::Mat& cellImage)
+bool is_cell_crossed(const cv::Mat& cellImage, const Parameters& parameters)
 {	
 	cv::Mat cellWorkingCopy = cellImage.clone();
 
 	// resize the working copy
-	cv::resize(cellWorkingCopy, cellWorkingCopy, cv::Size(DEFAULT_CELL_WIDTH, DEFAULT_CELL_HEIGHT));
+	cv::resize(cellWorkingCopy, cellWorkingCopy, cv::Size(parameters.default_cell_width, parameters.default_cell_height));
 
 	// convert cell image to a binary image
 	// NECESSARY BECAUSE EXTRACT TABLE FLOODS WITH GREY
@@ -26,7 +25,7 @@ bool is_cell_crossed(const cv::Mat& cellImage)
 
 	// find all the lines in the image
 	std::vector<cv::Vec2f> lines;
-	cv::HoughLines(cellWorkingCopy, lines, 1, CROSS_LINE_CURVATURE_LIMIT * (CV_PI / 180), CROSS_LINE_LENGTH);
+	cv::HoughLines(cellWorkingCopy, lines, 1, parameters.cross_line_curvature_limit * (CV_PI / 180), parameters.cross_line_length);
 
 	// if cell is empty
 	if (lines.empty())
@@ -62,7 +61,7 @@ bool is_cell_crossed(const cv::Mat& cellImage)
 
 	// decide if a cell is crossed or not
 	if (topLeftBottomRightCount > 0 && bottomLeftTopRightCount > 0 &&
-		otherCount <= RUBBISH_LINES_LIMIT)
+		otherCount <= parameters.rubbish_lines_limit)
 	{
 		return true;
 	}

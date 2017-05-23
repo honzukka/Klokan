@@ -29,7 +29,7 @@ using correctedSheetAnswers = std::array<correctedTableAnswers, TABLE_COUNT>;
 class Klokan
 {
 public:
-	Klokan() {}
+	Klokan(Parameters parameters) : parameters_(parameters) {}
 
 	Klokan(const Klokan& other) = delete;
 	Klokan(Klokan&& other) = delete;
@@ -45,6 +45,7 @@ private:
 	size_t count_score(const correctedSheetAnswers& correctedAnswers);
 	bool output_results(size_t score, const correctedSheetAnswers& correctedAnswers, const std::string& originalFilename);
 
+	Parameters parameters_;
 	sheetAnswers correctAnswers_;
 };
 

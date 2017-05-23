@@ -5,6 +5,8 @@
 #include "opencv2\highgui\highgui.hpp"
 #include "opencv2\imgproc\imgproc.hpp"
 
+#include "parameters.h"
+
 #include <vector>
 
 #define DLLExport __declspec(dllexport)
@@ -24,6 +26,6 @@ public:
 
 // finds the requested number of tables in the sheet, fixes their perspective and sorts them by the x-coordinate
 // modifies the sheet image!
-DLLExport std::vector<Table> extract_tables(cv::Mat& sheetImage, int numberOfTables);
+DLLExport std::vector<Table> extract_tables(cv::Mat& sheetImage, const Parameters& parameters);
 
 #endif // !TABLE_EXTRACT_
