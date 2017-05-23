@@ -1,5 +1,5 @@
 #ifndef PARAMETERS_
-#define PARAMATERS_
+#define PARAMETERS_
 
 // parameters describing the tables in the answer sheet
 const int TABLE_ROWS = 9;

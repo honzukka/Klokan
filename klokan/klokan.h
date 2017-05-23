@@ -13,11 +13,6 @@
 #include <iostream>
 #include <fstream>
 
-using tableAnswers = std::array<std::array<bool, TABLE_COLUMNS>, TABLE_ROWS>;
-using correctedTableAnswers = std::array<std::array<AnswerType, TABLE_COLUMNS>, TABLE_ROWS>;
-using sheetAnswers = std::array<tableAnswers, TABLE_COUNT>;
-using correctedSheetAnswers = std::array<correctedTableAnswers, TABLE_COUNT>;
-
 enum AnswerType
 {
 	CORRECT,
@@ -25,6 +20,11 @@ enum AnswerType
 	INCORRECT,
 	VOID
 };
+
+using tableAnswers = std::array<std::array<bool, TABLE_COLUMNS - 1>, TABLE_ROWS - 1>;
+using correctedTableAnswers = std::array<std::array<AnswerType, TABLE_COLUMNS - 1>, TABLE_ROWS - 1>;
+using sheetAnswers = std::array<tableAnswers, TABLE_COUNT>;
+using correctedSheetAnswers = std::array<correctedTableAnswers, TABLE_COUNT>;
 
 class Klokan
 {
@@ -37,7 +37,7 @@ public:
 	Klokan& operator=(const Klokan& other) = delete;
 	Klokan& operator=(Klokan&& other) = delete;
 
-	void run(const std::string& correctAnswerSheetName, const std::vector<const std::string&>& answerSheetNames);
+	void run(const std::string& correctAnswerSheetName, const std::vector<std::string>& answerSheetNames);
 
 private:
 	sheetAnswers extract_answers(cv::Mat& sheetImage);

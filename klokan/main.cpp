@@ -2,6 +2,7 @@
 #include "cell_extract.h"
 #include "cell_eval.h"
 #include "debug.h"
+#include "klokan.h"
 
 #include <iostream>
 #include <sstream>
@@ -11,6 +12,21 @@ using namespace cv;
 
 int main()
 {
+	Klokan klokan;
+
+	std::string correctSheetName = "01-varying_size.jpeg";
+	std::vector<std::string> sheetNames;
+
+	sheetNames.push_back("01-varying_size.jpeg");
+	sheetNames.push_back("01-varying_size-one_wrong.jpeg");
+	sheetNames.push_back("01-varying_size-one_empty.jpeg");
+	sheetNames.push_back("09-full_column_rotated.jpeg");
+
+	klokan.run(correctSheetName, sheetNames);
+
+	cout << "Ready!" << endl;
+
+	/*
 	Mat sheetImage = imread("09-full_column_rotated.jpeg", CV_LOAD_IMAGE_GRAYSCALE);
 
 	const int sheetRows = 9;
@@ -62,7 +78,7 @@ int main()
 		cout << endl;
 		tableNumber++;
 	}
-
+	*/
 	waitKey(0);
 
 	return 0;
