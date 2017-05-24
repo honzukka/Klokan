@@ -6,6 +6,7 @@
 #include <string>
 #include <fstream>
 #include <exception>
+#include <iostream>
 
 // parameters describing the tables in the answer sheet
 const int TABLE_ROWS = 9;

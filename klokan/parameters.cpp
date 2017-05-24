@@ -57,21 +57,23 @@ bool Parameters::update_from_file(const std::string& filename)
 				cross_line_curvature_limit = std::stoi(paramValue);
 			else if (paramName == "rubbish_lines_limit")
 				rubbish_lines_limit = std::stoi(paramValue);
-			// incorrect parameter format
 			else
 			{
 				inputFile.close();
+				std::cerr << "Incorrect parameter (" << paramName << ") name." << std::endl;
 				return false;
 			}
 		}
 		catch (const std::invalid_argument& ex)
 		{
 			inputFile.close();
+			std::cerr << "Incorrect parameter (" << paramName << ") value format." << std::endl;
 			return false;
 		}
 		catch (const std::out_of_range& ex)
 		{
 			inputFile.close();
+			std::cerr << "Parameter (" << paramName << ") value out of range." << std::endl;
 			return false;
 		}
 	}

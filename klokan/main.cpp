@@ -31,13 +31,13 @@ int main(int argc, char** argv)
 	
 	Parameters parameters;
 	if (!parameters.update_from_file("config.txt")) 
-		cout << "There was an error loading the config file. Using default parameters where necessary." << endl;
+		cerr << "There was an error loading the config file. Using default parameters where necessary." << endl;
 
 	Klokan klokan(parameters);
 	
 	klokan.run(correctSheetName, sheetNames);
 
-	cout << "Ready!" << endl;
+	cerr << "Ready!" << endl;
 
 	waitKey(0);
 

@@ -3,6 +3,7 @@
 #include "cell_extract.h"
 #include "cell_eval.h"
 
+// loads and stores correct answers and evaluates all answer sheets outputting their score and corrected answers into a file
 void Klokan::run(const std::string& correctAnswerSheetName, const std::vector<std::string>& answerSheetNames)
 {
 	// get and store correct answers
@@ -23,7 +24,7 @@ void Klokan::run(const std::string& correctAnswerSheetName, const std::vector<st
 		if (sheetImage.empty())
 		{
 			std::cerr << "Answer sheet number " << i << " could not be loaded!" << std::endl;
-			return;
+			continue;
 		}
 
 		// get the answers
@@ -47,6 +48,7 @@ void Klokan::run(const std::string& correctAnswerSheetName, const std::vector<st
 	}
 }
 
+// extracts answers from an answer sheet using image recognition
 sheetAnswers Klokan::extract_answers(cv::Mat& sheetImage)
 {
 	sheetAnswers answers;
@@ -86,6 +88,7 @@ sheetAnswers Klokan::extract_answers(cv::Mat& sheetImage)
 	return std::move(answers);
 }
 
+// for each cell of the answer sheet it saves whether it is void, correct, corrected or incorrect
 correctedSheetAnswers Klokan::correct_answers(const sheetAnswers& answers)
 {
 	// correct all answers and save them
@@ -119,6 +122,7 @@ correctedSheetAnswers Klokan::correct_answers(const sheetAnswers& answers)
 	return std::move(correctedAnswers);
 }
 
+// counts the score based on corrected answers acording to the standard rules of the Mathematical Kangaroo
 size_t Klokan::count_score(const correctedSheetAnswers& correctedAnswers)
 {
 	size_t score = 24;
@@ -165,6 +169,7 @@ size_t Klokan::count_score(const correctedSheetAnswers& correctedAnswers)
 	return score;
 }
 
+// saves all the information about a sheet into a file
 bool Klokan::output_results(size_t score, const correctedSheetAnswers& correctedAnswers, const std::string& originalFilename)
 {
 	// prepare the output file name
