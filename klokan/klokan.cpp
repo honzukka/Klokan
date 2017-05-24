@@ -2,6 +2,7 @@
 #include "table_extract.h"
 #include "cell_extract.h"
 #include "cell_eval.h"
+#include "debug.h"
 
 // loads and stores correct answers and evaluates all answer sheets outputting their score and corrected answers into a file
 void Klokan::run(const std::string& correctAnswerSheetName, const std::vector<std::string>& answerSheetNames)

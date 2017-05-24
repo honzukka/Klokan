@@ -16,6 +16,11 @@ int main(int argc, char** argv)
 	// get names of the sheets from the command line
 	// the first argument is the name of the correct sheet
 	// the rest of the arguments are names of the sheets to be processed
+	if (argc < 3)
+	{
+		cerr << "Too few arguments!" << endl;
+		return 0;
+	}
 	string correctSheetName(argv[1]);
 	vector<string> sheetNames(argv + 2, argv + argc);
 
