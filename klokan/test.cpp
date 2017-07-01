@@ -2,10 +2,22 @@
 #include <string>
 #include <array>
 
+#include "opencv2\core\core.hpp"
+#include "opencv2\highgui\highgui.hpp"
+#include "opencv2\imgproc\imgproc.hpp"
+
+#include "table_extract.h"
+#include "cell_extract.h"
+#include "cell_eval.h"
+#include "parameters.h"
+
 using namespace std;
 
 using testTableAnswers = array<array<bool, 2>, 3>;
 using testSheetAnswers = array<testTableAnswers, 2>;
+
+using tableAnswers = std::array<std::array<bool, TABLE_COLUMNS - 1>, TABLE_ROWS - 1>;
+using sheetAnswers = std::array<tableAnswers, TABLE_COUNT>;
 
 #pragma pack(push, 8)
 struct MyStructure
@@ -69,4 +81,70 @@ extern "C" _declspec(dllexport) void __stdcall array_test(int* answers)
 			}
 		}
 	}
+}
+
+// extracts answers from an answer sheet using image recognition
+extern "C" __declspec(dllexport) void __stdcall extract_answers_test(char* filename, Parameters params, bool* answerArray)
+{
+	sheetAnswers answers;
+
+	cout << "Loading image..." << endl;
+
+	cv::Mat sheetImage = cv::imread(filename, CV_LOAD_IMAGE_GRAYSCALE);
+	if (sheetImage.empty())
+	{
+		std::cerr << "Correct sheet could not be loaded!" << std::endl;
+		return;
+	}
+
+	cout << "Image loaded..." << endl;
+	cout << "Processing..." << endl;
+
+	// extract tables ordered by x-coordinate
+	std::vector<Table> tables = extract_tables(sheetImage, params);
+
+	// evaluate tables one by one
+	size_t tableNumber = 0;
+	for (auto&& table : tables)
+	{
+		// exracts the cells of the table
+		auto tableCells = extract_cells(table.image);
+
+		// for each cell output if it's crossed of not and save the answer
+		// the first row and the first column do not contain answers
+		for (size_t row = 1; row < TABLE_ROWS; row++)
+		{
+			for (size_t col = 1; col < TABLE_COLUMNS; col++)
+			{
+				auto&& cell = tableCells[row][col];
+
+				if (is_cell_crossed(cell, params))
+				{
+					answers[tableNumber][row - 1][col - 1] = true;
+				}
+				else
+				{
+					answers[tableNumber][row - 1][col - 1] = false;
+				}
+			}
+		}
+
+		tableNumber++;
+	}
+
+	cout << "Saving answers into a buffer..." << endl;
+
+	// save the answers into the answer array
+	for (int table = 0; table < TABLE_COUNT; table++)
+	{
+		for (int row = 0; row < TABLE_ROWS - 1; row++)
+		{
+			for (int col = 0; col < TABLE_COLUMNS - 1; col++)
+			{
+				answerArray[table * (TABLE_ROWS - 1) * (TABLE_COLUMNS - 1) + row * (TABLE_COLUMNS - 1) + col] = answers[table][row][col];
+			}
+		}
+	}
+
+	cout << "Done!" << endl;
 }
