@@ -52,27 +52,21 @@ extern "C" __declspec(dllexport) void __stdcall structure_test(MyStructure struc
 	cout << endl;
 }
 
-// assumming I get a buffer of int[2*3*2]...
+// assumming I get a buffer of int[2*3*2]... there's no guarantee!
 extern "C" _declspec(dllexport) void __stdcall array_test(int* answers)
 {
+	const int tables = 2;
 	const int rows = 3;
 	const int cols = 2;
 	
-	// first table
-	for (size_t row = 0; row < rows; row++)
+	for (int table = 0; table < tables; table++)
 	{
-		for (size_t col = 0; col < 2; col++)
+		for (int row = 0; row < rows; row++)
 		{
-			answers[0 * rows * cols + row * cols + cols] = row + col;
-		}
-	}
-
-	// second table
-	for (size_t row = 0; row < cols; row++)
-	{
-		for (size_t col = 0; col < 2; col++)
-		{
-			answers[1 * rows * cols + row * cols + cols] = row + col + 5;
+			for (int col = 0; col < cols; col++)
+			{
+				answers[table * rows * cols + row * cols + col] = row + col + (table * 5);
+			}
 		}
 	}
 }

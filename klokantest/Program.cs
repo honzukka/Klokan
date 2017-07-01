@@ -23,7 +23,7 @@ namespace klokantest
 		public static extern void structure_test(MyAmazingStructure structure);
 
 		[DllImport("klokan.dll")]
-		public static extern void array_test(ref AnswerWrapper answers);
+		public unsafe static extern void array_test(int* answers);
 	}
 
 	[StructLayout(LayoutKind.Sequential, Pack = 8)]
@@ -36,9 +36,8 @@ namespace klokantest
 	}
 
 	// unsafe!!!
-	// TODO: finish this!
 	[StructLayout(LayoutKind.Sequential, Pack = 8)]
-	internal unsafe struct AnswerWrapper
+	unsafe struct AnswerWrapper
 	{
 		public fixed int answers[2 * 3 * 2];
 	}
@@ -54,7 +53,28 @@ namespace klokantest
 			MyAmazingStructure structure = new MyAmazingStructure { number1 = 2, numberFloat = 567.98f, number3 = 2000000000, number4 = 0 };
 			Native.structure_test(structure);
 
-			// .. arrays missing!
+			// unsafe!!!
+			AnswerWrapper answers = new AnswerWrapper();
+			unsafe
+			{
+				int* answerPtr = answers.answers;
+				Native.array_test(answerPtr);
+
+				for (int table = 0; table < 2; table++)
+				{
+					Console.WriteLine("Table " + table + ":");
+
+					for (int row = 0; row < 3; row++)
+					{
+						for (int col = 0; col < 2; col++)
+						{
+							Console.Write(answerPtr[table * 3 * 2 + row * 2 + col] + " ");
+						}
+
+						Console.WriteLine();
+					}
+				}
+			}
 		}
 	}
 }
