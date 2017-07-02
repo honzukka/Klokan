@@ -39,7 +39,7 @@ std::vector<Table> extract_tables(cv::Mat& sheetImage, const Parameters& paramet
 	cv::dilate(sheetImage, sheetImage, kernel);
 	
 	// find tables one by one
-	for (int i = 0; i < TABLE_COUNT; i++)
+	for (int i = 0; i < parameters.table_count; i++)
 	{
 		cv::Point maxBlobPoint = find_largest_blob(sheetImage, 255 - (i * 5), 255 - ((i + 1) * 5));
 

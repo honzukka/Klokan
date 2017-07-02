@@ -21,10 +21,14 @@ enum AnswerType
 	VOID
 };
 
-using tableAnswers = std::array<std::array<bool, TABLE_COLUMNS - 1>, TABLE_ROWS - 1>;
-using correctedTableAnswers = std::array<std::array<AnswerType, TABLE_COLUMNS - 1>, TABLE_ROWS - 1>;
-using sheetAnswers = std::array<tableAnswers, TABLE_COUNT>;
-using correctedSheetAnswers = std::array<correctedTableAnswers, TABLE_COUNT>;
+using tableAnswers = std::vector<std::vector<bool>>;
+using sheetAnswers = std::vector<tableAnswers>;
+
+//using correctedTableAnswers = std::array<std::array<AnswerType, TABLE_COLUMNS - 1>, TABLE_ROWS - 1>;
+//using correctedSheetAnswers = std::array<correctedTableAnswers, TABLE_COUNT>;
+
+using correctedTableAnswers = std::vector<std::vector<AnswerType>>;
+using correctedSheetAnswers = std::vector<correctedTableAnswers>;
 
 class Klokan
 {

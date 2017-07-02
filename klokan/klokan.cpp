@@ -61,24 +61,30 @@ sheetAnswers Klokan::extract_answers(cv::Mat& sheetImage)
 	size_t tableNumber = 0;
 	for (auto&& table : tables)
 	{
-		// exracts the cells of the table
-		auto tableCells = extract_cells(table.image);
+		// start a new answer table
+		answers.push_back(tableAnswers());
+		
+		// extracts the cells of the table
+		auto tableCells = extract_cells(table.image, parameters_);
 
 		// for each cell output if it's crossed of not and save the answer
 		// the first row and the first column do not contain answers
-		for (size_t row = 1; row < TABLE_ROWS; row++)
+		for (size_t row = 1; row < parameters_.table_rows; row++)
 		{
-			for (size_t col = 1; col < TABLE_COLUMNS; col++)
+			// start a new answer table row
+			answers[tableNumber].push_back(std::vector<bool>());
+			
+			for (size_t col = 1; col < parameters_.table_columns; col++)
 			{
 				auto&& cell = tableCells[row][col];
 
 				if (is_cell_crossed(cell, parameters_))
 				{
-					answers[tableNumber][row - 1][col - 1] = true;
+					answers[tableNumber][row - 1].push_back(true);
 				}
 				else
 				{
-					answers[tableNumber][row - 1][col - 1] = false;
+					answers[tableNumber][row - 1].push_back(false);
 				}
 			}
 		}
@@ -92,30 +98,37 @@ sheetAnswers Klokan::extract_answers(cv::Mat& sheetImage)
 // for each cell of the answer sheet it saves whether it is void, correct, corrected or incorrect
 correctedSheetAnswers Klokan::correct_answers(const sheetAnswers& answers)
 {
-	// correct all answers and save them
 	correctedSheetAnswers correctedAnswers;
-	for (size_t table = 0; table < TABLE_COUNT; table++)
+
+	// correct all answers and save them
+	for (size_t table = 0; table < parameters_.table_count; table++)
 	{
+		// start a new corrected answer table
+		correctedAnswers.push_back(correctedTableAnswers());
+		
 		// again, the first row and the first column of the original table were removed as they do not contain any answers
-		for (size_t row = 0; row < TABLE_ROWS - 1; row++)
+		for (size_t row = 0; row < parameters_.table_rows - 1; row++)
 		{
-			for (size_t col = 0; col < TABLE_COLUMNS - 1; col++)
+			// start a new corrected answer table row
+			correctedAnswers[table].push_back(std::vector<AnswerType>());
+			
+			for (size_t col = 0; col < parameters_.table_columns - 1; col++)
 			{
 				// if the answer is no and correct
 				if (answers[table][row][col] == false && correctAnswers_[table][row][col] == false)
-					correctedAnswers[table][row][col] = VOID;
+					correctedAnswers[table][row].push_back(VOID);
 				
 				// if the answer is yes and correct
 				else if (answers[table][row][col] == true && correctAnswers_[table][row][col] == true)
-					correctedAnswers[table][row][col] = CORRECT;
+					correctedAnswers[table][row].push_back(CORRECT);
 				
 				// if the answer is yes and incorrect
 				else if (answers[table][row][col] == true && correctAnswers_[table][row][col] == false)
-					correctedAnswers[table][row][col] = INCORRECT;
+					correctedAnswers[table][row].push_back(INCORRECT);
 
 				// if the answer is no and incorrect
 				else if (answers[table][row][col] == false && correctAnswers_[table][row][col] == true)
-					correctedAnswers[table][row][col] = CORRECTED;
+					correctedAnswers[table][row].push_back(CORRECTED);
 			}
 		}
 	}
@@ -128,16 +141,16 @@ size_t Klokan::count_score(const correctedSheetAnswers& correctedAnswers)
 {
 	size_t score = 24;
 	
-	for (size_t table = 0; table < TABLE_COUNT; table++)
+	for (size_t table = 0; table < parameters_.table_count; table++)
 	{
 		// again, the first row and the first column of the original table were removed as they do not contain any answers
-		for (size_t row = 0; row < TABLE_ROWS - 1; row++)
+		for (size_t row = 0; row < parameters_.table_rows - 1; row++)
 		{
 			size_t correctAnswersCount = 0;
 			size_t incorrectAnswersCount = 0;
 			
 			// count the types of answers necessary to assign points
-			for (size_t col = 0; col < TABLE_COLUMNS - 1; col++)
+			for (size_t col = 0; col < parameters_.table_columns - 1; col++)
 			{
 				switch (correctedAnswers[table][row][col])
 				{
@@ -186,18 +199,18 @@ bool Klokan::output_results(size_t score, const correctedSheetAnswers& corrected
 	if (!outputFile.is_open()) return false;
 
 	// output results
-	for (size_t table = 0; table < TABLE_COUNT; table++)
+	for (size_t table = 0; table < parameters_.table_count; table++)
 	{
 		outputFile << "Table " << table + 1 << ":" << std::endl;
 		outputFile << "-----------------------" << std::endl;
 		outputFile << "\tA B C D E" << std::endl;
 
 		// again, the first row and the first column of the original table were removed as they do not contain any answers
-		for (size_t row = 0; row < TABLE_ROWS - 1; row++)
+		for (size_t row = 0; row < parameters_.table_rows - 1; row++)
 		{
 			outputFile << table * 8 + row + 1 << "\t";
 
-			for (size_t col = 0; col < TABLE_COLUMNS - 1; col++)
+			for (size_t col = 0; col < parameters_.table_columns - 1; col++)
 			{
 				switch (correctedAnswers[table][row][col])
 				{

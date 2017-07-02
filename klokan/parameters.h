@@ -9,9 +9,9 @@
 #include <iostream>
 
 // parameters describing the tables in the answer sheet
-const int TABLE_ROWS = 9;
-const int TABLE_COLUMNS = 6;
-const int TABLE_COUNT = 3;
+//const int TABLE_ROWS = 9;
+//const int TABLE_COLUMNS = 6;
+//const int TABLE_COUNT = 3;
 
 struct Parameters
 {
@@ -24,9 +24,14 @@ struct Parameters
 	int black_white_threshold;		// how bright a shade of grey can be to be recognized as black (the rest will be white)
 
 	// parameters of the table extraction process
+	int table_count;						// the number of table in the answer sheet
 	int table_line_length;					// the length of lines to be detected
 	float table_line_eccentricity_limit;	// how slanted a line can be to be recognized as either horizontal or vertical (in radians)
 	int table_line_curvature_limit;			// how curved a line can be to still be recognized as a straight line (1 is minimum)
+
+	// parameters of the cell extraction process
+	int table_rows;					// the number of rows in a table
+	int table_columns;				// the number of columns in a table
 
 	// parameters of the cell evaluation process
 	int default_cell_width;			// every cell will be resized to have this width

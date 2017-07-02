@@ -5,9 +5,13 @@ Parameters::Parameters()
 	default_sheet_width = 1700;
 	black_white_threshold = 230;
 
+	table_count = 3;
 	table_line_length = 350;
 	table_line_eccentricity_limit = CV_PI / 8;
 	table_line_curvature_limit = 1;
+
+	table_rows = 9;
+	table_columns = 6;
 
 	default_cell_width = 80;
 	default_cell_height = 40;
