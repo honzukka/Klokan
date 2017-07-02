@@ -9,6 +9,7 @@
 
 #include <vector>
 
+// export for unit tests
 #define DLLExport __declspec(dllexport)
 
 // splits the tableImage into cells based on the number of rows and columns

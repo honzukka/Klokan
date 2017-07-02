@@ -7,6 +7,7 @@
 
 #include "parameters.h"
 
+// export for unit tests
 #define DLLExport __declspec(dllexport)
 
 // returns if a cell is crossed (true) or if it's empty or corrected (false)

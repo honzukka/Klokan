@@ -9,6 +9,7 @@
 
 #include <vector>
 
+// export for unit tests
 #define DLLExport __declspec(dllexport)
 
 struct DLLExport Table

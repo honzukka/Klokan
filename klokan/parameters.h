@@ -8,11 +8,8 @@
 #include <exception>
 #include <iostream>
 
-// parameters describing the tables in the answer sheet
-//const int TABLE_ROWS = 9;
-//const int TABLE_COLUMNS = 6;
-//const int TABLE_COUNT = 3;
-
+// ensure a specific memory layout - necessary for C# interoperability
+#pragma pack(push, 8)
 struct Parameters
 {
 	Parameters();
@@ -40,5 +37,6 @@ struct Parameters
 	int cross_line_curvature_limit;	// how curved a line can be to still be recognized as a straight line (1 is minimum)
 	int rubbish_lines_limit;		// amount of lines that don't form a cross that will be ignored and not considered as a correction
 };
+#pragma pack(pop)
 
 #endif // !PARAMETERS_

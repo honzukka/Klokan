@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="api.cpp" />
     <ClCompile Include="cell_eval.cpp" />
     <ClCompile Include="cell_extract.cpp" />
     <ClCompile Include="debug.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="table_extract.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="api.h" />
     <ClInclude Include="cell_eval.h" />
     <ClInclude Include="cell_extract.h" />
     <ClInclude Include="debug.h" />
