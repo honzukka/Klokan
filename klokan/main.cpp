@@ -4,6 +4,7 @@
 #include "debug.h"
 #include "klokan.h"
 #include "parameters.h"
+#include "api.h"
 
 #include <iostream>
 #include <sstream>
@@ -13,6 +14,7 @@ using namespace cv;
 
 int main(int argc, char** argv)
 {
+	/*
 	// get names of the sheets from the command line
 	// the first argument is the name of the correct sheet
 	// the rest of the arguments are names of the sheets to be processed
@@ -24,15 +26,14 @@ int main(int argc, char** argv)
 	string correctSheetName(argv[1]);
 	vector<string> sheetNames(argv + 2, argv + argc);
 
-	/* ENTER THE NAMES OF THE SHEETS MANUALLY
-	string correctSheetName = "01-varying_size.jpeg";
-	vector<string> sheetNames;
+	//ENTER THE NAMES OF THE SHEETS MANUALLY
+	//string correctSheetName = "01-varying_size.jpeg";
+	//vector<string> sheetNames;
 
-	sheetNames.push_back("01-varying_size.jpeg");
-	sheetNames.push_back("01-varying_size-one_wrong.jpeg");
-	sheetNames.push_back("01-varying_size-one_empty.jpeg");
-	sheetNames.push_back("09-full_column_rotated.jpeg");
-	*/
+	//sheetNames.push_back("01-varying_size.jpeg");
+	//sheetNames.push_back("01-varying_size-one_wrong.jpeg");
+	//sheetNames.push_back("01-varying_size-one_empty.jpeg");
+	//sheetNames.push_back("09-full_column_rotated.jpeg");
 	
 	Parameters parameters;
 	if (!parameters.update_from_file("config.txt")) 
@@ -45,6 +46,37 @@ int main(int argc, char** argv)
 	cerr << "Ready!" << endl;
 
 	waitKey(0);
+	*/
+
+	Parameters params;
+	bool answersArray[3 * 8 * 5];
+	char* filename = "01-varying_size.jpeg";
+	bool success = false;
+	bool* successPtr = &success;
+
+	extract_answers_api(filename, params, answersArray, successPtr);
+
+	for (int table = 0; table < 3; table++)
+	{
+		cout << "Table " << (table + 1) << ":" << endl;
+
+		for (int row = 0; row < 8; row++)
+		{
+			for (int col = 0; col < 5; col++)
+			{
+				if (answersArray[table * 8 * 5 + row * 5 + col] == true)
+				{
+					cout << "X ";
+				}
+				else
+				{
+					cout << "  ";
+				}
+			}
+
+			cout << endl;
+		}
+	}
 
 	return 0;
 }
