@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Threading;
+
 namespace KlokanUI
 {
 	public partial class Form1 : Form
@@ -17,64 +19,66 @@ namespace KlokanUI
 			InitializeComponent();
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		public void AddTextToTextbox(string text)
+		{
+			if (outputTextBox.InvokeRequired)
+			{
+				outputTextBox.BeginInvoke(new Action(
+					() => { outputTextBox.AppendText(text); }	
+				));
+			}
+			else
+			{
+				outputTextBox.AppendText(text);
+			}
+		}
+
+		public void EnableGoButton()
+		{
+			if (goButton.InvokeRequired)
+			{
+				goButton.BeginInvoke(new Action(
+					() => { goButton.Enabled = true; }
+				));
+			}
+			else
+			{
+				goButton.Enabled = true;
+			}
+		}
+
+		private void goButton_Click(object sender, EventArgs e)
 		{
 			outputTextBox.Text = "";
+			goButton.Enabled = false;
 
 			Parameters parameters = new Parameters();
 			parameters.SetDefaultValues();
 
-			Evaluator evaluator = new Evaluator(parameters);
-
-			string correctSheetFilename = correctSheetTextBox.Text;
-			string sheetFilename = sheetTextBox.Text;
-
-			if (!evaluator.LoadCorrectAnswers(correctSheetFilename))
+			var sheetFilenames = new List<string>();
+			for (int i = 0; i < 100; i++)
 			{
-				outputTextBox.Text = "ERROR";
-				return;
+				sheetFilenames.Add("01-varying_size.jpeg");
 			}
 
-			Result result = evaluator.Evaluate(sheetFilename);
-
-			if (result.Error)
+			var klokanBatch = new KlokanBatch
 			{
-				outputTextBox.Text = "ERROR";
-				return;
-			}
-
-			for (int table = 0; table < parameters.TableCount; table++)
-			{
-				outputTextBox.Text += "Table " + (table + 1) + ":\r\n";
-
-				for (int row = 0; row < parameters.TableRows - 1; row++)
-				{
-					for (int col = 0; col < parameters.TableColumns - 1; col++)
-					{
-						switch (result.CorrectedAnswers[table][row][col])
-						{
-							case AnswerType.Correct:
-								outputTextBox.Text += "X\t";
-								break;
-							case AnswerType.Incorrect:
-								outputTextBox.Text += "!\t";
-								break;
-							case AnswerType.Void:
-								outputTextBox.Text += "\t";
-								break;
-							case AnswerType.Corrected:
-								outputTextBox.Text += "O\t";
-								break;
-						}
-					}
-
-					outputTextBox.Text += "\r\n";
+				Parameters = parameters,
+				CategoryBatches = new List<KlokanCategoryBatch> {
+										new KlokanCategoryBatch {
+													Category = Category.Kadet,
+													CorrectSheetFilename = correctSheetTextBox.Text,
+													SheetFilenames = sheetFilenames
+										}
 				}
+			};
 
-				outputTextBox.Text += "\r\n";
-			}
+			var jobScheduler = new JobScheduler(klokanBatch, this);
 
-			outputTextBox.Text += "Score: " + result.Score;
+			// new thread created, so that all tasks in it are planned in the threadpool and not in the WinForms synchronization context
+			Thread thread = new Thread(jobScheduler.Run);
+			thread.IsBackground = true;
+			thread.Start();
 		}
 	}
 }

@@ -7,4 +7,12 @@
 		Void,
 		Corrected
 	}
+
+	enum Category
+	{
+		Benjamin,
+		Kadet,
+		Junior,
+		Student
+	}
 }

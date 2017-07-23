@@ -9,39 +9,29 @@ namespace KlokanUI
 	class Evaluator
 	{
 		Parameters parameters;
-		List<List<List<bool>>> correctAnswers;
 
 		public Evaluator(Parameters parameters)
 		{
 			this.parameters = parameters;
 		}
-
+		
 		/// <summary>
 		/// Loads the correct answers to evaluate against.
 		/// </summary>
 		/// <param name="correctSheetFilename">Image name containing the correct answers.</param>
-		/// <returns>True on success and false on fail.</returns>
-		public bool LoadCorrectAnswers(string correctSheetFilename)
+		/// <returns>A multi-dimensional list of correct answers or null if there was an error loading the answers.</returns>
+		public List<List<List<bool>>> LoadCorrectAnswers(string correctSheetFilename)
 		{
-			correctAnswers = ExtractAnswers(correctSheetFilename);
-
-			if (correctAnswers == null)
-			{
-				return false;
-			}
-			else
-			{
-				return true;
-			}
+			return ExtractAnswers(correctSheetFilename);
 		}
-
+		
 		/// <summary>
 		/// Evaluates answers contained in an image of an answer sheet.
 		/// </summary>
 		/// <param name="sheetFilename">The name of the image containing answers to be evaluated.</param>
 		/// <exception cref="InvalidOperationException">Thrown when the correct answers haven't been loaded prior to the execution of this function.</exception>
 		/// <returns></returns>
-		public Result Evaluate(string sheetFilename)
+		public Result Evaluate(string sheetFilename, List<List<List<bool>>> correctAnswers)
 		{
 			if (correctAnswers == null)
 			{
@@ -57,7 +47,7 @@ namespace KlokanUI
 			}
 
 			// correct them
-			List<List<List<AnswerType>>> correctedAnswers = CorrectAnswers(answers);
+			List<List<List<AnswerType>>> correctedAnswers = CorrectAnswers(answers, correctAnswers);
 
 			// count the score
 			int score = CountScore(correctedAnswers);
@@ -130,7 +120,7 @@ namespace KlokanUI
 		/// </summary>
 		/// <param name="answers">Answers to be checked against the set of correct answers stored in the object.</param>
 		/// <returns>A multi-dimensional list of corrected answers (AnswerType).</returns>
-		List<List<List<AnswerType>>> CorrectAnswers(List<List<List<bool>>> answers)
+		List<List<List<AnswerType>>> CorrectAnswers(List<List<List<bool>>> answers, List<List<List<bool>>> correctAnswers)
 		{
 			List<List<List<AnswerType>>> correctedAnswers = new List<List<List<AnswerType>>>();
 
