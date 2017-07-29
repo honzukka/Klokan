@@ -12,25 +12,21 @@ using System.Threading;
 
 namespace KlokanUI
 {
-	public partial class Form1 : Form
+	public partial class EvaluationForm : Form
 	{
-		public Form1()
+		KlokanBatch klokanBatch;
+
+		public EvaluationForm()
 		{
 			InitializeComponent();
-		}
 
-		public void AddTextToTextbox(string text)
-		{
-			if (outputTextBox.InvokeRequired)
-			{
-				outputTextBox.BeginInvoke(new Action(
-					() => { outputTextBox.AppendText(text); }	
-				));
-			}
-			else
-			{
-				outputTextBox.AppendText(text);
-			}
+			// assign default parameters to the batch
+			Parameters parameters = new Parameters();
+			parameters.SetDefaultValues();
+
+			klokanBatch = new KlokanBatch();
+			klokanBatch.Parameters = parameters;
+			klokanBatch.CategoryBatches = new Dictionary<string, KlokanCategoryBatch>();
 		}
 
 		public void EnableGoButton()
@@ -49,9 +45,9 @@ namespace KlokanUI
 
 		private void goButton_Click(object sender, EventArgs e)
 		{
-			outputTextBox.Text = "";
 			goButton.Enabled = false;
 
+			/*
 			Parameters parameters = new Parameters();
 			parameters.SetDefaultValues();
 
@@ -64,14 +60,16 @@ namespace KlokanUI
 			var klokanBatch = new KlokanBatch
 			{
 				Parameters = parameters,
-				CategoryBatches = new List<KlokanCategoryBatch> {
-										new KlokanCategoryBatch {
-													Category = Category.Kadet,
-													CorrectSheetFilename = correctSheetTextBox.Text,
+				CategoryBatches = new Dictionary<string, KlokanCategoryBatch> { {
+						"TestBatch",	new KlokanCategoryBatch {
+													CategoryName = Category.Kadet.ToString(),
+													CorrectSheetFilename = "01-varying_size.jpeg",
 													SheetFilenames = sheetFilenames
 										}
+						}
 				}
 			};
+			*/
 
 			var jobScheduler = new JobScheduler(klokanBatch, this);
 
@@ -79,6 +77,19 @@ namespace KlokanUI
 			Thread thread = new Thread(jobScheduler.Run);
 			thread.IsBackground = true;
 			thread.Start();
+		}
+
+		private void listBoxAddButton_Click(object sender, EventArgs e)
+		{
+			CategoryEditForm categoryEditForm = new CategoryEditForm(klokanBatch);
+			categoryEditForm.StartPosition = FormStartPosition.CenterScreen;
+			var dialogResult = categoryEditForm.ShowDialog();
+
+			if (dialogResult == DialogResult.OK)
+			{
+				categoryBatchListBox.DataSource = null;
+				categoryBatchListBox.DataSource = new List<string>(klokanBatch.CategoryBatches.Keys);
+			}
 		}
 	}
 }

@@ -9,12 +9,12 @@ namespace KlokanUI
 	struct KlokanBatch
 	{
 		public Parameters Parameters;
-		public List<KlokanCategoryBatch> CategoryBatches;
+		public Dictionary<string, KlokanCategoryBatch> CategoryBatches;
 	}
 
 	struct KlokanCategoryBatch
 	{
-		public Category Category;
+		public string CategoryName;
 		public string CorrectSheetFilename;
 		public List<string> SheetFilenames;
 	}
