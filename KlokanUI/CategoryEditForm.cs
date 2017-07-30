@@ -15,18 +15,30 @@ namespace KlokanUI
 		List<string> answerSheetFilenames;
 
 		// a reference to the batch that's being edited in this form
-		KlokanBatch klokanBatch;
+		KlokanCategoryBatch categoryBatch;
 
-		public CategoryEditForm(KlokanBatch klokanBatch)
+		public CategoryEditForm(KlokanCategoryBatch categoryBatch)
 		{
 			InitializeComponent();
 
-			this.klokanBatch = klokanBatch;
-			answerSheetFilenames = new List<string>();
+			this.Text = "Klokan - Category Edit (" + categoryBatch.CategoryName + ")";
 
-			categoryComboBox.DataSource = Enum.GetValues(typeof(Category));
+			// show the content of the batch if there is something there already
+			if (categoryBatch.CorrectSheetFilename != null)
+			{
+				correctSheetTextBox.Text = categoryBatch.CorrectSheetFilename;
+			}
+
+			if (categoryBatch.SheetFilenames != null)
+			{
+				answerSheetsListBox.DataSource = categoryBatch.SheetFilenames;
+			}
+
+			this.categoryBatch = categoryBatch;
+			answerSheetFilenames = new List<string>();
 		}
 
+		// file dialog (no multiselect) for finding the path of the correct answer sheet
 		private void searchButton_Click(object sender, EventArgs e)
 		{
 			var dialogResult = openCorrectFileDialog.ShowDialog();
@@ -37,6 +49,7 @@ namespace KlokanUI
 			}
 		}
 
+		// file dialog (multiselect) for adding answer sheets to be evaluated
 		private void addButton_Click(object sender, EventArgs e)
 		{
 			var dialogResult = openFilesDialog.ShowDialog();
@@ -44,6 +57,7 @@ namespace KlokanUI
 
 			if (dialogResult == DialogResult.OK)
 			{
+				// for each filename that was chosen in the dialog
 				foreach (var filename in openFilesDialog.FileNames)
 				{
 					// add the filename only if it's not there already 
@@ -63,34 +77,44 @@ namespace KlokanUI
 				// inform the user that duplicate filenames were not added
 				if (duplicateFilenames)
 				{
-					MessageBox.Show("One or more files were already present in the list, so they were not added.", "Duplicate Filenames");
+					MessageBox.Show("One or more files were already present in the list, so they were not added.", "Duplicate Filenames", MessageBoxButtons.OK, MessageBoxIcon.Information);
 					duplicateFilenames = false;
 				}
 			}
 		}
 
+		// remove selected items from the list box
 		private void removeButton_Click(object sender, EventArgs e)
 		{
-			int selectedItemIndex = answerSheetsListBox.SelectedIndex;
-
 			// if something is selected
-			if (selectedItemIndex > -1)
+			if (answerSheetsListBox.SelectedIndices.Count > 0)
 			{
-				answerSheetFilenames.RemoveAt(selectedItemIndex);
+				foreach (string item in answerSheetsListBox.SelectedItems)
+				{
+					answerSheetFilenames.Remove(item);
+				}
 
 				UpdateListBox();
 			}
 		}
 
+		// save the batch and close the form
 		private void saveButton_Click(object sender, EventArgs e)
 		{
-			string categoryName = categoryComboBox.Text;
+			if (correctSheetTextBox.Text == "")
+			{
+				MessageBox.Show("Correct answer sheet not selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
 
-			klokanBatch.CategoryBatches[categoryName] = new KlokanCategoryBatch {
-				CategoryName = categoryName,
-				CorrectSheetFilename = correctSheetTextBox.Text,
-				SheetFilenames = answerSheetFilenames
-			};
+			if (answerSheetFilenames.Count == 0)
+			{
+				MessageBox.Show("No answer sheets selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			categoryBatch.CorrectSheetFilename = correctSheetTextBox.Text;
+			categoryBatch.SheetFilenames = answerSheetFilenames;
 
 			DialogResult = DialogResult.OK;
 			this.Close();

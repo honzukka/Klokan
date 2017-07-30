@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace KlokanUI
 {
-	struct KlokanBatch
+	class KlokanBatch
 	{
 		public Parameters Parameters;
 		public Dictionary<string, KlokanCategoryBatch> CategoryBatches;
 	}
 
-	struct KlokanCategoryBatch
+	class KlokanCategoryBatch
 	{
 		public string CategoryName;
 		public string CorrectSheetFilename;

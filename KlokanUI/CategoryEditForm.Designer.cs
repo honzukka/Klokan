@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.nameLabel = new System.Windows.Forms.Label();
 			this.correctSheetLabel = new System.Windows.Forms.Label();
 			this.openCorrectFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.correctSheetTextBox = new System.Windows.Forms.TextBox();
@@ -39,22 +38,12 @@
 			this.removeButton = new System.Windows.Forms.Button();
 			this.openFilesDialog = new System.Windows.Forms.OpenFileDialog();
 			this.saveButton = new System.Windows.Forms.Button();
-			this.categoryComboBox = new System.Windows.Forms.ComboBox();
 			this.SuspendLayout();
-			// 
-			// nameLabel
-			// 
-			this.nameLabel.AutoSize = true;
-			this.nameLabel.Location = new System.Drawing.Point(27, 33);
-			this.nameLabel.Name = "nameLabel";
-			this.nameLabel.Size = new System.Drawing.Size(83, 13);
-			this.nameLabel.TabIndex = 1;
-			this.nameLabel.Text = "Category Name:";
 			// 
 			// correctSheetLabel
 			// 
 			this.correctSheetLabel.AutoSize = true;
-			this.correctSheetLabel.Location = new System.Drawing.Point(27, 72);
+			this.correctSheetLabel.Location = new System.Drawing.Point(24, 18);
 			this.correctSheetLabel.Name = "correctSheetLabel";
 			this.correctSheetLabel.Size = new System.Drawing.Size(113, 13);
 			this.correctSheetLabel.TabIndex = 2;
@@ -66,14 +55,17 @@
 			// 
 			// correctSheetTextBox
 			// 
-			this.correctSheetTextBox.Location = new System.Drawing.Point(30, 88);
+			this.correctSheetTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.correctSheetTextBox.Location = new System.Drawing.Point(27, 34);
 			this.correctSheetTextBox.Name = "correctSheetTextBox";
-			this.correctSheetTextBox.Size = new System.Drawing.Size(285, 20);
+			this.correctSheetTextBox.Size = new System.Drawing.Size(489, 20);
 			this.correctSheetTextBox.TabIndex = 3;
 			// 
 			// searchButton
 			// 
-			this.searchButton.Location = new System.Drawing.Point(321, 85);
+			this.searchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.searchButton.Location = new System.Drawing.Point(522, 31);
 			this.searchButton.Name = "searchButton";
 			this.searchButton.Size = new System.Drawing.Size(97, 23);
 			this.searchButton.TabIndex = 4;
@@ -84,7 +76,7 @@
 			// sheetLabel
 			// 
 			this.sheetLabel.AutoSize = true;
-			this.sheetLabel.Location = new System.Drawing.Point(27, 111);
+			this.sheetLabel.Location = new System.Drawing.Point(24, 57);
 			this.sheetLabel.Name = "sheetLabel";
 			this.sheetLabel.Size = new System.Drawing.Size(96, 13);
 			this.sheetLabel.TabIndex = 5;
@@ -92,16 +84,21 @@
 			// 
 			// answerSheetsListBox
 			// 
+			this.answerSheetsListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.answerSheetsListBox.FormattingEnabled = true;
 			this.answerSheetsListBox.HorizontalScrollbar = true;
-			this.answerSheetsListBox.Location = new System.Drawing.Point(30, 128);
+			this.answerSheetsListBox.Location = new System.Drawing.Point(27, 74);
 			this.answerSheetsListBox.Name = "answerSheetsListBox";
-			this.answerSheetsListBox.Size = new System.Drawing.Size(285, 225);
+			this.answerSheetsListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+			this.answerSheetsListBox.Size = new System.Drawing.Size(489, 277);
 			this.answerSheetsListBox.TabIndex = 6;
 			// 
 			// addButton
 			// 
-			this.addButton.Location = new System.Drawing.Point(322, 128);
+			this.addButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.addButton.Location = new System.Drawing.Point(523, 74);
 			this.addButton.Name = "addButton";
 			this.addButton.Size = new System.Drawing.Size(96, 23);
 			this.addButton.TabIndex = 7;
@@ -111,7 +108,8 @@
 			// 
 			// removeButton
 			// 
-			this.removeButton.Location = new System.Drawing.Point(321, 157);
+			this.removeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.removeButton.Location = new System.Drawing.Point(522, 103);
 			this.removeButton.Name = "removeButton";
 			this.removeButton.Size = new System.Drawing.Size(97, 23);
 			this.removeButton.TabIndex = 8;
@@ -126,28 +124,20 @@
 			// 
 			// saveButton
 			// 
-			this.saveButton.Location = new System.Drawing.Point(169, 382);
+			this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.saveButton.Location = new System.Drawing.Point(407, 392);
 			this.saveButton.Name = "saveButton";
-			this.saveButton.Size = new System.Drawing.Size(117, 30);
+			this.saveButton.Size = new System.Drawing.Size(109, 23);
 			this.saveButton.TabIndex = 9;
 			this.saveButton.Text = "Save Category";
 			this.saveButton.UseVisualStyleBackColor = true;
 			this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
 			// 
-			// categoryComboBox
-			// 
-			this.categoryComboBox.FormattingEnabled = true;
-			this.categoryComboBox.Location = new System.Drawing.Point(30, 50);
-			this.categoryComboBox.Name = "categoryComboBox";
-			this.categoryComboBox.Size = new System.Drawing.Size(285, 21);
-			this.categoryComboBox.TabIndex = 10;
-			// 
 			// CategoryEditForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(454, 424);
-			this.Controls.Add(this.categoryComboBox);
+			this.ClientSize = new System.Drawing.Size(646, 427);
 			this.Controls.Add(this.saveButton);
 			this.Controls.Add(this.removeButton);
 			this.Controls.Add(this.addButton);
@@ -156,7 +146,7 @@
 			this.Controls.Add(this.searchButton);
 			this.Controls.Add(this.correctSheetTextBox);
 			this.Controls.Add(this.correctSheetLabel);
-			this.Controls.Add(this.nameLabel);
+			this.MinimumSize = new System.Drawing.Size(308, 313);
 			this.Name = "CategoryEditForm";
 			this.Text = "Klokan - Category Edit";
 			this.ResumeLayout(false);
@@ -165,7 +155,6 @@
 		}
 
 		#endregion
-		private System.Windows.Forms.Label nameLabel;
 		private System.Windows.Forms.Label correctSheetLabel;
 		private System.Windows.Forms.OpenFileDialog openCorrectFileDialog;
 		private System.Windows.Forms.TextBox correctSheetTextBox;
@@ -176,6 +165,5 @@
 		private System.Windows.Forms.Button removeButton;
 		private System.Windows.Forms.OpenFileDialog openFilesDialog;
 		private System.Windows.Forms.Button saveButton;
-		private System.Windows.Forms.ComboBox categoryComboBox;
 	}
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Threading;
+using System.IO;
 
 namespace KlokanUI
 {
@@ -48,7 +49,7 @@ namespace KlokanUI
 
 				if (correctAnswers == null)
 				{
-					//form.AddTextToTextbox("ERROR\r\n--------------\r\n");
+					// TODO: do something better here
 					continue;
 				}
 
@@ -62,57 +63,62 @@ namespace KlokanUI
 
 			Result[] results = await Task.WhenAll(tasks);
 
-			//OutputResultsTest(results);
-			//form.AddTextToTextbox("Finished in " + (DateTime.Now - startTime).TotalSeconds + " seconds.\r\n");
+			OutputResultsTest(results);
+			form.ShowMessageBoxInfo("Finished in " + (DateTime.Now - startTime).TotalSeconds + " seconds.\r\n", "Evaluation Completed");
 			form.EnableGoButton();
 		}
 
 		/// <summary>
-		/// A test function which outputs the result into the evaluation form. (slow and blocks the event loop)
+		/// A test function which outputs the result into an output file.
 		/// </summary>
 		/// <param name="results">Any enumerable structure of evaluation results.</param>
 		void OutputResultsTest(IEnumerable<Result> results)
 		{
-			foreach (var result in results)
+			using (var sw = new StreamWriter("output-test.txt"))
 			{
-				if (result.Error)
+				foreach (var result in results)
 				{
-					//form.AddTextToTextbox("ERROR\r\n--------------\r\n");
-					continue;
-				}
-
-				for (int table = 0; table < batch.Parameters.TableCount; table++)
-				{
-					//form.AddTextToTextbox("Table " + (table + 1) + ":\r\n");
-
-					for (int row = 0; row < batch.Parameters.TableRows - 1; row++)
+					if (result.Error)
 					{
-						for (int col = 0; col < batch.Parameters.TableColumns - 1; col++)
-						{
-							switch (result.CorrectedAnswers[table][row][col])
-							{
-								case AnswerType.Correct:
-									//form.AddTextToTextbox("X\t");
-									break;
-								case AnswerType.Incorrect:
-									//form.AddTextToTextbox("!\t");
-									break;
-								case AnswerType.Void:
-									//form.AddTextToTextbox("\t");
-									break;
-								case AnswerType.Corrected:
-									//form.AddTextToTextbox("O\t");
-									break;
-							}
-						}
-
-						//form.AddTextToTextbox("\r\n");
+						sw.WriteLine("ERROR");
+						sw.WriteLine("--------------");
+						continue;
 					}
 
-					//form.AddTextToTextbox("\r\n");
-				}
+					for (int table = 0; table < batch.Parameters.TableCount; table++)
+					{
+						sw.WriteLine("Table " + (table + 1) + ":");
 
-				//form.AddTextToTextbox("Score: " + result.Score + "\r\n--------------\r\n");
+						for (int row = 0; row < batch.Parameters.TableRows - 1; row++)
+						{
+							for (int col = 0; col < batch.Parameters.TableColumns - 1; col++)
+							{
+								switch (result.CorrectedAnswers[table][row][col])
+								{
+									case AnswerType.Correct:
+										sw.Write("X ");
+										break;
+									case AnswerType.Incorrect:
+										sw.Write("! ");
+										break;
+									case AnswerType.Void:
+										sw.Write("  ");
+										break;
+									case AnswerType.Corrected:
+										sw.Write("O ");
+										break;
+								}
+							}
+
+							sw.WriteLine();
+						}
+
+						sw.WriteLine();
+					}
+
+					sw.WriteLine("Score: " + result.Score);
+					sw.WriteLine("--------------");
+				}
 			}
 		}
 	}

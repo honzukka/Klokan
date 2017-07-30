@@ -14,11 +14,23 @@ namespace KlokanUI
 {
 	public partial class EvaluationForm : Form
 	{
+		class CategoryBatchConfig
+		{
+			public KlokanCategoryBatch batch;
+			public bool isIncluded;
+		}
+
 		KlokanBatch klokanBatch;
+		Dictionary<string, CategoryBatchConfig> categoryConfigurations;
 
 		public EvaluationForm()
 		{
 			InitializeComponent();
+
+			benjaminEditButton.Enabled = false;
+			kadetEditButton.Enabled = false;
+			juniorEditButton.Enabled = false;
+			studentEditButton.Enabled = false;
 
 			// assign default parameters to the batch
 			Parameters parameters = new Parameters();
@@ -27,49 +39,62 @@ namespace KlokanUI
 			klokanBatch = new KlokanBatch();
 			klokanBatch.Parameters = parameters;
 			klokanBatch.CategoryBatches = new Dictionary<string, KlokanCategoryBatch>();
+
+			categoryConfigurations = new Dictionary<string, CategoryBatchConfig>();
 		}
 
 		public void EnableGoButton()
 		{
-			if (goButton.InvokeRequired)
+			if (evaluateButton.InvokeRequired)
 			{
-				goButton.BeginInvoke(new Action(
-					() => { goButton.Enabled = true; }
+				evaluateButton.BeginInvoke(new Action(
+					() => { evaluateButton.Enabled = true; }
 				));
 			}
 			else
 			{
-				goButton.Enabled = true;
+				evaluateButton.Enabled = true;
 			}
 		}
 
-		private void goButton_Click(object sender, EventArgs e)
+		public void ShowMessageBoxInfo(string message, string caption)
 		{
-			goButton.Enabled = false;
-
-			/*
-			Parameters parameters = new Parameters();
-			parameters.SetDefaultValues();
-
-			var sheetFilenames = new List<string>();
-			for (int i = 0; i < 100; i++)
+			if (this.InvokeRequired)
 			{
-				sheetFilenames.Add("01-varying_size.jpeg");
+				this.BeginInvoke(new Action(
+					() => { MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information); }	
+				));
+			}
+			else
+			{
+				MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+		}
+
+		private void evaluateButton_Click(object sender, EventArgs e)
+		{
+			if (categoryConfigurations.Count == 0)
+			{
+				MessageBox.Show("No categories configured!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
 			}
 
-			var klokanBatch = new KlokanBatch
+			// save all included batches into the final klokan batch
+			foreach (var pair in categoryConfigurations)
 			{
-				Parameters = parameters,
-				CategoryBatches = new Dictionary<string, KlokanCategoryBatch> { {
-						"TestBatch",	new KlokanCategoryBatch {
-													CategoryName = Category.Kadet.ToString(),
-													CorrectSheetFilename = "01-varying_size.jpeg",
-													SheetFilenames = sheetFilenames
-										}
-						}
+				if (pair.Value.isIncluded)
+				{
+					klokanBatch.CategoryBatches[pair.Key] = pair.Value.batch;
 				}
-			};
-			*/
+			}
+
+			if (klokanBatch.CategoryBatches.Count == 0)
+			{
+				MessageBox.Show("No categories selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			evaluateButton.Enabled = false;
 
 			var jobScheduler = new JobScheduler(klokanBatch, this);
 
@@ -79,17 +104,67 @@ namespace KlokanUI
 			thread.Start();
 		}
 
-		private void listBoxAddButton_Click(object sender, EventArgs e)
+		private void benjaminCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			CategoryEditForm categoryEditForm = new CategoryEditForm(klokanBatch);
-			categoryEditForm.StartPosition = FormStartPosition.CenterScreen;
-			var dialogResult = categoryEditForm.ShowDialog();
-
-			if (dialogResult == DialogResult.OK)
+			if (benjaminCheckBox.Checked)
 			{
-				categoryBatchListBox.DataSource = null;
-				categoryBatchListBox.DataSource = new List<string>(klokanBatch.CategoryBatches.Keys);
+				if (categoryConfigurations.ContainsKey("Benjamin"))
+				{
+					categoryConfigurations["Benjamin"].isIncluded = true;
+				}
+				else
+				{
+					KlokanCategoryBatch benjaminBatch = new KlokanCategoryBatch { CategoryName = "Benjamin" };
+					CategoryEditForm form = new CategoryEditForm(benjaminBatch);
+					form.StartPosition = FormStartPosition.CenterScreen;
+
+					if (form.ShowDialog() == DialogResult.OK)
+					{
+						categoryConfigurations["Benjamin"] = new CategoryBatchConfig { batch = benjaminBatch, isIncluded = true };
+					}
+				}
+
+				benjaminEditButton.Enabled = true;
 			}
+			else
+			{
+				if (categoryConfigurations.ContainsKey("Benjamin"))
+				{
+					categoryConfigurations["Benjamin"].isIncluded = false;
+				}
+
+				benjaminEditButton.Enabled = false;
+			}
+		}
+
+		private void benjaminEditButton_Click(object sender, EventArgs e)
+		{
+			KlokanCategoryBatch benjaminBatch;
+			bool isAdd = false;
+
+			if (categoryConfigurations.ContainsKey("Benjamin"))
+			{
+				benjaminBatch = categoryConfigurations["Benjamin"].batch;
+			}
+			else
+			{
+				benjaminBatch = new KlokanCategoryBatch { CategoryName = "Benjamin" };
+				isAdd = true;
+			}
+
+			CategoryEditForm form = new CategoryEditForm(benjaminBatch);
+			form.StartPosition = FormStartPosition.CenterScreen;
+			var dialogResult = form.ShowDialog();
+
+			if (dialogResult == DialogResult.OK && isAdd)
+			{
+				categoryConfigurations["Benjamin"] = new CategoryBatchConfig { batch = benjaminBatch, isIncluded = true };
+			}
+		}
+
+		private void menuButton_Click(object sender, EventArgs e)
+		{
+			this.Close();
 		}
 	}
 }
