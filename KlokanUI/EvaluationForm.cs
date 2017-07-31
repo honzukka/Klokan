@@ -33,6 +33,8 @@ namespace KlokanUI
 			juniorEditButton.Enabled = false;
 			studentEditButton.Enabled = false;
 
+			editParamsButton.Enabled = false;
+
 			// assign default parameters to the batch
 			chosenParameters = Parameters.CreateDefaultParameters();
 
@@ -77,6 +79,9 @@ namespace KlokanUI
 				MessageBox.Show("No categories configured!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
+
+			// reset the category batches in the final klokan batch
+			klokanBatch.CategoryBatches = new Dictionary<string, KlokanCategoryBatch>();
 
 			// save all included batches into the final klokan batch
 			foreach (var pair in categoryConfigurations)
@@ -156,12 +161,25 @@ namespace KlokanUI
 
 		private void customParamsRadioButton_CheckedChanged(object sender, EventArgs e)
 		{
-			
+			if (customParamsRadioButton.Checked)
+			{
+				editParamsButton.Enabled = true;
+			}
+			else
+			{
+				editParamsButton.Enabled = false;
+			}
 		}
 
 		private void editParamsButton_Click(object sender, EventArgs e)
 		{
+			ParameterEditForm form = new ParameterEditForm(chosenParameters);
+			form.StartPosition = FormStartPosition.CenterScreen;
 
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				chosenParameters = form.Parameters;
+			}
 		}
 
 		/// <summary>

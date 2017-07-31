@@ -46,10 +46,10 @@
 			// 
 			// evaluateButton
 			// 
-			this.evaluateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.evaluateButton.Location = new System.Drawing.Point(40, 239);
+			this.evaluateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.evaluateButton.Location = new System.Drawing.Point(39, 245);
 			this.evaluateButton.Name = "evaluateButton";
-			this.evaluateButton.Size = new System.Drawing.Size(99, 32);
+			this.evaluateButton.Size = new System.Drawing.Size(75, 23);
 			this.evaluateButton.TabIndex = 9;
 			this.evaluateButton.Text = "Evaluate";
 			this.evaluateButton.UseVisualStyleBackColor = true;
@@ -58,10 +58,10 @@
 			// categoryLabel
 			// 
 			this.categoryLabel.AutoSize = true;
-			this.categoryLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.categoryLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.categoryLabel.Location = new System.Drawing.Point(35, 30);
 			this.categoryLabel.Name = "categoryLabel";
-			this.categoryLabel.Size = new System.Drawing.Size(163, 20);
+			this.categoryLabel.Size = new System.Drawing.Size(108, 13);
 			this.categoryLabel.TabIndex = 11;
 			this.categoryLabel.Text = "Configure Categories:";
 			// 
@@ -156,10 +156,10 @@
 			// parameterLabel
 			// 
 			this.parameterLabel.AutoSize = true;
-			this.parameterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.parameterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.parameterLabel.Location = new System.Drawing.Point(36, 147);
 			this.parameterLabel.Name = "parameterLabel";
-			this.parameterLabel.Size = new System.Drawing.Size(124, 20);
+			this.parameterLabel.Size = new System.Drawing.Size(82, 13);
 			this.parameterLabel.TabIndex = 20;
 			this.parameterLabel.Text = "Set Parameters:";
 			// 
