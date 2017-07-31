@@ -43,7 +43,7 @@ namespace KlokanUI
 
 			if (answers == null)
 			{
-				return new Result { Error = true };
+				return new Result(true);
 			}
 
 			// correct them
@@ -52,7 +52,7 @@ namespace KlokanUI
 			// count the score
 			int score = CountScore(correctedAnswers);
 
-			return new Result { CorrectedAnswers = correctedAnswers, Score = score, Error = false };
+			return new Result(correctedAnswers, score, false);
 		}
 
 		/// <summary>

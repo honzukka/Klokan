@@ -8,14 +8,14 @@ namespace KlokanUI
 {
 	class KlokanBatch
 	{
-		public Parameters Parameters;
-		public Dictionary<string, KlokanCategoryBatch> CategoryBatches;
+		public Parameters Parameters { get; set; }
+		public Dictionary<string, KlokanCategoryBatch> CategoryBatches { get; set; }
 	}
 
 	class KlokanCategoryBatch
 	{
-		public string CategoryName;
-		public string CorrectSheetFilename;
-		public List<string> SheetFilenames;
+		public string CategoryName { get; set; }
+		public string CorrectSheetFilename { get; set; }
+		public List<string> SheetFilenames { get; set; }
 	}
 }

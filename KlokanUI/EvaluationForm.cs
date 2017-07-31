@@ -22,6 +22,7 @@ namespace KlokanUI
 
 		KlokanBatch klokanBatch;
 		Dictionary<string, CategoryBatchConfig> categoryConfigurations;
+		Parameters chosenParameters;
 
 		public EvaluationForm()
 		{
@@ -33,11 +34,9 @@ namespace KlokanUI
 			studentEditButton.Enabled = false;
 
 			// assign default parameters to the batch
-			Parameters parameters = new Parameters();
-			parameters.SetDefaultValues();
+			chosenParameters = Parameters.CreateDefaultParameters();
 
 			klokanBatch = new KlokanBatch();
-			klokanBatch.Parameters = parameters;
 			klokanBatch.CategoryBatches = new Dictionary<string, KlokanCategoryBatch>();
 
 			categoryConfigurations = new Dictionary<string, CategoryBatchConfig>();
@@ -94,6 +93,9 @@ namespace KlokanUI
 				return;
 			}
 
+			// assign the chosen parameters
+			klokanBatch.Parameters = chosenParameters;
+
 			evaluateButton.Enabled = false;
 
 			var jobScheduler = new JobScheduler(klokanBatch, this);
@@ -144,9 +146,22 @@ namespace KlokanUI
 			editButtonHandle("Student");
 		}
 
-		private void menuButton_Click(object sender, EventArgs e)
+		private void defaultParamsRadioButton_CheckedChanged(object sender, EventArgs e)
 		{
-			this.Close();
+			if (defaultParamsRadioButton.Checked)
+			{
+				chosenParameters = Parameters.CreateDefaultParameters();
+			}
+		}
+
+		private void customParamsRadioButton_CheckedChanged(object sender, EventArgs e)
+		{
+			
+		}
+
+		private void editParamsButton_Click(object sender, EventArgs e)
+		{
+
 		}
 
 		/// <summary>
@@ -195,7 +210,7 @@ namespace KlokanUI
 		}
 
 		/// <summary>
-		/// Handles the editButton_Clicked event for all edit buttons in this form.
+		/// Handles the editButton_Clicked event for all category edit buttons in this form.
 		/// Makes sure that correct data is displayed in the configuration form 
 		/// and also saves a configuration in case an empty one is being edited.
 		/// </summary>

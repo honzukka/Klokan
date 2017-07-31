@@ -39,15 +39,17 @@
 			this.studentEditButton = new System.Windows.Forms.Button();
 			this.studentCheckBox = new System.Windows.Forms.CheckBox();
 			this.parameterLabel = new System.Windows.Forms.Label();
-			this.menuButton = new System.Windows.Forms.Button();
+			this.defaultParamsRadioButton = new System.Windows.Forms.RadioButton();
+			this.customParamsRadioButton = new System.Windows.Forms.RadioButton();
+			this.editParamsButton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// evaluateButton
 			// 
-			this.evaluateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.evaluateButton.Location = new System.Drawing.Point(282, 241);
+			this.evaluateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.evaluateButton.Location = new System.Drawing.Point(40, 239);
 			this.evaluateButton.Name = "evaluateButton";
-			this.evaluateButton.Size = new System.Drawing.Size(75, 23);
+			this.evaluateButton.Size = new System.Drawing.Size(99, 32);
 			this.evaluateButton.TabIndex = 9;
 			this.evaluateButton.Text = "Evaluate";
 			this.evaluateButton.UseVisualStyleBackColor = true;
@@ -161,22 +163,49 @@
 			this.parameterLabel.TabIndex = 20;
 			this.parameterLabel.Text = "Set Parameters:";
 			// 
-			// menuButton
+			// defaultParamsRadioButton
 			// 
-			this.menuButton.Location = new System.Drawing.Point(39, 241);
-			this.menuButton.Name = "menuButton";
-			this.menuButton.Size = new System.Drawing.Size(75, 23);
-			this.menuButton.TabIndex = 21;
-			this.menuButton.Text = "Main Menu";
-			this.menuButton.UseVisualStyleBackColor = true;
-			this.menuButton.Click += new System.EventHandler(this.menuButton_Click);
+			this.defaultParamsRadioButton.AutoSize = true;
+			this.defaultParamsRadioButton.Checked = true;
+			this.defaultParamsRadioButton.Location = new System.Drawing.Point(40, 182);
+			this.defaultParamsRadioButton.Name = "defaultParamsRadioButton";
+			this.defaultParamsRadioButton.Size = new System.Drawing.Size(59, 17);
+			this.defaultParamsRadioButton.TabIndex = 22;
+			this.defaultParamsRadioButton.TabStop = true;
+			this.defaultParamsRadioButton.Text = "Default";
+			this.defaultParamsRadioButton.UseVisualStyleBackColor = true;
+			this.defaultParamsRadioButton.CheckedChanged += new System.EventHandler(this.defaultParamsRadioButton_CheckedChanged);
+			// 
+			// customParamsRadioButton
+			// 
+			this.customParamsRadioButton.AutoSize = true;
+			this.customParamsRadioButton.Location = new System.Drawing.Point(282, 182);
+			this.customParamsRadioButton.Name = "customParamsRadioButton";
+			this.customParamsRadioButton.Size = new System.Drawing.Size(60, 17);
+			this.customParamsRadioButton.TabIndex = 23;
+			this.customParamsRadioButton.TabStop = true;
+			this.customParamsRadioButton.Text = "Custom";
+			this.customParamsRadioButton.UseVisualStyleBackColor = true;
+			this.customParamsRadioButton.CheckedChanged += new System.EventHandler(this.customParamsRadioButton_CheckedChanged);
+			// 
+			// editParamsButton
+			// 
+			this.editParamsButton.Location = new System.Drawing.Point(282, 205);
+			this.editParamsButton.Name = "editParamsButton";
+			this.editParamsButton.Size = new System.Drawing.Size(75, 23);
+			this.editParamsButton.TabIndex = 24;
+			this.editParamsButton.Text = "Edit";
+			this.editParamsButton.UseVisualStyleBackColor = true;
+			this.editParamsButton.Click += new System.EventHandler(this.editParamsButton_Click);
 			// 
 			// EvaluationForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(394, 295);
-			this.Controls.Add(this.menuButton);
+			this.ClientSize = new System.Drawing.Size(397, 310);
+			this.Controls.Add(this.editParamsButton);
+			this.Controls.Add(this.customParamsRadioButton);
+			this.Controls.Add(this.defaultParamsRadioButton);
 			this.Controls.Add(this.parameterLabel);
 			this.Controls.Add(this.studentEditButton);
 			this.Controls.Add(this.studentCheckBox);
@@ -207,7 +236,9 @@
 		private System.Windows.Forms.Button studentEditButton;
 		private System.Windows.Forms.CheckBox studentCheckBox;
 		private System.Windows.Forms.Label parameterLabel;
-		private System.Windows.Forms.Button menuButton;
+		private System.Windows.Forms.RadioButton defaultParamsRadioButton;
+		private System.Windows.Forms.RadioButton customParamsRadioButton;
+		private System.Windows.Forms.Button editParamsButton;
 	}
 }
 
