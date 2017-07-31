@@ -17,6 +17,10 @@ namespace KlokanUI
 		// a reference to the batch that's being edited in this form
 		KlokanCategoryBatch categoryBatch;
 
+		/// <param name="categoryBatch">
+		/// The batch needs to have a name set, so that it can be displayed in this form.
+		/// The batch is then going to be edited in this form and changes will be saved if the DialogResult is OK.
+		/// </param>
 		public CategoryEditForm(KlokanCategoryBatch categoryBatch)
 		{
 			InitializeComponent();

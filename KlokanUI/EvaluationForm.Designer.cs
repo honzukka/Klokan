@@ -93,6 +93,7 @@
 			this.kadetEditButton.TabIndex = 15;
 			this.kadetEditButton.Text = "Edit";
 			this.kadetEditButton.UseVisualStyleBackColor = true;
+			this.kadetEditButton.Click += new System.EventHandler(this.kadetEditButton_Click);
 			// 
 			// kadetCheckBox
 			// 
@@ -104,6 +105,7 @@
 			this.kadetCheckBox.Text = "Kadet";
 			this.kadetCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.kadetCheckBox.UseVisualStyleBackColor = true;
+			this.kadetCheckBox.CheckedChanged += new System.EventHandler(this.kadetCheckBox_CheckedChanged);
 			// 
 			// juniorEditButton
 			// 
@@ -113,6 +115,7 @@
 			this.juniorEditButton.TabIndex = 17;
 			this.juniorEditButton.Text = "Edit";
 			this.juniorEditButton.UseVisualStyleBackColor = true;
+			this.juniorEditButton.Click += new System.EventHandler(this.juniorEditButton_Click);
 			// 
 			// juniorCheckBox
 			// 
@@ -124,6 +127,7 @@
 			this.juniorCheckBox.Text = "Junior";
 			this.juniorCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.juniorCheckBox.UseVisualStyleBackColor = true;
+			this.juniorCheckBox.CheckedChanged += new System.EventHandler(this.juniorCheckBox_CheckedChanged);
 			// 
 			// studentEditButton
 			// 
@@ -133,6 +137,7 @@
 			this.studentEditButton.TabIndex = 19;
 			this.studentEditButton.Text = "Edit";
 			this.studentEditButton.UseVisualStyleBackColor = true;
+			this.studentEditButton.Click += new System.EventHandler(this.studentEditButton_Click);
 			// 
 			// studentCheckBox
 			// 
@@ -144,6 +149,7 @@
 			this.studentCheckBox.Text = "Student";
 			this.studentCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.studentCheckBox.UseVisualStyleBackColor = true;
+			this.studentCheckBox.CheckedChanged += new System.EventHandler(this.studentCheckBox_CheckedChanged);
 			// 
 			// parameterLabel
 			// 
@@ -169,7 +175,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(389, 276);
+			this.ClientSize = new System.Drawing.Size(394, 295);
 			this.Controls.Add(this.menuButton);
 			this.Controls.Add(this.parameterLabel);
 			this.Controls.Add(this.studentEditButton);

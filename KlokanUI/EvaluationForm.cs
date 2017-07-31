@@ -106,65 +106,127 @@ namespace KlokanUI
 
 		private void benjaminCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			if (benjaminCheckBox.Checked)
-			{
-				if (categoryConfigurations.ContainsKey("Benjamin"))
-				{
-					categoryConfigurations["Benjamin"].isIncluded = true;
-				}
-				else
-				{
-					KlokanCategoryBatch benjaminBatch = new KlokanCategoryBatch { CategoryName = "Benjamin" };
-					CategoryEditForm form = new CategoryEditForm(benjaminBatch);
-					form.StartPosition = FormStartPosition.CenterScreen;
-
-					if (form.ShowDialog() == DialogResult.OK)
-					{
-						categoryConfigurations["Benjamin"] = new CategoryBatchConfig { batch = benjaminBatch, isIncluded = true };
-					}
-				}
-
-				benjaminEditButton.Enabled = true;
-			}
-			else
-			{
-				if (categoryConfigurations.ContainsKey("Benjamin"))
-				{
-					categoryConfigurations["Benjamin"].isIncluded = false;
-				}
-
-				benjaminEditButton.Enabled = false;
-			}
+			checkBoxHandle("Benjamin", benjaminCheckBox, benjaminEditButton);
 		}
 
 		private void benjaminEditButton_Click(object sender, EventArgs e)
 		{
-			KlokanCategoryBatch benjaminBatch;
-			bool isAdd = false;
+			editButtonHandle("Benjamin");
+		}
 
-			if (categoryConfigurations.ContainsKey("Benjamin"))
-			{
-				benjaminBatch = categoryConfigurations["Benjamin"].batch;
-			}
-			else
-			{
-				benjaminBatch = new KlokanCategoryBatch { CategoryName = "Benjamin" };
-				isAdd = true;
-			}
+		private void kadetCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			checkBoxHandle("Kadet", kadetCheckBox, kadetEditButton);
+		}
 
-			CategoryEditForm form = new CategoryEditForm(benjaminBatch);
-			form.StartPosition = FormStartPosition.CenterScreen;
-			var dialogResult = form.ShowDialog();
+		private void kadetEditButton_Click(object sender, EventArgs e)
+		{
+			editButtonHandle("Kadet");
+		}
 
-			if (dialogResult == DialogResult.OK && isAdd)
-			{
-				categoryConfigurations["Benjamin"] = new CategoryBatchConfig { batch = benjaminBatch, isIncluded = true };
-			}
+		private void juniorCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			checkBoxHandle("Junior", juniorCheckBox, juniorEditButton);
+		}
+
+		private void juniorEditButton_Click(object sender, EventArgs e)
+		{
+			editButtonHandle("Junior");
+		}
+
+		private void studentCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			checkBoxHandle("Student", studentCheckBox, studentEditButton);
+		}
+
+		private void studentEditButton_Click(object sender, EventArgs e)
+		{
+			editButtonHandle("Student");
 		}
 
 		private void menuButton_Click(object sender, EventArgs e)
 		{
 			this.Close();
+		}
+
+		/// <summary>
+		/// Handles the checkBox_CheckedChanged event for all checkboxes in this form.
+		/// Makes sure that a category is always configured when added into a selection.
+		/// </summary>
+		/// <param name="categoryName">Name of the category.</param>
+		/// <param name="checkBox">A checkbox belonging to the category.</param>
+		/// <param name="editButton">An edit button belonging to the category.</param>
+		private void checkBoxHandle(string categoryName, CheckBox checkBox, Button editButton)
+		{
+			// checkbox was checked
+			if (checkBox.Checked)
+			{
+				// if the category is already configured
+				if (categoryConfigurations.ContainsKey(categoryName))
+				{
+					// just include it in the selection of categories for the final klokan batch
+					categoryConfigurations[categoryName].isIncluded = true;
+				}
+				else
+				{
+					// open a configuration form in the form of a dialog
+					KlokanCategoryBatch categoryBatch = new KlokanCategoryBatch { CategoryName = categoryName };
+					CategoryEditForm form = new CategoryEditForm(categoryBatch);
+					form.StartPosition = FormStartPosition.CenterScreen;
+
+					if (form.ShowDialog() == DialogResult.OK)
+					{
+						// save the configuration
+						categoryConfigurations[categoryName] = new CategoryBatchConfig { batch = categoryBatch, isIncluded = true };
+					}
+				}
+
+				editButton.Enabled = true;
+			}
+			else
+			{
+				if (categoryConfigurations.ContainsKey(categoryName))
+				{
+					categoryConfigurations[categoryName].isIncluded = false;
+				}
+
+				editButton.Enabled = false;
+			}
+		}
+
+		/// <summary>
+		/// Handles the editButton_Clicked event for all edit buttons in this form.
+		/// Makes sure that correct data is displayed in the configuration form 
+		/// and also saves a configuration in case an empty one is being edited.
+		/// </summary>
+		/// <param name="categoryName"></param>
+		private void editButtonHandle(string categoryName)
+		{
+			KlokanCategoryBatch categoryBatch;
+			bool isAdd = false;
+
+			// if the category is already configured
+			if (categoryConfigurations.ContainsKey(categoryName))
+			{
+				categoryBatch = categoryConfigurations[categoryName].batch;
+			}
+			else
+			{
+				// create a new one and set the flag saying that it will have to be saved when configured
+				categoryBatch = new KlokanCategoryBatch { CategoryName = categoryName };
+				isAdd = true;
+			}
+
+			// open a configuration form in the form of a dialog
+			CategoryEditForm form = new CategoryEditForm(categoryBatch);
+			form.StartPosition = FormStartPosition.CenterScreen;
+			var dialogResult = form.ShowDialog();
+
+			if (dialogResult == DialogResult.OK && isAdd)
+			{
+				// save the configuration
+				categoryConfigurations[categoryName] = new CategoryBatchConfig { batch = categoryBatch, isIncluded = true };
+			}
 		}
 	}
 }
