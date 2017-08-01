@@ -1,6 +1,7 @@
 # Ignore images and text files:
 *.jpeg
 *.jpg
+*.png
 *.txt
 
 ## Ignore Visual Studio temporary files, build results, and

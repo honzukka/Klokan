@@ -63,6 +63,7 @@ namespace KlokanUI
 		/// <returns>Answers from an answers sheet or null if there was an error processing the sheet image in the native library.</returns>
 		List<List<List<bool>>> ExtractAnswers(string sheetFilename)
 		{
+			// TODO: change this to multi-dimensional arrays!
 			List<List<List<bool>>> extractedAnswers = new List<List<List<bool>>>();
 
 			// the first row and the first column of the original table were removed as they do not contain any answers

@@ -217,6 +217,8 @@
 			this.Controls.Add(this.benjaminCheckBox);
 			this.Controls.Add(this.categoryLabel);
 			this.Controls.Add(this.evaluateButton);
+			this.MaximumSize = new System.Drawing.Size(413, 349);
+			this.MinimumSize = new System.Drawing.Size(413, 349);
 			this.Name = "EvaluationForm";
 			this.Text = "Klokan - Evaluation";
 			this.ResumeLayout(false);

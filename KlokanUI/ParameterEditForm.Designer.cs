@@ -307,6 +307,8 @@
 			this.Controls.Add(this.blackWhiteThresholdLabel);
 			this.Controls.Add(this.defaultSheetWidthTextBox);
 			this.Controls.Add(this.defaultSheetWidthLabel);
+			this.MaximumSize = new System.Drawing.Size(485, 548);
+			this.MinimumSize = new System.Drawing.Size(485, 548);
 			this.Name = "ParameterEditForm";
 			this.Text = "Klokan - Parameter Edit";
 			this.ResumeLayout(false);
