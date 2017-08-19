@@ -14,24 +14,15 @@ namespace KlokanUI
 		{
 			this.parameters = parameters;
 		}
-		
-		/// <summary>
-		/// Loads the correct answers to evaluate against.
-		/// </summary>
-		/// <param name="correctSheetFilename">Image name containing the correct answers.</param>
-		/// <returns>A multi-dimensional list of correct answers or null if there was an error loading the answers.</returns>
-		public List<List<List<bool>>> LoadCorrectAnswers(string correctSheetFilename)
-		{
-			return ExtractAnswers(correctSheetFilename);
-		}
-		
+
 		/// <summary>
 		/// Evaluates answers contained in an image of an answer sheet.
 		/// </summary>
-		/// <param name="sheetFilename">The name of the image containing answers to be evaluated.</param>
+		/// <param name="sheetFilename">The path to the image containing answers to be evaluated.</param>
+		/// <param name="correctAnswers">Correct answers to evaluate against.</param>
 		/// <exception cref="InvalidOperationException">Thrown when the correct answers haven't been loaded prior to the execution of this function.</exception>
 		/// <returns></returns>
-		public Result Evaluate(string sheetFilename, List<List<List<bool>>> correctAnswers)
+		public Result Evaluate(string sheetFilename, bool[,,] correctAnswers)
 		{
 			if (correctAnswers == null)
 			{
@@ -39,7 +30,7 @@ namespace KlokanUI
 			}
 
 			// get the answers from the sheet
-			List<List<List<bool>>> answers = ExtractAnswers(sheetFilename);
+			bool[,,] answers = ExtractAnswers(sheetFilename);
 
 			if (answers == null)
 			{
@@ -47,7 +38,7 @@ namespace KlokanUI
 			}
 
 			// correct them
-			List<List<List<AnswerType>>> correctedAnswers = CorrectAnswers(answers, correctAnswers);
+			AnswerType[,,] correctedAnswers = CorrectAnswers(answers, correctAnswers);
 
 			// count the score
 			int score = CountScore(correctedAnswers);
@@ -59,12 +50,11 @@ namespace KlokanUI
 		/// Uses a native library to load an image and extract answers from it.
 		/// This method is unsafe.
 		/// </summary>
-		/// <param name="sheetFilename">The name of the image containing answers to be extracted.</param>
+		/// <param name="sheetFilename">The path to the image containing answers to be extracted.</param>
 		/// <returns>Answers from an answers sheet or null if there was an error processing the sheet image in the native library.</returns>
-		List<List<List<bool>>> ExtractAnswers(string sheetFilename)
+		bool[,,] ExtractAnswers(string sheetFilename)
 		{
-			// TODO: change this to multi-dimensional arrays!
-			List<List<List<bool>>> extractedAnswers = new List<List<List<bool>>>();
+			bool[,,] extractedAnswers = new bool[3, 8, 5];
 
 			// the first row and the first column of the original table were removed as they do not contain any answers
 			int answerRows = parameters.TableRows - 1;
@@ -86,26 +76,20 @@ namespace KlokanUI
 					return null;
 				}
 
-				// convert the answers from a C-style array to a multi-dimensional list
+				// convert the answers from a C-style array to a C# multi-dimensional array
 				for (int table = 0; table < parameters.TableCount; table++)
 				{
-					// add a new table
-					extractedAnswers.Add(new List<List<bool>>());
-
 					for (int row = 0; row < answerRows; row++)
 					{
-						// add a new row
-						extractedAnswers[table].Add(new List<bool>());
-
 						for (int col = 0; col < answerColumns; col++)
 						{
 							if (answersPtr[table * answerRows * answerColumns + row * answerColumns + col] == true)
 							{
-								extractedAnswers[table][row].Add(true);
+								extractedAnswers[table, row, col] = true;
 							}
 							else
 							{
-								extractedAnswers[table][row].Add(false);
+								extractedAnswers[table, row, col] = false;
 							}
 						}
 					}
@@ -119,40 +103,35 @@ namespace KlokanUI
 		/// Checks the answers in the input against the set of correct answers stored in the object
 		/// and outputs the corrections in the form of a multi-dimensional array of AnswerType.
 		/// </summary>
-		/// <param name="answers">Answers to be checked against the set of correct answers stored in the object.</param>
-		/// <returns>A multi-dimensional list of corrected answers (AnswerType).</returns>
-		List<List<List<AnswerType>>> CorrectAnswers(List<List<List<bool>>> answers, List<List<List<bool>>> correctAnswers)
+		/// <param name="answers">Answers to be checked.</param>
+		/// <param name="correctAnswers">The set of correct answers to check against.</param>
+		/// <returns>A multi-dimensional array of corrected answers (AnswerType).</returns>
+		AnswerType[,,] CorrectAnswers(bool[,,] answers, bool[,,] correctAnswers)
 		{
-			List<List<List<AnswerType>>> correctedAnswers = new List<List<List<AnswerType>>>();
+			AnswerType[,,] correctedAnswers = new AnswerType[3,8,5];
 
 			for (int table = 0; table < parameters.TableCount; table++)
 			{
-				// add a new table
-				correctedAnswers.Add(new List<List<AnswerType>>());
-
 				// the first row and the first column of the original table were removed as they do not contain any answers
 				for (int row = 0; row < parameters.TableRows - 1; row++)
 				{
-					// add a new row
-					correctedAnswers[table].Add(new List<AnswerType>());
-
 					for (int col = 0; col < parameters.TableColumns - 1; col++)
 					{
 						// if the answer is no and correct
-						if (answers[table][row][col] == false && correctAnswers[table][row][col] == false)
-							correctedAnswers[table][row].Add(AnswerType.Void);
+						if (answers[table, row, col] == false && correctAnswers[table, row, col] == false)
+							correctedAnswers[table, row, col] = AnswerType.Void;
 
 						// if the answer is yes and correct
-						else if (answers[table][row][col] == true && correctAnswers[table][row][col] == true)
-							correctedAnswers[table][row].Add(AnswerType.Correct);
+						else if (answers[table, row, col] == true && correctAnswers[table, row, col] == true)
+							correctedAnswers[table, row, col] = AnswerType.Correct;
 
 						// if the answer is yes and incorrect
-						else if (answers[table][row][col] == true && correctAnswers[table][row][col] == false)
-							correctedAnswers[table][row].Add(AnswerType.Incorrect);
+						else if (answers[table, row, col] == true && correctAnswers[table, row, col] == false)
+							correctedAnswers[table, row, col] = AnswerType.Incorrect;
 
 						// if the answer is no and incorrect
-						else if (answers[table][row][col] == false && correctAnswers[table][row][col] == true)
-							correctedAnswers[table][row].Add(AnswerType.Corrected);
+						else if (answers[table, row, col] == false && correctAnswers[table, row, col] == true)
+							correctedAnswers[table, row, col] = AnswerType.Corrected;
 					}
 				}
 			}
@@ -165,7 +144,7 @@ namespace KlokanUI
 		/// </summary>
 		/// <param name="correctedAnswers">Corrected answers to be rated.</param>
 		/// <returns>The score.</returns>
-		int CountScore(List<List<List<AnswerType>>> correctedAnswers)
+		int CountScore(AnswerType[,,] correctedAnswers)
 		{
 			int score = 24;
 
@@ -180,7 +159,7 @@ namespace KlokanUI
 					// count the types of answers necessary to assign points
 					for (int col = 0; col < parameters.TableColumns - 1; col++)
 					{
-						switch (correctedAnswers[table][row][col])
+						switch (correctedAnswers[table, row, col])
 						{
 							case AnswerType.Correct: correctAnswersCount++; break;
 							case AnswerType.Incorrect: incorrectAnswersCount++; break;

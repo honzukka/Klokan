@@ -30,8 +30,9 @@ namespace KlokanUI
 		}
 
 		/// <summary>
-		/// Synchronously loads correct answers and then creates and starts a task for each sheet in the batch.
-		/// Results of those tasks are awaited and later outputted. The evaluation form is notified that the process was completed.
+		/// Creates and starts a task for each sheet in the batch.
+		/// Results of those tasks are awaited and later outputted. 
+		/// The evaluation form is notified that the process was completed.
 		/// </summary>
 		/// <param name="batch">Data structure containing algorithm parameters, correct answers and sheets to be processed for multiple categories.</param>
 		/// <param name="form">A reference to the evaluation form, so that new events can be added to its event loop.</param>
@@ -44,18 +45,9 @@ namespace KlokanUI
 
 			foreach (var categoryBatch in batch.CategoryBatches.Values)
 			{
-				// this is still synchronous...
-				var correctAnswers = evaluator.LoadCorrectAnswers(categoryBatch.CorrectSheetFilename);
-
-				if (correctAnswers == null)
-				{
-					// TODO: do something better here
-					continue;
-				}
-
 				foreach (var sheetFilename in categoryBatch.SheetFilenames)
 				{
-					Task<Result> sheetTask = new Task<Result>(() => evaluator.Evaluate(sheetFilename, correctAnswers));
+					Task<Result> sheetTask = new Task<Result>(() => evaluator.Evaluate(sheetFilename, categoryBatch.CorrectAnswers));
 					tasks.Add(sheetTask);
 					sheetTask.Start();
 				}
@@ -93,7 +85,7 @@ namespace KlokanUI
 						{
 							for (int col = 0; col < batch.Parameters.TableColumns - 1; col++)
 							{
-								switch (result.CorrectedAnswers[table][row][col])
+								switch (result.CorrectedAnswers[table, row, col])
 								{
 									case AnswerType.Correct:
 										sw.Write("X ");

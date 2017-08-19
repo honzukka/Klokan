@@ -8,7 +8,7 @@ namespace KlokanUI
 {
 	struct Result
 	{
-		public Result(List<List<List<AnswerType>>> correctedAnswers, int score, bool error)
+		public Result(AnswerType[,,] correctedAnswers, int score, bool error)
 		{
 			CorrectedAnswers = correctedAnswers;
 			Score = score;
@@ -22,7 +22,7 @@ namespace KlokanUI
 			Error = error;
 		}
 
-		public List<List<List<AnswerType>>> CorrectedAnswers { get; }
+		public AnswerType[,,] CorrectedAnswers { get; }
 		public int Score { get; }
 		public bool Error { get; }
 	}

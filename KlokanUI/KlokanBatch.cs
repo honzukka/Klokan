@@ -16,6 +16,7 @@ namespace KlokanUI
 	{
 		public string CategoryName { get; set; }
 		public string CorrectSheetFilename { get; set; }
+		public bool[,,] CorrectAnswers { get; set; }
 		public List<string> SheetFilenames { get; set; }
 	}
 }
