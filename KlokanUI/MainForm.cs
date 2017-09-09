@@ -29,5 +29,25 @@ namespace KlokanUI
 			evaluationForm.Show();
 			this.Hide();
 		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			using (var db = new KlokanDBContext())
+			{
+				if (db.AnswerSheets.Count() == 0)
+				{
+					var answerSheet = new AnswerSheet { Data = "Ahoj!" };
+					db.AnswerSheets.Add(answerSheet);
+					db.SaveChanges();
+				}
+
+				var query = from sheet in db.AnswerSheets where sheet.Data == "Ahoj!" select sheet;
+
+				foreach (var item in query)
+				{
+					label1.Text = item.Data;
+				}
+			}
+		}
 	}
 }
