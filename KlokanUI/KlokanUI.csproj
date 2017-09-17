@@ -75,6 +75,18 @@
     <Compile Include="CategoryEditForm.Designer.cs">
       <DependentUpon>CategoryEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DatabaseDetailForm.Designer.cs">
+      <DependentUpon>DatabaseDetailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DatabaseForm.Designer.cs">
+      <DependentUpon>DatabaseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Enums.cs" />
     <Compile Include="Evaluator.cs" />
     <Compile Include="EvaluationForm.cs">
@@ -104,6 +116,12 @@
     <Compile Include="Result.cs" />
     <EmbeddedResource Include="CategoryEditForm.resx">
       <DependentUpon>CategoryEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DatabaseDetailForm.resx">
+      <DependentUpon>DatabaseDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DatabaseForm.resx">
+      <DependentUpon>DatabaseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EvaluationForm.resx">
       <DependentUpon>EvaluationForm.cs</DependentUpon>

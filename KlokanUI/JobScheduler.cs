@@ -58,7 +58,7 @@ namespace KlokanUI
 			{
 				foreach (var sheetFilename in categoryBatch.SheetFilenames)
 				{
-					Task<Result> sheetTask = new Task<Result>(() => evaluator.Evaluate(sheetFilename, categoryBatch.CorrectAnswers, categoryBatch.CategoryName));
+					Task<Result> sheetTask = new Task<Result>(() => evaluator.Evaluate(sheetFilename, categoryBatch.CorrectAnswers, categoryBatch.CategoryName, batch.Year));
 					tasks.Add(sheetTask);
 					sheetTask.Start();
 				}
@@ -138,6 +138,7 @@ namespace KlokanUI
 				foreach (var result in results)
 				{
 					var answerSheet = new AnswerSheet {
+						Year = result.Year,
 						Category = result.Category,
 						Points = result.Score,
 						Answers = GetAnswers(result.CorrectedAnswers),

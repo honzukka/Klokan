@@ -10,6 +10,7 @@ namespace KlokanUI
 	{
 		public Parameters Parameters { get; set; }
 		public Dictionary<string, KlokanCategoryBatch> CategoryBatches { get; set; }
+		public int Year { get; set; }
 	}
 
 	class KlokanCategoryBatch

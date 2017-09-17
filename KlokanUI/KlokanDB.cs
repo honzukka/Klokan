@@ -20,6 +20,7 @@ namespace KlokanUI
 
 		[Key]
 		public int AnswerSheetId { get; set; }
+		// TODO: complete this
 		public int StudentNumber { get; set; }
 		//public int Class { get; set; }
 		public int Year { get; set; }
@@ -59,7 +60,7 @@ namespace KlokanUI
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			var sqliteConnectionInitializer = new SqliteDropCreateDatabaseAlways<KlokanDBContext>(modelBuilder);
+			var sqliteConnectionInitializer = new SqliteCreateDatabaseIfNotExists<KlokanDBContext>(modelBuilder);
 			Database.SetInitializer(sqliteConnectionInitializer);
 		}
 	}

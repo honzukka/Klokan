@@ -42,12 +42,14 @@
 			this.defaultParamsRadioButton = new System.Windows.Forms.RadioButton();
 			this.customParamsRadioButton = new System.Windows.Forms.RadioButton();
 			this.editParamsButton = new System.Windows.Forms.Button();
+			this.yearLabel = new System.Windows.Forms.Label();
+			this.yearComboBox = new System.Windows.Forms.ComboBox();
 			this.SuspendLayout();
 			// 
 			// evaluateButton
 			// 
 			this.evaluateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.evaluateButton.Location = new System.Drawing.Point(39, 245);
+			this.evaluateButton.Location = new System.Drawing.Point(42, 256);
 			this.evaluateButton.Name = "evaluateButton";
 			this.evaluateButton.Size = new System.Drawing.Size(75, 23);
 			this.evaluateButton.TabIndex = 9;
@@ -58,17 +60,17 @@
 			// categoryLabel
 			// 
 			this.categoryLabel.AutoSize = true;
-			this.categoryLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.categoryLabel.Location = new System.Drawing.Point(35, 30);
+			this.categoryLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.categoryLabel.Location = new System.Drawing.Point(38, 77);
 			this.categoryLabel.Name = "categoryLabel";
-			this.categoryLabel.Size = new System.Drawing.Size(108, 13);
+			this.categoryLabel.Size = new System.Drawing.Size(128, 13);
 			this.categoryLabel.TabIndex = 11;
-			this.categoryLabel.Text = "Configure Categories:";
+			this.categoryLabel.Text = "Configure categories:";
 			// 
 			// benjaminCheckBox
 			// 
 			this.benjaminCheckBox.AutoSize = true;
-			this.benjaminCheckBox.Location = new System.Drawing.Point(39, 71);
+			this.benjaminCheckBox.Location = new System.Drawing.Point(41, 109);
 			this.benjaminCheckBox.Name = "benjaminCheckBox";
 			this.benjaminCheckBox.Size = new System.Drawing.Size(69, 17);
 			this.benjaminCheckBox.TabIndex = 12;
@@ -79,7 +81,7 @@
 			// 
 			// benjaminEditButton
 			// 
-			this.benjaminEditButton.Location = new System.Drawing.Point(39, 94);
+			this.benjaminEditButton.Location = new System.Drawing.Point(41, 132);
 			this.benjaminEditButton.Name = "benjaminEditButton";
 			this.benjaminEditButton.Size = new System.Drawing.Size(75, 23);
 			this.benjaminEditButton.TabIndex = 13;
@@ -89,7 +91,7 @@
 			// 
 			// kadetEditButton
 			// 
-			this.kadetEditButton.Location = new System.Drawing.Point(120, 94);
+			this.kadetEditButton.Location = new System.Drawing.Point(122, 132);
 			this.kadetEditButton.Name = "kadetEditButton";
 			this.kadetEditButton.Size = new System.Drawing.Size(75, 23);
 			this.kadetEditButton.TabIndex = 15;
@@ -100,7 +102,7 @@
 			// kadetCheckBox
 			// 
 			this.kadetCheckBox.AutoSize = true;
-			this.kadetCheckBox.Location = new System.Drawing.Point(120, 71);
+			this.kadetCheckBox.Location = new System.Drawing.Point(122, 109);
 			this.kadetCheckBox.Name = "kadetCheckBox";
 			this.kadetCheckBox.Size = new System.Drawing.Size(54, 17);
 			this.kadetCheckBox.TabIndex = 14;
@@ -111,7 +113,7 @@
 			// 
 			// juniorEditButton
 			// 
-			this.juniorEditButton.Location = new System.Drawing.Point(201, 94);
+			this.juniorEditButton.Location = new System.Drawing.Point(203, 132);
 			this.juniorEditButton.Name = "juniorEditButton";
 			this.juniorEditButton.Size = new System.Drawing.Size(75, 23);
 			this.juniorEditButton.TabIndex = 17;
@@ -122,7 +124,7 @@
 			// juniorCheckBox
 			// 
 			this.juniorCheckBox.AutoSize = true;
-			this.juniorCheckBox.Location = new System.Drawing.Point(201, 71);
+			this.juniorCheckBox.Location = new System.Drawing.Point(203, 109);
 			this.juniorCheckBox.Name = "juniorCheckBox";
 			this.juniorCheckBox.Size = new System.Drawing.Size(54, 17);
 			this.juniorCheckBox.TabIndex = 16;
@@ -133,7 +135,7 @@
 			// 
 			// studentEditButton
 			// 
-			this.studentEditButton.Location = new System.Drawing.Point(282, 94);
+			this.studentEditButton.Location = new System.Drawing.Point(284, 132);
 			this.studentEditButton.Name = "studentEditButton";
 			this.studentEditButton.Size = new System.Drawing.Size(75, 23);
 			this.studentEditButton.TabIndex = 19;
@@ -144,7 +146,7 @@
 			// studentCheckBox
 			// 
 			this.studentCheckBox.AutoSize = true;
-			this.studentCheckBox.Location = new System.Drawing.Point(282, 71);
+			this.studentCheckBox.Location = new System.Drawing.Point(284, 109);
 			this.studentCheckBox.Name = "studentCheckBox";
 			this.studentCheckBox.Size = new System.Drawing.Size(63, 17);
 			this.studentCheckBox.TabIndex = 18;
@@ -156,18 +158,18 @@
 			// parameterLabel
 			// 
 			this.parameterLabel.AutoSize = true;
-			this.parameterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.parameterLabel.Location = new System.Drawing.Point(36, 147);
+			this.parameterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.parameterLabel.Location = new System.Drawing.Point(39, 186);
 			this.parameterLabel.Name = "parameterLabel";
-			this.parameterLabel.Size = new System.Drawing.Size(82, 13);
+			this.parameterLabel.Size = new System.Drawing.Size(96, 13);
 			this.parameterLabel.TabIndex = 20;
-			this.parameterLabel.Text = "Set Parameters:";
+			this.parameterLabel.Text = "Set parameters:";
 			// 
 			// defaultParamsRadioButton
 			// 
 			this.defaultParamsRadioButton.AutoSize = true;
 			this.defaultParamsRadioButton.Checked = true;
-			this.defaultParamsRadioButton.Location = new System.Drawing.Point(40, 182);
+			this.defaultParamsRadioButton.Location = new System.Drawing.Point(158, 186);
 			this.defaultParamsRadioButton.Name = "defaultParamsRadioButton";
 			this.defaultParamsRadioButton.Size = new System.Drawing.Size(59, 17);
 			this.defaultParamsRadioButton.TabIndex = 22;
@@ -179,7 +181,7 @@
 			// customParamsRadioButton
 			// 
 			this.customParamsRadioButton.AutoSize = true;
-			this.customParamsRadioButton.Location = new System.Drawing.Point(282, 182);
+			this.customParamsRadioButton.Location = new System.Drawing.Point(285, 186);
 			this.customParamsRadioButton.Name = "customParamsRadioButton";
 			this.customParamsRadioButton.Size = new System.Drawing.Size(60, 17);
 			this.customParamsRadioButton.TabIndex = 23;
@@ -190,7 +192,7 @@
 			// 
 			// editParamsButton
 			// 
-			this.editParamsButton.Location = new System.Drawing.Point(282, 205);
+			this.editParamsButton.Location = new System.Drawing.Point(285, 209);
 			this.editParamsButton.Name = "editParamsButton";
 			this.editParamsButton.Size = new System.Drawing.Size(75, 23);
 			this.editParamsButton.TabIndex = 24;
@@ -198,11 +200,31 @@
 			this.editParamsButton.UseVisualStyleBackColor = true;
 			this.editParamsButton.Click += new System.EventHandler(this.editParamsButton_Click);
 			// 
+			// yearLabel
+			// 
+			this.yearLabel.AutoSize = true;
+			this.yearLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.yearLabel.Location = new System.Drawing.Point(38, 32);
+			this.yearLabel.Name = "yearLabel";
+			this.yearLabel.Size = new System.Drawing.Size(92, 13);
+			this.yearLabel.TabIndex = 25;
+			this.yearLabel.Text = "Choose a year:";
+			// 
+			// yearComboBox
+			// 
+			this.yearComboBox.FormattingEnabled = true;
+			this.yearComboBox.Location = new System.Drawing.Point(158, 29);
+			this.yearComboBox.Name = "yearComboBox";
+			this.yearComboBox.Size = new System.Drawing.Size(74, 21);
+			this.yearComboBox.TabIndex = 26;
+			// 
 			// EvaluationForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(397, 310);
+			this.Controls.Add(this.yearComboBox);
+			this.Controls.Add(this.yearLabel);
 			this.Controls.Add(this.editParamsButton);
 			this.Controls.Add(this.customParamsRadioButton);
 			this.Controls.Add(this.defaultParamsRadioButton);
@@ -241,6 +263,8 @@
 		private System.Windows.Forms.RadioButton defaultParamsRadioButton;
 		private System.Windows.Forms.RadioButton customParamsRadioButton;
 		private System.Windows.Forms.Button editParamsButton;
+		private System.Windows.Forms.Label yearLabel;
+		private System.Windows.Forms.ComboBox yearComboBox;
 	}
 }
 

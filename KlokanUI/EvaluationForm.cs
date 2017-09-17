@@ -21,6 +21,7 @@ namespace KlokanUI
 		}
 
 		KlokanBatch klokanBatch;
+		List<int> yearList;
 		Dictionary<string, CategoryBatchConfig> categoryConfigurations;
 		Parameters chosenParameters;
 
@@ -34,6 +35,14 @@ namespace KlokanUI
 			studentEditButton.Enabled = false;
 
 			editParamsButton.Enabled = false;
+
+			// initialize the year combo box with a list of years
+			yearList = new List<int>();
+			for (int year = DateTime.Now.Year; year >= 2000; year--)
+			{
+				yearList.Add(year);
+			}
+			yearComboBox.DataSource = yearList;
 
 			// assign default parameters to the batch
 			chosenParameters = Parameters.CreateDefaultParameters();
@@ -97,6 +106,9 @@ namespace KlokanUI
 				MessageBox.Show("No categories selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
+
+			// assign the chosen year
+			klokanBatch.Year = (int)(yearComboBox.SelectedItem);
 
 			// assign the chosen parameters
 			klokanBatch.Parameters = chosenParameters;

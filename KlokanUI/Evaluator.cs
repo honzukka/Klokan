@@ -21,9 +21,10 @@ namespace KlokanUI
 		/// <param name="sheetFilename">The path to the image containing answers to be evaluated.</param>
 		/// <param name="correctAnswers">Correct answers to evaluate against.</param>
 		/// <param name="category">The category this sheet belongs to.</param>
+		/// <param name="year">The year this sheet belongs to.</param>
 		/// <exception cref="InvalidOperationException">Thrown when the correct answers haven't been loaded prior to the execution of this function.</exception>
 		/// <returns></returns>
-		public Result Evaluate(string sheetFilename, bool[,,] correctAnswers, string category)
+		public Result Evaluate(string sheetFilename, bool[,,] correctAnswers, string category, int year)
 		{
 			if (correctAnswers == null)
 			{
@@ -44,7 +45,7 @@ namespace KlokanUI
 			// count the score
 			int score = CountScore(correctedAnswers);
 
-			return new Result(category, correctedAnswers, score, sheetFilename,  false);
+			return new Result(year, category, correctedAnswers, score, sheetFilename,  false);
 		}
 
 		/// <summary>

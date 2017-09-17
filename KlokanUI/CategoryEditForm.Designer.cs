@@ -170,7 +170,7 @@
 			this.Controls.Add(this.sheetLabel);
 			this.MinimumSize = new System.Drawing.Size(830, 560);
 			this.Name = "CategoryEditForm";
-			this.Text = "Klokan - Category Edit";
+			this.Text = "Klokan - Evaluation - Category Edit";
 			((System.ComponentModel.ISupportInitialize)(this.table1PictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.table2PictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.table3PictureBox)).EndInit();

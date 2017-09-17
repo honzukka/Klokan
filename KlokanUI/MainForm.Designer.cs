@@ -51,6 +51,7 @@
 			this.databaseButton.TabIndex = 1;
 			this.databaseButton.Text = "View Database";
 			this.databaseButton.UseVisualStyleBackColor = true;
+			this.databaseButton.Click += new System.EventHandler(this.databaseButton_Click);
 			// 
 			// testButton
 			// 

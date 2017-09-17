@@ -310,7 +310,7 @@
 			this.MaximumSize = new System.Drawing.Size(485, 548);
 			this.MinimumSize = new System.Drawing.Size(485, 548);
 			this.Name = "ParameterEditForm";
-			this.Text = "Klokan - Parameter Edit";
+			this.Text = "Klokan - Evaluation - Parameter Edit";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
