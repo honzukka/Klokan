@@ -42,20 +42,31 @@ namespace KlokanUI
 
 			using (var db = new KlokanDBContext())
 			{
-				var selectQuery = from sheet in db.AnswerSheets
-								  where sheet.Year == year && sheet.Category == category
-								  orderby sheet.Points descending
-								  select new { sheet.AnswerSheetId, sheet.Points };
+				var instanceQuery = from instance in db.Instances
+									where instance.Year == year && instance.Category == category
+									select instance;
 
-				foreach (var item in selectQuery)
+				Instance currentInstance = instanceQuery.FirstOrDefault();
+
+				// if this instance exits
+				if (currentInstance != default(Instance))
 				{
-					dataView.Rows.Add(item.AnswerSheetId, item.Points);
+					var answerSheetQuery = from sheet in db.AnswerSheets
+										   where sheet.Instance.InstanceId == currentInstance.InstanceId
+										   orderby sheet.Points descending
+										   select new { sheet.AnswerSheetId, sheet.Points };
+
+					foreach (var item in answerSheetQuery)
+					{
+						dataView.Rows.Add(item.AnswerSheetId, item.Points);
+					}
 				}
 			}
 		}
 
 		private void viewButton_Click(object sender, EventArgs e)
 		{
+			// TODO: make this asynchronous!
 			PopulateDataView((int)yearComboBox.SelectedItem, (string)categoryComboBox.SelectedItem);
 		}
 

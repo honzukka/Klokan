@@ -171,6 +171,7 @@ namespace KlokanUI
 
 					// assign points for the question (row)
 					// if it's correct
+					// NOTE: here we test if only one question has been selected!!!
 					if (correctAnswersCount == 1 && incorrectAnswersCount == 0)
 					{
 						switch (table)

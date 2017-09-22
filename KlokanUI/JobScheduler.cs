@@ -137,15 +137,46 @@ namespace KlokanUI
 			{
 				foreach (var result in results)
 				{
-					var answerSheet = new AnswerSheet {
-						Year = result.Year,
-						Category = result.Category,
+					// find out if the instance this result belongs to is new or already exists
+					var query = from instance
+								in db.Instances
+								where instance.Year == result.Year && instance.Category == result.Category
+								select instance;
+
+					Instance currentInstance = query.FirstOrDefault();
+
+					if (currentInstance == default(Instance))
+					{
+						// try to search locally too
+						var querylocal = from instance
+										 in db.Instances.Local
+										 where instance.Year == result.Year && instance.Category == result.Category
+										 select instance;
+
+						currentInstance = querylocal.FirstOrDefault();
+					}
+
+					if (currentInstance == default(Instance))
+					{
+						// it's new, we have to create it
+						currentInstance = new Instance
+						{
+							Year = result.Year,
+							Category = result.Category,
+							CorrectAnswers = GetCorrectAnswers(result.CorrectedAnswers)
+						};
+
+						db.Instances.Add(currentInstance);
+					}
+
+					var answerSheet = new AnswerSheet
+					{
 						Points = result.Score,
 						Answers = GetAnswers(result.CorrectedAnswers),
 						Scan = GetImageBytes(result.SheetFilename, ImageFormat.Png)
 					};
 
-					db.AnswerSheets.Add(answerSheet);
+					currentInstance.AnswerSheets.Add(answerSheet);
 				}
 
 				await db.SaveChangesAsync();
@@ -167,39 +198,75 @@ namespace KlokanUI
 				for (int row = 0; row < batch.Parameters.TableRows - 1; row++)
 				{
 					char enteredValue = '\0';
-					char correctValue = '\0';
 					
-					// find out the entered and correct value (entered value can stay '\0' in case the question wasn't answered)
+					// find out the entered value (entered value can stay '\0' in case the question wasn't answered)
 					// the first row and the first column of the original table were removed as they do not contain any answers
 					for (int col = 0; col < batch.Parameters.TableColumns - 1; col++)
 					{
-						switch (correctedAnswers[table, row, col])
+						int numberOfSelectedAnswers = 0;
+
+						if (correctedAnswers[table, row, col] == AnswerType.Correct ||
+							correctedAnswers[table, row, col] == AnswerType.Incorrect)
 						{
-							case AnswerType.Correct:
-								enteredValue = (char)('a' + col);
-								correctValue = enteredValue;
-								break;
-							case AnswerType.Incorrect:
-								enteredValue = (char)('a' + col);
-								break;
-							case AnswerType.Corrected:
-								correctValue = (char)('a' + col);
-								break;
-							default:
-								break;
+							enteredValue = (char)('a' + col);
+							numberOfSelectedAnswers++;
+						}
+
+						// keep in mind that more answers can be selected
+						if (numberOfSelectedAnswers > 1)
+						{
+							enteredValue = 'x';
 						}
 					}
 
 					answers.Add(new Answer
 					{
 						QuestionNumber = (row + 1) + (table * (batch.Parameters.TableRows - 1)),
-						EnteredValue = new String(enteredValue, 1),
-						CorrectValue = new string(correctValue, 1)
+						Value = new String(enteredValue, 1)
 					});
 				}
 			}
 
 			return answers;
+		}
+
+		/// <summary>
+		/// Transform the "table view" of the correct answers (multidimensional array) into a list of objects 
+		/// which correspond to a database record described in the CorrectAnswer class.
+		/// </summary>
+		/// <param name="correctedAnswers">Answers as stored in the Result structure.</param>
+		List<CorrectAnswer> GetCorrectAnswers(AnswerType[,,] correctedAnswers)
+		{
+			List<CorrectAnswer> correctAnswers = new List<CorrectAnswer>();
+
+			for (int table = 0; table < batch.Parameters.TableCount; table++)
+			{
+				// the first row and the first column of the original table were removed as they do not contain any answers
+				for (int row = 0; row < batch.Parameters.TableRows - 1; row++)
+				{
+					char correctValue = '\0';
+
+					// find out the entered and correct value (entered value can stay '\0' in case the question wasn't answered)
+					// the first row and the first column of the original table were removed as they do not contain any answers
+					for (int col = 0; col < batch.Parameters.TableColumns - 1; col++)
+					{
+						if (correctedAnswers[table, row, col] == AnswerType.Correct ||
+							correctedAnswers[table, row, col] == AnswerType.Corrected)
+						{
+							correctValue = (char)('a' + col);
+							break;		// only one answer can be selected as correct thanks to the category edit form
+						}
+					}
+
+					correctAnswers.Add(new CorrectAnswer
+					{
+						QuestionNumber = (row + 1) + (table * (batch.Parameters.TableRows - 1)),
+						Value = new string(correctValue, 1)
+					});
+				}
+			}
+
+			return correctAnswers;
 		}
 
 		/// <summary>

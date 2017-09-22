@@ -11,6 +11,40 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KlokanUI
 {
+	public class Instance
+	{
+		public Instance()
+		{
+			CorrectAnswers = new List<CorrectAnswer>();
+			AnswerSheets = new List<AnswerSheet>();
+		}
+
+		[Key]
+		public int InstanceId { get; set; }
+		public int Year { get; set; }
+
+		[MaxLength(10)]
+		public string Category { get; set; }
+
+		public virtual ICollection<CorrectAnswer> CorrectAnswers { get; set; }
+		public virtual ICollection<AnswerSheet> AnswerSheets { get; set; }
+	}
+
+	public class CorrectAnswer
+	{
+		[Key]
+		public int CorrectAnswerId { get; set; }
+		public int QuestionNumber { get; set; }
+
+		[MaxLength(1)]
+		public string Value { get; set; }
+
+		public int InstanceId { get; set; }
+
+		[ForeignKey("InstanceId")]
+		public virtual Instance Instance { get; set; }
+	}
+
 	public class AnswerSheet
 	{
 		public AnswerSheet()
@@ -20,15 +54,15 @@ namespace KlokanUI
 
 		[Key]
 		public int AnswerSheetId { get; set; }
-		// TODO: complete this
+		// TODO: implement this
 		public int StudentNumber { get; set; }
-		//public int Class { get; set; }
-		public int Year { get; set; }
-
-		[MaxLength(10)]
-		public string Category { get; set; }
 		public int Points { get; set; }
 		public byte[] Scan { get; set; }
+
+		public int InstanceId { get; set; }
+
+		[ForeignKey("InstanceId")]
+		public virtual Instance Instance { get; set; }
 
 		public virtual ICollection<Answer> Answers { get; set; }
 	}
@@ -40,10 +74,7 @@ namespace KlokanUI
 		public int QuestionNumber { get; set; }
 
 		[MaxLength(1)]
-		public string EnteredValue { get; set; }
-
-		[MaxLength(1)]
-		public string CorrectValue { get; set; }
+		public string Value { get; set; }
 
 		public int AnswerSheetId { get; set; }
 
@@ -55,12 +86,14 @@ namespace KlokanUI
 	{
 		public KlokanDBContext() : base("KlokanDBContext") { }
 
+		public DbSet<Instance> Instances { get; set; }
+		public DbSet<CorrectAnswer> CorrectAnswers { get; set; }
 		public DbSet<AnswerSheet> AnswerSheets { get; set; }
 		public DbSet<Answer> Answers { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			var sqliteConnectionInitializer = new SqliteCreateDatabaseIfNotExists<KlokanDBContext>(modelBuilder);
+			var sqliteConnectionInitializer = new SqliteDropCreateDatabaseAlways<KlokanDBContext>(modelBuilder);
 			Database.SetInitializer(sqliteConnectionInitializer);
 		}
 	}

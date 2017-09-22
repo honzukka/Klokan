@@ -186,6 +186,23 @@ namespace KlokanUI
 			}
 		}
 
+		private void DrawCross(int row, int column, int cellWidth, int cellHeight, Graphics graphics, Pen pen)
+		{
+			Point upperLeft = new Point(column * cellWidth, row * cellHeight);
+			Point upperRight = new Point(upperLeft.X + cellWidth, upperLeft.Y);
+			Point lowerLeft = new Point(upperLeft.X, upperLeft.Y + cellHeight);
+			Point lowerRight = new Point(upperLeft.X + cellWidth, upperLeft.Y + cellHeight);
+
+			graphics.DrawLine(pen, upperLeft, lowerRight);
+			graphics.DrawLine(pen, upperRight, lowerLeft);
+		}
+
+		private void RemoveCross(int row, int column, int cellWidth, int cellHeight, Graphics graphics)
+		{
+			Rectangle cell = new Rectangle((column * cellWidth) + 1, (row * cellHeight) + 1, cellWidth - 2, cellHeight - 2);
+			graphics.FillRectangle(Brushes.White, cell);
+		}
+
 		// visualize information saved in the correctAnswers data structure
 		private void DrawCorrectAnswers()
 		{
@@ -215,23 +232,6 @@ namespace KlokanUI
 
 				pictureBoxes[i].Refresh();
 			}
-		}
-
-		private void DrawCross(int row, int column, int cellWidth, int cellHeight, Graphics graphics, Pen pen)
-		{
-			Point upperLeft = new Point(column * cellWidth, row * cellHeight);
-			Point upperRight = new Point(upperLeft.X + cellWidth, upperLeft.Y);
-			Point lowerLeft = new Point(upperLeft.X, upperLeft.Y + cellHeight);
-			Point lowerRight = new Point(upperLeft.X + cellWidth, upperLeft.Y + cellHeight);
-
-			graphics.DrawLine(pen, upperLeft, lowerRight);
-			graphics.DrawLine(pen, upperRight, lowerLeft);
-		}
-
-		private void RemoveCross(int row, int column, int cellWidth, int cellHeight, Graphics graphics)
-		{
-			Rectangle cell = new Rectangle((column * cellWidth) + 1, (row * cellHeight) + 1, cellWidth - 2, cellHeight - 2);
-			graphics.FillRectangle(Brushes.White, cell);
 		}
 
 		// checks whether an answer is selected in each row 

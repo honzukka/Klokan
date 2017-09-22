@@ -31,21 +31,26 @@ namespace KlokanUI
 								 where sheet.AnswerSheetId == answerSheetId
 								 select sheet;
 
+				AnswerSheet answerSheet = sheetQuery.FirstOrDefault();
+
 				var answersQuery = from answer in db.Answers
 								   where answer.AnswerSheetId == answerSheetId
 								   select answer;
 
-				// it's fine to do this because sheetQuery always finds exactly one record and we're not going to query it further
-				List<AnswerSheet> answerSheetsReturned = sheetQuery.ToList();
+				var instanceQuery = from instance in db.Instances
+									where instance.InstanceId == answerSheet.InstanceId
+									select instance;
 
-				idValueLabel.Text = answerSheetsReturned[0].AnswerSheetId.ToString();
-				yearValueLabel.Text = answerSheetsReturned[0].Year.ToString();
-				categoryValueLabel.Text = answerSheetsReturned[0].Category.ToString();
-				pointsValueLabel.Text = answerSheetsReturned[0].Points.ToString();
+				Instance currentInstance = instanceQuery.FirstOrDefault();
+
+				idValueLabel.Text = answerSheet.AnswerSheetId.ToString();
+				yearValueLabel.Text = currentInstance.Year.ToString();
+				categoryValueLabel.Text = currentInstance.Category.ToString();
+				pointsValueLabel.Text = answerSheet.Points.ToString();
 
 				// load scan
 				var imageConverter = new ImageConverter();
-				Bitmap bmp = (Bitmap)imageConverter.ConvertFrom(answerSheetsReturned[0].Scan);
+				Bitmap bmp = (Bitmap)imageConverter.ConvertFrom(answerSheet.Scan);
 				scanPictureBox.Image = bmp;
 			}
 		}

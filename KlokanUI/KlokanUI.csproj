@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnswerDrawing.cs" />
     <Compile Include="CategoryEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
