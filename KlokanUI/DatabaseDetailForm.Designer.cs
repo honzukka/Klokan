@@ -168,7 +168,7 @@
 			// 
 			this.table2PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.table2PictureBox.Image = ((System.Drawing.Image)(resources.GetObject("table2PictureBox.Image")));
-			this.table2PictureBox.Location = new System.Drawing.Point(690, 291);
+			this.table2PictureBox.Location = new System.Drawing.Point(937, 60);
 			this.table2PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
 			this.table2PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
 			this.table2PictureBox.Name = "table2PictureBox";
@@ -180,7 +180,7 @@
 			// 
 			this.table3PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.table3PictureBox.Image = ((System.Drawing.Image)(resources.GetObject("table3PictureBox.Image")));
-			this.table3PictureBox.Location = new System.Drawing.Point(937, 60);
+			this.table3PictureBox.Location = new System.Drawing.Point(690, 291);
 			this.table3PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
 			this.table3PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
 			this.table3PictureBox.Name = "table3PictureBox";
