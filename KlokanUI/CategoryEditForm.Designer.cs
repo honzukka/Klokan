@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CategoryEditForm));
 			this.openCorrectFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.sheetLabel = new System.Windows.Forms.Label();
 			this.answerSheetsListBox = new System.Windows.Forms.ListBox();
@@ -111,7 +110,7 @@
 			// 
 			// table1PictureBox
 			// 
-			this.table1PictureBox.Image = ((System.Drawing.Image)(resources.GetObject("table1PictureBox.Image")));
+			this.table1PictureBox.Image = global::KlokanUI.Properties.Resources.table1Image;
 			this.table1PictureBox.Location = new System.Drawing.Point(39, 37);
 			this.table1PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
 			this.table1PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
@@ -123,7 +122,7 @@
 			// 
 			// table2PictureBox
 			// 
-			this.table2PictureBox.Image = ((System.Drawing.Image)(resources.GetObject("table2PictureBox.Image")));
+			this.table2PictureBox.Image = global::KlokanUI.Properties.Resources.table2Image;
 			this.table2PictureBox.Location = new System.Drawing.Point(296, 37);
 			this.table2PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
 			this.table2PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
@@ -135,7 +134,7 @@
 			// 
 			// table3PictureBox
 			// 
-			this.table3PictureBox.Image = ((System.Drawing.Image)(resources.GetObject("table3PictureBox.Image")));
+			this.table3PictureBox.Image = global::KlokanUI.Properties.Resources.table3Image;
 			this.table3PictureBox.Location = new System.Drawing.Point(39, 276);
 			this.table3PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
 			this.table3PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
