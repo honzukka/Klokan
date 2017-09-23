@@ -30,26 +30,11 @@ namespace KlokanUI
 		public virtual ICollection<AnswerSheet> AnswerSheets { get; set; }
 	}
 
-	public class CorrectAnswer
-	{
-		[Key]
-		public int CorrectAnswerId { get; set; }
-		public int QuestionNumber { get; set; }
-
-		[MaxLength(1)]
-		public string Value { get; set; }
-
-		public int InstanceId { get; set; }
-
-		[ForeignKey("InstanceId")]
-		public virtual Instance Instance { get; set; }
-	}
-
 	public class AnswerSheet
 	{
 		public AnswerSheet()
 		{
-			Answers = new List<Answer>();
+			ChosenAnswers = new List<ChosenAnswer>();
 		}
 
 		[Key]
@@ -64,18 +49,27 @@ namespace KlokanUI
 		[ForeignKey("InstanceId")]
 		public virtual Instance Instance { get; set; }
 
-		public virtual ICollection<Answer> Answers { get; set; }
+		public virtual ICollection<ChosenAnswer> ChosenAnswers { get; set; }
 	}
 
-	public class Answer
+	public abstract class Answer
 	{
 		[Key]
 		public int AnswerId { get; set; }
 		public int QuestionNumber { get; set; }
-
-		[MaxLength(1)]
 		public string Value { get; set; }
+	}
 
+	public class CorrectAnswer : Answer
+	{
+		public int InstanceId { get; set; }
+
+		[ForeignKey("InstanceId")]
+		public virtual Instance Instance { get; set; }
+	}
+
+	public class ChosenAnswer : Answer
+	{
 		public int AnswerSheetId { get; set; }
 
 		[ForeignKey("AnswerSheetId")]
@@ -87,9 +81,9 @@ namespace KlokanUI
 		public KlokanDBContext() : base("KlokanDBContext") { }
 
 		public DbSet<Instance> Instances { get; set; }
-		public DbSet<CorrectAnswer> CorrectAnswers { get; set; }
 		public DbSet<AnswerSheet> AnswerSheets { get; set; }
-		public DbSet<Answer> Answers { get; set; }
+		public DbSet<CorrectAnswer> CorrectAnswers { get; set; }
+		public DbSet<ChosenAnswer> ChosenAnswers { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

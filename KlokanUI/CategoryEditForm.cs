@@ -35,7 +35,7 @@ namespace KlokanUI
 			if (categoryBatch.CorrectAnswers != null)
 			{
 				correctAnswers = categoryBatch.CorrectAnswers;
-				AnswerDrawing.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers);
+				AnswerDrawing.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, AnswerDrawing.DrawCross, Color.Black);
 			}
 			else
 			{

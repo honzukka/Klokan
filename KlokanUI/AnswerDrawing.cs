@@ -11,14 +11,17 @@ namespace KlokanUI
 {
 	static class AnswerDrawing
 	{
+		// represents a function which draws a shape into a table cell
+		public delegate void DrawSomething(int row, int column, int cellWidth, int cellHeight, Graphics graphics, Pen pen);
+		
 		/// <summary>
-		/// Handles clicks for all picture boxes in this form.
+		/// Handles clicks for table images, stores chosen answers in a data structure 
+		/// and ensures only one answer is selected for each question.
 		/// </summary>
 		/// <param name="mouseEvent">The click event.</param>
 		/// <param name="pictureBox">A reference to the picture box that was clicked.</param>
 		/// <param name="tableIndex">An index of the table represented by the picture box in the correctAnswers array.</param>
 		/// <param name="answers">A multi-dimensional array of answers (yes/no) that are displayed in the table image.</param>
-
 		public static void HandleTableImageClicks(MouseEventArgs mouseEvent, PictureBox pictureBox, int tableIndex, bool[,,] answers)
 		{
 			int cellHeight = pictureBox.Height / 9;
@@ -53,7 +56,7 @@ namespace KlokanUI
 		}
 
 		// visualize information saved in the correctAnswers data structure
-		public static void DrawAnswers(PictureBox table1PictureBox, PictureBox table2PictureBox, PictureBox table3PictureBox, bool[,,] answers)
+		public static void DrawAnswers(PictureBox table1PictureBox, PictureBox table2PictureBox, PictureBox table3PictureBox, bool[,,] answers, DrawSomething drawSomething, Color penColor)
 		{
 			PictureBox[] pictureBoxes = new PictureBox[] { table1PictureBox, table2PictureBox, table3PictureBox };
 
@@ -65,7 +68,7 @@ namespace KlokanUI
 				Image tableImage = pictureBoxes[i].Image;
 
 				using (var graphics = Graphics.FromImage(tableImage))
-				using (var blackPen = new Pen(Color.Black, 2))
+				using (var blackPen = new Pen(penColor, 2))
 				{
 					for (int row = 0; row < 8; row++)
 					{
@@ -73,7 +76,7 @@ namespace KlokanUI
 						{
 							if (answers[i, row, col] == true)
 							{
-								DrawCross(row + 1, col + 1, cellWidth, cellHeight, graphics, blackPen);
+								drawSomething(row + 1, col + 1, cellWidth, cellHeight, graphics, blackPen);
 							}
 						}
 					}
@@ -92,6 +95,14 @@ namespace KlokanUI
 
 			graphics.DrawLine(pen, upperLeft, lowerRight);
 			graphics.DrawLine(pen, upperRight, lowerLeft);
+		}
+
+		public static void DrawCircle(int row, int column, int cellWidth, int cellHeight, Graphics graphics, Pen pen)
+		{
+			float originX = column * cellWidth;
+			float originY = row * cellHeight;
+
+			graphics.DrawEllipse(pen, originX, originY, cellWidth, cellHeight);
 		}
 
 		public static void RemoveCellContent(int row, int column, int cellWidth, int cellHeight, Graphics graphics)

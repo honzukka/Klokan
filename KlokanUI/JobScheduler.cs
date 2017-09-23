@@ -172,7 +172,7 @@ namespace KlokanUI
 					var answerSheet = new AnswerSheet
 					{
 						Points = result.Score,
-						Answers = GetAnswers(result.CorrectedAnswers),
+						ChosenAnswers = GetAnswers(result.CorrectedAnswers),
 						Scan = GetImageBytes(result.SheetFilename, ImageFormat.Png)
 					};
 
@@ -188,9 +188,9 @@ namespace KlokanUI
 		/// which correspond to a database record described in the Answer class.
 		/// </summary>
 		/// <param name="correctedAnswers">Answers as stored in the Result structure.</param>
-		List<Answer> GetAnswers(AnswerType[,,] correctedAnswers)
+		List<ChosenAnswer> GetAnswers(AnswerType[,,] correctedAnswers)
 		{
-			List<Answer> answers = new List<Answer>();
+			List<ChosenAnswer> answers = new List<ChosenAnswer>();
 
 			for (int table = 0; table < batch.Parameters.TableCount; table++)
 			{
@@ -219,7 +219,7 @@ namespace KlokanUI
 						}
 					}
 
-					answers.Add(new Answer
+					answers.Add(new ChosenAnswer
 					{
 						QuestionNumber = (row + 1) + (table * (batch.Parameters.TableRows - 1)),
 						Value = new String(enteredValue, 1)

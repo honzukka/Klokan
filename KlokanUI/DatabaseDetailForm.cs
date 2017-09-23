@@ -8,10 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using System.Drawing.Imaging;
-using System.Globalization;
-using System.Drawing.Drawing2D;
-
 namespace KlokanUI
 {
 	public partial class DatabaseDetailForm : Form
@@ -51,17 +47,19 @@ namespace KlokanUI
 				scanPictureBox.Image = bmp;
 
 				// draw answers
-				var answersQuery = from answer in db.Answers
-								   where answer.AnswerSheetId == answerSheetId
-								   select answer;
+				var chosenAnswersQuery = from chosenAnswer in db.ChosenAnswers
+								   where chosenAnswer.AnswerSheetId == answerSheetId
+								   select chosenAnswer;
 
-				// TODO: draw also these
+				var answers = GetAnswersTableArray(chosenAnswersQuery);
+				AnswerDrawing.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, answers, AnswerDrawing.DrawCross, Color.Black);
+
 				var correctAnswersQuery = from correctAnswer in db.CorrectAnswers
 										  where correctAnswer.InstanceId == answerSheet.InstanceId
 										  select correctAnswer;
 
-				var answers = GetAnswersTableArray(answersQuery);
-				AnswerDrawing.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, answers);
+				var correctAnswers = GetAnswersTableArray(correctAnswersQuery);
+				AnswerDrawing.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, AnswerDrawing.DrawCircle, Color.Red);
 			}
 		}
 
