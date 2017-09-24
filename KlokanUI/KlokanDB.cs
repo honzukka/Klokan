@@ -44,9 +44,10 @@ namespace KlokanUI
 		public int Points { get; set; }
 		public byte[] Scan { get; set; }
 
+		[Required]
 		public int InstanceId { get; set; }
 
-		[ForeignKey("InstanceId")]
+		[ForeignKey("InstanceId"), Required]
 		public virtual Instance Instance { get; set; }
 
 		public virtual ICollection<ChosenAnswer> ChosenAnswers { get; set; }
@@ -62,17 +63,19 @@ namespace KlokanUI
 
 	public class CorrectAnswer : Answer
 	{
+		[Required]
 		public int InstanceId { get; set; }
 
-		[ForeignKey("InstanceId")]
+		[ForeignKey("InstanceId"), Required]
 		public virtual Instance Instance { get; set; }
 	}
 
 	public class ChosenAnswer : Answer
 	{
+		[Required]
 		public int AnswerSheetId { get; set; }
 
-		[ForeignKey("AnswerSheetId")]
+		[ForeignKey("AnswerSheetId"), Required]
 		public virtual AnswerSheet AnswerSheet { get; set; }
 	}
 

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace KlokanUI
 {
-	class AnswerSelection
+	static class AnswerSelection
 	{
 		/// <summary>
 		/// Handles clicks for table images, stores chosen answers in a data structure 

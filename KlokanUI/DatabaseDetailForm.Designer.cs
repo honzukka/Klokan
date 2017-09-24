@@ -245,6 +245,7 @@
 			// updateDatabaseButton
 			// 
 			this.updateDatabaseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.updateDatabaseButton.Enabled = false;
 			this.updateDatabaseButton.Location = new System.Drawing.Point(41, 498);
 			this.updateDatabaseButton.Name = "updateDatabaseButton";
 			this.updateDatabaseButton.Size = new System.Drawing.Size(107, 23);

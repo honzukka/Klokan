@@ -13,7 +13,10 @@ namespace KlokanUI
 	// TODO: add comments
 	public partial class DatabaseDetailForm : Form
 	{
+		// id of the answer sheet that's being viewed in this form
 		int answerSheetId;
+
+		// answer sheet data this form needs to work with
 		bool[,,] chosenAnswers;
 		bool[,,] chosenAnswersTemp;
 		bool[,,] correctAnswers;
@@ -32,12 +35,16 @@ namespace KlokanUI
 			PopulateForm();
 		}
 
+		// toggle edit mode
 		private void editButton_Click(object sender, EventArgs e)
 		{
 			applyButton.Enabled = true;
 			discardButton.Enabled = true;
 			editButton.Enabled = false;
+			reevaluateButton.Enabled = false;
+			updateDatabaseButton.Enabled = false;
 
+			// draw only chosen answers as only those can be edited
 			ResetTableImages();
 			AnswerDrawing.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, AnswerDrawing.DrawCross, Color.Black);
 
@@ -70,11 +77,12 @@ namespace KlokanUI
 		private void reevaluateButton_Click(object sender, EventArgs e)
 		{
 			reevaluateButton.Enabled = false;
+			updateDatabaseButton.Enabled = true;
 
 			points = ReevaluateAnswers();
 			pointsValueLabel.Text = points.ToString();
 
-			// redraw answers
+			// draw both chosen and correct answers again
 			ResetTableImages();
 			AnswerDrawing.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, AnswerDrawing.DrawCross, Color.Black);
 			AnswerDrawing.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, AnswerDrawing.DrawCircle, Color.Red);
@@ -82,7 +90,42 @@ namespace KlokanUI
 
 		private void updateDatabaseButton_Click(object sender, EventArgs e)
 		{
+			updateDatabaseButton.Enabled = false;
 
+			var dialogResult = MessageBox.Show("Are you sure you want to update the database?", "Database Change", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			if (dialogResult == DialogResult.No)
+			{
+				return;
+			}
+
+			List<ChosenAnswer> newChosenAnswers = GetChosenAnswers();
+			int newPoints = points;
+
+			using (var db = new KlokanDBContext())
+			{
+				var query = from sheet in db.AnswerSheets
+							where sheet.AnswerSheetId == answerSheetId
+							select sheet;
+
+				AnswerSheet answerSheet = query.FirstOrDefault();
+
+				// load the old chosen answers so that EF knows it should delete them when the old answer sheet is deleted
+				List<ChosenAnswer> blah = new List<ChosenAnswer>(answerSheet.ChosenAnswers);
+
+				AnswerSheet updatedAnswerSheet = new AnswerSheet {
+					StudentNumber = answerSheet.StudentNumber,
+					Points = newPoints,
+					Scan = answerSheet.Scan,
+					InstanceId = answerSheet.InstanceId,
+					Instance = answerSheet.Instance,
+					ChosenAnswers = newChosenAnswers
+				};
+
+				db.AnswerSheets.Remove(answerSheet);
+				db.AnswerSheets.Add(updatedAnswerSheet);
+
+				db.SaveChanges();
+			}
 		}
 
 		private void table1PictureBox_Click(object sender, EventArgs e)
@@ -185,6 +228,7 @@ namespace KlokanUI
 			oldImages.Add(table1PictureBox.Image);
 			oldImages.Add(table2PictureBox.Image);
 			oldImages.Add(table3PictureBox.Image);
+
 			foreach (var oldImage in oldImages)
 			{
 				if (oldImage != null) oldImage.Dispose();
@@ -245,6 +289,46 @@ namespace KlokanUI
 			}
 
 			return newPoints;
+		}
+
+		// TODO: duplicate code?
+		List<ChosenAnswer> GetChosenAnswers()
+		{
+			List<ChosenAnswer> chosenAnswersDB = new List<ChosenAnswer>();
+
+			for (int table = 0; table < 3; table++)
+			{
+				for (int row = 0; row < 8; row++)
+				{
+					char enteredValue = '\0';
+
+					// find out the entered value (entered value can stay '\0' in case the question wasn't answered)
+					for (int col = 0; col < 5; col++)
+					{
+						int numberOfSelectedAnswers = 0;
+
+						if (chosenAnswers[table, row, col] == true)
+						{
+							enteredValue = (char)('a' + col);
+							numberOfSelectedAnswers++;
+						}
+
+						// keep in mind that more answers can be selected
+						if (numberOfSelectedAnswers > 1)
+						{
+							enteredValue = 'x';
+						}
+					}
+
+					chosenAnswersDB.Add(new ChosenAnswer
+					{
+						QuestionNumber = (row + 1) + (table * 8),
+						Value = new String(enteredValue, 1)
+					});
+				}
+			}
+
+			return chosenAnswersDB;
 		}
 	}
 }
