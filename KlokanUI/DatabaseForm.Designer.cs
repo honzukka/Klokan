@@ -37,6 +37,9 @@
 			this.categoryComboBox = new System.Windows.Forms.ComboBox();
 			this.viewButton = new System.Windows.Forms.Button();
 			this.detailButton = new System.Windows.Forms.Button();
+			this.exportAllButton = new System.Windows.Forms.Button();
+			this.exportSelectionButton = new System.Windows.Forms.Button();
+			this.saveFileDialogExportAll = new System.Windows.Forms.SaveFileDialog();
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -58,6 +61,7 @@
 			this.dataView.ReadOnly = true;
 			this.dataView.Size = new System.Drawing.Size(295, 483);
 			this.dataView.TabIndex = 0;
+			this.dataView.Click += new System.EventHandler(this.dataView_Click);
 			// 
 			// id
 			// 
@@ -108,9 +112,9 @@
 			// viewButton
 			// 
 			this.viewButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.viewButton.Location = new System.Drawing.Point(394, 26);
+			this.viewButton.Location = new System.Drawing.Point(384, 26);
 			this.viewButton.Name = "viewButton";
-			this.viewButton.Size = new System.Drawing.Size(71, 23);
+			this.viewButton.Size = new System.Drawing.Size(108, 23);
 			this.viewButton.TabIndex = 5;
 			this.viewButton.Text = "View";
 			this.viewButton.UseVisualStyleBackColor = true;
@@ -119,19 +123,46 @@
 			// detailButton
 			// 
 			this.detailButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.detailButton.Location = new System.Drawing.Point(394, 86);
+			this.detailButton.Enabled = false;
+			this.detailButton.Location = new System.Drawing.Point(384, 86);
 			this.detailButton.Name = "detailButton";
-			this.detailButton.Size = new System.Drawing.Size(88, 23);
+			this.detailButton.Size = new System.Drawing.Size(108, 23);
 			this.detailButton.TabIndex = 6;
 			this.detailButton.Text = "View Detail";
 			this.detailButton.UseVisualStyleBackColor = true;
 			this.detailButton.Click += new System.EventHandler(this.detailButton_Click);
+			// 
+			// exportAllButton
+			// 
+			this.exportAllButton.Location = new System.Drawing.Point(384, 546);
+			this.exportAllButton.Name = "exportAllButton";
+			this.exportAllButton.Size = new System.Drawing.Size(108, 23);
+			this.exportAllButton.TabIndex = 7;
+			this.exportAllButton.Text = "Export All";
+			this.exportAllButton.UseVisualStyleBackColor = true;
+			this.exportAllButton.Click += new System.EventHandler(this.exportAllButton_Click);
+			// 
+			// exportSelectionButton
+			// 
+			this.exportSelectionButton.Location = new System.Drawing.Point(384, 517);
+			this.exportSelectionButton.Name = "exportSelectionButton";
+			this.exportSelectionButton.Size = new System.Drawing.Size(108, 23);
+			this.exportSelectionButton.TabIndex = 8;
+			this.exportSelectionButton.Text = "Export Selection";
+			this.exportSelectionButton.UseVisualStyleBackColor = true;
+			this.exportSelectionButton.Click += new System.EventHandler(this.exportSelectionButton_Click);
+			// 
+			// saveFileDialogExportAll
+			// 
+			this.saveFileDialogExportAll.Filter = "CSV File|*.csv";
 			// 
 			// DatabaseForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(522, 601);
+			this.Controls.Add(this.exportSelectionButton);
+			this.Controls.Add(this.exportAllButton);
 			this.Controls.Add(this.detailButton);
 			this.Controls.Add(this.viewButton);
 			this.Controls.Add(this.categoryComboBox);
@@ -159,5 +190,8 @@
 		private System.Windows.Forms.ComboBox categoryComboBox;
 		private System.Windows.Forms.Button viewButton;
 		private System.Windows.Forms.Button detailButton;
+		private System.Windows.Forms.Button exportAllButton;
+		private System.Windows.Forms.Button exportSelectionButton;
+		private System.Windows.Forms.SaveFileDialog saveFileDialogExportAll;
 	}
 }

@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.IO;
+
 namespace KlokanUI
 {
 	public partial class DatabaseForm : Form
@@ -81,6 +83,143 @@ namespace KlokanUI
 			DatabaseDetailForm form = new DatabaseDetailForm((int)(dataView.SelectedRows[0].Cells[0].Value));
 			form.StartPosition = FormStartPosition.CenterScreen;
 			form.ShowDialog();
+		}
+
+		private void dataView_Click(object sender, EventArgs e)
+		{
+			if (dataView.SelectedRows.Count == 1)
+			{
+				detailButton.Enabled = true;
+			}
+			else
+			{
+				detailButton.Enabled = false;
+			}
+		}
+
+		private void exportSelectionButton_Click(object sender, EventArgs e)
+		{
+			var dialogResult = saveFileDialogExportAll.ShowDialog();
+
+			if (dialogResult == DialogResult.OK)
+			{
+				string saveFilePath = saveFileDialogExportAll.FileName;
+
+				using (var file = new StreamWriter(saveFilePath, false))
+				{
+					ExportSelection(file, (int)yearComboBox.SelectedItem, (string)categoryComboBox.SelectedItem);
+				}
+			}
+		}
+
+		private void exportAllButton_Click(object sender, EventArgs e)
+		{
+			var dialogResult = saveFileDialogExportAll.ShowDialog();
+
+			if (dialogResult == DialogResult.OK)
+			{
+				string saveFilePath = saveFileDialogExportAll.FileName;
+
+				using (var file = new StreamWriter(saveFilePath, false))
+				{
+					ExportAll(file);
+				}
+			}
+		}
+
+		// selects only answer sheets with specific year and category and outputs them
+		private void ExportSelection(StreamWriter sw, int year, string category)
+		{
+			OutputHeader(sw);
+
+			using (var db = new KlokanDBContext())
+			{
+				// select everything except for scans
+				var answerSheetQuery = from answerSheet in db.AnswerSheets
+									   where answerSheet.Instance.Year == year && answerSheet.Instance.Category == category
+									   select new AnswerSheetSelection
+									   {
+										   AnswerSheetId = answerSheet.AnswerSheetId,
+										   StudentNumber = answerSheet.StudentNumber,
+										   Points = answerSheet.Points,
+										   Instance = answerSheet.Instance,
+										   ChosenAnswers = answerSheet.ChosenAnswers
+									   };
+
+				OutputAnswerSheetSelection(sw, answerSheetQuery);
+			}
+		}
+
+		// selects all answer sheets and outputs them
+		private void ExportAll(StreamWriter sw)
+		{
+			OutputHeader(sw);
+
+			using (var db = new KlokanDBContext())
+			{
+				// select everything except for scans
+				var answerSheetQuery = from answerSheet in db.AnswerSheets
+									   select new AnswerSheetSelection {
+										   AnswerSheetId = answerSheet.AnswerSheetId,
+										   StudentNumber = answerSheet.StudentNumber,
+										   Points = answerSheet.Points,
+										   Instance = answerSheet.Instance,
+										   ChosenAnswers = answerSheet.ChosenAnswers
+									   };
+
+				OutputAnswerSheetSelection(sw, answerSheetQuery);
+			}
+		}
+
+		// outputs answer sheet selection in csv format delimited by a semicolon
+		private void OutputAnswerSheetSelection(StreamWriter sw, IQueryable<AnswerSheetSelection> answerSheetSelection)
+		{
+			foreach (var answerSheet in answerSheetSelection)
+			{
+				Instance currentInstance = answerSheet.Instance;
+				List<ChosenAnswer> chosenAnswers = new List<ChosenAnswer>(answerSheet.ChosenAnswers);
+				List<CorrectAnswer> correctAnswers = new List<CorrectAnswer>(currentInstance.CorrectAnswers);
+
+				sw.Write(answerSheet.AnswerSheetId + ";");
+				sw.Write(answerSheet.StudentNumber + ";");
+				sw.Write(currentInstance.Year + ";");
+				sw.Write(currentInstance.Category + ";");
+				sw.Write(answerSheet.Points + ";");
+
+				// relies on the order of answers in the database...
+				for (int i = 0; i < 24; i++)
+				{
+					sw.Write(chosenAnswers[i].Value + ";" + correctAnswers[i].Value + ";");
+				}
+
+				sw.WriteLine();
+			}
+		}
+
+		// outputs a header for the answer sheet selection in csv format delimited by a semicolon
+		private void OutputHeader(StreamWriter sw)
+		{
+			sw.Write("Answer Sheet ID;");
+			sw.Write("Student Number;");
+			sw.Write("Year;");
+			sw.Write("Category;");
+			sw.Write("Points;");
+
+			for (int i = 1; i <= 24; i++)
+			{
+				sw.Write(i + " (Chosen);" + i + " (Correct);");
+			}
+
+			sw.WriteLine();
+		}
+
+		class AnswerSheetSelection
+		{
+			public int AnswerSheetId { get; set; }
+			public int StudentNumber { get; set; }
+			public int Points { get; set; }
+			public Instance Instance { get; set; }
+			public ICollection<ChosenAnswer> ChosenAnswers { get; set; }
 		}
 	}
 }
