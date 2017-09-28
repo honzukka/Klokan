@@ -5,6 +5,7 @@
 
 // extracts answers from an answer sheet using image recognition
 // relies on the caller to provide answerArray of size (params.table_count * (params.table_rows - 1) * (params.table_columns - 1)) and the success variable
+//void extract_answers_api(char* filename, Parameters params, bool* answerArray, bool* success)
 void extract_answers_api(char* filename, Parameters params, bool* answerArray, bool* success)
 {
 	sheetAnswers answers;

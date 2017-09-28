@@ -4,6 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
+
 namespace KlokanUI
 {
 	static class Program
