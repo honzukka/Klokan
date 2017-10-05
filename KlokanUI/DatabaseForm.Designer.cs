@@ -39,7 +39,9 @@
 			this.detailButton = new System.Windows.Forms.Button();
 			this.exportAllButton = new System.Windows.Forms.Button();
 			this.exportSelectionButton = new System.Windows.Forms.Button();
-			this.saveFileDialogExportAll = new System.Windows.Forms.SaveFileDialog();
+			this.saveFileDialogExport = new System.Windows.Forms.SaveFileDialog();
+			this.importButton = new System.Windows.Forms.Button();
+			this.openDBDialog = new System.Windows.Forms.OpenFileDialog();
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -152,15 +154,26 @@
 			this.exportSelectionButton.UseVisualStyleBackColor = true;
 			this.exportSelectionButton.Click += new System.EventHandler(this.exportSelectionButton_Click);
 			// 
-			// saveFileDialogExportAll
+			// saveFileDialogExport
 			// 
-			this.saveFileDialogExportAll.Filter = "CSV File|*.csv";
+			this.saveFileDialogExport.Filter = "CSV File|*.csv";
+			// 
+			// importButton
+			// 
+			this.importButton.Location = new System.Drawing.Point(384, 488);
+			this.importButton.Name = "importButton";
+			this.importButton.Size = new System.Drawing.Size(108, 23);
+			this.importButton.TabIndex = 9;
+			this.importButton.Text = "Import Database";
+			this.importButton.UseVisualStyleBackColor = true;
+			this.importButton.Click += new System.EventHandler(this.importButton_Click);
 			// 
 			// DatabaseForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(522, 601);
+			this.Controls.Add(this.importButton);
 			this.Controls.Add(this.exportSelectionButton);
 			this.Controls.Add(this.exportAllButton);
 			this.Controls.Add(this.detailButton);
@@ -192,6 +205,8 @@
 		private System.Windows.Forms.Button detailButton;
 		private System.Windows.Forms.Button exportAllButton;
 		private System.Windows.Forms.Button exportSelectionButton;
-		private System.Windows.Forms.SaveFileDialog saveFileDialogExportAll;
+		private System.Windows.Forms.SaveFileDialog saveFileDialogExport;
+		private System.Windows.Forms.Button importButton;
+		private System.Windows.Forms.OpenFileDialog openDBDialog;
 	}
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Data.Entity;
+using System.Data.SQLite;
 using SQLite.CodeFirst;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -82,6 +83,8 @@ namespace KlokanUI
 	public class KlokanDBContext : DbContext
 	{
 		public KlokanDBContext() : base("KlokanDBContext") { }
+
+		public KlokanDBContext(SQLiteConnection connection) : base(connection, true) { }
 
 		public DbSet<Instance> Instances { get; set; }
 		public DbSet<AnswerSheet> AnswerSheets { get; set; }

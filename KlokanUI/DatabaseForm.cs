@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.IO;
+using System.Data.SQLite;
 
 namespace KlokanUI
 {
@@ -97,13 +98,27 @@ namespace KlokanUI
 			}
 		}
 
-		private void exportSelectionButton_Click(object sender, EventArgs e)
+		private void importButton_Click(object sender, EventArgs e)
 		{
-			var dialogResult = saveFileDialogExportAll.ShowDialog();
+			var dialogResult = openDBDialog.ShowDialog();
 
 			if (dialogResult == DialogResult.OK)
 			{
-				string saveFilePath = saveFileDialogExportAll.FileName;
+				string importFilePath = openDBDialog.FileName;
+				string externalConnectionString = "Data Source=" + importFilePath + ";Pooling=True";
+				var externalConnection = new SQLiteConnection(externalConnectionString);
+
+				ImportDB(externalConnection);
+			}
+		}
+
+		private void exportSelectionButton_Click(object sender, EventArgs e)
+		{
+			var dialogResult = saveFileDialogExport.ShowDialog();
+
+			if (dialogResult == DialogResult.OK)
+			{
+				string saveFilePath = saveFileDialogExport.FileName;
 
 				using (var file = new StreamWriter(saveFilePath, false))
 				{
@@ -114,16 +129,51 @@ namespace KlokanUI
 
 		private void exportAllButton_Click(object sender, EventArgs e)
 		{
-			var dialogResult = saveFileDialogExportAll.ShowDialog();
+			var dialogResult = saveFileDialogExport.ShowDialog();
 
 			if (dialogResult == DialogResult.OK)
 			{
-				string saveFilePath = saveFileDialogExportAll.FileName;
+				string saveFilePath = saveFileDialogExport.FileName;
 
 				using (var file = new StreamWriter(saveFilePath, false))
 				{
 					ExportAll(file);
 				}
+			}
+		}
+
+		private void ImportDB(SQLiteConnection externalConnection)
+		{
+			using (var internalDB = new KlokanDBContext())
+			using (var externalDB = new KlokanDBContext(externalConnection))
+			{
+				// load the whole external database
+				// (only one instance of a dbcontext can be tracked at a time and this one won't be modified anyway...)
+				var externalInstanceQuery = externalDB.Instances
+												.Include("AnswerSheets.ChosenAnswers")
+												.Include("CorrectAnswers").AsNoTracking();	
+
+				// import new instances
+				foreach (var externalInstance in externalInstanceQuery)
+				{
+					var internalInstanceQuery = from internalInstance in internalDB.Instances
+								where internalInstance.Category == externalInstance.Category &&
+										internalInstance.Year == externalInstance.Year
+								select internalInstance;
+
+					// if the external instance is new, insert it into the internal table
+					if (internalInstanceQuery.Count() == 0)
+					{
+						internalDB.Instances.Add(externalInstance);
+					}
+
+					// TODO: new answer sheets can also be imported 
+					// but only once a set of columns that differentiates them 
+					// is determined (student number + school number???)
+				}
+
+				// TODO: asynchronous?
+				internalDB.SaveChanges();
 			}
 		}
 
