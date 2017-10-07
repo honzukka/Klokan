@@ -34,13 +34,18 @@ namespace KlokanUI
 		/// <param name="tableColumns">The number of columns in a table.</param>
 		/// <param name="defaultCellWidth">Every cell will be resized to have this width.</param>
 		/// <param name="defaultCellHeight">Every cell will be resized to have this height.</param>
+		/// <param name="cellEvaluationType">TRUE - shape recognition; FALSE - pixel ratio</param>
 		/// <param name="crossLineLength">The length of lines to be detected.</param>
 		/// <param name="crossLineCurvatureLimit">How curved a line can be to still be recognized as a straight line (1 is minimum).</param>
 		/// <param name="rubbishLinesLimit">Amount of lines that don't form a cross that will be ignored and not considered as a correction.</param>
+		/// <param name="lowerThreshold">If the ratio of pixels representing student input in the whole cell is lower than this, answer was not chosen.</param>
+		/// <param name="upperThreshold">If the ratio of pixels representing student input in the whole cell is higher than this, answer was invalidated.</param>
 		public Parameters(int defaultSheetWidth, int blackWhiteThreshold,
 			int tableCount, int tableLineLength, float tableLineEccentricityLimit, int tableLineCurvatureLimit,
 			int tableRows, int tableColumns,
-			int defaultCellWidth, int defaultCellHeight, int crossLineLength, int crossLineCurvatureLimit, int rubbishLinesLimit)
+			int defaultCellWidth, int defaultCellHeight, bool cellEvaluationType,
+			int crossLineLength, int crossLineCurvatureLimit, int rubbishLinesLimit,
+			float lowerThreshold, float upperThreshold)
 		{
 			DefaultSheetWidth = defaultSheetWidth;
 			BlackWhiteThreshold = blackWhiteThreshold;
@@ -55,9 +60,14 @@ namespace KlokanUI
 
 			DefaultCellWidth = defaultCellWidth;
 			DefaultCellHeight = defaultCellHeight;
+			CellEvaluationType = cellEvaluationType;
+
 			CrossLineLength = crossLineLength;
 			CrossLineCurvatureLimit = crossLineCurvatureLimit;
 			RubbishLinesLimit = rubbishLinesLimit;
+
+			LowerThreshold = lowerThreshold;
+			UpperThreshold = upperThreshold;
 		}
 		
 		// parameters used to prepare a sheet image for processing
@@ -77,9 +87,16 @@ namespace KlokanUI
 		// parameters of the cell evaluation process
 		public int DefaultCellWidth { get; }
 		public int DefaultCellHeight { get; }
+		public bool CellEvaluationType { get; }
+
+		// parameters for shape recognition
 		public int CrossLineLength { get; } 
 		public int CrossLineCurvatureLimit { get; }
 		public int RubbishLinesLimit { get; }
+
+		// parameters for pixel ratio
+		public float LowerThreshold { get; }
+		public float UpperThreshold { get; }
 
 		public static Parameters CreateDefaultParameters()
 		{
@@ -87,7 +104,9 @@ namespace KlokanUI
 				1700, 230,
 				3, 350, (float)(Math.PI / 8), 1,
 				9, 6,
-				80, 40, 35, 5, 10
+				80, 40, false,
+				35, 5, 10,
+				0.20f, 0.70f
 			);	
 		}
 	}

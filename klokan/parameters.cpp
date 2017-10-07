@@ -15,9 +15,14 @@ Parameters::Parameters()
 
 	default_cell_width = 80;
 	default_cell_height = 40;
+	cell_evaluation_type = false;
+
 	cross_line_length = 35;
 	cross_line_curvature_limit = 5;
 	rubbish_lines_limit = 10;
+
+	lower_threshold = 0.20f;
+	upper_threshold = 0.70f;
 }
 
 bool Parameters::update_from_file(const std::string& filename)

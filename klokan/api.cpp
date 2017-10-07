@@ -5,10 +5,20 @@
 
 // extracts answers from an answer sheet using image recognition
 // relies on the caller to provide answerArray of size (params.table_count * (params.table_rows - 1) * (params.table_columns - 1)) and the success variable
-//void extract_answers_api(char* filename, Parameters params, bool* answerArray, bool* success)
 void extract_answers_api(char* filename, Parameters params, bool* answerArray, bool* success)
 {
 	sheetAnswers answers;
+
+	// decide which type of cell evaluation will be used
+	bool(*isCellCrossed)(const cv::Mat&, const Parameters&);
+	if (params.cell_evaluation_type == true)
+	{
+		isCellCrossed = is_cell_crossed_shape;
+	}
+	else
+	{
+		isCellCrossed = is_cell_crossed_ratio;
+	}
 
 	// load the answer sheet
 	cv::Mat sheetImage = cv::imread(filename, CV_LOAD_IMAGE_GRAYSCALE);
@@ -41,7 +51,7 @@ void extract_answers_api(char* filename, Parameters params, bool* answerArray, b
 			{
 				auto&& cell = tableCells[row][col];
 
-				if (is_cell_crossed(cell, params))
+				if (isCellCrossed(cell, params))
 				{
 					answers[table][row - 1].push_back(true);
 				}

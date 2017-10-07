@@ -42,9 +42,14 @@ namespace KlokanUI
 
 			toolTip.SetToolTip(defaultCellWidthLabel, "Every cell will be resized to have this width.");
 			toolTip.SetToolTip(defaultCellHeightLabel, "Every cell will be resized to have this height.");
+			toolTip.SetToolTip(cellEvaluationTypeLabel, "TRUE - shape recognition; FALSE - pixel ratio");
+
 			toolTip.SetToolTip(crossLineLengthLabel, "The length of lines to be detected.");
 			toolTip.SetToolTip(crossLineCurvatureLimitLabel, "How curved a line can be to still be recognized as a straight line (1 is minimum).");
 			toolTip.SetToolTip(rubbishLinesLimitLabel, "Amount of lines that don't form a cross that will be ignored and not considered as a correction.");
+
+			toolTip.SetToolTip(lowerThresholdLabel, "If the ratio of pixels representing student input in the whole cell is lower than this, answer was not chosen.");
+			toolTip.SetToolTip(upperThresholdLabel, "If the ratio of pixels representing student input in the whole cell is higher than this, answer was invalidated.");
 		}
 
 		private void FillTextBoxes()
@@ -62,9 +67,14 @@ namespace KlokanUI
 
 			defaultCellWidthTextBox.Text = Parameters.DefaultCellWidth.ToString();
 			defaultCellHeightTextBox.Text = Parameters.DefaultCellHeight.ToString();
+			cellEvaluationTypeTextBox.Text = Parameters.CellEvaluationType.ToString();
+
 			crossLineLengthTextBox.Text = Parameters.CrossLineLength.ToString();
 			crossLineCurvatureLimitTextBox.Text = Parameters.CrossLineCurvatureLimit.ToString();
 			rubbishLinesLimitTextBox.Text = Parameters.RubbishLinesLimit.ToString();
+
+			lowerThresholdTextBox.Text = Parameters.LowerThreshold.ToString();
+			upperThresholdTextBox.Text = Parameters.UpperThreshold.ToString();
 		}
 
 		private void saveButton_Click(object sender, EventArgs e)
@@ -82,9 +92,13 @@ namespace KlokanUI
 
 			int defaultCellWidth;
 			int defaultCellHeight;
+			bool cellEvaluationType;
+
 			int crossLineLength;
 			int crossLineCurvatureLimit;
 			int rubbishLinesLimit;
+			float lowerThreshold;
+			float upperThreshold;
 
 			// TODO: add value control too!
 
@@ -148,6 +162,12 @@ namespace KlokanUI
 				return;
 			}
 
+			if (!bool.TryParse(cellEvaluationTypeTextBox.Text, out cellEvaluationType))
+			{
+				MessageBox.Show("Cell Evaluation Type has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
 			if (!Int32.TryParse(crossLineLengthTextBox.Text, out crossLineLength))
 			{
 				MessageBox.Show("Cross Line Length has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -166,10 +186,24 @@ namespace KlokanUI
 				return;
 			}
 
+			if (!float.TryParse(lowerThresholdTextBox.Text, out lowerThreshold))
+			{
+				MessageBox.Show("Lower Threshold has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			if (!float.TryParse(upperThresholdTextBox.Text, out upperThreshold))
+			{
+				MessageBox.Show("Upper Threshold has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
 			Parameters = new Parameters(defaultSheetWidth, blackWhiteThreshold,
 								tableCount, tableLineLength, tableLineEccentricityLimit, tableLineCurvatureLimit,
 								tableRows, tableColumns,
-								defaultCellWidth, defaultCellHeight, crossLineLength, crossLineCurvatureLimit, rubbishLinesLimit
+								defaultCellWidth, defaultCellHeight, cellEvaluationType,
+								crossLineLength, crossLineCurvatureLimit, rubbishLinesLimit,
+								lowerThreshold, upperThreshold
 			);
 
 			DialogResult = DialogResult.OK;

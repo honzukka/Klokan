@@ -33,9 +33,16 @@ struct Parameters
 	// parameters of the cell evaluation process
 	int default_cell_width;			// every cell will be resized to have this width
 	int default_cell_height;		// every cell will be resized to have this height
+	bool cell_evaluation_type;		// TRUE - shape recognition; FALSE - pixel ratio
+
+	// parameters for shape recognition
 	int cross_line_length;			// the length of lines to be detected
 	int cross_line_curvature_limit;	// how curved a line can be to still be recognized as a straight line (1 is minimum)
 	int rubbish_lines_limit;		// amount of lines that don't form a cross that will be ignored and not considered as a correction
+
+	// parameters for pixel ratio
+	float lower_threshold;		// if the ratio of pixels representing student input in the whole cell is lower than this, answer was not chosen
+	float upper_threshold;		// if the ratio of pixels representing student input in the whole cell is higher than this, answer was invalidated
 };
 #pragma pack(pop)
 

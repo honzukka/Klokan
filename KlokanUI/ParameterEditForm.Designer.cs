@@ -55,6 +55,12 @@
 			this.rubbishLinesLimitTextBox = new System.Windows.Forms.TextBox();
 			this.rubbishLinesLimitLabel = new System.Windows.Forms.Label();
 			this.saveButton = new System.Windows.Forms.Button();
+			this.cellEvaluationTypeLabel = new System.Windows.Forms.Label();
+			this.cellEvaluationTypeTextBox = new System.Windows.Forms.TextBox();
+			this.lowerThresholdLabel = new System.Windows.Forms.Label();
+			this.lowerThresholdTextBox = new System.Windows.Forms.TextBox();
+			this.upperThresholdLabel = new System.Windows.Forms.Label();
+			this.upperThresholdTextBox = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// defaultSheetWidthLabel
@@ -219,7 +225,7 @@
 			// 
 			// crossLineLengthTextBox
 			// 
-			this.crossLineLengthTextBox.Location = new System.Drawing.Point(317, 367);
+			this.crossLineLengthTextBox.Location = new System.Drawing.Point(317, 414);
 			this.crossLineLengthTextBox.Name = "crossLineLengthTextBox";
 			this.crossLineLengthTextBox.Size = new System.Drawing.Size(100, 20);
 			this.crossLineLengthTextBox.TabIndex = 20;
@@ -227,7 +233,7 @@
 			// crossLineLengthLabel
 			// 
 			this.crossLineLengthLabel.AutoSize = true;
-			this.crossLineLengthLabel.Location = new System.Drawing.Point(31, 370);
+			this.crossLineLengthLabel.Location = new System.Drawing.Point(31, 417);
 			this.crossLineLengthLabel.Name = "crossLineLengthLabel";
 			this.crossLineLengthLabel.Size = new System.Drawing.Size(95, 13);
 			this.crossLineLengthLabel.TabIndex = 21;
@@ -235,7 +241,7 @@
 			// 
 			// crossLineCurvatureLimitTextBox
 			// 
-			this.crossLineCurvatureLimitTextBox.Location = new System.Drawing.Point(317, 394);
+			this.crossLineCurvatureLimitTextBox.Location = new System.Drawing.Point(317, 441);
 			this.crossLineCurvatureLimitTextBox.Name = "crossLineCurvatureLimitTextBox";
 			this.crossLineCurvatureLimitTextBox.Size = new System.Drawing.Size(100, 20);
 			this.crossLineCurvatureLimitTextBox.TabIndex = 22;
@@ -243,7 +249,7 @@
 			// crossLineCurvatureLimitLabel
 			// 
 			this.crossLineCurvatureLimitLabel.AutoSize = true;
-			this.crossLineCurvatureLimitLabel.Location = new System.Drawing.Point(31, 397);
+			this.crossLineCurvatureLimitLabel.Location = new System.Drawing.Point(31, 444);
 			this.crossLineCurvatureLimitLabel.Name = "crossLineCurvatureLimitLabel";
 			this.crossLineCurvatureLimitLabel.Size = new System.Drawing.Size(132, 13);
 			this.crossLineCurvatureLimitLabel.TabIndex = 23;
@@ -251,7 +257,7 @@
 			// 
 			// rubbishLinesLimitTextBox
 			// 
-			this.rubbishLinesLimitTextBox.Location = new System.Drawing.Point(317, 421);
+			this.rubbishLinesLimitTextBox.Location = new System.Drawing.Point(317, 468);
 			this.rubbishLinesLimitTextBox.Name = "rubbishLinesLimitTextBox";
 			this.rubbishLinesLimitTextBox.Size = new System.Drawing.Size(100, 20);
 			this.rubbishLinesLimitTextBox.TabIndex = 24;
@@ -259,7 +265,7 @@
 			// rubbishLinesLimitLabel
 			// 
 			this.rubbishLinesLimitLabel.AutoSize = true;
-			this.rubbishLinesLimitLabel.Location = new System.Drawing.Point(31, 424);
+			this.rubbishLinesLimitLabel.Location = new System.Drawing.Point(31, 471);
 			this.rubbishLinesLimitLabel.Name = "rubbishLinesLimitLabel";
 			this.rubbishLinesLimitLabel.Size = new System.Drawing.Size(101, 13);
 			this.rubbishLinesLimitLabel.TabIndex = 25;
@@ -267,7 +273,7 @@
 			// 
 			// saveButton
 			// 
-			this.saveButton.Location = new System.Drawing.Point(183, 474);
+			this.saveButton.Location = new System.Drawing.Point(187, 594);
 			this.saveButton.Name = "saveButton";
 			this.saveButton.Size = new System.Drawing.Size(75, 23);
 			this.saveButton.TabIndex = 26;
@@ -275,11 +281,65 @@
 			this.saveButton.UseVisualStyleBackColor = true;
 			this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
 			// 
+			// cellEvaluationTypeLabel
+			// 
+			this.cellEvaluationTypeLabel.AutoSize = true;
+			this.cellEvaluationTypeLabel.Location = new System.Drawing.Point(31, 369);
+			this.cellEvaluationTypeLabel.Name = "cellEvaluationTypeLabel";
+			this.cellEvaluationTypeLabel.Size = new System.Drawing.Size(107, 13);
+			this.cellEvaluationTypeLabel.TabIndex = 27;
+			this.cellEvaluationTypeLabel.Text = "Cell Evaluation Type:";
+			// 
+			// cellEvaluationTypeTextBox
+			// 
+			this.cellEvaluationTypeTextBox.Location = new System.Drawing.Point(317, 367);
+			this.cellEvaluationTypeTextBox.Name = "cellEvaluationTypeTextBox";
+			this.cellEvaluationTypeTextBox.Size = new System.Drawing.Size(100, 20);
+			this.cellEvaluationTypeTextBox.TabIndex = 28;
+			// 
+			// lowerThresholdLabel
+			// 
+			this.lowerThresholdLabel.AutoSize = true;
+			this.lowerThresholdLabel.Location = new System.Drawing.Point(31, 518);
+			this.lowerThresholdLabel.Name = "lowerThresholdLabel";
+			this.lowerThresholdLabel.Size = new System.Drawing.Size(89, 13);
+			this.lowerThresholdLabel.TabIndex = 29;
+			this.lowerThresholdLabel.Text = "Lower Threshold:";
+			// 
+			// lowerThresholdTextBox
+			// 
+			this.lowerThresholdTextBox.Location = new System.Drawing.Point(317, 515);
+			this.lowerThresholdTextBox.Name = "lowerThresholdTextBox";
+			this.lowerThresholdTextBox.Size = new System.Drawing.Size(100, 20);
+			this.lowerThresholdTextBox.TabIndex = 30;
+			// 
+			// upperThresholdLabel
+			// 
+			this.upperThresholdLabel.AutoSize = true;
+			this.upperThresholdLabel.Location = new System.Drawing.Point(31, 544);
+			this.upperThresholdLabel.Name = "upperThresholdLabel";
+			this.upperThresholdLabel.Size = new System.Drawing.Size(89, 13);
+			this.upperThresholdLabel.TabIndex = 31;
+			this.upperThresholdLabel.Text = "Upper Threshold:";
+			// 
+			// upperThresholdTextBox
+			// 
+			this.upperThresholdTextBox.Location = new System.Drawing.Point(317, 541);
+			this.upperThresholdTextBox.Name = "upperThresholdTextBox";
+			this.upperThresholdTextBox.Size = new System.Drawing.Size(100, 20);
+			this.upperThresholdTextBox.TabIndex = 32;
+			// 
 			// ParameterEditForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(469, 509);
+			this.ClientSize = new System.Drawing.Size(469, 629);
+			this.Controls.Add(this.upperThresholdTextBox);
+			this.Controls.Add(this.upperThresholdLabel);
+			this.Controls.Add(this.lowerThresholdTextBox);
+			this.Controls.Add(this.lowerThresholdLabel);
+			this.Controls.Add(this.cellEvaluationTypeTextBox);
+			this.Controls.Add(this.cellEvaluationTypeLabel);
 			this.Controls.Add(this.saveButton);
 			this.Controls.Add(this.rubbishLinesLimitLabel);
 			this.Controls.Add(this.rubbishLinesLimitTextBox);
@@ -307,7 +367,6 @@
 			this.Controls.Add(this.blackWhiteThresholdLabel);
 			this.Controls.Add(this.defaultSheetWidthTextBox);
 			this.Controls.Add(this.defaultSheetWidthLabel);
-			this.MaximumSize = new System.Drawing.Size(485, 548);
 			this.MinimumSize = new System.Drawing.Size(485, 548);
 			this.Name = "ParameterEditForm";
 			this.Text = "Klokan - Evaluation - Parameter Edit";
@@ -345,5 +404,11 @@
 		private System.Windows.Forms.TextBox rubbishLinesLimitTextBox;
 		private System.Windows.Forms.Label rubbishLinesLimitLabel;
 		private System.Windows.Forms.Button saveButton;
+		private System.Windows.Forms.Label cellEvaluationTypeLabel;
+		private System.Windows.Forms.TextBox cellEvaluationTypeTextBox;
+		private System.Windows.Forms.Label lowerThresholdLabel;
+		private System.Windows.Forms.TextBox lowerThresholdTextBox;
+		private System.Windows.Forms.Label upperThresholdLabel;
+		private System.Windows.Forms.TextBox upperThresholdTextBox;
 	}
 }

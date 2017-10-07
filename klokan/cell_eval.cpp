@@ -8,7 +8,7 @@ bool is_line_bottom_left(cv::Vec2f line, int imageWidth, int imageHeight);
 bool is_line_top_right(cv::Vec2f line, int imageWidth, int imageHeight);
 bool is_line_bottom_right(cv::Vec2f line, int imageWidth, int imageHeight);
 
-bool is_cell_crossed(const cv::Mat& cellImage, const Parameters& parameters)
+bool is_cell_crossed_shape(const cv::Mat& cellImage, const Parameters& parameters)
 {	
 	cv::Mat cellWorkingCopy = cellImage.clone();
 
@@ -68,6 +68,49 @@ bool is_cell_crossed(const cv::Mat& cellImage, const Parameters& parameters)
 	else
 	{
 		//debug::show_lines(cellWorkingCopy, lines, "" + lines.size());
+		return false;
+	}
+}
+
+bool is_cell_crossed_ratio(const cv::Mat& cellImage, const Parameters& parameters)
+{
+	cv::Mat cellWorkingCopy = cellImage.clone();
+
+	// resize the working copy
+	cv::resize(cellWorkingCopy, cellWorkingCopy, cv::Size(parameters.default_cell_width, parameters.default_cell_height));
+
+	// convert cell image to a binary image
+	// NECESSARY BECAUSE EXTRACT TABLE FLOODS WITH GREY
+	cv::threshold(cellWorkingCopy, cellWorkingCopy, 200, 255, CV_THRESH_BINARY);
+
+	// after extract_table the image should already be inverted - crosses are white and the background is black
+	// cv::bitwise_not(cellWorkingCopy, cellWorkingCopy);
+
+	size_t whitePixelCount = 0;
+	size_t allPixelsCount = cellWorkingCopy.size().width * cellWorkingCopy.size().height;
+
+	// count white pixels
+	for (int y = 0; y < cellWorkingCopy.size().height; y++)
+	{
+		uchar* row = cellWorkingCopy.ptr(y);
+		for (int x = 0; x < cellWorkingCopy.size().width; x++)
+		{
+			// if this is a white pixel
+			if (row[x] >= 200)
+			{
+				whitePixelCount++;
+			}
+		}
+	}
+
+	float ratio = (float)whitePixelCount / (float)allPixelsCount;
+
+	if (ratio > parameters.lower_threshold && ratio < parameters.upper_threshold)
+	{
+		return true;
+	}
+	else
+	{
 		return false;
 	}
 }

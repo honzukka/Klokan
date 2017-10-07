@@ -78,7 +78,7 @@ sheetAnswers Klokan::extract_answers(cv::Mat& sheetImage)
 			{
 				auto&& cell = tableCells[row][col];
 
-				if (is_cell_crossed(cell, parameters_))
+				if (is_cell_crossed_shape(cell, parameters_))
 				{
 					answers[tableNumber][row - 1].push_back(true);
 				}
