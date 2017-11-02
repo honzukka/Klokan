@@ -39,18 +39,19 @@ std::vector<Table> extract_tables(cv::Mat& sheetImage, const Parameters& paramet
 	cv::dilate(sheetImage, sheetImage, kernel);
 	
 	// find tables one by one
-	for (int i = 0; i < parameters.table_count; i++)
+	//for (int i = 0; i < parameters.table_count; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		cv::Point maxBlobPoint = find_largest_blob(sheetImage, 255 - (i * 5), 255 - ((i + 1) * 5));
 
 		cv::Mat sheetImageCopy = sheetImage.clone();
 		std::vector<cv::Vec2f> lines = find_blob_lines(sheetImageCopy, maxBlobPoint, parameters);
 
-		//debug::show_lines(sheetImage, lines, "all blob lines " + i);
+		debug::show_lines(sheetImage, lines, "all blob lines " + i);
 
 		std::vector<cv::Point> cornerPoints = find_corners_of_table(lines, parameters);
 
-		//debug::show_points(sheetImage, cornerPoints, "corner points " + i);
+		debug::show_points(sheetImage, cornerPoints, "corner points " + i);
 
 		cv::Mat tableImage = crop_fix_perspective(sheetImage, cornerPoints);
 
@@ -121,10 +122,40 @@ std::vector<cv::Vec2f> find_blob_lines(cv::Mat& blobImage, cv::Point blobPoint, 
 	//debug::show_image(blobImage, "looking for lines here");
 
 	// find the lines
-	std::vector<cv::Vec2f> lines;
-	cv::HoughLines(blobImage, lines, 1, parameters.table_line_curvature_limit * (CV_PI / 180), parameters.table_line_length);
+	std::vector<cv::Vec2f> shortLines;
+	std::vector<cv::Vec2f> longLines;
+	cv::HoughLines(blobImage, shortLines, 1, parameters.table_line_curvature_limit * (CV_PI / 180), parameters.student_table_rows * parameters.resized_cell_height);
 
-	return lines;
+	std::vector<cv::Vec2f> chosenLines;
+	for (auto&& line : shortLines)
+	{
+		float rho = line[0];		// the length of the normal (can be negative)
+		float theta = line[1];		// the angle that (rho, 0) vector has to be rotated to the right by to get the normal
+
+		// if line is "vertical"
+		if (theta >= 0 && theta < parameters.table_line_eccentricity_limit
+			|| theta < CV_PI && theta > CV_PI - parameters.table_line_eccentricity_limit)
+		{
+			chosenLines.push_back(line);
+		}
+	}
+
+	cv::HoughLines(blobImage, longLines, 1, parameters.table_line_curvature_limit * (CV_PI / 180), parameters.student_table_columns * parameters.resized_cell_width);
+	
+	for (auto&& line : longLines)
+	{
+		float rho = line[0];		// the length of the normal (can be negative)
+		float theta = line[1];		// the angle that (rho, 0) vector has to be rotated to the right by to get the normal
+
+		// if line is "horizontal"
+		if (theta > CV_PI / 2 - parameters.table_line_eccentricity_limit && theta < CV_PI / 2 + parameters.table_line_eccentricity_limit)
+		{
+			chosenLines.push_back(line);
+		}
+	}
+
+
+	return chosenLines;
 }
 
 // finds the intersections of the extreme lines of the collection

@@ -42,12 +42,12 @@ void extract_answers_api(char* filename, Parameters params, bool* answerArray, b
 
 		// for each cell output if it's crossed of not and save the answer
 		// the first row and the first column do not contain answers
-		for (int row = 1; row < params.table_rows; row++)
+		for (int row = 1; row < params.answer_table_rows; row++)
 		{
 			// start a new answer table row
 			answers[table].push_back(std::vector<bool>());
 			
-			for (int col = 1; col < params.table_columns; col++)
+			for (int col = 1; col < params.answer_table_columns; col++)
 			{
 				auto&& cell = tableCells[row][col];
 
@@ -67,11 +67,11 @@ void extract_answers_api(char* filename, Parameters params, bool* answerArray, b
 	for (int table = 0; table < params.table_count; table++)
 	{
 		// again, the first row and the first column of the original table were removed as they do not contain any answers
-		for (int row = 0; row < params.table_rows - 1; row++)
+		for (int row = 0; row < params.answer_table_rows - 1; row++)
 		{
-			for (int col = 0; col < params.table_columns - 1; col++)
+			for (int col = 0; col < params.answer_table_columns - 1; col++)
 			{
-				int arrayIndex = table * (params.table_rows - 1) * (params.table_columns - 1) + row * (params.table_columns - 1) + col;
+				int arrayIndex = table * (params.answer_table_rows - 1) * (params.answer_table_columns - 1) + row * (params.answer_table_columns - 1) + col;
 				answerArray[arrayIndex] = answers[table][row][col];
 			}
 		}

@@ -47,7 +47,7 @@ int main(int argc, char** argv)
 
 	waitKey(0);
 	*/
-
+	/*
 	Parameters params;
 	bool answersArray[3 * 8 * 5];
 	char* filename = "01-varying_size.jpeg";
@@ -77,6 +77,22 @@ int main(int argc, char** argv)
 			cout << endl;
 		}
 	}
+	*/
+	Parameters params;
 
+	// load the answer sheet
+	cv::Mat sheetImage = cv::imread("sheet1.jpeg", CV_LOAD_IMAGE_GRAYSCALE);
+
+	// extract tables ordered by x-coordinate
+	std::vector<Table> tables = extract_tables(sheetImage, params);
+
+	int i = 0;
+	for (auto&& table : tables)
+	{
+		debug::show_image(table.image, "table" + i);
+		i++;
+	}
+
+	waitKey(0);
 	return 0;
 }

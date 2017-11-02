@@ -5,15 +5,15 @@ std::vector<std::vector<cv::Mat>> extract_cells(const cv::Mat& tableImage, const
 {
 	std::vector<std::vector<cv::Mat>> tableCells;
 	
-	float cellWidth = (float)tableImage.cols / (float)parameters.table_columns;
-	float cellHeight = (float)tableImage.rows / (float)parameters.table_rows;
+	float cellWidth = (float)tableImage.cols / (float)parameters.answer_table_columns;
+	float cellHeight = (float)tableImage.rows / (float)parameters.answer_table_rows;
 
-	for (int row = 0; row < parameters.table_rows; row++)
+	for (int row = 0; row < parameters.answer_table_rows; row++)
 	{
 		// create a new row
 		tableCells.push_back(std::vector<cv::Mat>());
 		
-		for (int column = 0; column < parameters.table_columns; column++)
+		for (int column = 0; column < parameters.answer_table_columns; column++)
 		{
 			// extract the cell
 			float x = column * cellWidth;

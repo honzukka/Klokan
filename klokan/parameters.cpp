@@ -5,13 +5,15 @@ Parameters::Parameters()
 	default_sheet_width = 1700;
 	black_white_threshold = 230;
 
-	table_count = 3;
-	table_line_length = 350;
+	table_count = 4;
 	table_line_eccentricity_limit = CV_PI / 8;
 	table_line_curvature_limit = 1;
-
-	table_rows = 9;
-	table_columns = 6;
+	student_table_rows = 6;
+	student_table_columns = 10;
+	answer_table_rows = 9;
+	answer_table_columns = 6;
+	resized_cell_width = 60;
+	resized_cell_height = 40;
 
 	default_cell_width = 80;
 	default_cell_height = 40;
@@ -44,14 +46,13 @@ bool Parameters::update_from_file(const std::string& filename)
 		std::string paramValue = line.substr(assignmentPosition + 1);
 
 		// try to assign the value
+		// TODO: update to load the new parameters too...
 		try
 		{
 			if (paramName == "default_sheet_width")
 				default_sheet_width = std::stoi(paramValue);
 			else if (paramName == "black_white_threshold")
 				black_white_threshold = std::stoi(paramValue);
-			else if (paramName == "table_line_length")
-				table_line_length = std::stoi(paramValue);
 			else if (paramName == "table_line_eccentricity_limit")
 				table_line_eccentricity_limit = std::stof(paramValue);
 			else if (paramName == "table_line_curvature_limit")
