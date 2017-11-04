@@ -269,3 +269,7 @@ paket-files/
 __pycache__/
 *.pyc
 /submission.zip
+/forms/new_form2.pdf
+/forms/new_form.pdf
+/forms/new_form.docx
+/forms/KARTA_ODPOVEDI_OSTATNI_Junior_Student.pdf
