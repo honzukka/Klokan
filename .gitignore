@@ -269,4 +269,3 @@ paket-files/
 __pycache__/
 *.pyc
 /submission.zip
-/forms
