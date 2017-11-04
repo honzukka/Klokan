@@ -12,7 +12,13 @@ namespace KlokanUI
 	{
 		// unsafe!!!
 		[DllImport("klokan.dll")]
-		public unsafe static extern void extract_answers_api(string filename, Parameters parameters, bool* answers, bool* success);
+		public unsafe static extern void extract_answers_api(string filename, Parameters parameters, bool* number, bool* answers, bool* success);
+	}
+
+	// unsafe!!!
+	unsafe struct NumberWrapper
+	{
+		public fixed bool number[5 * 10];
 	}
 
 	// unsafe!!!
@@ -27,11 +33,14 @@ namespace KlokanUI
 		/// <param name="defaultSheetWidth">Every sheet will be resized accordingly (preserving aspect ratio) before the tables are extracted.</param>
 		/// <param name="blackWhiteThreshold">How bright a shade of grey can be to be recognized as black (the rest will be white).</param>
 		/// <param name="tableCount">The number of table in the answer sheet.</param>
-		/// <param name="tableLineLength">The length of lines to be detected.</param>
 		/// <param name="tableLineEccentricityLimit">How slanted a line can be to be recognized as either horizontal or vertical (in radians).</param>
 		/// <param name="tableLineCurvatureLimit">How curved a line can be to still be recognized as a straight line (1 is minimum).</param>
-		/// <param name="tableRows">The number of rows in a table.</param>
-		/// <param name="tableColumns">The number of columns in a table.</param>
+		/// <param name="studentTableRows">The number of rows in the student number table.</param>
+		/// <param name="studentTableColumns">The number of columns in the student number table.</param>
+		/// <param name="answerTableRows">The number of rows in the answer table.</param>
+		/// <param name="answerTableColumns">The number of columns in the answer table.</param>
+		/// <param name="resizedCellWidth">This is the width of a cell after the sheet has been resized (see default_sheet_width).</param>
+		/// <param name="resizedCellHeight">This is the height of a cell after the sheet has been resized (see default_sheet_height).</param>
 		/// <param name="defaultCellWidth">Every cell will be resized to have this width.</param>
 		/// <param name="defaultCellHeight">Every cell will be resized to have this height.</param>
 		/// <param name="cellEvaluationType">TRUE - shape recognition; FALSE - pixel ratio</param>
@@ -41,8 +50,9 @@ namespace KlokanUI
 		/// <param name="lowerThreshold">If the ratio of pixels representing student input in the whole cell is lower than this, answer was not chosen.</param>
 		/// <param name="upperThreshold">If the ratio of pixels representing student input in the whole cell is higher than this, answer was invalidated.</param>
 		public Parameters(int defaultSheetWidth, int blackWhiteThreshold,
-			int tableCount, int tableLineLength, float tableLineEccentricityLimit, int tableLineCurvatureLimit,
-			int tableRows, int tableColumns,
+			int tableCount, float tableLineEccentricityLimit, int tableLineCurvatureLimit,
+			int studentTableRows, int studentTableColumns, int answerTableRows, int answerTableColumns,
+			int resizedCellWidth, int resizedCellHeight,
 			int defaultCellWidth, int defaultCellHeight, bool cellEvaluationType,
 			int crossLineLength, int crossLineCurvatureLimit, int rubbishLinesLimit,
 			float lowerThreshold, float upperThreshold)
@@ -51,12 +61,14 @@ namespace KlokanUI
 			BlackWhiteThreshold = blackWhiteThreshold;
 
 			TableCount = tableCount;
-			TableLineLength = tableLineLength;
 			TableLineEccentricityLimit = tableLineEccentricityLimit;
 			TableLineCurvatureLimit = tableLineCurvatureLimit;
-
-			TableRows = tableRows;
-			TableColumns = tableColumns;
+			StudentTableRows = studentTableRows;
+			StudentTableColumns = studentTableColumns;
+			AnswerTableRows = answerTableRows;
+			AnswerTableColumns = answerTableColumns;
+			ResizedCellWidth = resizedCellWidth;
+			ResizedCellHeight = resizedCellHeight;
 
 			DefaultCellWidth = defaultCellWidth;
 			DefaultCellHeight = defaultCellHeight;
@@ -74,15 +86,16 @@ namespace KlokanUI
 		public int DefaultSheetWidth { get; }
 		public int BlackWhiteThreshold { get; }
 
-		// parameters of the table extraction process
+		// parameters of the table & cell extraction process
 		public int TableCount { get; }
-		public int TableLineLength { get; }
 		public float TableLineEccentricityLimit { get; }
-		public int TableLineCurvatureLimit { get; } 
-
-		// parameters of the cell extraction process
-		public int TableRows { get; }
-		public int TableColumns { get; }
+		public int TableLineCurvatureLimit { get; }
+		public int StudentTableRows { get; }
+		public int StudentTableColumns { get; }
+		public int AnswerTableRows { get; }
+		public int AnswerTableColumns { get; }
+		public int ResizedCellWidth { get; }
+		public int ResizedCellHeight { get; }
 
 		// parameters of the cell evaluation process
 		public int DefaultCellWidth { get; }
@@ -102,8 +115,8 @@ namespace KlokanUI
 		{
 			return new Parameters (
 				1700, 230,
-				3, 350, (float)(Math.PI / 8), 1,
-				9, 6,
+				4, (float)(Math.PI / 8), 1,
+				6, 11, 9, 6, 55, 35,
 				80, 40, false,
 				35, 5, 10,
 				0.20f, 0.70f

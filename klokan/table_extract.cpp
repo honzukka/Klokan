@@ -3,7 +3,7 @@
 #include "debug.h"
 
 cv::Point find_largest_blob(cv::Mat& image, int threshold, int newThreshold);
-std::vector<cv::Vec2f> find_blob_lines(cv::Mat& blobImage, cv::Point blobPoint, const Parameters& parameters);
+std::vector<cv::Vec2f> find_blob_lines(cv::Mat& blobImage, cv::Point blobPoint, const Parameters& parameters, TableType type);
 std::vector<cv::Point> find_corners_of_table(const std::vector<cv::Vec2f>& lines, const Parameters& parameters);
 void find_extreme_lines(const std::vector<cv::Vec2f>& lines, cv::Vec2f& topEdge, cv::Vec2f& bottomEdge, cv::Vec2f& leftEdge, cv::Vec2f& rightEdge, const Parameters& parameters);
 cv::Point find_intersection(cv::Vec2f line1, cv::Vec2f line2);
@@ -21,14 +21,15 @@ bool TableComparer::operator() (const Table& table1, const Table& table2)
 	}
 }
 
-std::vector<Table> extract_tables(cv::Mat& sheetImage, const Parameters& parameters)
+std::tuple<Table, std::vector<Table>> extract_tables(cv::Mat& sheetImage, const Parameters& parameters)
 {
 	// resize the sheet
 	float heightToWidthRatio = (float)sheetImage.rows / (float)sheetImage.cols;
 	cv::Size newSize(parameters.default_sheet_width, parameters.default_sheet_width * heightToWidthRatio);
 	cv::resize(sheetImage, sheetImage, newSize, 0.0, 0.0);
 	
-	std::vector<Table> tables;
+	Table studentTable;
+	std::vector<Table> answerTables;
 	
 	// convert the image to a binary image and invert it
 	cv::threshold(sheetImage, sheetImage, parameters.black_white_threshold, 255, CV_THRESH_BINARY);
@@ -39,34 +40,43 @@ std::vector<Table> extract_tables(cv::Mat& sheetImage, const Parameters& paramet
 	cv::dilate(sheetImage, sheetImage, kernel);
 	
 	// find tables one by one
-	//for (int i = 0; i < parameters.table_count; i++)
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < parameters.table_count; i++)
 	{
 		cv::Point maxBlobPoint = find_largest_blob(sheetImage, 255 - (i * 5), 255 - ((i + 1) * 5));
 
 		cv::Mat sheetImageCopy = sheetImage.clone();
-		std::vector<cv::Vec2f> lines = find_blob_lines(sheetImageCopy, maxBlobPoint, parameters);
+		std::vector<cv::Vec2f> lines = find_blob_lines(sheetImageCopy, maxBlobPoint, parameters, i == 0 ? STUDENTTABLE : ANSWERTABLE);
 
-		debug::show_lines(sheetImage, lines, "all blob lines " + i);
+		//debug::show_lines(sheetImage, lines, "all blob lines " + i);
 
 		std::vector<cv::Point> cornerPoints = find_corners_of_table(lines, parameters);
 
-		debug::show_points(sheetImage, cornerPoints, "corner points " + i);
+		//debug::show_points(sheetImage, cornerPoints, "corner points " + i);
 
 		cv::Mat tableImage = crop_fix_perspective(sheetImage, cornerPoints);
 
-		// save the table
 		Table table{ tableImage, maxBlobPoint };
-		tables.push_back(std::move(table));
+
+		// save the table
+		if (i == 0)
+		{
+			// student table is the largest table, so it will be chosen first
+			studentTable = std::move(table);
+		}
+		else
+		{
+			// all other tables are answer tables
+			answerTables.push_back(std::move(table));
+		}
 
 		// hide the processed blob (table)
 		cv::floodFill(sheetImage, maxBlobPoint, 0);
 	}
 
-	// sort the tables by the x-coordinate
-	sort(tables.begin(), tables.end(), TableComparer());
+	// sort the answer tables by the x-coordinate
+	sort(answerTables.begin(), answerTables.end(), TableComparer());
 
-	return tables;
+	return {std::move(studentTable), std::move(answerTables)};
 }
 
 // returns the upper left corner of the largest white blob in the image (it is expected to be a table)
@@ -101,7 +111,7 @@ cv::Point find_largest_blob(cv::Mat& image, int threshold, int newThreshold)
 
 // finds all lines in a blob (presumably table) in the input image
 // modifies the input image
-std::vector<cv::Vec2f> find_blob_lines(cv::Mat& blobImage, cv::Point blobPoint, const Parameters& parameters)
+std::vector<cv::Vec2f> find_blob_lines(cv::Mat& blobImage, cv::Point blobPoint, const Parameters& parameters, TableType type)
 {
 	// make the largest blob white again
 	cv::floodFill(blobImage, blobPoint, 255);
@@ -122,12 +132,21 @@ std::vector<cv::Vec2f> find_blob_lines(cv::Mat& blobImage, cv::Point blobPoint, 
 	//debug::show_image(blobImage, "looking for lines here");
 
 	// find the lines
-	std::vector<cv::Vec2f> shortLines;
-	std::vector<cv::Vec2f> longLines;
-	cv::HoughLines(blobImage, shortLines, 1, parameters.table_line_curvature_limit * (CV_PI / 180), parameters.student_table_rows * parameters.resized_cell_height);
-
+	std::vector<cv::Vec2f> verticalLines;
+	std::vector<cv::Vec2f> horizontalLines;
 	std::vector<cv::Vec2f> chosenLines;
-	for (auto&& line : shortLines)
+
+	int verticalLineLength = type == STUDENTTABLE ? 
+		parameters.student_table_rows * parameters.resized_cell_height : 
+		parameters.answer_table_rows * parameters.resized_cell_height;
+	int horizontalLineLength = type == STUDENTTABLE ?
+		parameters.student_table_columns * parameters.resized_cell_width :
+		parameters.answer_table_columns * parameters.resized_cell_width;
+
+	// find vertical lines
+	cv::HoughLines(blobImage, verticalLines, 1, parameters.table_line_curvature_limit * (CV_PI / 180), verticalLineLength);
+
+	for (auto&& line : verticalLines)
 	{
 		float rho = line[0];		// the length of the normal (can be negative)
 		float theta = line[1];		// the angle that (rho, 0) vector has to be rotated to the right by to get the normal
@@ -140,9 +159,10 @@ std::vector<cv::Vec2f> find_blob_lines(cv::Mat& blobImage, cv::Point blobPoint, 
 		}
 	}
 
-	cv::HoughLines(blobImage, longLines, 1, parameters.table_line_curvature_limit * (CV_PI / 180), parameters.student_table_columns * parameters.resized_cell_width);
+	// find horizontal lines
+	cv::HoughLines(blobImage, horizontalLines, 1, parameters.table_line_curvature_limit * (CV_PI / 180), horizontalLineLength);
 	
-	for (auto&& line : longLines)
+	for (auto&& line : horizontalLines)
 	{
 		float rho = line[0];		// the length of the normal (can be negative)
 		float theta = line[1];		// the angle that (rho, 0) vector has to be rotated to the right by to get the normal
@@ -153,7 +173,6 @@ std::vector<cv::Vec2f> find_blob_lines(cv::Mat& blobImage, cv::Point blobPoint, 
 			chosenLines.push_back(line);
 		}
 	}
-
 
 	return chosenLines;
 }

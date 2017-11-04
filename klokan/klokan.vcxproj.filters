@@ -30,9 +30,6 @@
     <ClCompile Include="debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="klokan.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="parameters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -54,9 +51,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="parameters.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="klokan.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="api.h">

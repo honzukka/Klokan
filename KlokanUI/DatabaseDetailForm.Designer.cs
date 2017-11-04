@@ -47,6 +47,8 @@
 			this.discardButton = new System.Windows.Forms.Button();
 			this.reevaluateButton = new System.Windows.Forms.Button();
 			this.updateDatabaseButton = new System.Windows.Forms.Button();
+			this.studentNumberLabel = new System.Windows.Forms.Label();
+			this.studentNumberValueLabel = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.scanPictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.table1PictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.table2PictureBox)).BeginInit();
@@ -56,7 +58,7 @@
 			// idLabel
 			// 
 			this.idLabel.AutoSize = true;
-			this.idLabel.Location = new System.Drawing.Point(38, 36);
+			this.idLabel.Location = new System.Drawing.Point(38, 60);
 			this.idLabel.Name = "idLabel";
 			this.idLabel.Size = new System.Drawing.Size(90, 13);
 			this.idLabel.TabIndex = 0;
@@ -65,7 +67,7 @@
 			// yearLabel
 			// 
 			this.yearLabel.AutoSize = true;
-			this.yearLabel.Location = new System.Drawing.Point(38, 60);
+			this.yearLabel.Location = new System.Drawing.Point(38, 84);
 			this.yearLabel.Name = "yearLabel";
 			this.yearLabel.Size = new System.Drawing.Size(32, 13);
 			this.yearLabel.TabIndex = 1;
@@ -74,7 +76,7 @@
 			// categoryLabel
 			// 
 			this.categoryLabel.AutoSize = true;
-			this.categoryLabel.Location = new System.Drawing.Point(38, 85);
+			this.categoryLabel.Location = new System.Drawing.Point(38, 109);
 			this.categoryLabel.Name = "categoryLabel";
 			this.categoryLabel.Size = new System.Drawing.Size(52, 13);
 			this.categoryLabel.TabIndex = 2;
@@ -83,7 +85,7 @@
 			// pointsLabel
 			// 
 			this.pointsLabel.AutoSize = true;
-			this.pointsLabel.Location = new System.Drawing.Point(38, 111);
+			this.pointsLabel.Location = new System.Drawing.Point(38, 135);
 			this.pointsLabel.Name = "pointsLabel";
 			this.pointsLabel.Size = new System.Drawing.Size(39, 13);
 			this.pointsLabel.TabIndex = 3;
@@ -92,7 +94,7 @@
 			// idValueLabel
 			// 
 			this.idValueLabel.AutoSize = true;
-			this.idValueLabel.Location = new System.Drawing.Point(176, 35);
+			this.idValueLabel.Location = new System.Drawing.Point(176, 59);
 			this.idValueLabel.Name = "idValueLabel";
 			this.idValueLabel.Size = new System.Drawing.Size(68, 13);
 			this.idValueLabel.TabIndex = 4;
@@ -101,7 +103,7 @@
 			// yearValueLabel
 			// 
 			this.yearValueLabel.AutoSize = true;
-			this.yearValueLabel.Location = new System.Drawing.Point(176, 60);
+			this.yearValueLabel.Location = new System.Drawing.Point(176, 84);
 			this.yearValueLabel.Name = "yearValueLabel";
 			this.yearValueLabel.Size = new System.Drawing.Size(80, 13);
 			this.yearValueLabel.TabIndex = 5;
@@ -110,7 +112,7 @@
 			// categoryValueLabel
 			// 
 			this.categoryValueLabel.AutoSize = true;
-			this.categoryValueLabel.Location = new System.Drawing.Point(176, 85);
+			this.categoryValueLabel.Location = new System.Drawing.Point(176, 109);
 			this.categoryValueLabel.Name = "categoryValueLabel";
 			this.categoryValueLabel.Size = new System.Drawing.Size(101, 13);
 			this.categoryValueLabel.TabIndex = 6;
@@ -119,7 +121,7 @@
 			// pointsValueLabel
 			// 
 			this.pointsValueLabel.AutoSize = true;
-			this.pointsValueLabel.Location = new System.Drawing.Point(176, 111);
+			this.pointsValueLabel.Location = new System.Drawing.Point(176, 135);
 			this.pointsValueLabel.Name = "pointsValueLabel";
 			this.pointsValueLabel.Size = new System.Drawing.Size(88, 13);
 			this.pointsValueLabel.TabIndex = 7;
@@ -254,11 +256,31 @@
 			this.updateDatabaseButton.UseVisualStyleBackColor = true;
 			this.updateDatabaseButton.Click += new System.EventHandler(this.updateDatabaseButton_Click);
 			// 
+			// studentNumberLabel
+			// 
+			this.studentNumberLabel.AutoSize = true;
+			this.studentNumberLabel.Location = new System.Drawing.Point(38, 35);
+			this.studentNumberLabel.Name = "studentNumberLabel";
+			this.studentNumberLabel.Size = new System.Drawing.Size(87, 13);
+			this.studentNumberLabel.TabIndex = 21;
+			this.studentNumberLabel.Text = "Student Number:";
+			// 
+			// studentNumberValueLabel
+			// 
+			this.studentNumberValueLabel.AutoSize = true;
+			this.studentNumberValueLabel.Location = new System.Drawing.Point(174, 35);
+			this.studentNumberValueLabel.Name = "studentNumberValueLabel";
+			this.studentNumberValueLabel.Size = new System.Drawing.Size(132, 13);
+			this.studentNumberValueLabel.TabIndex = 22;
+			this.studentNumberValueLabel.Text = "studentNumberValueLabel";
+			// 
 			// DatabaseDetailForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1195, 545);
+			this.Controls.Add(this.studentNumberValueLabel);
+			this.Controls.Add(this.studentNumberLabel);
 			this.Controls.Add(this.updateDatabaseButton);
 			this.Controls.Add(this.reevaluateButton);
 			this.Controls.Add(this.discardButton);
@@ -311,5 +333,7 @@
 		private System.Windows.Forms.Button discardButton;
 		private System.Windows.Forms.Button reevaluateButton;
 		private System.Windows.Forms.Button updateDatabaseButton;
+		private System.Windows.Forms.Label studentNumberLabel;
+		private System.Windows.Forms.Label studentNumberValueLabel;
 	}
 }

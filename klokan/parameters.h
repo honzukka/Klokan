@@ -13,8 +13,6 @@
 struct Parameters
 {
 	Parameters();
-
-	bool update_from_file(const std::string& filename);
 	
 	// parameters used to prepare a sheet image for processing
 	int default_sheet_width;		// every sheet will be resized accordingly (preserving aspect ratio) before the tables are extracted

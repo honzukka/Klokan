@@ -46,7 +46,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -152,7 +152,6 @@
     <ClCompile Include="cell_eval.cpp" />
     <ClCompile Include="cell_extract.cpp" />
     <ClCompile Include="debug.cpp" />
-    <ClCompile Include="klokan.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="parameters.cpp" />
     <ClCompile Include="table_extract.cpp" />
@@ -162,7 +161,6 @@
     <ClInclude Include="cell_eval.h" />
     <ClInclude Include="cell_extract.h" />
     <ClInclude Include="debug.h" />
-    <ClInclude Include="klokan.h" />
     <ClInclude Include="parameters.h" />
     <ClInclude Include="table_extract.h" />
   </ItemGroup>

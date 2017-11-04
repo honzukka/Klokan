@@ -57,11 +57,11 @@ namespace KlokanUI
 					var answerSheetQuery = from sheet in db.AnswerSheets
 										   where sheet.Instance.InstanceId == currentInstance.InstanceId
 										   orderby sheet.Points descending
-										   select new { sheet.AnswerSheetId, sheet.Points };
+										   select new { sheet.AnswerSheetId, sheet.StudentNumber, sheet.Points };
 
 					foreach (var item in answerSheetQuery)
 					{
-						dataView.Rows.Add(item.AnswerSheetId, item.Points);
+						dataView.Rows.Add(item.AnswerSheetId, item.StudentNumber, item.Points);
 					}
 				}
 			}

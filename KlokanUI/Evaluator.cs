@@ -32,9 +32,9 @@ namespace KlokanUI
 			}
 
 			// get the answers from the sheet
-			bool[,,] answers = ExtractAnswers(sheetFilename);
-
-			if (answers == null)
+			int studentNumber;
+			bool[,,] answers;
+			if (ExtractAnswers(sheetFilename, out studentNumber, out answers) == false)
 			{
 				return new Result(true);
 			}
@@ -45,7 +45,7 @@ namespace KlokanUI
 			// count the score
 			int score = CountScore(correctedAnswers);
 
-			return new Result(year, category, correctedAnswers, score, sheetFilename,  false);
+			return new Result(year, category, studentNumber, correctedAnswers, score, sheetFilename,  false);
 		}
 
 		/// <summary>
@@ -53,33 +53,68 @@ namespace KlokanUI
 		/// This method is unsafe.
 		/// </summary>
 		/// <param name="sheetFilename">The path to the image containing answers to be extracted.</param>
-		/// <returns>Answers from an answers sheet or null if there was an error processing the sheet image in the native library.</returns>
-		bool[,,] ExtractAnswers(string sheetFilename)
+		/// <param name="studentNumber">This parameter will contain the student number extracted from the student number table.</param>
+		/// <param name="extractedAnswers">This parameter will contain the answers extracted from the answer tables.</param>
+		/// <returns>True if the process has succeeded and false otherwise.</returns>
+		bool ExtractAnswers(string sheetFilename, out int studentNumber, out bool[,,] extractedAnswers)
 		{
-			bool[,,] extractedAnswers = new bool[3, 8, 5];
+			extractedAnswers = new bool[3, 8, 5];
+			studentNumber = 0;
 
-			// the first row and the first column of the original table were removed as they do not contain any answers
-			int answerRows = parameters.TableRows - 1;
-			int answerColumns = parameters.TableColumns - 1;
+			// the first row and the first column of the original tables were removed as they do not contain any answers
+			int studentNumberRows = parameters.StudentTableRows - 1;
+			int studentNumberColumns = parameters.StudentTableColumns - 1;
+			int answerRows = parameters.AnswerTableRows - 1;
+			int answerColumns = parameters.AnswerTableColumns - 1;
 
+			NumberWrapper numberWrapper = new NumberWrapper();
 			AnswerWrapper answerWrapper = new AnswerWrapper();
 			bool success = false;
 
 			unsafe
 			{
+				bool* numberPtr = numberWrapper.number;
 				bool* answersPtr = answerWrapper.answers;
 				bool* successPtr = &success;
 
 				// call into the native library
-				NativeAPIWrapper.extract_answers_api(sheetFilename, parameters, answersPtr, successPtr);
+				NativeAPIWrapper.extract_answers_api(sheetFilename, parameters, numberPtr, answersPtr, successPtr);
 
 				if (!success)
 				{
-					return null;
+					return false;
+				}
+
+				// convert the number from a C-style array of answers to an actual number
+				for (int row = 0; row < studentNumberRows; row++)
+				{
+					bool numberInRow = false;
+
+					for (int col = 0; col < studentNumberColumns; col++)
+					{
+						if (numberPtr[row * studentNumberColumns + col] == true)
+						{
+							// if a row contains two numbers (answers)
+							if (numberInRow == true)
+							{
+								return false;
+							}
+
+							numberInRow = true;
+							studentNumber *= 10;
+							studentNumber += col;
+						}
+					}
+
+					// if a row doesn't contain a number (an answer)
+					if (numberInRow == false)
+					{
+						return false;
+					}
 				}
 
 				// convert the answers from a C-style array to a C# multi-dimensional array
-				for (int table = 0; table < parameters.TableCount; table++)
+				for (int table = 0; table < parameters.TableCount - 1; table++)
 				{
 					for (int row = 0; row < answerRows; row++)
 					{
@@ -98,7 +133,7 @@ namespace KlokanUI
 				}
 			}
 
-			return extractedAnswers;
+			return true;
 		}
 
 		/// <summary>
@@ -112,12 +147,12 @@ namespace KlokanUI
 		{
 			AnswerType[,,] correctedAnswers = new AnswerType[3,8,5];
 
-			for (int table = 0; table < parameters.TableCount; table++)
+			for (int table = 0; table < parameters.TableCount - 1; table++)
 			{
 				// the first row and the first column of the original table were removed as they do not contain any answers
-				for (int row = 0; row < parameters.TableRows - 1; row++)
+				for (int row = 0; row < parameters.AnswerTableRows - 1; row++)
 				{
-					for (int col = 0; col < parameters.TableColumns - 1; col++)
+					for (int col = 0; col < parameters.AnswerTableColumns - 1; col++)
 					{
 						// if the answer is no and correct
 						if (answers[table, row, col] == false && correctAnswers[table, row, col] == false)
@@ -150,16 +185,16 @@ namespace KlokanUI
 		{
 			int score = 24;
 
-			for (int table = 0; table < parameters.TableCount; table++)
+			for (int table = 0; table < parameters.TableCount - 1; table++)
 			{
 				// the first row and the first column of the original table were removed as they do not contain any answers
-				for (int row = 0; row < parameters.TableRows - 1; row++)
+				for (int row = 0; row < parameters.AnswerTableRows - 1; row++)
 				{
 					int correctAnswersCount = 0;
 					int incorrectAnswersCount = 0;
 
 					// count the types of answers necessary to assign points
-					for (int col = 0; col < parameters.TableColumns - 1; col++)
+					for (int col = 0; col < parameters.AnswerTableColumns - 1; col++)
 					{
 						switch (correctedAnswers[table, row, col])
 						{

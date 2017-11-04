@@ -9,11 +9,11 @@ Parameters::Parameters()
 	table_line_eccentricity_limit = CV_PI / 8;
 	table_line_curvature_limit = 1;
 	student_table_rows = 6;
-	student_table_columns = 10;
+	student_table_columns = 11;
 	answer_table_rows = 9;
 	answer_table_columns = 6;
-	resized_cell_width = 60;
-	resized_cell_height = 40;
+	resized_cell_width = 55;
+	resized_cell_height = 35;
 
 	default_cell_width = 80;
 	default_cell_height = 40;
@@ -25,73 +25,4 @@ Parameters::Parameters()
 
 	lower_threshold = 0.20f;
 	upper_threshold = 0.70f;
-}
-
-bool Parameters::update_from_file(const std::string& filename)
-{
-	std::ifstream inputFile;
-	inputFile.open(filename);
-
-	// check for errors
-	if (!inputFile.is_open()) return false;
-
-	std::string line;
-
-	// read the config file
-	while (std::getline(inputFile, line))
-	{
-		// extract the parameter name and value
-		size_t assignmentPosition = line.find('=');
-		std::string paramName = line.substr(0, assignmentPosition);
-		std::string paramValue = line.substr(assignmentPosition + 1);
-
-		// try to assign the value
-		// TODO: update to load the new parameters too...
-		try
-		{
-			if (paramName == "default_sheet_width")
-				default_sheet_width = std::stoi(paramValue);
-			else if (paramName == "black_white_threshold")
-				black_white_threshold = std::stoi(paramValue);
-			else if (paramName == "table_line_eccentricity_limit")
-				table_line_eccentricity_limit = std::stof(paramValue);
-			else if (paramName == "table_line_curvature_limit")
-				table_line_curvature_limit = std::stoi(paramValue);
-			else if (paramName == "default_cell_width")
-				default_cell_width = std::stoi(paramValue);
-			else if (paramName == "default_cell_height")
-				default_cell_height = std::stoi(paramValue);
-			else if (paramName == "cross_line_length")
-				cross_line_length = std::stoi(paramValue);
-			else if (paramName == "cross_line_curvature_limit")
-				cross_line_curvature_limit = std::stoi(paramValue);
-			else if (paramName == "rubbish_lines_limit")
-				rubbish_lines_limit = std::stoi(paramValue);
-			else
-			{
-				inputFile.close();
-				std::cerr << "Incorrect parameter (" << paramName << ") name." << std::endl;
-				return false;
-			}
-		}
-		catch (const std::invalid_argument& ex)
-		{
-			inputFile.close();
-			std::cerr << "Incorrect parameter (" << paramName << ") value format." << std::endl;
-			return false;
-		}
-		catch (const std::out_of_range& ex)
-		{
-			inputFile.close();
-			std::cerr << "Parameter (" << paramName << ") value out of range." << std::endl;
-			return false;
-		}
-	}
-
-	// close the file
-	inputFile.close();
-	if (inputFile.fail())
-		return false;
-	else
-		return true;
 }

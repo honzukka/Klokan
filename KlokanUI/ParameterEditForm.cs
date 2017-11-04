@@ -33,12 +33,14 @@ namespace KlokanUI
 			toolTip.SetToolTip(blackWhiteThresholdLabel, "How bright a shade of grey can be to be recognized as black (the rest will be white).");
 
 			toolTip.SetToolTip(tableCountLabel, "The number of table in the answer sheet.");
-			toolTip.SetToolTip(tableLineLengthLabel, "The length of lines to be detected.");
 			toolTip.SetToolTip(tableLineEccetricityLimitLabel, "How slanted a line can be to be recognized as either horizontal or vertical (in radians).");
 			toolTip.SetToolTip(tableLineCurvatureLimitLabel, "How curved a line can be to still be recognized as a straight line (1 is minimum).");
-
-			toolTip.SetToolTip(tableRowsLabel, "The number of rows in a table.");
-			toolTip.SetToolTip(tableColumnsLabel, "The number of columns in a table.");
+			toolTip.SetToolTip(studentTableRowsLabel, "The number of rows in the student number table.");
+			toolTip.SetToolTip(studentTableColumnsLabel, "The number of columns in the student number table.");
+			toolTip.SetToolTip(answerTableRowsLabel, "The number of rows in an answer table.");
+			toolTip.SetToolTip(answerTableColumnsLabel, "The number of columns in an answer table.");
+			toolTip.SetToolTip(resizedCellWidthLabel, "This is the width of a cell after the sheet has been resized (see default_sheet_width).");
+			toolTip.SetToolTip(resizedCellHeightLabel, "This is the height of a cell after the sheet has been resized (see default_sheet_height).");
 
 			toolTip.SetToolTip(defaultCellWidthLabel, "Every cell will be resized to have this width.");
 			toolTip.SetToolTip(defaultCellHeightLabel, "Every cell will be resized to have this height.");
@@ -58,12 +60,14 @@ namespace KlokanUI
 			blackWhiteThresholdTextBox.Text = Parameters.BlackWhiteThreshold.ToString();
 
 			tableCountTextBox.Text = Parameters.TableCount.ToString();
-			tableLineLengthTextBox.Text = Parameters.TableLineLength.ToString();
 			tableLineEccentricityLimitTextBox.Text = Parameters.TableLineEccentricityLimit.ToString();
 			tableLineCurvatureLimitTextBox.Text = Parameters.TableLineCurvatureLimit.ToString();
-
-			tableRowsTextBox.Text = Parameters.TableRows.ToString();
-			tableColumnsTextBox.Text = Parameters.TableColumns.ToString();
+			studentTableRowsTextBox.Text = Parameters.StudentTableRows.ToString();
+			studentTableColumnsTextBox.Text = Parameters.StudentTableColumns.ToString();
+			answerTableRowsTextBox.Text = Parameters.AnswerTableRows.ToString();
+			answerTableColumnsTextBox.Text = Parameters.AnswerTableColumns.ToString();
+			resizedCellWidthTextBox.Text = Parameters.ResizedCellWidth.ToString();
+			resizedCellHeightTextBox.Text = Parameters.ResizedCellHeight.ToString();
 
 			defaultCellWidthTextBox.Text = Parameters.DefaultCellWidth.ToString();
 			defaultCellHeightTextBox.Text = Parameters.DefaultCellHeight.ToString();
@@ -83,12 +87,14 @@ namespace KlokanUI
 			int blackWhiteThreshold;
 
 			int tableCount;
-			int tableLineLength;
 			float tableLineEccentricityLimit;
 			int tableLineCurvatureLimit;
-
-			int tableRows;
-			int tableColumns;
+			int studentTableRows;
+			int studentTableColumns;
+			int answerTableRows;
+			int answerTableColumns;
+			int resizedCellWidth;
+			int resizedCellHeight;
 
 			int defaultCellWidth;
 			int defaultCellHeight;
@@ -120,12 +126,6 @@ namespace KlokanUI
 				return;
 			}
 
-			if (!Int32.TryParse(tableLineLengthTextBox.Text, out tableLineLength))
-			{
-				MessageBox.Show("Table Line Length has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
-
 			if (!float.TryParse(tableLineEccentricityLimitTextBox.Text, out tableLineEccentricityLimit))
 			{
 				MessageBox.Show("Table Line Eccentricity Limit has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -138,15 +138,39 @@ namespace KlokanUI
 				return;
 			}
 
-			if (!Int32.TryParse(tableRowsTextBox.Text, out tableRows))
+			if (!Int32.TryParse(studentTableRowsTextBox.Text, out studentTableRows))
 			{
-				MessageBox.Show("Table Rows has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("Student Table Rows has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
-			if (!Int32.TryParse(tableColumnsTextBox.Text, out tableColumns))
+			if (!Int32.TryParse(studentTableColumnsTextBox.Text, out studentTableColumns))
 			{
-				MessageBox.Show("Table Columns has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("Student Table Columns has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			if (!Int32.TryParse(answerTableRowsTextBox.Text, out answerTableRows))
+			{
+				MessageBox.Show("Answer Table Rows has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			if (!Int32.TryParse(answerTableColumnsTextBox.Text, out answerTableColumns))
+			{
+				MessageBox.Show("Answer Table Columns has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			if (!Int32.TryParse(resizedCellWidthTextBox.Text, out resizedCellWidth))
+			{
+				MessageBox.Show("Resized Cell Width has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			if (!Int32.TryParse(resizedCellHeightTextBox.Text, out resizedCellHeight))
+			{
+				MessageBox.Show("Resized Cell Height has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
@@ -199,8 +223,9 @@ namespace KlokanUI
 			}
 
 			Parameters = new Parameters(defaultSheetWidth, blackWhiteThreshold,
-								tableCount, tableLineLength, tableLineEccentricityLimit, tableLineCurvatureLimit,
-								tableRows, tableColumns,
+								tableCount, tableLineEccentricityLimit, tableLineCurvatureLimit,
+								studentTableRows, studentTableColumns, answerTableRows, answerTableColumns,
+								resizedCellWidth, resizedCellHeight,
 								defaultCellWidth, defaultCellHeight, cellEvaluationType,
 								crossLineLength, crossLineCurvatureLimit, rubbishLinesLimit,
 								lowerThreshold, upperThreshold

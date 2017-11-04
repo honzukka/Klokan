@@ -89,13 +89,13 @@ namespace KlokanUI
 						continue;
 					}
 
-					for (int table = 0; table < batch.Parameters.TableCount; table++)
+					for (int table = 0; table < batch.Parameters.TableCount - 1; table++)
 					{
 						sw.WriteLine("Table " + (table + 1) + ":");
 
-						for (int row = 0; row < batch.Parameters.TableRows - 1; row++)
+						for (int row = 0; row < batch.Parameters.AnswerTableRows - 1; row++)
 						{
-							for (int col = 0; col < batch.Parameters.TableColumns - 1; col++)
+							for (int col = 0; col < batch.Parameters.AnswerTableColumns - 1; col++)
 							{
 								switch (result.CorrectedAnswers[table, row, col])
 								{
@@ -171,6 +171,7 @@ namespace KlokanUI
 
 					var answerSheet = new AnswerSheet
 					{
+						StudentNumber = result.StudentNumber,
 						Points = result.Score,
 						ChosenAnswers = GetChosenAnswers(result.CorrectedAnswers),
 						Scan = GetImageBytes(result.SheetFilename, ImageFormat.Png)
@@ -192,16 +193,16 @@ namespace KlokanUI
 		{
 			List<ChosenAnswer> chosenAnswers = new List<ChosenAnswer>();
 
-			for (int table = 0; table < batch.Parameters.TableCount; table++)
+			for (int table = 0; table < batch.Parameters.TableCount - 1; table++)
 			{
 				// the first row and the first column of the original table were removed as they do not contain any answers
-				for (int row = 0; row < batch.Parameters.TableRows - 1; row++)
+				for (int row = 0; row < batch.Parameters.AnswerTableRows - 1; row++)
 				{
 					char enteredValue = '\0';
 					
 					// find out the entered value (entered value can stay '\0' in case the question wasn't answered)
 					// the first row and the first column of the original table were removed as they do not contain any answers
-					for (int col = 0; col < batch.Parameters.TableColumns - 1; col++)
+					for (int col = 0; col < batch.Parameters.AnswerTableColumns - 1; col++)
 					{
 						int numberOfSelectedAnswers = 0;
 
@@ -221,7 +222,7 @@ namespace KlokanUI
 
 					chosenAnswers.Add(new ChosenAnswer
 					{
-						QuestionNumber = (row + 1) + (table * (batch.Parameters.TableRows - 1)),
+						QuestionNumber = (row + 1) + (table * (batch.Parameters.AnswerTableRows - 1)),
 						Value = new String(enteredValue, 1)
 					});
 				}
@@ -239,16 +240,16 @@ namespace KlokanUI
 		{
 			List<CorrectAnswer> correctAnswers = new List<CorrectAnswer>();
 
-			for (int table = 0; table < batch.Parameters.TableCount; table++)
+			for (int table = 0; table < batch.Parameters.TableCount - 1; table++)
 			{
 				// the first row and the first column of the original table were removed as they do not contain any answers
-				for (int row = 0; row < batch.Parameters.TableRows - 1; row++)
+				for (int row = 0; row < batch.Parameters.AnswerTableRows - 1; row++)
 				{
 					char correctValue = '\0';
 
 					// find out the entered and correct value (entered value can stay '\0' in case the question wasn't answered)
 					// the first row and the first column of the original table were removed as they do not contain any answers
-					for (int col = 0; col < batch.Parameters.TableColumns - 1; col++)
+					for (int col = 0; col < batch.Parameters.AnswerTableColumns - 1; col++)
 					{
 						if (correctedAnswers[table, row, col] == AnswerType.Correct ||
 							correctedAnswers[table, row, col] == AnswerType.Corrected)
@@ -260,7 +261,7 @@ namespace KlokanUI
 
 					correctAnswers.Add(new CorrectAnswer
 					{
-						QuestionNumber = (row + 1) + (table * (batch.Parameters.TableRows - 1)),
+						QuestionNumber = (row + 1) + (table * (batch.Parameters.AnswerTableRows - 1)),
 						Value = new string(correctValue, 1)
 					});
 				}

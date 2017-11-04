@@ -3,14 +3,19 @@
 #include "cell_extract.h"
 #include "cell_eval.h"
 
+tableAnswers evaluate_table(const cv::Mat& tableImage, const Parameters& params, TableType type, cellEvalFunc isCellCrossed);
+
 // extracts answers from an answer sheet using image recognition
-// relies on the caller to provide answerArray of size (params.table_count * (params.table_rows - 1) * (params.table_columns - 1)) and the success variable
-void extract_answers_api(char* filename, Parameters params, bool* answerArray, bool* success)
+// relies on the caller to provide numberArray of size (params.student_table_rows - 1) * (params.student_table_columns - 1),
+// answerArray of size (params.table_count * (params.answer_table_rows - 1) * (params.answer_table_columns - 1)) and the success variable
+void extract_answers_api(char* filename, Parameters params, bool* numberArray, bool* answerArray, bool* success)
 {
+	tableAnswers number;
 	sheetAnswers answers;
 
 	// decide which type of cell evaluation will be used
-	bool(*isCellCrossed)(const cv::Mat&, const Parameters&);
+	cellEvalFunc isCellCrossed;
+
 	if (params.cell_evaluation_type == true)
 	{
 		isCellCrossed = is_cell_crossed_shape;
@@ -29,42 +34,34 @@ void extract_answers_api(char* filename, Parameters params, bool* answerArray, b
 	}
 
 	// extract tables ordered by x-coordinate
-	std::vector<Table> tables = extract_tables(sheetImage, params);
+	Table studentTable;
+	std::vector<Table> answerTables;
 
-	// evaluate tables one by one
-	for (int table = 0; table < params.table_count; table++)
+	std::tie(studentTable, answerTables) = extract_tables(sheetImage, params);
+
+	// evaluate tables
+	number = evaluate_table(studentTable.image, params, STUDENTTABLE, isCellCrossed);
+
+	int i = 0;
+	for (auto&& answerTable : answerTables)
 	{
-		// start a new answer table
-		answers.push_back(tableAnswers());
-		
-		// extract the cells of the table
-		auto tableCells = extract_cells(tables[table].image, params);
+		answers.push_back(evaluate_table(answerTable.image, params, ANSWERTABLE, isCellCrossed));
+		i++;
+	}
 
-		// for each cell output if it's crossed of not and save the answer
-		// the first row and the first column do not contain answers
-		for (int row = 1; row < params.answer_table_rows; row++)
+	// save the number into the number array
+	// again, the first row and the first column of the original table were removed as they do not contain any answers
+	for (int row = 0; row < params.student_table_rows - 1; row++)
+	{
+		for (int col = 0; col < params.student_table_columns - 1; col++)
 		{
-			// start a new answer table row
-			answers[table].push_back(std::vector<bool>());
-			
-			for (int col = 1; col < params.answer_table_columns; col++)
-			{
-				auto&& cell = tableCells[row][col];
-
-				if (isCellCrossed(cell, params))
-				{
-					answers[table][row - 1].push_back(true);
-				}
-				else
-				{
-					answers[table][row - 1].push_back(false);
-				}
-			}
+			int arrayIndex = row * (params.student_table_columns - 1) + col;
+			numberArray[arrayIndex] = number[row][col];
 		}
 	}
 
 	// save the answers into the answer array
-	for (int table = 0; table < params.table_count; table++)
+	for (int table = 0; table < params.table_count - 1; table++)
 	{
 		// again, the first row and the first column of the original table were removed as they do not contain any answers
 		for (int row = 0; row < params.answer_table_rows - 1; row++)
@@ -78,4 +75,39 @@ void extract_answers_api(char* filename, Parameters params, bool* answerArray, b
 	}
 
 	*success = true;
+}
+
+tableAnswers evaluate_table(const cv::Mat& tableImage, const Parameters& params, TableType type, cellEvalFunc isCellCrossed)
+{
+	tableAnswers answers;
+
+	int tableColumns = type == STUDENTTABLE ? params.student_table_columns : params.answer_table_columns;
+	int tableRows = type == STUDENTTABLE ? params.student_table_rows : params.answer_table_rows;
+	
+	// extract the cells of the table
+	auto tableCells = extract_cells(tableImage, tableColumns, tableRows);
+
+	// for each cell output if it's crossed of not and save the answer
+	// the first row and the first column do not contain answers
+	for (int row = 1; row < tableRows; row++)
+	{
+		// start a new answer table row
+		answers.push_back(std::vector<bool>());
+
+		for (int col = 1; col < tableColumns; col++)
+		{
+			auto&& cell = tableCells[row][col];
+
+			if (isCellCrossed(cell, params))
+			{
+				answers[row - 1].push_back(true);
+			}
+			else
+			{
+				answers[row - 1].push_back(false);
+			}
+		}
+	}
+
+	return std::move(answers);
 }

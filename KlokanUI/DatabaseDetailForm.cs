@@ -173,6 +173,7 @@ namespace KlokanUI
 
 				Instance currentInstance = instanceQuery.FirstOrDefault();
 
+				studentNumberValueLabel.Text = answerSheet.StudentNumber.ToString();
 				idValueLabel.Text = answerSheet.AnswerSheetId.ToString();
 				yearValueLabel.Text = currentInstance.Year.ToString();
 				categoryValueLabel.Text = currentInstance.Category.ToString();

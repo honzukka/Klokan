@@ -29,8 +29,6 @@
 		private void InitializeComponent()
 		{
 			this.dataView = new System.Windows.Forms.DataGridView();
-			this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.points = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.yearLabel = new System.Windows.Forms.Label();
 			this.yearComboBox = new System.Windows.Forms.ComboBox();
 			this.categoryLabel = new System.Windows.Forms.Label();
@@ -42,6 +40,9 @@
 			this.saveFileDialogExport = new System.Windows.Forms.SaveFileDialog();
 			this.importButton = new System.Windows.Forms.Button();
 			this.openDBDialog = new System.Windows.Forms.OpenFileDialog();
+			this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.studentNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.points = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -56,26 +57,15 @@
 			this.dataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
+            this.studentNumber,
             this.points});
 			this.dataView.Location = new System.Drawing.Point(48, 86);
 			this.dataView.MultiSelect = false;
 			this.dataView.Name = "dataView";
 			this.dataView.ReadOnly = true;
-			this.dataView.Size = new System.Drawing.Size(295, 483);
+			this.dataView.Size = new System.Drawing.Size(383, 483);
 			this.dataView.TabIndex = 0;
 			this.dataView.Click += new System.EventHandler(this.dataView_Click);
-			// 
-			// id
-			// 
-			this.id.HeaderText = "ID";
-			this.id.Name = "id";
-			this.id.ReadOnly = true;
-			// 
-			// points
-			// 
-			this.points.HeaderText = "Points";
-			this.points.Name = "points";
-			this.points.ReadOnly = true;
 			// 
 			// yearLabel
 			// 
@@ -114,7 +104,7 @@
 			// viewButton
 			// 
 			this.viewButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.viewButton.Location = new System.Drawing.Point(384, 26);
+			this.viewButton.Location = new System.Drawing.Point(472, 26);
 			this.viewButton.Name = "viewButton";
 			this.viewButton.Size = new System.Drawing.Size(108, 23);
 			this.viewButton.TabIndex = 5;
@@ -126,7 +116,7 @@
 			// 
 			this.detailButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.detailButton.Enabled = false;
-			this.detailButton.Location = new System.Drawing.Point(384, 86);
+			this.detailButton.Location = new System.Drawing.Point(472, 86);
 			this.detailButton.Name = "detailButton";
 			this.detailButton.Size = new System.Drawing.Size(108, 23);
 			this.detailButton.TabIndex = 6;
@@ -136,7 +126,8 @@
 			// 
 			// exportAllButton
 			// 
-			this.exportAllButton.Location = new System.Drawing.Point(384, 546);
+			this.exportAllButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.exportAllButton.Location = new System.Drawing.Point(472, 546);
 			this.exportAllButton.Name = "exportAllButton";
 			this.exportAllButton.Size = new System.Drawing.Size(108, 23);
 			this.exportAllButton.TabIndex = 7;
@@ -146,7 +137,8 @@
 			// 
 			// exportSelectionButton
 			// 
-			this.exportSelectionButton.Location = new System.Drawing.Point(384, 517);
+			this.exportSelectionButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.exportSelectionButton.Location = new System.Drawing.Point(472, 517);
 			this.exportSelectionButton.Name = "exportSelectionButton";
 			this.exportSelectionButton.Size = new System.Drawing.Size(108, 23);
 			this.exportSelectionButton.TabIndex = 8;
@@ -160,7 +152,8 @@
 			// 
 			// importButton
 			// 
-			this.importButton.Location = new System.Drawing.Point(384, 488);
+			this.importButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.importButton.Location = new System.Drawing.Point(472, 488);
 			this.importButton.Name = "importButton";
 			this.importButton.Size = new System.Drawing.Size(108, 23);
 			this.importButton.TabIndex = 9;
@@ -168,11 +161,29 @@
 			this.importButton.UseVisualStyleBackColor = true;
 			this.importButton.Click += new System.EventHandler(this.importButton_Click);
 			// 
+			// id
+			// 
+			this.id.HeaderText = "ID";
+			this.id.Name = "id";
+			this.id.ReadOnly = true;
+			// 
+			// studentNumber
+			// 
+			this.studentNumber.HeaderText = "Student Number";
+			this.studentNumber.Name = "studentNumber";
+			this.studentNumber.ReadOnly = true;
+			// 
+			// points
+			// 
+			this.points.HeaderText = "Points";
+			this.points.Name = "points";
+			this.points.ReadOnly = true;
+			// 
 			// DatabaseForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(522, 601);
+			this.ClientSize = new System.Drawing.Size(610, 601);
 			this.Controls.Add(this.importButton);
 			this.Controls.Add(this.exportSelectionButton);
 			this.Controls.Add(this.exportAllButton);
@@ -195,8 +206,6 @@
 		#endregion
 
 		private System.Windows.Forms.DataGridView dataView;
-		private System.Windows.Forms.DataGridViewTextBoxColumn id;
-		private System.Windows.Forms.DataGridViewTextBoxColumn points;
 		private System.Windows.Forms.Label yearLabel;
 		private System.Windows.Forms.ComboBox yearComboBox;
 		private System.Windows.Forms.Label categoryLabel;
@@ -208,5 +217,8 @@
 		private System.Windows.Forms.SaveFileDialog saveFileDialogExport;
 		private System.Windows.Forms.Button importButton;
 		private System.Windows.Forms.OpenFileDialog openDBDialog;
+		private System.Windows.Forms.DataGridViewTextBoxColumn id;
+		private System.Windows.Forms.DataGridViewTextBoxColumn studentNumber;
+		private System.Windows.Forms.DataGridViewTextBoxColumn points;
 	}
 }
