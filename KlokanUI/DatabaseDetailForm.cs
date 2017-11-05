@@ -98,7 +98,12 @@ namespace KlokanUI
 				return;
 			}
 
-			List<KlokanDBChosenAnswer> newChosenAnswers = GetChosenAnswers();
+			List<KlokanDBChosenAnswer> newChosenAnswers = new List<KlokanDBChosenAnswer>();
+			for (int i = 0; i < 3; i++)
+			{
+				newChosenAnswers.AddRange(HelperFunctions.AnswersToDbSet<KlokanDBChosenAnswer>(chosenAnswers, i, false));
+			}
+
 			int newPoints = points;
 
 			using (var db = new KlokanDBContext())
@@ -290,46 +295,6 @@ namespace KlokanUI
 			}
 
 			return newPoints;
-		}
-
-		// TODO: duplicate code?
-		List<KlokanDBChosenAnswer> GetChosenAnswers()
-		{
-			List<KlokanDBChosenAnswer> chosenAnswersDB = new List<KlokanDBChosenAnswer>();
-
-			for (int table = 0; table < 3; table++)
-			{
-				for (int row = 0; row < 8; row++)
-				{
-					char enteredValue = '\0';
-
-					// find out the entered value (entered value can stay '\0' in case the question wasn't answered)
-					for (int col = 0; col < 5; col++)
-					{
-						int numberOfSelectedAnswers = 0;
-
-						if (chosenAnswers[table, row, col] == true)
-						{
-							enteredValue = (char)('a' + col);
-							numberOfSelectedAnswers++;
-						}
-
-						// keep in mind that more answers can be selected
-						if (numberOfSelectedAnswers > 1)
-						{
-							enteredValue = 'x';
-						}
-					}
-
-					chosenAnswersDB.Add(new KlokanDBChosenAnswer
-					{
-						QuestionNumber = (row + 1) + (table * 8),
-						Value = new String(enteredValue, 1)
-					});
-				}
-			}
-
-			return chosenAnswersDB;
 		}
 	}
 }

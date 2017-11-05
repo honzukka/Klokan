@@ -174,7 +174,7 @@ namespace KlokanUI
 						StudentNumber = result.StudentNumber,
 						Points = result.Score,
 						ChosenAnswers = GetChosenAnswers(result.CorrectedAnswers),
-						Scan = GetImageBytes(result.SheetFilename, ImageFormat.Png)
+						Scan = HelperFunctions.GetImageBytes(result.SheetFilename, ImageFormat.Png)
 					};
 
 					currentInstance.AnswerSheets.Add(answerSheet);
@@ -268,21 +268,6 @@ namespace KlokanUI
 			}
 
 			return correctAnswers;
-		}
-
-		/// <summary>
-		/// Transforms an image into an array of bytes in a specified format.
-		/// </summary>
-		/// <param name="imageFilename">Path to the image that will be transformed.</param>
-		/// <param name="imageFormat">The format in which the image will be stored into the array.</param>
-		byte[] GetImageBytes(string imageFilename, ImageFormat imageFormat)
-		{
-			using (var memoryStream = new MemoryStream())
-			using (var sheetImage = Image.FromFile(imageFilename))
-			{
-				sheetImage.Save(memoryStream, imageFormat);
-				return memoryStream.ToArray();
-			}
 		}
 
 		/// <summary>

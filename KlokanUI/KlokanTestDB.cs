@@ -16,8 +16,8 @@ namespace KlokanUI
 	{
 		public KlokanTestDBScan()
 		{
-			ExpectedValues = new List<KlokanTestDBExpectedValue>();
-			ComputedValues = new List<KlokanTestDBComputedValue>();
+			ExpectedValues = new List<KlokanTestDBExpectedAnswer>();
+			ComputedValues = new List<KlokanTestDBComputedAnswer>();
 		}
 
 		[Key]
@@ -25,19 +25,11 @@ namespace KlokanUI
 		public byte[] Image { get; set; }
 		public float Correctness { get; set; }
 
-		public virtual ICollection<KlokanTestDBExpectedValue> ExpectedValues { get; set; }
-		public virtual ICollection<KlokanTestDBComputedValue> ComputedValues { get; set; }
+		public virtual ICollection<KlokanTestDBExpectedAnswer> ExpectedValues { get; set; }
+		public virtual ICollection<KlokanTestDBComputedAnswer> ComputedValues { get; set; }
 	}
 
-	public abstract class KlokanTestDBValue
-	{
-		[Key]
-		public int ValueId { get; set; }
-		public int QuestionIdentifier { get; set; }
-		public string Value { get; set; }
-	}
-
-	public class KlokanTestDBExpectedValue
+	public class KlokanTestDBExpectedAnswer : KlokanDBAnswer
 	{
 		[Required]
 		public int ScanId { get; set; }
@@ -46,7 +38,7 @@ namespace KlokanUI
 		public virtual KlokanTestDBScan Scan { get; set; }
 	}
 
-	public class KlokanTestDBComputedValue
+	public class KlokanTestDBComputedAnswer : KlokanDBAnswer
 	{
 		[Required]
 		public int ScanId { get; set; }
@@ -62,12 +54,12 @@ namespace KlokanUI
 		public KlokanTestDBContext(SQLiteConnection connection) : base(connection, true) { }
 
 		public DbSet<KlokanTestDBScan> Scans { get; set; }
-		public DbSet<KlokanTestDBExpectedValue> ExpectedValues { get; set; }
-		public DbSet<KlokanTestDBComputedValue> ComputedValues { get; set; }
+		public DbSet<KlokanTestDBExpectedAnswer> ExpectedValues { get; set; }
+		public DbSet<KlokanTestDBComputedAnswer> ComputedValues { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			var sqliteConnectionInitializer = new SqliteCreateDatabaseIfNotExists<KlokanTestDBContext>(modelBuilder);
+			var sqliteConnectionInitializer = new SqliteDropCreateDatabaseAlways<KlokanTestDBContext>(modelBuilder);
 			Database.SetInitializer(sqliteConnectionInitializer);
 		}
 	}

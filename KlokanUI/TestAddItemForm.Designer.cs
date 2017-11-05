@@ -34,16 +34,16 @@
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.okButton = new System.Windows.Forms.Button();
 			this.expectedValuesLabel = new System.Windows.Forms.Label();
-			this.table3PictureBox = new System.Windows.Forms.PictureBox();
-			this.table2PictureBox = new System.Windows.Forms.PictureBox();
-			this.table1PictureBox = new System.Windows.Forms.PictureBox();
+			this.answerTable3PictureBox = new System.Windows.Forms.PictureBox();
+			this.answerTable2PictureBox = new System.Windows.Forms.PictureBox();
+			this.answerTable1PictureBox = new System.Windows.Forms.PictureBox();
 			this.scanPictureBox = new System.Windows.Forms.PictureBox();
-			this.pictureBox1 = new System.Windows.Forms.PictureBox();
-			((System.ComponentModel.ISupportInitialize)(this.table3PictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.table2PictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.table1PictureBox)).BeginInit();
+			this.studentTablePictureBox = new System.Windows.Forms.PictureBox();
+			((System.ComponentModel.ISupportInitialize)(this.answerTable3PictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.answerTable2PictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.answerTable1PictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.scanPictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.studentTablePictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// chooseFileButton
@@ -78,6 +78,7 @@
 			this.okButton.TabIndex = 17;
 			this.okButton.Text = "OK";
 			this.okButton.UseVisualStyleBackColor = true;
+			this.okButton.Click += new System.EventHandler(this.okButton_Click);
 			// 
 			// expectedValuesLabel
 			// 
@@ -89,41 +90,44 @@
 			this.expectedValuesLabel.TabIndex = 18;
 			this.expectedValuesLabel.Text = "Expected Values:";
 			// 
-			// table3PictureBox
+			// answerTable3PictureBox
 			// 
-			this.table3PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.table3PictureBox.Image = ((System.Drawing.Image)(resources.GetObject("table3PictureBox.Image")));
-			this.table3PictureBox.Location = new System.Drawing.Point(512, 487);
-			this.table3PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
-			this.table3PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
-			this.table3PictureBox.Name = "table3PictureBox";
-			this.table3PictureBox.Size = new System.Drawing.Size(241, 225);
-			this.table3PictureBox.TabIndex = 16;
-			this.table3PictureBox.TabStop = false;
+			this.answerTable3PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.answerTable3PictureBox.Image = ((System.Drawing.Image)(resources.GetObject("answerTable3PictureBox.Image")));
+			this.answerTable3PictureBox.Location = new System.Drawing.Point(512, 487);
+			this.answerTable3PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
+			this.answerTable3PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
+			this.answerTable3PictureBox.Name = "answerTable3PictureBox";
+			this.answerTable3PictureBox.Size = new System.Drawing.Size(241, 225);
+			this.answerTable3PictureBox.TabIndex = 16;
+			this.answerTable3PictureBox.TabStop = false;
+			this.answerTable3PictureBox.Click += new System.EventHandler(this.answerTable3PictureBox_Click);
 			// 
-			// table2PictureBox
+			// answerTable2PictureBox
 			// 
-			this.table2PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.table2PictureBox.Image = ((System.Drawing.Image)(resources.GetObject("table2PictureBox.Image")));
-			this.table2PictureBox.Location = new System.Drawing.Point(759, 256);
-			this.table2PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
-			this.table2PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
-			this.table2PictureBox.Name = "table2PictureBox";
-			this.table2PictureBox.Size = new System.Drawing.Size(241, 225);
-			this.table2PictureBox.TabIndex = 15;
-			this.table2PictureBox.TabStop = false;
+			this.answerTable2PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.answerTable2PictureBox.Image = ((System.Drawing.Image)(resources.GetObject("answerTable2PictureBox.Image")));
+			this.answerTable2PictureBox.Location = new System.Drawing.Point(759, 256);
+			this.answerTable2PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
+			this.answerTable2PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
+			this.answerTable2PictureBox.Name = "answerTable2PictureBox";
+			this.answerTable2PictureBox.Size = new System.Drawing.Size(241, 225);
+			this.answerTable2PictureBox.TabIndex = 15;
+			this.answerTable2PictureBox.TabStop = false;
+			this.answerTable2PictureBox.Click += new System.EventHandler(this.answerTable2PictureBox_Click);
 			// 
-			// table1PictureBox
+			// answerTable1PictureBox
 			// 
-			this.table1PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.table1PictureBox.Image = ((System.Drawing.Image)(resources.GetObject("table1PictureBox.Image")));
-			this.table1PictureBox.Location = new System.Drawing.Point(512, 256);
-			this.table1PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
-			this.table1PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
-			this.table1PictureBox.Name = "table1PictureBox";
-			this.table1PictureBox.Size = new System.Drawing.Size(241, 225);
-			this.table1PictureBox.TabIndex = 14;
-			this.table1PictureBox.TabStop = false;
+			this.answerTable1PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.answerTable1PictureBox.Image = ((System.Drawing.Image)(resources.GetObject("answerTable1PictureBox.Image")));
+			this.answerTable1PictureBox.Location = new System.Drawing.Point(512, 256);
+			this.answerTable1PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
+			this.answerTable1PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
+			this.answerTable1PictureBox.Name = "answerTable1PictureBox";
+			this.answerTable1PictureBox.Size = new System.Drawing.Size(241, 225);
+			this.answerTable1PictureBox.TabIndex = 14;
+			this.answerTable1PictureBox.TabStop = false;
+			this.answerTable1PictureBox.Click += new System.EventHandler(this.answerTable1PictureBox_Click);
 			// 
 			// scanPictureBox
 			// 
@@ -137,40 +141,41 @@
 			this.scanPictureBox.TabIndex = 2;
 			this.scanPictureBox.TabStop = false;
 			// 
-			// pictureBox1
+			// studentTablePictureBox
 			// 
-			this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.pictureBox1.Image = global::KlokanUI.Properties.Resources.studentTableImage;
-			this.pictureBox1.Location = new System.Drawing.Point(512, 86);
-			this.pictureBox1.MaximumSize = new System.Drawing.Size(488, 164);
-			this.pictureBox1.MinimumSize = new System.Drawing.Size(488, 164);
-			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(488, 164);
-			this.pictureBox1.TabIndex = 19;
-			this.pictureBox1.TabStop = false;
+			this.studentTablePictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.studentTablePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("studentTablePictureBox.Image")));
+			this.studentTablePictureBox.Location = new System.Drawing.Point(512, 86);
+			this.studentTablePictureBox.MaximumSize = new System.Drawing.Size(488, 164);
+			this.studentTablePictureBox.MinimumSize = new System.Drawing.Size(488, 164);
+			this.studentTablePictureBox.Name = "studentTablePictureBox";
+			this.studentTablePictureBox.Size = new System.Drawing.Size(488, 164);
+			this.studentTablePictureBox.TabIndex = 19;
+			this.studentTablePictureBox.TabStop = false;
+			this.studentTablePictureBox.Click += new System.EventHandler(this.studentTablePictureBox_Click);
 			// 
 			// TestAddItemForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1040, 750);
-			this.Controls.Add(this.pictureBox1);
+			this.Controls.Add(this.studentTablePictureBox);
 			this.Controls.Add(this.expectedValuesLabel);
 			this.Controls.Add(this.okButton);
-			this.Controls.Add(this.table3PictureBox);
-			this.Controls.Add(this.table2PictureBox);
-			this.Controls.Add(this.table1PictureBox);
+			this.Controls.Add(this.answerTable3PictureBox);
+			this.Controls.Add(this.answerTable2PictureBox);
+			this.Controls.Add(this.answerTable1PictureBox);
 			this.Controls.Add(this.scanPictureBox);
 			this.Controls.Add(this.filePathLabel);
 			this.Controls.Add(this.chooseFileButton);
 			this.MinimumSize = new System.Drawing.Size(1056, 789);
 			this.Name = "TestAddItemForm";
 			this.Text = "Klokan - Test - Add Item";
-			((System.ComponentModel.ISupportInitialize)(this.table3PictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.table2PictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.table1PictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.answerTable3PictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.answerTable2PictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.answerTable1PictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.scanPictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.studentTablePictureBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -182,11 +187,11 @@
 		private System.Windows.Forms.Label filePathLabel;
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
 		private System.Windows.Forms.PictureBox scanPictureBox;
-		private System.Windows.Forms.PictureBox table1PictureBox;
-		private System.Windows.Forms.PictureBox table2PictureBox;
-		private System.Windows.Forms.PictureBox table3PictureBox;
+		private System.Windows.Forms.PictureBox answerTable1PictureBox;
+		private System.Windows.Forms.PictureBox answerTable2PictureBox;
+		private System.Windows.Forms.PictureBox answerTable3PictureBox;
 		private System.Windows.Forms.Button okButton;
 		private System.Windows.Forms.Label expectedValuesLabel;
-		private System.Windows.Forms.PictureBox pictureBox1;
+		private System.Windows.Forms.PictureBox studentTablePictureBox;
 	}
 }

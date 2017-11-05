@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace KlokanUI
 {
@@ -17,12 +19,16 @@ namespace KlokanUI
 		/// </summary>
 		/// <param name="mouseEvent">The click event.</param>
 		/// <param name="pictureBox">A reference to the picture box that was clicked.</param>
-		/// <param name="tableIndex">An index of the table represented by the picture box in the correctAnswers array.</param>
-		/// <param name="answers">A multi-dimensional array of answers (yes/no) that are displayed in the table image.</param>
+		/// <param name="tableIndex">The index of the table that was clicked.</param>
+		/// <param name="answers">A three-dimensional array of answers (yes/no) that are displayed in the table image.</param>
 		public static void HandleTableImageClicks(MouseEventArgs mouseEvent, PictureBox pictureBox, int tableIndex, bool[,,] answers)
 		{
-			int cellHeight = pictureBox.Height / 9;
-			int cellWidth = pictureBox.Width / 6;
+			// the tables have one extra column and one extra row that doesn't contain answers but annotations
+			int tableRows = answers.GetUpperBound(1) + 2;
+			int tableColumns = answers.GetUpperBound(2) + 2;
+
+			int cellHeight = pictureBox.Height / tableRows;
+			int cellWidth = pictureBox.Width / tableColumns;
 			int rowClicked = mouseEvent.Y / cellHeight;
 			int columnClicked = mouseEvent.X / cellWidth;
 
@@ -44,7 +50,7 @@ namespace KlokanUI
 					else
 					{
 						// remove any crosses that are already in the row
-						for (int i = 0; i < 5; i++)
+						for (int i = 0; i < tableColumns - 1; i++)
 						{
 							if (answers[tableIndex, rowClicked - 1, i] == true)
 							{
@@ -123,10 +129,17 @@ namespace KlokanUI
 		/// <param name="pen">Pen to be used for drawing.</param>
 		public static void DrawCross(int row, int column, int cellWidth, int cellHeight, Graphics graphics, Pen pen)
 		{
+			int crossOffset = 5;
+
 			Point upperLeft = new Point(column * cellWidth, row * cellHeight);
 			Point upperRight = new Point(upperLeft.X + cellWidth, upperLeft.Y);
 			Point lowerLeft = new Point(upperLeft.X, upperLeft.Y + cellHeight);
 			Point lowerRight = new Point(upperLeft.X + cellWidth, upperLeft.Y + cellHeight);
+
+			upperLeft.X += crossOffset;		upperLeft.Y += crossOffset;
+			upperRight.X -= crossOffset;	upperRight.Y += crossOffset;
+			lowerLeft.X += crossOffset;		lowerLeft.Y -= crossOffset;
+			lowerRight.X -= crossOffset;	lowerRight.Y -= crossOffset;
 
 			graphics.DrawLine(pen, upperLeft, lowerRight);
 			graphics.DrawLine(pen, upperRight, lowerLeft);
@@ -160,8 +173,122 @@ namespace KlokanUI
 		/// <param name="pen">Pen to be used for drawing.</param>
 		public static void RemoveCellContent(int row, int column, int cellWidth, int cellHeight, Graphics graphics)
 		{
-			Rectangle cell = new Rectangle((column * cellWidth) + 1, (row * cellHeight) + 1, cellWidth - 2, cellHeight - 2);
+			int contentOffset = 4;
+
+			Rectangle cell = new Rectangle(column * cellWidth, row * cellHeight, cellWidth, cellHeight);
+
+			cell.X += contentOffset;			cell.Y += contentOffset;
+			cell.Width -= (contentOffset * 2);	cell.Height -= (contentOffset * 2);
+
 			graphics.FillRectangle(Brushes.White, cell);
+		}
+
+		/// <summary>
+		/// Transforms an image into an array of bytes in a specified format.
+		/// </summary>
+		/// <param name="imageFilename">Path to the image that will be transformed.</param>
+		/// <param name="imageFormat">The format in which the image will be stored into the array.</param>
+		public static byte[] GetImageBytes(string imageFilename, ImageFormat imageFormat)
+		{
+			using (var memoryStream = new MemoryStream())
+			using (var sheetImage = Image.FromFile(imageFilename))
+			{
+				sheetImage.Save(memoryStream, imageFormat);
+				return memoryStream.ToArray();
+			}
+		}
+
+		/// <summary>
+		/// Checks whether an answer is selected in each row.
+		/// (there can't be two or more answers selected thanks to the implementation of HandlePictureBoxClicks() )
+		/// </summary>
+		/// <param name="answers">A three-dimensional array containing the answers. (=Array of tables)</param>
+		/// <param name="tableIndex">The index of the table to check.</param>
+		/// <returns></returns>
+		public static bool CheckAnswers(bool[,,] answers, int tableIndex)
+		{
+			int tableRows = answers.GetUpperBound(1) + 1;
+			int tableColumns = answers.GetUpperBound(2) + 1;
+
+			for (int row = 0; row < tableRows; row++)
+			{
+				bool rowContainsAnswer = false;
+
+				for (int col = 0; col < tableColumns; col++)
+				{
+					if (answers[tableIndex, row, col] == true)
+					{
+						rowContainsAnswer = true;
+						break;
+					}
+				}
+
+				if (!rowContainsAnswer)
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		/// <summary>
+		/// This function converts answers from a table (answer table or student table) into DbSets that inherit from KlokanDBAnswer.
+		/// Uses reflection and therefore is not suitable for automated batch processing.
+		/// </summary>
+		/// <typeparam name="T">The specific DbSet type that inherits from KlokanDBAnswer.</typeparam>
+		/// <param name="answers">A three-dimensional table of answers.</param>
+		/// <param name="tableIndex">The index of a table which is to be converted.</param>
+		/// <param name="isStudentTable">A flag that tells whether the table is a student table and therefore should be treated slightly differently.</param>
+		public static List<T> AnswersToDbSet<T>(bool[,,] answers, int tableIndex, bool isStudentTable) where T : KlokanDBAnswer
+		{
+			int tableRows = answers.GetUpperBound(1) + 1;
+			int tableColumns = answers.GetUpperBound(2) + 1;
+
+			List<T> chosenAnswersDB = new List<T>();
+
+			for (int row = 0; row < tableRows; row++)
+			{
+				char enteredValue = '\0';
+
+				// find out the entered value (entered value can stay '\0' in case the question wasn't answered)
+				for (int col = 0; col < tableColumns; col++)
+				{
+					int numberOfSelectedAnswers = 0;
+
+					if (answers[tableIndex, row, col] == true)
+					{
+						enteredValue = (char)('a' + col);
+						numberOfSelectedAnswers++;
+					}
+
+					// keep in mind that more answers can be selected
+					if (numberOfSelectedAnswers > 1)
+					{
+						enteredValue = 'x';
+					}
+				}
+
+				// reflection is fine to use here because this function is never called in automated batch processing
+				// it is always called in forms which allow the user to edit 1 sheet
+				var answerInstance = Activator.CreateInstance(typeof(T)) as T;
+
+				if (isStudentTable)
+				{
+					// student table answers are assigned to questions with negative numbers
+					answerInstance.QuestionNumber = row - 5;
+				}
+				else
+				{
+					answerInstance.QuestionNumber = (row + 1) + (tableIndex * 8);
+				}
+
+				answerInstance.Value = new String(enteredValue, 1);
+
+				chosenAnswersDB.Add(answerInstance);
+			}
+
+			return chosenAnswersDB;
 		}
 	}
 }

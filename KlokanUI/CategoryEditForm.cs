@@ -105,10 +105,13 @@ namespace KlokanUI
 		// save the batch and close the form
 		private void saveButton_Click(object sender, EventArgs e)
 		{
-			if (!CheckCorrectAnswers())
+			for (int i = 0; i < 3; i++)
 			{
-				MessageBox.Show("Correct answers have not been properly selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
+				if (!HelperFunctions.CheckAnswers(correctAnswers, i))
+				{
+					MessageBox.Show("Correct answers have not been properly selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return;
+				}
 			}
 
 			if (answerSheetFilenames.Count == 0)
@@ -145,35 +148,6 @@ namespace KlokanUI
 		private void table3PictureBox_Click(object sender, EventArgs e)
 		{
 			HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, table3PictureBox, 2, correctAnswers);
-		}
-
-		// checks whether an answer is selected in each row 
-		// (there can't be two or more answers selected thanks to the implementation of HandlePictureBoxClicks() )
-		private bool CheckCorrectAnswers()
-		{
-			for (int table = 0; table < 3; table++)
-			{
-				for (int row = 0; row < 8; row++)
-				{
-					bool rowContainsAnswer = false;
-
-					for (int col = 0; col < 5; col++)
-					{
-						if (correctAnswers[table, row, col] == true)
-						{
-							rowContainsAnswer = true;
-							break;
-						}
-					}
-
-					if (!rowContainsAnswer)
-					{
-						return false;
-					}
-				}
-			}
-
-			return true;
 		}
 	}
 }
