@@ -12,12 +12,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KlokanUI
 {
-	public class Instance
+	public class KlokanDBInstance
 	{
-		public Instance()
+		public KlokanDBInstance()
 		{
-			CorrectAnswers = new List<CorrectAnswer>();
-			AnswerSheets = new List<AnswerSheet>();
+			CorrectAnswers = new List<KlokanDBCorrectAnswer>();
+			AnswerSheets = new List<KlokanDBAnswerSheet>();
 		}
 
 		[Key]
@@ -27,20 +27,19 @@ namespace KlokanUI
 		[MaxLength(10)]
 		public string Category { get; set; }
 
-		public virtual ICollection<CorrectAnswer> CorrectAnswers { get; set; }
-		public virtual ICollection<AnswerSheet> AnswerSheets { get; set; }
+		public virtual ICollection<KlokanDBCorrectAnswer> CorrectAnswers { get; set; }
+		public virtual ICollection<KlokanDBAnswerSheet> AnswerSheets { get; set; }
 	}
 
-	public class AnswerSheet
+	public class KlokanDBAnswerSheet
 	{
-		public AnswerSheet()
+		public KlokanDBAnswerSheet()
 		{
-			ChosenAnswers = new List<ChosenAnswer>();
+			ChosenAnswers = new List<KlokanDBChosenAnswer>();
 		}
 
 		[Key]
 		public int AnswerSheetId { get; set; }
-		// TODO: implement this
 		public int StudentNumber { get; set; }
 		public int Points { get; set; }
 		public byte[] Scan { get; set; }
@@ -49,12 +48,12 @@ namespace KlokanUI
 		public int InstanceId { get; set; }
 
 		[ForeignKey("InstanceId"), Required]
-		public virtual Instance Instance { get; set; }
+		public virtual KlokanDBInstance Instance { get; set; }
 
-		public virtual ICollection<ChosenAnswer> ChosenAnswers { get; set; }
+		public virtual ICollection<KlokanDBChosenAnswer> ChosenAnswers { get; set; }
 	}
 
-	public abstract class Answer
+	public abstract class KlokanDBAnswer
 	{
 		[Key]
 		public int AnswerId { get; set; }
@@ -62,22 +61,22 @@ namespace KlokanUI
 		public string Value { get; set; }
 	}
 
-	public class CorrectAnswer : Answer
+	public class KlokanDBCorrectAnswer : KlokanDBAnswer
 	{
 		[Required]
 		public int InstanceId { get; set; }
 
 		[ForeignKey("InstanceId"), Required]
-		public virtual Instance Instance { get; set; }
+		public virtual KlokanDBInstance Instance { get; set; }
 	}
 
-	public class ChosenAnswer : Answer
+	public class KlokanDBChosenAnswer : KlokanDBAnswer
 	{
 		[Required]
 		public int AnswerSheetId { get; set; }
 
 		[ForeignKey("AnswerSheetId"), Required]
-		public virtual AnswerSheet AnswerSheet { get; set; }
+		public virtual KlokanDBAnswerSheet AnswerSheet { get; set; }
 	}
 
 	public class KlokanDBContext : DbContext
@@ -86,10 +85,10 @@ namespace KlokanUI
 
 		public KlokanDBContext(SQLiteConnection connection) : base(connection, true) { }
 
-		public DbSet<Instance> Instances { get; set; }
-		public DbSet<AnswerSheet> AnswerSheets { get; set; }
-		public DbSet<CorrectAnswer> CorrectAnswers { get; set; }
-		public DbSet<ChosenAnswer> ChosenAnswers { get; set; }
+		public DbSet<KlokanDBInstance> Instances { get; set; }
+		public DbSet<KlokanDBAnswerSheet> AnswerSheets { get; set; }
+		public DbSet<KlokanDBCorrectAnswer> CorrectAnswers { get; set; }
+		public DbSet<KlokanDBChosenAnswer> ChosenAnswers { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

@@ -46,7 +46,7 @@ namespace KlokanUI
 
 			// draw only chosen answers as only those can be edited
 			ResetTableImages();
-			AnswerDrawing.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, AnswerDrawing.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
 
 			// create a copy of currently chosen answers for editing
 			chosenAnswersTemp = new bool[3, 8, 5];
@@ -71,7 +71,7 @@ namespace KlokanUI
 
 			// draw the original answers
 			ResetTableImages();
-			AnswerDrawing.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, AnswerDrawing.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
 		}
 
 		private void reevaluateButton_Click(object sender, EventArgs e)
@@ -84,8 +84,8 @@ namespace KlokanUI
 
 			// draw both chosen and correct answers again
 			ResetTableImages();
-			AnswerDrawing.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, AnswerDrawing.DrawCross, Color.Black);
-			AnswerDrawing.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, AnswerDrawing.DrawCircle, Color.Red);
+			HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, HelperFunctions.DrawCircle, Color.Red);
 		}
 
 		private void updateDatabaseButton_Click(object sender, EventArgs e)
@@ -98,7 +98,7 @@ namespace KlokanUI
 				return;
 			}
 
-			List<ChosenAnswer> newChosenAnswers = GetChosenAnswers();
+			List<KlokanDBChosenAnswer> newChosenAnswers = GetChosenAnswers();
 			int newPoints = points;
 
 			using (var db = new KlokanDBContext())
@@ -107,12 +107,12 @@ namespace KlokanUI
 							where sheet.AnswerSheetId == answerSheetId
 							select sheet;
 
-				AnswerSheet answerSheet = query.FirstOrDefault();
+				KlokanDBAnswerSheet answerSheet = query.FirstOrDefault();
 
 				// load the old chosen answers so that EF knows it should delete them when the old answer sheet is deleted
-				List<ChosenAnswer> blah = new List<ChosenAnswer>(answerSheet.ChosenAnswers);
+				List<KlokanDBChosenAnswer> blah = new List<KlokanDBChosenAnswer>(answerSheet.ChosenAnswers);
 
-				AnswerSheet updatedAnswerSheet = new AnswerSheet {
+				KlokanDBAnswerSheet updatedAnswerSheet = new KlokanDBAnswerSheet {
 					StudentNumber = answerSheet.StudentNumber,
 					Points = newPoints,
 					Scan = answerSheet.Scan,
@@ -133,7 +133,7 @@ namespace KlokanUI
 			// if in edit mode
 			if (editButton.Enabled == false)
 			{
-				AnswerSelection.HandleTableImageClicks(e as MouseEventArgs, table1PictureBox, 0, chosenAnswersTemp);
+				HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, table1PictureBox, 0, chosenAnswersTemp);
 			}
 		}
 
@@ -142,7 +142,7 @@ namespace KlokanUI
 			// if in edit mode
 			if (editButton.Enabled == false)
 			{
-				AnswerSelection.HandleTableImageClicks(e as MouseEventArgs, table2PictureBox, 1, chosenAnswersTemp);
+				HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, table2PictureBox, 1, chosenAnswersTemp);
 			}		
 		}
 
@@ -151,7 +151,7 @@ namespace KlokanUI
 			// if in edit mode
 			if (editButton.Enabled == false)
 			{
-				AnswerSelection.HandleTableImageClicks(e as MouseEventArgs, table3PictureBox, 2, chosenAnswersTemp);
+				HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, table3PictureBox, 2, chosenAnswersTemp);
 			}
 				
 		}
@@ -165,13 +165,13 @@ namespace KlokanUI
 								 where sheet.AnswerSheetId == answerSheetId
 								 select sheet;
 
-				AnswerSheet answerSheet = sheetQuery.FirstOrDefault();
+				KlokanDBAnswerSheet answerSheet = sheetQuery.FirstOrDefault();
 
 				var instanceQuery = from instance in db.Instances
 									where instance.InstanceId == answerSheet.InstanceId
 									select instance;
 
-				Instance currentInstance = instanceQuery.FirstOrDefault();
+				KlokanDBInstance currentInstance = instanceQuery.FirstOrDefault();
 
 				studentNumberValueLabel.Text = answerSheet.StudentNumber.ToString();
 				idValueLabel.Text = answerSheet.AnswerSheetId.ToString();
@@ -190,18 +190,18 @@ namespace KlokanUI
 								   select chosenAnswer;
 
 				chosenAnswers = GetAnswersTableArray(chosenAnswersQuery);
-				AnswerDrawing.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, AnswerDrawing.DrawCross, Color.Black);
+				HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
 
 				var correctAnswersQuery = from correctAnswer in db.CorrectAnswers
 										  where correctAnswer.InstanceId == answerSheet.InstanceId
 										  select correctAnswer;
 
 				correctAnswers = GetAnswersTableArray(correctAnswersQuery);
-				AnswerDrawing.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, AnswerDrawing.DrawCircle, Color.Red);
+				HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, HelperFunctions.DrawCircle, Color.Red);
 			}
 		}
 
-		private bool[,,] GetAnswersTableArray(IQueryable<Answer> answerQuery)
+		private bool[,,] GetAnswersTableArray(IQueryable<KlokanDBAnswer> answerQuery)
 		{
 			bool[,,] answers = new bool[3, 8, 5];
 
@@ -235,9 +235,9 @@ namespace KlokanUI
 				if (oldImage != null) oldImage.Dispose();
 			}
 
-			table1PictureBox.Image = Properties.Resources.table1Image;
-			table2PictureBox.Image = Properties.Resources.table2Image;
-			table3PictureBox.Image = Properties.Resources.table3Image;
+			table1PictureBox.Image = Properties.Resources.answerTable1Image;
+			table2PictureBox.Image = Properties.Resources.answerTable2Image;
+			table3PictureBox.Image = Properties.Resources.answerTable3Image;
 
 			table1PictureBox.Refresh();
 			table2PictureBox.Refresh();
@@ -293,9 +293,9 @@ namespace KlokanUI
 		}
 
 		// TODO: duplicate code?
-		List<ChosenAnswer> GetChosenAnswers()
+		List<KlokanDBChosenAnswer> GetChosenAnswers()
 		{
-			List<ChosenAnswer> chosenAnswersDB = new List<ChosenAnswer>();
+			List<KlokanDBChosenAnswer> chosenAnswersDB = new List<KlokanDBChosenAnswer>();
 
 			for (int table = 0; table < 3; table++)
 			{
@@ -321,7 +321,7 @@ namespace KlokanUI
 						}
 					}
 
-					chosenAnswersDB.Add(new ChosenAnswer
+					chosenAnswersDB.Add(new KlokanDBChosenAnswer
 					{
 						QuestionNumber = (row + 1) + (table * 8),
 						Value = new String(enteredValue, 1)

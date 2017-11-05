@@ -143,9 +143,9 @@ namespace KlokanUI
 								where instance.Year == result.Year && instance.Category == result.Category
 								select instance;
 
-					Instance currentInstance = query.FirstOrDefault();
+					KlokanDBInstance currentInstance = query.FirstOrDefault();
 
-					if (currentInstance == default(Instance))
+					if (currentInstance == default(KlokanDBInstance))
 					{
 						// try to search locally too
 						var querylocal = from instance
@@ -156,10 +156,10 @@ namespace KlokanUI
 						currentInstance = querylocal.FirstOrDefault();
 					}
 
-					if (currentInstance == default(Instance))
+					if (currentInstance == default(KlokanDBInstance))
 					{
 						// it's new, we have to create it
-						currentInstance = new Instance
+						currentInstance = new KlokanDBInstance
 						{
 							Year = result.Year,
 							Category = result.Category,
@@ -169,7 +169,7 @@ namespace KlokanUI
 						db.Instances.Add(currentInstance);
 					}
 
-					var answerSheet = new AnswerSheet
+					var answerSheet = new KlokanDBAnswerSheet
 					{
 						StudentNumber = result.StudentNumber,
 						Points = result.Score,
@@ -189,9 +189,9 @@ namespace KlokanUI
 		/// which correspond to a database record described in the Answer class.
 		/// </summary>
 		/// <param name="correctedAnswers">Answers as stored in the Result structure.</param>
-		List<ChosenAnswer> GetChosenAnswers(AnswerType[,,] correctedAnswers)
+		List<KlokanDBChosenAnswer> GetChosenAnswers(AnswerType[,,] correctedAnswers)
 		{
-			List<ChosenAnswer> chosenAnswers = new List<ChosenAnswer>();
+			List<KlokanDBChosenAnswer> chosenAnswers = new List<KlokanDBChosenAnswer>();
 
 			for (int table = 0; table < batch.Parameters.TableCount - 1; table++)
 			{
@@ -220,7 +220,7 @@ namespace KlokanUI
 						}
 					}
 
-					chosenAnswers.Add(new ChosenAnswer
+					chosenAnswers.Add(new KlokanDBChosenAnswer
 					{
 						QuestionNumber = (row + 1) + (table * (batch.Parameters.AnswerTableRows - 1)),
 						Value = new String(enteredValue, 1)
@@ -236,9 +236,9 @@ namespace KlokanUI
 		/// which correspond to a database record described in the CorrectAnswer class.
 		/// </summary>
 		/// <param name="correctedAnswers">Answers as stored in the Result structure.</param>
-		List<CorrectAnswer> GetCorrectAnswers(AnswerType[,,] correctedAnswers)
+		List<KlokanDBCorrectAnswer> GetCorrectAnswers(AnswerType[,,] correctedAnswers)
 		{
-			List<CorrectAnswer> correctAnswers = new List<CorrectAnswer>();
+			List<KlokanDBCorrectAnswer> correctAnswers = new List<KlokanDBCorrectAnswer>();
 
 			for (int table = 0; table < batch.Parameters.TableCount - 1; table++)
 			{
@@ -259,7 +259,7 @@ namespace KlokanUI
 						}
 					}
 
-					correctAnswers.Add(new CorrectAnswer
+					correctAnswers.Add(new KlokanDBCorrectAnswer
 					{
 						QuestionNumber = (row + 1) + (table * (batch.Parameters.AnswerTableRows - 1)),
 						Value = new string(correctValue, 1)

@@ -69,8 +69,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnswerDrawing.cs" />
-    <Compile Include="AnswerSelection.cs" />
     <Compile Include="CategoryEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,9 +95,11 @@
     <Compile Include="EvaluationForm.Designer.cs">
       <DependentUpon>EvaluationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="HelperFunctions.cs" />
     <Compile Include="JobScheduler.cs" />
     <Compile Include="KlokanBatch.cs" />
     <Compile Include="KlokanDB.cs" />
+    <Compile Include="KlokanTestDB.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +116,18 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result.cs" />
+    <Compile Include="TestAddItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestAddItemForm.Designer.cs">
+      <DependentUpon>TestAddItemForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CategoryEditForm.resx">
       <DependentUpon>CategoryEditForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -144,6 +156,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TestAddItemForm.resx">
+      <DependentUpon>TestAddItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -164,17 +182,29 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <None Include="Resources\table1Image.png" />
+    <Resource Include="Resources\answerTable1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="table1.png" />
+    <Resource Include="Resources\answerTable2.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="table2.png" />
+    <Resource Include="Resources\answerTable3.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="table3.png" />
+    <Resource Include="Resources\studentTable.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\table1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\table2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\table3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.105.2\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.105.2\build\net451\System.Data.SQLite.Core.targets')" />

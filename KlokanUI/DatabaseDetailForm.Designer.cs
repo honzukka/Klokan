@@ -37,11 +37,7 @@
 			this.categoryValueLabel = new System.Windows.Forms.Label();
 			this.pointsValueLabel = new System.Windows.Forms.Label();
 			this.scanLabel = new System.Windows.Forms.Label();
-			this.scanPictureBox = new System.Windows.Forms.PictureBox();
 			this.answersLabel = new System.Windows.Forms.Label();
-			this.table1PictureBox = new System.Windows.Forms.PictureBox();
-			this.table2PictureBox = new System.Windows.Forms.PictureBox();
-			this.table3PictureBox = new System.Windows.Forms.PictureBox();
 			this.editButton = new System.Windows.Forms.Button();
 			this.applyButton = new System.Windows.Forms.Button();
 			this.discardButton = new System.Windows.Forms.Button();
@@ -49,10 +45,14 @@
 			this.updateDatabaseButton = new System.Windows.Forms.Button();
 			this.studentNumberLabel = new System.Windows.Forms.Label();
 			this.studentNumberValueLabel = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.scanPictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.table1PictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.table2PictureBox)).BeginInit();
+			this.table3PictureBox = new System.Windows.Forms.PictureBox();
+			this.table2PictureBox = new System.Windows.Forms.PictureBox();
+			this.table1PictureBox = new System.Windows.Forms.PictureBox();
+			this.scanPictureBox = new System.Windows.Forms.PictureBox();
 			((System.ComponentModel.ISupportInitialize)(this.table3PictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.table2PictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.table1PictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.scanPictureBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// idLabel
@@ -136,18 +136,6 @@
 			this.scanLabel.TabIndex = 8;
 			this.scanLabel.Text = "Scan:";
 			// 
-			// scanPictureBox
-			// 
-			this.scanPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.scanPictureBox.Location = new System.Drawing.Point(324, 60);
-			this.scanPictureBox.Name = "scanPictureBox";
-			this.scanPictureBox.Size = new System.Drawing.Size(329, 461);
-			this.scanPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.scanPictureBox.TabIndex = 9;
-			this.scanPictureBox.TabStop = false;
-			// 
 			// answersLabel
 			// 
 			this.answersLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -157,45 +145,6 @@
 			this.answersLabel.Size = new System.Drawing.Size(103, 13);
 			this.answersLabel.TabIndex = 10;
 			this.answersLabel.Text = "Processed Answers:";
-			// 
-			// table1PictureBox
-			// 
-			this.table1PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.table1PictureBox.Image = global::KlokanUI.Properties.Resources.table1Image;
-			this.table1PictureBox.Location = new System.Drawing.Point(690, 60);
-			this.table1PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
-			this.table1PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
-			this.table1PictureBox.Name = "table1PictureBox";
-			this.table1PictureBox.Size = new System.Drawing.Size(241, 225);
-			this.table1PictureBox.TabIndex = 13;
-			this.table1PictureBox.TabStop = false;
-			this.table1PictureBox.Click += new System.EventHandler(this.table1PictureBox_Click);
-			// 
-			// table2PictureBox
-			// 
-			this.table2PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.table2PictureBox.Image = global::KlokanUI.Properties.Resources.table2Image;
-			this.table2PictureBox.Location = new System.Drawing.Point(937, 60);
-			this.table2PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
-			this.table2PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
-			this.table2PictureBox.Name = "table2PictureBox";
-			this.table2PictureBox.Size = new System.Drawing.Size(241, 225);
-			this.table2PictureBox.TabIndex = 14;
-			this.table2PictureBox.TabStop = false;
-			this.table2PictureBox.Click += new System.EventHandler(this.table2PictureBox_Click);
-			// 
-			// table3PictureBox
-			// 
-			this.table3PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.table3PictureBox.Image = global::KlokanUI.Properties.Resources.table3Image;
-			this.table3PictureBox.Location = new System.Drawing.Point(690, 291);
-			this.table3PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
-			this.table3PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
-			this.table3PictureBox.Name = "table3PictureBox";
-			this.table3PictureBox.Size = new System.Drawing.Size(241, 225);
-			this.table3PictureBox.TabIndex = 15;
-			this.table3PictureBox.TabStop = false;
-			this.table3PictureBox.Click += new System.EventHandler(this.table3PictureBox_Click);
 			// 
 			// editButton
 			// 
@@ -274,6 +223,57 @@
 			this.studentNumberValueLabel.TabIndex = 22;
 			this.studentNumberValueLabel.Text = "studentNumberValueLabel";
 			// 
+			// table3PictureBox
+			// 
+			this.table3PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.table3PictureBox.Image = global::KlokanUI.Properties.Resources.answerTable3Image;
+			this.table3PictureBox.Location = new System.Drawing.Point(690, 291);
+			this.table3PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
+			this.table3PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
+			this.table3PictureBox.Name = "table3PictureBox";
+			this.table3PictureBox.Size = new System.Drawing.Size(241, 225);
+			this.table3PictureBox.TabIndex = 15;
+			this.table3PictureBox.TabStop = false;
+			this.table3PictureBox.Click += new System.EventHandler(this.table3PictureBox_Click);
+			// 
+			// table2PictureBox
+			// 
+			this.table2PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.table2PictureBox.Image = global::KlokanUI.Properties.Resources.answerTable2Image;
+			this.table2PictureBox.Location = new System.Drawing.Point(937, 60);
+			this.table2PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
+			this.table2PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
+			this.table2PictureBox.Name = "table2PictureBox";
+			this.table2PictureBox.Size = new System.Drawing.Size(241, 225);
+			this.table2PictureBox.TabIndex = 14;
+			this.table2PictureBox.TabStop = false;
+			this.table2PictureBox.Click += new System.EventHandler(this.table2PictureBox_Click);
+			// 
+			// table1PictureBox
+			// 
+			this.table1PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.table1PictureBox.Image = global::KlokanUI.Properties.Resources.answerTable1Image;
+			this.table1PictureBox.Location = new System.Drawing.Point(690, 60);
+			this.table1PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
+			this.table1PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
+			this.table1PictureBox.Name = "table1PictureBox";
+			this.table1PictureBox.Size = new System.Drawing.Size(241, 225);
+			this.table1PictureBox.TabIndex = 13;
+			this.table1PictureBox.TabStop = false;
+			this.table1PictureBox.Click += new System.EventHandler(this.table1PictureBox_Click);
+			// 
+			// scanPictureBox
+			// 
+			this.scanPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.scanPictureBox.Location = new System.Drawing.Point(324, 60);
+			this.scanPictureBox.Name = "scanPictureBox";
+			this.scanPictureBox.Size = new System.Drawing.Size(329, 461);
+			this.scanPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.scanPictureBox.TabIndex = 9;
+			this.scanPictureBox.TabStop = false;
+			// 
 			// DatabaseDetailForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -303,10 +303,10 @@
 			this.MinimumSize = new System.Drawing.Size(1211, 584);
 			this.Name = "DatabaseDetailForm";
 			this.Text = "Klokan - Database - Detail";
-			((System.ComponentModel.ISupportInitialize)(this.scanPictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.table1PictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.table2PictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.table3PictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.table2PictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.table1PictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.scanPictureBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

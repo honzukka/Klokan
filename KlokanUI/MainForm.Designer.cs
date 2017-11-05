@@ -61,6 +61,7 @@
 			this.testButton.TabIndex = 2;
 			this.testButton.Text = "Test Algorithm";
 			this.testButton.UseVisualStyleBackColor = true;
+			this.testButton.Click += new System.EventHandler(this.testButton_Click);
 			// 
 			// MainForm
 			// 

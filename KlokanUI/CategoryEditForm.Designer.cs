@@ -28,25 +28,20 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.openCorrectFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.sheetLabel = new System.Windows.Forms.Label();
 			this.answerSheetsListBox = new System.Windows.Forms.ListBox();
 			this.addButton = new System.Windows.Forms.Button();
 			this.removeButton = new System.Windows.Forms.Button();
 			this.openFilesDialog = new System.Windows.Forms.OpenFileDialog();
 			this.saveButton = new System.Windows.Forms.Button();
-			this.table1PictureBox = new System.Windows.Forms.PictureBox();
-			this.table2PictureBox = new System.Windows.Forms.PictureBox();
-			this.table3PictureBox = new System.Windows.Forms.PictureBox();
 			this.label1 = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.table1PictureBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.table2PictureBox)).BeginInit();
+			this.table3PictureBox = new System.Windows.Forms.PictureBox();
+			this.table2PictureBox = new System.Windows.Forms.PictureBox();
+			this.table1PictureBox = new System.Windows.Forms.PictureBox();
 			((System.ComponentModel.ISupportInitialize)(this.table3PictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.table2PictureBox)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.table1PictureBox)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// openCorrectFileDialog
-			// 
-			this.openCorrectFileDialog.Filter = "JPEG Files|(*.jpg;*.jpeg;*JPG;*.JPEG)|All Files|*.*";
 			// 
 			// sheetLabel
 			// 
@@ -108,33 +103,18 @@
 			this.saveButton.UseVisualStyleBackColor = true;
 			this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
 			// 
-			// table1PictureBox
+			// label1
 			// 
-			this.table1PictureBox.Image = global::KlokanUI.Properties.Resources.table1Image;
-			this.table1PictureBox.Location = new System.Drawing.Point(39, 37);
-			this.table1PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
-			this.table1PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
-			this.table1PictureBox.Name = "table1PictureBox";
-			this.table1PictureBox.Size = new System.Drawing.Size(241, 225);
-			this.table1PictureBox.TabIndex = 12;
-			this.table1PictureBox.TabStop = false;
-			this.table1PictureBox.Click += new System.EventHandler(this.table1PictureBox_Click);
-			// 
-			// table2PictureBox
-			// 
-			this.table2PictureBox.Image = global::KlokanUI.Properties.Resources.table2Image;
-			this.table2PictureBox.Location = new System.Drawing.Point(296, 37);
-			this.table2PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
-			this.table2PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
-			this.table2PictureBox.Name = "table2PictureBox";
-			this.table2PictureBox.Size = new System.Drawing.Size(241, 225);
-			this.table2PictureBox.TabIndex = 13;
-			this.table2PictureBox.TabStop = false;
-			this.table2PictureBox.Click += new System.EventHandler(this.table2PictureBox_Click);
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(36, 17);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(124, 13);
+			this.label1.TabIndex = 15;
+			this.label1.Text = "Choose correct answers:";
 			// 
 			// table3PictureBox
 			// 
-			this.table3PictureBox.Image = global::KlokanUI.Properties.Resources.table3Image;
+			this.table3PictureBox.Image = global::KlokanUI.Properties.Resources.answerTable3Image;
 			this.table3PictureBox.Location = new System.Drawing.Point(39, 276);
 			this.table3PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
 			this.table3PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
@@ -144,14 +124,29 @@
 			this.table3PictureBox.TabStop = false;
 			this.table3PictureBox.Click += new System.EventHandler(this.table3PictureBox_Click);
 			// 
-			// label1
+			// table2PictureBox
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(36, 17);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(124, 13);
-			this.label1.TabIndex = 15;
-			this.label1.Text = "Choose correct answers:";
+			this.table2PictureBox.Image = global::KlokanUI.Properties.Resources.answerTable2Image;
+			this.table2PictureBox.Location = new System.Drawing.Point(296, 37);
+			this.table2PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
+			this.table2PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
+			this.table2PictureBox.Name = "table2PictureBox";
+			this.table2PictureBox.Size = new System.Drawing.Size(241, 225);
+			this.table2PictureBox.TabIndex = 13;
+			this.table2PictureBox.TabStop = false;
+			this.table2PictureBox.Click += new System.EventHandler(this.table2PictureBox_Click);
+			// 
+			// table1PictureBox
+			// 
+			this.table1PictureBox.Image = global::KlokanUI.Properties.Resources.answerTable1Image;
+			this.table1PictureBox.Location = new System.Drawing.Point(39, 37);
+			this.table1PictureBox.MaximumSize = new System.Drawing.Size(241, 225);
+			this.table1PictureBox.MinimumSize = new System.Drawing.Size(241, 225);
+			this.table1PictureBox.Name = "table1PictureBox";
+			this.table1PictureBox.Size = new System.Drawing.Size(241, 225);
+			this.table1PictureBox.TabIndex = 12;
+			this.table1PictureBox.TabStop = false;
+			this.table1PictureBox.Click += new System.EventHandler(this.table1PictureBox_Click);
 			// 
 			// CategoryEditForm
 			// 
@@ -170,16 +165,15 @@
 			this.MinimumSize = new System.Drawing.Size(830, 560);
 			this.Name = "CategoryEditForm";
 			this.Text = "Klokan - Evaluation - Category Edit";
-			((System.ComponentModel.ISupportInitialize)(this.table1PictureBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.table2PictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.table3PictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.table2PictureBox)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.table1PictureBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
 
 		#endregion
-		private System.Windows.Forms.OpenFileDialog openCorrectFileDialog;
 		private System.Windows.Forms.Label sheetLabel;
 		private System.Windows.Forms.ListBox answerSheetsListBox;
 		private System.Windows.Forms.Button addButton;

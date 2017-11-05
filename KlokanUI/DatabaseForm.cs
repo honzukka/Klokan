@@ -49,10 +49,10 @@ namespace KlokanUI
 									where instance.Year == year && instance.Category == category
 									select instance;
 
-				Instance currentInstance = instanceQuery.FirstOrDefault();
+				KlokanDBInstance currentInstance = instanceQuery.FirstOrDefault();
 
 				// if this instance exits
-				if (currentInstance != default(Instance))
+				if (currentInstance != default(KlokanDBInstance))
 				{
 					var answerSheetQuery = from sheet in db.AnswerSheets
 										   where sheet.Instance.InstanceId == currentInstance.InstanceId
@@ -226,9 +226,9 @@ namespace KlokanUI
 		{
 			foreach (var answerSheet in answerSheetSelection)
 			{
-				Instance currentInstance = answerSheet.Instance;
-				List<ChosenAnswer> chosenAnswers = new List<ChosenAnswer>(answerSheet.ChosenAnswers);
-				List<CorrectAnswer> correctAnswers = new List<CorrectAnswer>(currentInstance.CorrectAnswers);
+				KlokanDBInstance currentInstance = answerSheet.Instance;
+				List<KlokanDBChosenAnswer> chosenAnswers = new List<KlokanDBChosenAnswer>(answerSheet.ChosenAnswers);
+				List<KlokanDBCorrectAnswer> correctAnswers = new List<KlokanDBCorrectAnswer>(currentInstance.CorrectAnswers);
 
 				sw.Write(answerSheet.AnswerSheetId + ";");
 				sw.Write(answerSheet.StudentNumber + ";");
@@ -268,8 +268,8 @@ namespace KlokanUI
 			public int AnswerSheetId { get; set; }
 			public int StudentNumber { get; set; }
 			public int Points { get; set; }
-			public Instance Instance { get; set; }
-			public ICollection<ChosenAnswer> ChosenAnswers { get; set; }
+			public KlokanDBInstance Instance { get; set; }
+			public ICollection<KlokanDBChosenAnswer> ChosenAnswers { get; set; }
 		}
 	}
 }

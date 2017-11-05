@@ -35,7 +35,7 @@ namespace KlokanUI
 			if (categoryBatch.CorrectAnswers != null)
 			{
 				correctAnswers = categoryBatch.CorrectAnswers;
-				AnswerDrawing.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, AnswerDrawing.DrawCross, Color.Black);
+				HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, HelperFunctions.DrawCross, Color.Black);
 			}
 			else
 			{
@@ -134,17 +134,17 @@ namespace KlokanUI
 
 		private void table1PictureBox_Click(object sender, EventArgs e)
 		{
-			AnswerSelection.HandleTableImageClicks(e as MouseEventArgs, table1PictureBox, 0, correctAnswers);
+			HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, table1PictureBox, 0, correctAnswers);
 		}
 
 		private void table2PictureBox_Click(object sender, EventArgs e)
 		{
-			AnswerSelection.HandleTableImageClicks(e as MouseEventArgs, table2PictureBox, 1, correctAnswers);
+			HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, table2PictureBox, 1, correctAnswers);
 		}
 
 		private void table3PictureBox_Click(object sender, EventArgs e)
 		{
-			AnswerSelection.HandleTableImageClicks(e as MouseEventArgs, table3PictureBox, 2, correctAnswers);
+			HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, table3PictureBox, 2, correctAnswers);
 		}
 
 		// checks whether an answer is selected in each row 

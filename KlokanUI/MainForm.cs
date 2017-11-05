@@ -42,5 +42,18 @@ namespace KlokanUI
 			databaseForm.Show();
 			this.Hide();
 		}
+
+		/// <summary>
+		/// Hides this form and creates and shows the test form.
+		/// Also registers a callback at the test form closing event which makes this form show up again.
+		/// </summary>
+		private void testButton_Click(object sender, EventArgs e)
+		{
+			TestForm testForm = new TestForm();
+			testForm.StartPosition = FormStartPosition.CenterScreen;
+			testForm.FormClosed += delegate { this.Show(); };
+			testForm.Show();
+			this.Hide();
+		}
 	}
 }
