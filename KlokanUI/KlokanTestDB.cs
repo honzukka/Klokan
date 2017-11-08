@@ -59,7 +59,7 @@ namespace KlokanUI
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
-			var sqliteConnectionInitializer = new SqliteDropCreateDatabaseAlways<KlokanTestDBContext>(modelBuilder);
+			var sqliteConnectionInitializer = new SqliteCreateDatabaseIfNotExists<KlokanTestDBContext>(modelBuilder);
 			Database.SetInitializer(sqliteConnectionInitializer);
 		}
 	}

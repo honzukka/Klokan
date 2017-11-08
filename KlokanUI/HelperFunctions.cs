@@ -199,6 +199,17 @@ namespace KlokanUI
 		}
 
 		/// <summary>
+		/// Transforms an array of bytes into an image.
+		/// </summary>
+		/// <param name="image">The array of bytes forming the image.</param>
+		public static Bitmap GetBitmap(byte[] image)
+		{
+			var imageConverter = new ImageConverter();
+			Bitmap bmp = (Bitmap)imageConverter.ConvertFrom(image);
+			return bmp;
+		}
+
+		/// <summary>
 		/// Checks whether an answer is selected in each row.
 		/// (there can't be two or more answers selected thanks to the implementation of HandlePictureBoxClicks() )
 		/// </summary>
@@ -235,6 +246,9 @@ namespace KlokanUI
 		/// <summary>
 		/// This function converts answers from a table (answer table or student table) into DbSets that inherit from KlokanDBAnswer.
 		/// Uses reflection and therefore is not suitable for automated batch processing.
+		/// Special table values:
+		/// No answer:			'\0' (or -1 for number)
+		/// Multiple answers:	'x' (or int.MaxValue for number)
 		/// </summary>
 		/// <typeparam name="T">The specific DbSet type that inherits from KlokanDBAnswer.</typeparam>
 		/// <param name="answers">A three-dimensional table of answers.</param>
@@ -249,23 +263,23 @@ namespace KlokanUI
 
 			for (int row = 0; row < tableRows; row++)
 			{
-				char enteredValue = '\0';
+				int markedColumn = -1;
 
-				// find out the entered value (entered value can stay '\0' in case the question wasn't answered)
+				// find out the marked column (marked column can stay -1 in case the question wasn't answered)
 				for (int col = 0; col < tableColumns; col++)
 				{
 					int numberOfSelectedAnswers = 0;
 
 					if (answers[tableIndex, row, col] == true)
 					{
-						enteredValue = (char)('a' + col);
+						markedColumn = col;
 						numberOfSelectedAnswers++;
 					}
 
 					// keep in mind that more answers can be selected
 					if (numberOfSelectedAnswers > 1)
 					{
-						enteredValue = 'x';
+						markedColumn = int.MaxValue;
 					}
 				}
 
@@ -277,18 +291,98 @@ namespace KlokanUI
 				{
 					// student table answers are assigned to questions with negative numbers
 					answerInstance.QuestionNumber = row - 5;
+					answerInstance.Value = new String((char)markedColumn, 1);
 				}
 				else
 				{
 					answerInstance.QuestionNumber = (row + 1) + (tableIndex * 8);
+					char enteredValue = (char)('a' + markedColumn);
+					answerInstance.Value = new String(enteredValue, 1);
 				}
-
-				answerInstance.Value = new String(enteredValue, 1);
 
 				chosenAnswersDB.Add(answerInstance);
 			}
 
 			return chosenAnswersDB;
+		}
+
+		/// <summary>
+		/// Takes a test DbSet of answers that belongs to a test scan 
+		/// and converts it into two multi-dimensional tables of answers (number and regular).
+		/// </summary>
+		/// <typeparam name="T">The specific DbSet type that inherits from KlokanDBAnswer.</typeparam>
+		/// <param name="dbSet">A full list of dbSet instances that belong to a single scan in the test database.</param>
+		/// <param name="numberAnswers">A three-dimensional table of number answers. 
+		///		(Effectively two-dimensional, this is just a trick that allows for the use of multi-dimensional arrays 
+		///		as opposed to jagged arrays.)
+		/// <param name="answers">A three-dimensional table of regular answers.</param>
+		public static void DbSetToAnswers<T>(IList<T> dbSet, out bool[,,] numberAnswers, out bool[,,] answers) where T : KlokanDBAnswer
+		{
+			numberAnswers = null;
+			answers = new bool[3, 8, 5];
+
+			bool containsNumber = false;
+			int i = 0;
+
+			// if the DB Set also contains number answers
+			if (dbSet.Count > 24)
+			{
+				containsNumber = true;
+				numberAnswers = new bool[1, 5, 10];
+
+				// go through the number answers (there are 5 of them) and save them into a table
+				while (i < 5)
+				{
+					var answer = dbSet[i];
+
+					if (answer.Value[0] >= '0' && answer.Value[0] <= '9')
+					{
+						int table = 1;
+						int row = i;
+						int column = (int)answer.Value[0];
+
+						numberAnswers[table, row, column] = true;
+					}
+
+					i++;
+				}
+			}
+
+			// go through the regular answers and save them into a table
+			while (i < dbSet.Count)
+			{
+				var answer = dbSet[i];
+
+				int questionNumber = i;
+				if (containsNumber)
+				{
+					questionNumber = i - 5;
+				}
+
+				if (answer.Value[0] >= 'a' && answer.Value[0] <= 'e')
+				{
+					int table = questionNumber / 8;
+					int row = questionNumber % 8;
+					int column = answer.Value[0] - 'a';
+
+					answers[table, row, column] = true;
+				}
+
+				i++;
+			}
+		}
+
+		/// <summary>
+		/// Takes a DbSet of answers that belongs to an answer sheet 
+		/// and converts it into a multi-dimensional table of answers.
+		/// </summary>
+		/// <typeparam name="T">The specific DbSet type that inherits from KlokanDBAnswer.</typeparam>
+		/// <param name="dbSet">A full list of dbSet instances that belong to a single answer sheet in the database.</param>
+		/// <param name="answers">A three-dimensional table of regular answers.</param>
+		public static void DbSetToAnswers<T>(IList<T> dbSet, out bool[,,] answers) where T : KlokanDBAnswer
+		{
+			bool[,,] tempArray;
+			DbSetToAnswers(dbSet, out tempArray, out answers);
 		}
 	}
 }

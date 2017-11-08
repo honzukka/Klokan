@@ -81,6 +81,7 @@ namespace KlokanUI
 				return;
 			}
 
+			// multiselect is set to false for this data view
 			DatabaseDetailForm form = new DatabaseDetailForm((int)(dataView.SelectedRows[0].Cells[0].Value));
 			form.StartPosition = FormStartPosition.CenterScreen;
 			form.ShowDialog();

@@ -1,6 +1,6 @@
 ﻿namespace KlokanUI
 {
-	partial class TestAddItemForm
+	partial class TestItemForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestAddItemForm));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestItemForm));
 			this.chooseFileButton = new System.Windows.Forms.Button();
 			this.filePathLabel = new System.Windows.Forms.Label();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -154,7 +154,7 @@
 			this.studentTablePictureBox.TabStop = false;
 			this.studentTablePictureBox.Click += new System.EventHandler(this.studentTablePictureBox_Click);
 			// 
-			// TestAddItemForm
+			// TestItemForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -169,8 +169,8 @@
 			this.Controls.Add(this.filePathLabel);
 			this.Controls.Add(this.chooseFileButton);
 			this.MinimumSize = new System.Drawing.Size(1056, 789);
-			this.Name = "TestAddItemForm";
-			this.Text = "Klokan - Test - Add Item";
+			this.Name = "TestItemForm";
+			this.Text = "Klokan - Test - Item";
 			((System.ComponentModel.ISupportInitialize)(this.answerTable3PictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.answerTable2PictureBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.answerTable1PictureBox)).EndInit();

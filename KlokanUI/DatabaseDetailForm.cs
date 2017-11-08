@@ -185,47 +185,23 @@ namespace KlokanUI
 				pointsValueLabel.Text = answerSheet.Points.ToString();
 
 				// load scan
-				var imageConverter = new ImageConverter();
-				Bitmap bmp = (Bitmap)imageConverter.ConvertFrom(answerSheet.Scan);
-				scanPictureBox.Image = bmp;
+				scanPictureBox.Image = HelperFunctions.GetBitmap(answerSheet.Scan);
 
 				// draw answers
 				var chosenAnswersQuery = from chosenAnswer in db.ChosenAnswers
 								   where chosenAnswer.AnswerSheetId == answerSheetId
 								   select chosenAnswer;
 
-				chosenAnswers = GetAnswersTableArray(chosenAnswersQuery);
+				HelperFunctions.DbSetToAnswers(chosenAnswersQuery.ToList(), out chosenAnswers);
 				HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
 
 				var correctAnswersQuery = from correctAnswer in db.CorrectAnswers
 										  where correctAnswer.InstanceId == answerSheet.InstanceId
 										  select correctAnswer;
 
-				correctAnswers = GetAnswersTableArray(correctAnswersQuery);
+				HelperFunctions.DbSetToAnswers(correctAnswersQuery.ToList(), out correctAnswers);
 				HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, HelperFunctions.DrawCircle, Color.Red);
 			}
-		}
-
-		private bool[,,] GetAnswersTableArray(IQueryable<KlokanDBAnswer> answerQuery)
-		{
-			bool[,,] answers = new bool[3, 8, 5];
-
-			int i = 0;
-			foreach (var answer in answerQuery)
-			{
-				if (answer.Value[0] >= 'a' && answer.Value[0] <= 'e')
-				{
-					int table = i / 8;
-					int row = i % 8;
-					int column = answer.Value[0] - 'a';
-
-					answers[table, row, column] = true;
-				}
-
-				i++;
-			}
-
-			return answers;
 		}
 
 		private void ResetTableImages()

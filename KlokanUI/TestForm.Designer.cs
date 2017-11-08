@@ -52,7 +52,9 @@
             this.idColumn,
             this.correctnessColumn});
 			this.dataView.Location = new System.Drawing.Point(43, 92);
+			this.dataView.MultiSelect = false;
 			this.dataView.Name = "dataView";
+			this.dataView.ReadOnly = true;
 			this.dataView.Size = new System.Drawing.Size(289, 385);
 			this.dataView.TabIndex = 0;
 			// 
@@ -88,6 +90,7 @@
 			this.removeItemButton.TabIndex = 2;
 			this.removeItemButton.Text = "Remove Item";
 			this.removeItemButton.UseVisualStyleBackColor = true;
+			this.removeItemButton.Click += new System.EventHandler(this.removeItemButton_Click);
 			// 
 			// editParamsButton
 			// 
@@ -116,6 +119,7 @@
 			this.viewItemButton.TabIndex = 5;
 			this.viewItemButton.Text = "View Item";
 			this.viewItemButton.UseVisualStyleBackColor = true;
+			this.viewItemButton.Click += new System.EventHandler(this.viewItemButton_Click);
 			// 
 			// TestForm
 			// 
