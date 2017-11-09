@@ -21,6 +21,8 @@ namespace KlokanUI
 
 		private void PopulateDataView()
 		{
+			dataView.Rows.Clear();
+
 			using (var testDB = new KlokanTestDBContext())
 			{
 				var scanQuery = from scan in testDB.Scans
@@ -30,9 +32,6 @@ namespace KlokanUI
 				{
 					dataView.Rows.Add(scanInfo.ScanId, scanInfo.Correctness);
 				}
-
-				// TODO: async???
-				testDB.SaveChanges();
 			}
 		}
 
@@ -41,29 +40,9 @@ namespace KlokanUI
 			KlokanTestDBScan newScanItem = new KlokanTestDBScan();
 			TestItemForm testAddItemForm = new TestItemForm(newScanItem, false);
 			testAddItemForm.StartPosition = FormStartPosition.CenterScreen;
+			testAddItemForm.ShowDialog();
 
-			if (testAddItemForm.ShowDialog() == DialogResult.OK)
-			{
-				// save the successfully created item
-				using (var testDB = new KlokanTestDBContext())
-				{
-					testDB.Scans.Add(newScanItem);
-
-					// TODO: async???
-					testDB.SaveChanges();
-
-					// repopulate the data view
-					dataView.Rows.Clear();
-
-					var scanQuery = from scan in testDB.Scans
-									select new { scan.ScanId, scan.Correctness };
-
-					foreach (var item in scanQuery)
-					{
-						dataView.Rows.Add(item.ScanId, item.Correctness);
-					}
-				}
-			}
+			PopulateDataView();
 		}
 
 		private void removeItemButton_Click(object sender, EventArgs e)
@@ -109,7 +88,7 @@ namespace KlokanUI
 			// multiselect is set to false for this data view
 			int scanItemId = (int)dataView.SelectedRows[0].Cells[0].Value;
 
-			KlokanTestDBScan scanItem = null;
+			KlokanTestDBScan scanItemToView = null;
 
 			using (var testDB = new KlokanTestDBContext())
 			{
@@ -117,17 +96,22 @@ namespace KlokanUI
 									where scan.ScanId == scanItemId
 									select scan;
 
-				scanItem = scanItemQuery.FirstOrDefault();
+				var scanItem = scanItemQuery.FirstOrDefault();
 
-				if (scanItem == null)
-				{
-					return;
-				}
-
-				TestItemForm form = new TestItemForm(scanItem, true);
-				form.StartPosition = FormStartPosition.CenterScreen;
-				form.ShowDialog();
+				scanItemToView = new KlokanTestDBScan {
+					ScanId = scanItem.ScanId,
+					ComputedValues = scanItem.ComputedValues,
+					ExpectedValues = scanItem.ExpectedValues,
+					Image = scanItem.Image,
+					Correctness = scanItem.Correctness
+				};
 			}
+
+			TestItemForm form = new TestItemForm(scanItemToView, true);
+			form.StartPosition = FormStartPosition.CenterScreen;
+			form.ShowDialog();
+
+			PopulateDataView();
 		}
 	}
 }

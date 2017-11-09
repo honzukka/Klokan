@@ -32,13 +32,14 @@
 			this.chooseFileButton = new System.Windows.Forms.Button();
 			this.filePathLabel = new System.Windows.Forms.Label();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-			this.okButton = new System.Windows.Forms.Button();
-			this.expectedValuesLabel = new System.Windows.Forms.Label();
+			this.applyButton = new System.Windows.Forms.Button();
 			this.answerTable3PictureBox = new System.Windows.Forms.PictureBox();
 			this.answerTable2PictureBox = new System.Windows.Forms.PictureBox();
 			this.answerTable1PictureBox = new System.Windows.Forms.PictureBox();
 			this.scanPictureBox = new System.Windows.Forms.PictureBox();
 			this.studentTablePictureBox = new System.Windows.Forms.PictureBox();
+			this.editButton = new System.Windows.Forms.Button();
+			this.updateButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.answerTable3PictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.answerTable2PictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.answerTable1PictureBox)).BeginInit();
@@ -69,26 +70,16 @@
 			// 
 			this.openFileDialog.Filter = "JPEG Files|(*.jpg;*.jpeg;*JPG;*.JPEG)";
 			// 
-			// okButton
+			// applyButton
 			// 
-			this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.okButton.Location = new System.Drawing.Point(925, 687);
-			this.okButton.Name = "okButton";
-			this.okButton.Size = new System.Drawing.Size(75, 23);
-			this.okButton.TabIndex = 17;
-			this.okButton.Text = "OK";
-			this.okButton.UseVisualStyleBackColor = true;
-			this.okButton.Click += new System.EventHandler(this.okButton_Click);
-			// 
-			// expectedValuesLabel
-			// 
-			this.expectedValuesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.expectedValuesLabel.AutoSize = true;
-			this.expectedValuesLabel.Location = new System.Drawing.Point(512, 41);
-			this.expectedValuesLabel.Name = "expectedValuesLabel";
-			this.expectedValuesLabel.Size = new System.Drawing.Size(90, 13);
-			this.expectedValuesLabel.TabIndex = 18;
-			this.expectedValuesLabel.Text = "Expected Values:";
+			this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.applyButton.Location = new System.Drawing.Point(807, 687);
+			this.applyButton.Name = "applyButton";
+			this.applyButton.Size = new System.Drawing.Size(75, 23);
+			this.applyButton.TabIndex = 17;
+			this.applyButton.Text = "Apply";
+			this.applyButton.UseVisualStyleBackColor = true;
+			this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
 			// 
 			// answerTable3PictureBox
 			// 
@@ -154,14 +145,37 @@
 			this.studentTablePictureBox.TabStop = false;
 			this.studentTablePictureBox.Click += new System.EventHandler(this.studentTablePictureBox_Click);
 			// 
+			// editButton
+			// 
+			this.editButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.editButton.Location = new System.Drawing.Point(512, 37);
+			this.editButton.Name = "editButton";
+			this.editButton.Size = new System.Drawing.Size(75, 23);
+			this.editButton.TabIndex = 20;
+			this.editButton.Text = "Edit";
+			this.editButton.UseVisualStyleBackColor = true;
+			this.editButton.Click += new System.EventHandler(this.editButton_Click);
+			// 
+			// updateButton
+			// 
+			this.updateButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.updateButton.Location = new System.Drawing.Point(888, 687);
+			this.updateButton.Name = "updateButton";
+			this.updateButton.Size = new System.Drawing.Size(112, 23);
+			this.updateButton.TabIndex = 22;
+			this.updateButton.Text = "Update Database";
+			this.updateButton.UseVisualStyleBackColor = true;
+			this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
+			// 
 			// TestItemForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1040, 750);
+			this.Controls.Add(this.updateButton);
+			this.Controls.Add(this.editButton);
 			this.Controls.Add(this.studentTablePictureBox);
-			this.Controls.Add(this.expectedValuesLabel);
-			this.Controls.Add(this.okButton);
+			this.Controls.Add(this.applyButton);
 			this.Controls.Add(this.answerTable3PictureBox);
 			this.Controls.Add(this.answerTable2PictureBox);
 			this.Controls.Add(this.answerTable1PictureBox);
@@ -190,8 +204,9 @@
 		private System.Windows.Forms.PictureBox answerTable1PictureBox;
 		private System.Windows.Forms.PictureBox answerTable2PictureBox;
 		private System.Windows.Forms.PictureBox answerTable3PictureBox;
-		private System.Windows.Forms.Button okButton;
-		private System.Windows.Forms.Label expectedValuesLabel;
+		private System.Windows.Forms.Button applyButton;
 		private System.Windows.Forms.PictureBox studentTablePictureBox;
+		private System.Windows.Forms.Button editButton;
+		private System.Windows.Forms.Button updateButton;
 	}
 }

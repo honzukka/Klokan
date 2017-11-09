@@ -17,6 +17,7 @@ namespace KlokanUI
 		KlokanTestDBScan scanItem;
 		string scanFilePath;
 		bool viewMode;
+		bool addMode;
 
 		bool[,,] chosenValuesStudentTable;
 		bool[,,] chosenValuesAnswerTable;
@@ -26,10 +27,12 @@ namespace KlokanUI
 			InitializeComponent();
 
 			filePathLabel.Text = "";
+			updateButton.Enabled = false;
 
 			this.scanItem = scanItem;
 			scanFilePath = null;
 			this.viewMode = viewMode;
+			addMode = !viewMode;
 
 			// this array is effectively two-dimensional; this is a trick to help make the code cleaner and faster
 			// (I want to work with multi-dimensional arrays as opposed to jagged arrays)
@@ -39,7 +42,12 @@ namespace KlokanUI
 			if (viewMode)
 			{
 				chooseFileButton.Enabled = false;
+				applyButton.Enabled = false;
 				PopulateForm();
+			}
+			else
+			{
+				editButton.Hide();
 			}
 		}
 
@@ -88,16 +96,15 @@ namespace KlokanUI
 			}
 		}
 
-		private void okButton_Click(object sender, EventArgs e)
+		private void editButton_Click(object sender, EventArgs e)
 		{
-			if (viewMode)
-			{
-				DialogResult = DialogResult.Cancel;
-				this.Close();
-				return;
-			}
+			viewMode = false;
+			applyButton.Enabled = true;
+		}
 
-			if (scanFilePath == null || scanFilePath == "")
+		private void applyButton_Click(object sender, EventArgs e)
+		{
+			if (addMode && (scanFilePath == null || scanFilePath == ""))
 			{
 				MessageBox.Show("No file has been selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
@@ -126,12 +133,55 @@ namespace KlokanUI
 				expectedAnswers.AddRange(HelperFunctions.AnswersToDbSet<KlokanTestDBExpectedAnswer>(chosenValuesAnswerTable, i, false));
 			}
 
-			scanItem.Image = HelperFunctions.GetImageBytes(scanFilePath, ImageFormat.Png);
+			if (addMode)
+			{
+				scanItem.Image = HelperFunctions.GetImageBytes(scanFilePath, ImageFormat.Png);
+			}
+			
 			scanItem.ExpectedValues = expectedAnswers;
-			scanItem.Correctness = -1;		// correctness will only have a valid value once the evaluation is run
+			scanItem.Correctness = -1;      // correctness will only have a valid value once the evaluation is run
 
-			DialogResult = DialogResult.OK;
-			this.Close();
+			updateButton.Enabled = true;
+		}
+
+		private void updateButton_Click(object sender, EventArgs e)
+		{
+			var dialogResult = MessageBox.Show("Are you sure you want to update the database?", "Database Change", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			if (dialogResult == DialogResult.No)
+			{
+				return;
+			}
+
+			using (var testDB = new KlokanTestDBContext())
+			{
+				KlokanTestDBScan newScanItem = new KlokanTestDBScan {
+					ExpectedValues = scanItem.ExpectedValues,
+					ComputedValues = scanItem.ComputedValues,
+					Image = scanItem.Image,
+					Correctness = -1
+				};
+
+				// when editing an item we first have to delete the old one
+				if (!addMode)
+				{
+					var oldScanItemQuery = from scan in testDB.Scans
+										   where scan.ScanId == scanItem.ScanId
+										   select scan;
+
+					var oldScanItem = oldScanItemQuery.FirstOrDefault();
+
+					// load the old expected values so that EF knows it should delete them when the old scan item is deleted
+					var blah = oldScanItem.ExpectedValues;
+
+					testDB.Scans.Remove(oldScanItem);
+				}
+				
+				testDB.Scans.Add(newScanItem);
+
+				testDB.SaveChanges();
+			}
+
+			updateButton.Enabled = false;
 		}
 
 		private void PopulateForm()
@@ -143,7 +193,10 @@ namespace KlokanUI
 			List<KlokanTestDBExpectedAnswer> expectedValues = new List<KlokanTestDBExpectedAnswer>(scanItem.ExpectedValues);
 			HelperFunctions.DbSetToAnswers(expectedValues, out chosenValuesStudentTable, out chosenValuesAnswerTable);
 
-			HelperFunctions.DrawAnswers(answerTable1PictureBox, answerTable2PictureBox, answerTable3PictureBox, chosenValuesAnswerTable, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(studentTablePictureBox, chosenValuesStudentTable, 0, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(answerTable1PictureBox, chosenValuesAnswerTable, 0, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(answerTable2PictureBox, chosenValuesAnswerTable, 1, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(answerTable3PictureBox, chosenValuesAnswerTable, 2, HelperFunctions.DrawCross, Color.Black);
 		}
 	}
 }

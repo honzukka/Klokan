@@ -113,6 +113,7 @@
 			// 
 			// viewItemButton
 			// 
+			this.viewItemButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.viewItemButton.Location = new System.Drawing.Point(360, 150);
 			this.viewItemButton.Name = "viewItemButton";
 			this.viewItemButton.Size = new System.Drawing.Size(86, 23);

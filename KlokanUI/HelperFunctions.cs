@@ -80,42 +80,39 @@ namespace KlokanUI
 		public delegate void DrawSomething(int row, int column, int cellWidth, int cellHeight, Graphics graphics, Pen pen);
 
 		/// <summary>
-		/// Draws the contents of the answers array into table images of all the picture boxes.
+		/// Draws the contents of the answers array into the table images of a picture box.
 		/// </summary>
-		/// <param name="table1PictureBox">Picture box contaning the first table image.</param>
-		/// <param name="table2PictureBox">Picture box contaning the second table image.</param>
-		/// <param name="table3PictureBox">Picture box contaning the third table image.</param>
-		/// <param name="answers">A multi-dimensional array of yes/no answers.</param>
+		/// <param name="tablePictureBox">Picture box contaning the table image.</param>
+		/// <param name="answers">A three-dimensional array of yes/no answers.</param>
+		/// <param name="tableIndex">The index of the table in the answers array.</param>
 		/// <param name="drawSomething">A delegate which will draw into the cells.</param>
 		/// <param name="penColor">The color of the pen to be used for drawing.</param>
-		public static void DrawAnswers(PictureBox table1PictureBox, PictureBox table2PictureBox, PictureBox table3PictureBox, bool[,,] answers, DrawSomething drawSomething, Color penColor)
+		public static void DrawAnswers(PictureBox tablePictureBox, bool[,,] answers, int tableIndex, DrawSomething drawSomething, Color penColor)
 		{
-			PictureBox[] pictureBoxes = new PictureBox[] { table1PictureBox, table2PictureBox, table3PictureBox };
+			// the table images have one extra column and one extra row that doesn't contain answers but annotations
+			int tableRows = answers.GetUpperBound(1) + 2;
+			int tableColumns = answers.GetUpperBound(2) + 2;
 
-			for (int i = 0; i < pictureBoxes.Length; i++)
+			int cellHeight = tablePictureBox.Height / tableRows;
+			int cellWidth = tablePictureBox.Width / tableColumns;
+
+			using (var graphics = Graphics.FromImage(tablePictureBox.Image))
+			using (var pen = new Pen(penColor, 2))
 			{
-				int cellHeight = pictureBoxes[i].Height / 9;
-				int cellWidth = pictureBoxes[i].Width / 6;
-
-				Image tableImage = pictureBoxes[i].Image;
-
-				using (var graphics = Graphics.FromImage(tableImage))
-				using (var blackPen = new Pen(penColor, 2))
+				for (int row = 0; row < tableRows - 1; row++)
 				{
-					for (int row = 0; row < 8; row++)
+					for (int col = 0; col < tableColumns - 1; col++)
 					{
-						for (int col = 0; col < 5; col++)
+						if (answers[tableIndex, row, col] == true)
 						{
-							if (answers[i, row, col] == true)
-							{
-								drawSomething(row + 1, col + 1, cellWidth, cellHeight, graphics, blackPen);
-							}
+							// there is one extra column and one extra row in the actual table image (with annotations)
+							drawSomething(row + 1, col + 1, cellWidth, cellHeight, graphics, pen);
 						}
 					}
 				}
-
-				pictureBoxes[i].Refresh();
 			}
+
+			tablePictureBox.Refresh();
 		}
 
 		/// <summary>
@@ -291,7 +288,7 @@ namespace KlokanUI
 				{
 					// student table answers are assigned to questions with negative numbers
 					answerInstance.QuestionNumber = row - 5;
-					answerInstance.Value = new String((char)markedColumn, 1);
+					answerInstance.Value = markedColumn.ToString();
 				}
 				else
 				{
@@ -337,11 +334,13 @@ namespace KlokanUI
 
 					if (answer.Value[0] >= '0' && answer.Value[0] <= '9')
 					{
-						int table = 1;
+						int table = 0;
 						int row = i;
-						int column = (int)answer.Value[0];
-
-						numberAnswers[table, row, column] = true;
+						int column;
+						if (int.TryParse(answer.Value, out column))
+						{
+							numberAnswers[table, row, column] = true;
+						}
 					}
 
 					i++;

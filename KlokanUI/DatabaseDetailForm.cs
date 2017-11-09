@@ -46,7 +46,10 @@ namespace KlokanUI
 
 			// draw only chosen answers as only those can be edited
 			ResetTableImages();
-			HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
+			//HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(table1PictureBox, chosenAnswers, 0, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(table2PictureBox, chosenAnswers, 1, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(table3PictureBox, chosenAnswers, 2, HelperFunctions.DrawCross, Color.Black);
 
 			// create a copy of currently chosen answers for editing
 			chosenAnswersTemp = new bool[3, 8, 5];
@@ -71,7 +74,10 @@ namespace KlokanUI
 
 			// draw the original answers
 			ResetTableImages();
-			HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
+			//HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(table1PictureBox, chosenAnswers, 0, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(table2PictureBox, chosenAnswers, 1, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(table3PictureBox, chosenAnswers, 2, HelperFunctions.DrawCross, Color.Black);
 		}
 
 		private void reevaluateButton_Click(object sender, EventArgs e)
@@ -84,8 +90,15 @@ namespace KlokanUI
 
 			// draw both chosen and correct answers again
 			ResetTableImages();
-			HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
-			HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, HelperFunctions.DrawCircle, Color.Red);
+			//HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
+			//HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, HelperFunctions.DrawCircle, Color.Red);
+			HelperFunctions.DrawAnswers(table1PictureBox, chosenAnswers, 0, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(table2PictureBox, chosenAnswers, 1, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(table3PictureBox, chosenAnswers, 2, HelperFunctions.DrawCross, Color.Black);
+
+			HelperFunctions.DrawAnswers(table1PictureBox, correctAnswers, 0, HelperFunctions.DrawCircle, Color.Red);
+			HelperFunctions.DrawAnswers(table2PictureBox, correctAnswers, 1, HelperFunctions.DrawCircle, Color.Red);
+			HelperFunctions.DrawAnswers(table3PictureBox, correctAnswers, 2, HelperFunctions.DrawCircle, Color.Red);
 		}
 
 		private void updateDatabaseButton_Click(object sender, EventArgs e)
@@ -113,7 +126,7 @@ namespace KlokanUI
 							select sheet;
 
 				KlokanDBAnswerSheet answerSheet = query.FirstOrDefault();
-
+				
 				// load the old chosen answers so that EF knows it should delete them when the old answer sheet is deleted
 				List<KlokanDBChosenAnswer> blah = new List<KlokanDBChosenAnswer>(answerSheet.ChosenAnswers);
 
@@ -193,14 +206,20 @@ namespace KlokanUI
 								   select chosenAnswer;
 
 				HelperFunctions.DbSetToAnswers(chosenAnswersQuery.ToList(), out chosenAnswers);
-				HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
+				//HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
+				HelperFunctions.DrawAnswers(table1PictureBox, chosenAnswers, 0, HelperFunctions.DrawCross, Color.Black);
+				HelperFunctions.DrawAnswers(table2PictureBox, chosenAnswers, 1, HelperFunctions.DrawCross, Color.Black);
+				HelperFunctions.DrawAnswers(table3PictureBox, chosenAnswers, 2, HelperFunctions.DrawCross, Color.Black);
 
 				var correctAnswersQuery = from correctAnswer in db.CorrectAnswers
 										  where correctAnswer.InstanceId == answerSheet.InstanceId
 										  select correctAnswer;
 
 				HelperFunctions.DbSetToAnswers(correctAnswersQuery.ToList(), out correctAnswers);
-				HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, HelperFunctions.DrawCircle, Color.Red);
+				//HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, HelperFunctions.DrawCircle, Color.Red);
+				HelperFunctions.DrawAnswers(table1PictureBox, correctAnswers, 0, HelperFunctions.DrawCircle, Color.Red);
+				HelperFunctions.DrawAnswers(table2PictureBox, correctAnswers, 1, HelperFunctions.DrawCircle, Color.Red);
+				HelperFunctions.DrawAnswers(table3PictureBox, correctAnswers, 2, HelperFunctions.DrawCircle, Color.Red);
 			}
 		}
 
