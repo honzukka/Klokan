@@ -128,6 +128,8 @@
     <Compile Include="TestForm.Designer.cs">
       <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TestKlokanBatch.cs" />
+    <Compile Include="TestResult.cs" />
     <EmbeddedResource Include="CategoryEditForm.resx">
       <DependentUpon>CategoryEditForm.cs</DependentUpon>
     </EmbeddedResource>

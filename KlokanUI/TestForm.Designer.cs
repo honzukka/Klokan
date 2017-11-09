@@ -100,6 +100,7 @@
 			this.editParamsButton.TabIndex = 3;
 			this.editParamsButton.Text = "Edit Parameters";
 			this.editParamsButton.UseVisualStyleBackColor = true;
+			this.editParamsButton.Click += new System.EventHandler(this.editParamsButton_Click);
 			// 
 			// evaluateButton
 			// 

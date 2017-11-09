@@ -12,11 +12,15 @@ namespace KlokanUI
 {
 	public partial class TestForm : Form
 	{
+		Parameters chosenParameters;
+
 		public TestForm()
 		{
 			InitializeComponent();
 
 			PopulateDataView();
+
+			chosenParameters = Parameters.CreateDefaultParameters();
 		}
 
 		private void PopulateDataView()
@@ -112,6 +116,17 @@ namespace KlokanUI
 			form.ShowDialog();
 
 			PopulateDataView();
+		}
+
+		private void editParamsButton_Click(object sender, EventArgs e)
+		{
+			ParameterEditForm form = new ParameterEditForm(chosenParameters);
+			form.StartPosition = FormStartPosition.CenterScreen;
+
+			if (form.ShowDialog() == DialogResult.OK)
+			{
+				chosenParameters = form.Parameters;
+			}
 		}
 	}
 }

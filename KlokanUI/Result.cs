@@ -8,6 +8,14 @@ namespace KlokanUI
 {
 	struct Result
 	{
+		public int Year { get; }
+		public string Category { get; }
+		public int StudentNumber { get; }
+		public AnswerType[,,] CorrectedAnswers { get; }
+		public int Score { get; }
+		public string SheetFilename { get; }
+		public bool Error { get; }
+
 		public Result(int year, string category, int studentNumber, AnswerType[,,] correctedAnswers, int score, string sheetFilename, bool error)
 		{
 			Year = year;
@@ -29,13 +37,5 @@ namespace KlokanUI
 			SheetFilename = null;
 			Error = error;
 		}
-
-		public int Year { get; }
-		public string Category { get; }
-		public int StudentNumber { get; }
-		public AnswerType[,,] CorrectedAnswers { get; }
-		public int Score { get; }
-		public string SheetFilename { get; }
-		public bool Error { get; }
 	}
 }
