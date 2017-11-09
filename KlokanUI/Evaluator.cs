@@ -61,6 +61,8 @@ namespace KlokanUI
 			// get the answers from the sheet
 			bool[,,] studentComputedValues;
 			bool[,,] answerComputedValues;
+
+			// TODO: shouldn't it be possible to pass just the image data? (if tests are run later just on the database...)
 			if (ExtractAnswers(sheetFilename, out studentComputedValues, out answerComputedValues) == false)
 			{
 				return new TestResult(true);
