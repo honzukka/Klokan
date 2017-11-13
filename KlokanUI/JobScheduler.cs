@@ -8,29 +8,36 @@ using System.Threading;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Windows.Forms;
 
 namespace KlokanUI
 {
 	class JobScheduler
 	{
-		/// <summary>
-		/// Data structure containing algorithm parameters, correct answers and sheets to be processed for multiple categories.
-		/// </summary>
 		KlokanBatch batch;
-
+		TestKlokanBatch testBatch;
+		
 		/// <summary>
 		/// A reference to the evaluation form, so that new events can be added to its event loop.
 		/// </summary>
-		EvaluationForm form;
+		IEvaluationForm callingForm;
 
 		// just for information
 		DateTime evaluationStartTime;
 		DateTime evaluationEndTime;
 
-		public JobScheduler(KlokanBatch batch, EvaluationForm form)
+		public JobScheduler(KlokanBatch batch, IEvaluationForm callingForm)
 		{
 			this.batch = batch;
-			this.form = form;
+			testBatch = null;
+			this.callingForm = callingForm;
+		}
+
+		public JobScheduler(TestKlokanBatch testBatch, IEvaluationForm callingForm)
+		{
+			batch = null;
+			this.testBatch = testBatch;
+			this.callingForm = callingForm;
 		}
 
 		/// <summary>
@@ -39,7 +46,15 @@ namespace KlokanUI
 		/// </summary>
 		public void Run()
 		{
-			ProcessBatchAsync();
+			if (batch != null)
+			{
+				ProcessBatchAsync();
+			}
+
+			if (testBatch != null)
+			{
+				ProcessTestBatchAsync();
+			}
 		}
 
 		/// <summary>
@@ -68,6 +83,29 @@ namespace KlokanUI
 			evaluationEndTime = DateTime.Now;
 
 			await OutputResultsDB(results);
+
+			FinishJob();
+		}
+
+		async void ProcessTestBatchAsync()
+		{
+			evaluationStartTime = DateTime.Now;
+
+			Evaluator evaluator = new Evaluator(testBatch.Parameters);
+			List<Task<TestResult>> tasks = new List<Task<TestResult>>();
+
+			foreach (var testInstance in testBatch.TestInstances)
+			{
+				Task<TestResult> instanceTask = new Task<TestResult>(() => evaluator.EvaluateTest(testInstance.ScanId, testInstance.SheetFilename, testInstance.StudentExpectedValues, testInstance.AnswerExpectedValues));
+				tasks.Add(instanceTask);
+				instanceTask.Start();
+			}
+
+			TestResult[] testResults = await Task.WhenAll(tasks);
+			evaluationEndTime = DateTime.Now;
+
+			// output results
+			await OutputTestResultsDB(testResults);
 
 			FinishJob();
 		}
@@ -137,7 +175,7 @@ namespace KlokanUI
 			{
 				foreach (var result in results)
 				{
-					// find out if the instance this result belongs to is new or already exists
+					// find out if the instance this result belongs to is new or if already exists
 					var query = from instance
 								in db.Instances
 								where instance.Year == result.Year && instance.Category == result.Category
@@ -181,6 +219,33 @@ namespace KlokanUI
 				}
 
 				await db.SaveChangesAsync();
+			}
+		}
+
+		async Task OutputTestResultsDB(IEnumerable<TestResult> testResults)
+		{
+			using (var testDB = new KlokanTestDBContext())
+			{
+				foreach (var testResult in testResults)
+				{
+					var scanQuery = from scan in testDB.Scans
+									where scan.ScanId == testResult.ScanId
+									select scan;
+
+					KlokanTestDBScan correspondingScan = scanQuery.FirstOrDefault();
+
+					var computedValuesDbSet = new List<KlokanTestDBComputedAnswer>();
+					computedValuesDbSet.AddRange(HelperFunctions.AnswersToDbSet<KlokanTestDBComputedAnswer>(testResult.StudentComputedValues, 0, true));
+					for (int i = 0; i < 3; i++)
+					{
+						computedValuesDbSet.AddRange(HelperFunctions.AnswersToDbSet<KlokanTestDBComputedAnswer>(testResult.AnswerComputedValues, i, false));
+					}
+
+					correspondingScan.ComputedValues = computedValuesDbSet;
+					correspondingScan.Correctness = testResult.Correctness;
+
+					await testDB.SaveChangesAsync();
+				}
 			}
 		}
 
@@ -276,10 +341,10 @@ namespace KlokanUI
 		/// </summary>
 		void FinishJob()
 		{
-			form.ShowMessageBoxInfo("Evaluation finished in " + (evaluationEndTime - evaluationStartTime).TotalSeconds + " seconds.\r\n" +
+			callingForm.ShowMessageBoxInfo("Evaluation finished in " + (evaluationEndTime - evaluationStartTime).TotalSeconds + " seconds.\r\n" +
 				"Results saved in " + (DateTime.Now - evaluationEndTime).TotalSeconds + " seconds.", "Evaluation Completed"
 			);
-			form.EnableGoButton();
+			callingForm.EnableGoButton();
 		}
 	}
 }

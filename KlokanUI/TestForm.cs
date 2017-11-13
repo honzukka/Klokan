@@ -8,9 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Threading;
+
 namespace KlokanUI
 {
-	public partial class TestForm : Form
+	public partial class TestForm : Form, IEvaluationForm
 	{
 		Parameters chosenParameters;
 
@@ -37,6 +39,76 @@ namespace KlokanUI
 					dataView.Rows.Add(scanInfo.ScanId, scanInfo.Correctness);
 				}
 			}
+		}
+
+		public void EnableGoButton()
+		{
+			if (evaluateButton.InvokeRequired)
+			{
+				evaluateButton.BeginInvoke(new Action(
+					() => { evaluateButton.Enabled = true; }
+				));
+			}
+			else
+			{
+				evaluateButton.Enabled = true;
+			}
+		}
+
+		public void ShowMessageBoxInfo(string message, string caption)
+		{
+			if (this.InvokeRequired)
+			{
+				this.BeginInvoke(new Action(
+					() => { MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information); }
+				));
+			}
+			else
+			{
+				MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+		}
+
+		private void evaluateButton_Click(object sender, EventArgs e)
+		{
+			evaluateButton.Enabled = false;
+
+			List<TestKlokanInstance> testInstances = new List<TestKlokanInstance>();
+
+			using (var testDB = new KlokanTestDBContext())
+			{
+				var allScansQuery = from scan in testDB.Scans
+									select scan;
+
+				foreach (var scan in allScansQuery)
+				{
+					bool[,,] studentExpectedValues;
+					bool[,,] answerExpectedValues;
+					HelperFunctions.DbSetToAnswers(new List<KlokanTestDBExpectedAnswer>(scan.ExpectedValues), out studentExpectedValues, out answerExpectedValues);
+					
+					// TODO: make this variable :D
+					TestKlokanInstance testInstance = new TestKlokanInstance {
+						ScanId = scan.ScanId,
+						SheetFilename = "C:/Users/Honza/source/repos/Klokan/scans/sheet1.jpeg",
+						StudentExpectedValues = studentExpectedValues,
+						AnswerExpectedValues = answerExpectedValues
+					};
+
+					testInstances.Add(testInstance);
+				}
+			}
+
+			TestKlokanBatch testBatch = new TestKlokanBatch {
+				Parameters = chosenParameters,
+				TestInstances = testInstances
+			};
+
+			var jobScheduler = new JobScheduler(testBatch, this);
+
+			// new thread created, so that all tasks in it are planned in the threadpool and not in the WinForms synchronization context
+			Thread thread = new Thread(jobScheduler.Run);
+			thread.IsBackground = true;
+			thread.Start();
 		}
 
 		private void addItemButton_Click(object sender, EventArgs e)

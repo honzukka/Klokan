@@ -96,6 +96,7 @@
       <DependentUpon>EvaluationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="HelperFunctions.cs" />
+    <Compile Include="IEvaluationForm.cs" />
     <Compile Include="JobScheduler.cs" />
     <Compile Include="KlokanBatch.cs" />
     <Compile Include="KlokanDB.cs" />

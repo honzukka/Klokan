@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace KlokanUI
 {
-	public partial class EvaluationForm : Form
+	public partial class EvaluationForm : Form, IEvaluationForm
 	{
 		// TODO: when I enter a batch for an existing instance (category+year), it will let me choose different correct answers!!!
 		// these won't be saved into the database, of course, and it's gonna be a mess

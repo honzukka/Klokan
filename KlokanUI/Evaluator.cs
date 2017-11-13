@@ -51,7 +51,7 @@ namespace KlokanUI
 			return new Result(year, category, studentNumber, correctedAnswers, score, sheetFilename,  false);
 		}
 		
-		public TestResult EvaluateTest(string sheetFilename, bool[,,] studentExpectedValues, bool[,,] answerExpectedValues)
+		public TestResult EvaluateTest(int scanId, string sheetFilename, bool[,,] studentExpectedValues, bool[,,] answerExpectedValues)
 		{
 			if (studentExpectedValues == null || answerExpectedValues == null)
 			{
@@ -71,7 +71,7 @@ namespace KlokanUI
 			// compute the correctness
 			float correctness = ComputeCorrectness(studentExpectedValues, studentComputedValues, answerExpectedValues, answerComputedValues);
 
-			return new TestResult(studentComputedValues, studentExpectedValues, answerComputedValues, answerExpectedValues, correctness, false);
+			return new TestResult(scanId, studentComputedValues, studentExpectedValues, answerComputedValues, answerExpectedValues, correctness, false);
 		}
 		
 		/// <summary>

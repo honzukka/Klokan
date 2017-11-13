@@ -111,6 +111,7 @@
 			this.evaluateButton.TabIndex = 4;
 			this.evaluateButton.Text = "Evaluate";
 			this.evaluateButton.UseVisualStyleBackColor = true;
+			this.evaluateButton.Click += new System.EventHandler(this.evaluateButton_Click);
 			// 
 			// viewItemButton
 			// 

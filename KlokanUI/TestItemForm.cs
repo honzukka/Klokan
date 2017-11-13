@@ -197,6 +197,17 @@ namespace KlokanUI
 			HelperFunctions.DrawAnswers(answerTable1PictureBox, chosenValuesAnswerTable, 0, HelperFunctions.DrawCross, Color.Black);
 			HelperFunctions.DrawAnswers(answerTable2PictureBox, chosenValuesAnswerTable, 1, HelperFunctions.DrawCross, Color.Black);
 			HelperFunctions.DrawAnswers(answerTable3PictureBox, chosenValuesAnswerTable, 2, HelperFunctions.DrawCross, Color.Black);
+
+			bool[,,] computedValuesStudentTable;
+			bool[,,] computedValuesAnswerTable;
+
+			List<KlokanTestDBComputedAnswer> computedValues = new List<KlokanTestDBComputedAnswer>(scanItem.ComputedValues);
+			HelperFunctions.DbSetToAnswers(computedValues, out computedValuesStudentTable, out computedValuesAnswerTable);
+
+			HelperFunctions.DrawAnswers(studentTablePictureBox, computedValuesStudentTable, 0, HelperFunctions.DrawCircle, Color.Red);
+			HelperFunctions.DrawAnswers(answerTable1PictureBox, computedValuesAnswerTable, 0, HelperFunctions.DrawCircle, Color.Red);
+			HelperFunctions.DrawAnswers(answerTable2PictureBox, computedValuesAnswerTable, 1, HelperFunctions.DrawCircle, Color.Red);
+			HelperFunctions.DrawAnswers(answerTable3PictureBox, computedValuesAnswerTable, 2, HelperFunctions.DrawCircle, Color.Red);
 		}
 	}
 }
