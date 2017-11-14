@@ -232,6 +232,17 @@ namespace KlokanUI
 									where scan.ScanId == testResult.ScanId
 									select scan;
 
+					var oldComputedAnswersQuery = from answer in testDB.ComputedValues
+												  where answer.ScanId == testResult.ScanId
+												  select answer;
+
+					// delete old computed values
+					foreach (var answer in oldComputedAnswersQuery)
+					{
+						testDB.ComputedValues.Remove(answer);
+					}
+
+					// assign new computed values
 					KlokanTestDBScan correspondingScan = scanQuery.FirstOrDefault();
 
 					var computedValuesDbSet = new List<KlokanTestDBComputedAnswer>();

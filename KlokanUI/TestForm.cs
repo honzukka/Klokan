@@ -60,12 +60,16 @@ namespace KlokanUI
 			if (this.InvokeRequired)
 			{
 				this.BeginInvoke(new Action(
-					() => { MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information); }
+					() => {
+						MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+						PopulateDataView();
+					}
 				));
 			}
 			else
 			{
 				MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+				PopulateDataView();
 			}
 		}
 

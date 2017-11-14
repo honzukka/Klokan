@@ -77,6 +77,12 @@ void extract_answers_api(char* filename, Parameters params, bool* numberArray, b
 	*success = true;
 }
 
+void test_image_transfer(unsigned char* testArray, int rows, int cols)
+{
+	cv::Mat image(rows, cols, CV_8UC3, testArray);
+	cv::imwrite("C:/Users/Honza/source/repos/Klokan/testOutput/output.png", image);
+}
+
 tableAnswers evaluate_table(const cv::Mat& tableImage, const Parameters& params, TableType type, cellEvalFunc isCellCrossed)
 {
 	tableAnswers answers;

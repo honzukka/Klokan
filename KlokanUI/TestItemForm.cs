@@ -152,15 +152,10 @@ namespace KlokanUI
 				return;
 			}
 
+			updateButton.Enabled = false;
+
 			using (var testDB = new KlokanTestDBContext())
 			{
-				KlokanTestDBScan newScanItem = new KlokanTestDBScan {
-					ExpectedValues = scanItem.ExpectedValues,
-					ComputedValues = scanItem.ComputedValues,
-					Image = scanItem.Image,
-					Correctness = -1
-				};
-
 				// when editing an item we first have to delete the old one
 				if (!addMode)
 				{
@@ -168,20 +163,35 @@ namespace KlokanUI
 										   where scan.ScanId == scanItem.ScanId
 										   select scan;
 
+					var oldExpectedAnswers = from answer in testDB.ExpectedValues
+											 where answer.ScanId == scanItem.ScanId
+											 select answer;
+
+					// delete the old expected answers
+					foreach (var answer in oldExpectedAnswers)
+					{
+						testDB.ExpectedValues.Remove(answer);
+					}
+
+					// assign new expected answers
 					var oldScanItem = oldScanItemQuery.FirstOrDefault();
+					oldScanItem.ExpectedValues = scanItem.ExpectedValues;
+				}
+				else
+				{
+					KlokanTestDBScan newScanItem = new KlokanTestDBScan
+					{
+						ExpectedValues = scanItem.ExpectedValues,
+						ComputedValues = scanItem.ComputedValues,
+						Image = scanItem.Image,
+						Correctness = -1
+					};
 
-					// load the old expected values so that EF knows it should delete them when the old scan item is deleted
-					var blah = oldScanItem.ExpectedValues;
-
-					testDB.Scans.Remove(oldScanItem);
+					testDB.Scans.Add(newScanItem);
 				}
 				
-				testDB.Scans.Add(newScanItem);
-
 				testDB.SaveChanges();
 			}
-
-			updateButton.Enabled = false;
 		}
 
 		private void PopulateForm()

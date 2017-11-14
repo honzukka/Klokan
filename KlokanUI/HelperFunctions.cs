@@ -89,6 +89,11 @@ namespace KlokanUI
 		/// <param name="penColor">The color of the pen to be used for drawing.</param>
 		public static void DrawAnswers(PictureBox tablePictureBox, bool[,,] answers, int tableIndex, DrawSomething drawSomething, Color penColor)
 		{
+			if (answers == null)
+			{
+				return;
+			}
+			
 			// the table images have one extra column and one extra row that doesn't contain answers but annotations
 			int tableRows = answers.GetUpperBound(1) + 2;
 			int tableColumns = answers.GetUpperBound(2) + 2;

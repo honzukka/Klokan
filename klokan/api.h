@@ -18,4 +18,6 @@ typedef bool(*cellEvalFunc)(const cv::Mat&, const Parameters&);
 // answerArray of size (params.table_count * (params.answer_table_rows - 1) * (params.answer_table_columns - 1)) and the success variable
 extern "C" __declspec(dllexport) void __stdcall extract_answers_api(char* filename, Parameters params, bool* numberArray, bool* answerArray, bool* success);
 
+extern "C" __declspec(dllexport) void __stdcall test_image_transfer(unsigned char* testArray, int rows, int cols);
+
 #endif // !API_
