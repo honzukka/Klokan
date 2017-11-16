@@ -129,6 +129,7 @@ namespace KlokanUI
 
 					KlokanDBInstance currentInstance = query.FirstOrDefault();
 
+					// if the instance isn't saved in the database
 					if (currentInstance == default(KlokanDBInstance))
 					{
 						// try to search locally too (maybe the instance was added in the previous loop cycle)
@@ -139,10 +140,26 @@ namespace KlokanUI
 
 						currentInstance = querylocal.FirstOrDefault();
 					}
+					else
+					{
+						// remove it completely because the new one will rewrite it
+						// lazy loading is used, so we need to load all the relations of an instance if we want Remove() to remove those as well
+						var blah = currentInstance.AnswerSheets;
+						var blah2 = currentInstance.CorrectAnswers;
+						List<ICollection<KlokanDBChosenAnswer>> blah3 = new List<ICollection<KlokanDBChosenAnswer>>();
+						foreach (var answerSheetBlah in blah)
+						{
+							blah3.Add(answerSheetBlah.ChosenAnswers);
+						}
 
+						db.Instances.Remove(currentInstance);
+						await db.SaveChangesAsync();
+						currentInstance = null;
+					}
+
+					// if the instance doesn't exist locally either
 					if (currentInstance == default(KlokanDBInstance))
 					{
-						// it's new, we have to create it
 						currentInstance = new KlokanDBInstance
 						{
 							Year = result.Year,
