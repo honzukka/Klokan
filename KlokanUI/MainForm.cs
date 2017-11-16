@@ -58,29 +58,5 @@ namespace KlokanUI
 			testForm.Show();
 			this.Hide();
 		}
-
-		private void button1_Click(object sender, EventArgs e)
-		{
-			Image testImage = new Bitmap("C:/Users/Honza/source/repos/Klokan/scans/sheet1.jpeg");
-			int testImageWidth = testImage.Width;
-			int testImageHeight = testImage.Height;
-
-			byte[] imageBytes = HelperFunctions.GetImageBytes("C:/Users/Honza/source/repos/Klokan/scans/sheet1.jpeg", ImageFormat.Bmp);
-
-			unsafe
-			{
-				fixed (byte* testPtr = imageBytes)
-				{
-					TestWrapper.test_image_transfer(testPtr, testImageHeight, testImageWidth);
-				}
-			}
-		}
-
-		class TestWrapper
-		{
-			// unsafe!!!
-			[DllImport("klokan.dll")]
-			public unsafe static extern void test_image_transfer(byte* imagePtr, int rows, int cols);
-		}
 	}
 }

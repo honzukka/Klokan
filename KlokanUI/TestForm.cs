@@ -90,10 +90,9 @@ namespace KlokanUI
 					bool[,,] answerExpectedValues;
 					HelperFunctions.DbSetToAnswers(new List<KlokanTestDBExpectedAnswer>(scan.ExpectedValues), out studentExpectedValues, out answerExpectedValues);
 					
-					// TODO: make this variable :D
 					TestKlokanInstance testInstance = new TestKlokanInstance {
 						ScanId = scan.ScanId,
-						SheetFilename = "C:/Users/Honza/source/repos/Klokan/scans/sheet1.jpeg",
+						Image = scan.Image,
 						StudentExpectedValues = studentExpectedValues,
 						AnswerExpectedValues = answerExpectedValues
 					};

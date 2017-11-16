@@ -5,10 +5,39 @@
 
 tableAnswers evaluate_table(const cv::Mat& tableImage, const Parameters& params, TableType type, cellEvalFunc isCellCrossed);
 
+// loads the answer sheet image from an array of bytes sent from C# and passes it to the extract_answers function
+void extract_answers_image_api(unsigned char* imageBytes, int rows, int cols, Parameters params, bool* numberArray, bool* answerArray, bool* success)
+{
+	// get the answer sheet image ready
+	cv::Mat receivedSheetImage(rows, cols, CV_8UC3, imageBytes);
+	cv::Mat sheetImage;
+
+	cv::flip(receivedSheetImage, receivedSheetImage, 0);	// the image comes flipped around the x axis from C#
+	cv::cvtColor(receivedSheetImage, sheetImage, cv::COLOR_BGR2GRAY);	// the image that comes is RGB
+
+	// extract the answers and save the results into the allocated memory
+	extract_answers(sheetImage, params, numberArray, answerArray, success);
+}
+
+// loads the answers sheet image from a file specified by the filename and passes it to the extract_answers function
+void extract_answers_path_api(char* filename, Parameters params, bool* numberArray, bool* answerArray, bool* success)
+{
+	// load the answer sheet image
+	cv::Mat sheetImage = cv::imread(filename, CV_LOAD_IMAGE_GRAYSCALE);
+	if (sheetImage.empty())
+	{
+		*success = false;
+		return;
+	}
+
+	// extract the answers and save the results into the allocated memory
+	extract_answers(sheetImage, params, numberArray, answerArray, success);
+}
+
 // extracts answers from an answer sheet using image recognition
 // relies on the caller to provide numberArray of size (params.student_table_rows - 1) * (params.student_table_columns - 1),
 // answerArray of size (params.table_count * (params.answer_table_rows - 1) * (params.answer_table_columns - 1)) and the success variable
-void extract_answers_api(char* filename, Parameters params, bool* numberArray, bool* answerArray, bool* success)
+void extract_answers(cv::Mat& sheetImage, Parameters params, bool* numberArray, bool* answerArray, bool* success)
 {
 	tableAnswers number;
 	sheetAnswers answers;
@@ -24,15 +53,7 @@ void extract_answers_api(char* filename, Parameters params, bool* numberArray, b
 	{
 		isCellCrossed = is_cell_crossed_ratio;
 	}
-
-	// load the answer sheet
-	cv::Mat sheetImage = cv::imread(filename, CV_LOAD_IMAGE_GRAYSCALE);
-	if (sheetImage.empty())
-	{
-		*success = false;
-		return;
-	}
-
+	
 	// extract tables ordered by x-coordinate
 	Table studentTable;
 	std::vector<Table> answerTables;
@@ -75,12 +96,6 @@ void extract_answers_api(char* filename, Parameters params, bool* numberArray, b
 	}
 
 	*success = true;
-}
-
-void test_image_transfer(unsigned char* testArray, int rows, int cols)
-{
-	cv::Mat image(rows, cols, CV_8UC3, testArray);
-	cv::imwrite("C:/Users/Honza/source/repos/Klokan/testOutput/output.png", image);
 }
 
 tableAnswers evaluate_table(const cv::Mat& tableImage, const Parameters& params, TableType type, cellEvalFunc isCellCrossed)

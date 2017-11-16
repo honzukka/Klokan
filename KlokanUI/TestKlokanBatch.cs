@@ -15,7 +15,7 @@ namespace KlokanUI
 	class TestKlokanInstance
 	{
 		public int ScanId { get; set; }
-		public string SheetFilename { get; set; }
+		public byte[] Image { get; set; }
 		public bool[,,] StudentExpectedValues { get; set; }
 		public bool[,,] AnswerExpectedValues { get; set; }
 	}

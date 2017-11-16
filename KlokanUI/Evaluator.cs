@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Drawing;
+using System.Drawing.Imaging;
+
 namespace KlokanUI
 {
 	class Evaluator
@@ -51,7 +54,7 @@ namespace KlokanUI
 			return new Result(year, category, studentNumber, correctedAnswers, score, sheetFilename,  false);
 		}
 		
-		public TestResult EvaluateTest(int scanId, string sheetFilename, bool[,,] studentExpectedValues, bool[,,] answerExpectedValues)
+		public TestResult EvaluateTest(int scanId, byte[] sheetImage, bool[,,] studentExpectedValues, bool[,,] answerExpectedValues)
 		{
 			if (studentExpectedValues == null || answerExpectedValues == null)
 			{
@@ -62,8 +65,7 @@ namespace KlokanUI
 			bool[,,] studentComputedValues;
 			bool[,,] answerComputedValues;
 
-			// TODO: shouldn't it be possible to pass just the image data? (if tests are run later just on the database...)
-			if (ExtractAnswers(sheetFilename, out studentComputedValues, out answerComputedValues) == false)
+			if (ExtractAnswers(sheetImage, out studentComputedValues, out answerComputedValues) == false)
 			{
 				return new TestResult(true);
 			}
@@ -82,7 +84,7 @@ namespace KlokanUI
 		/// <param name="studentNumberAnswers">This parameter will contain the student number answers extracted from the student number table.</param>
 		/// <param name="extractedAnswers">This parameter will contain the answers extracted from the answer tables.</param>
 		/// <returns>True if the process has succeeded and false otherwise.</returns>
-		bool ExtractAnswers(string sheetFilename, out bool[,,] studentNumberAnswers, out bool[,,] extractedAnswers)
+		bool ExtractAnswers<T>(T sheet, out bool[,,] studentNumberAnswers, out bool[,,] extractedAnswers)
 		{
 			extractedAnswers = new bool[3, 8, 5];
 			studentNumberAnswers = new bool[1, 5, 10];
@@ -104,7 +106,34 @@ namespace KlokanUI
 				bool* successPtr = &success;
 
 				// call into the native library
-				NativeAPIWrapper.extract_answers_api(sheetFilename, parameters, numberPtr, answersPtr, successPtr);
+				string sheetFilename;
+				byte[] sheetImageBytes;
+
+				// if the sheet has been passed as a filename
+				if ((sheetFilename = sheet as string) != null)
+				{
+					NativeAPIWrapper.extract_answers_path_api(sheetFilename, parameters, numberPtr, answersPtr, successPtr);
+				}
+				// if the sheet has been passed as image bytes
+				else if ((sheetImageBytes = sheet as byte[]) != null)
+				{
+					// the image is saved in PNG so we need to convert it to BMP which the library can read
+					Image sheetImage = HelperFunctions.GetBitmap(sheetImageBytes);
+					int imageRows = sheetImage.Height;
+					int imageCols = sheetImage.Width;
+
+					byte[] sheetImageBitmapBytes = HelperFunctions.GetImageBytes(sheetImage, ImageFormat.Bmp);
+					sheetImage.Dispose();
+
+					fixed (byte* imageBitmapBytesPtr = sheetImageBitmapBytes)
+					{
+						NativeAPIWrapper.extract_answers_image_api(imageBitmapBytesPtr, imageRows, imageCols, parameters, numberPtr, answersPtr, successPtr);
+					}
+				}
+				else
+				{
+					return false;
+				}
 
 				if (!success)
 				{

@@ -96,7 +96,7 @@ namespace KlokanUI
 
 			foreach (var testInstance in testBatch.TestInstances)
 			{
-				Task<TestResult> instanceTask = new Task<TestResult>(() => evaluator.EvaluateTest(testInstance.ScanId, testInstance.SheetFilename, testInstance.StudentExpectedValues, testInstance.AnswerExpectedValues));
+				Task<TestResult> instanceTask = new Task<TestResult>(() => evaluator.EvaluateTest(testInstance.ScanId, testInstance.Image, testInstance.StudentExpectedValues, testInstance.AnswerExpectedValues));
 				tasks.Add(instanceTask);
 				instanceTask.Start();
 			}
@@ -111,60 +111,6 @@ namespace KlokanUI
 		}
 
 		/// <summary>
-		/// A test method which outputs results into an output file.
-		/// </summary>
-		/// <param name="results">Any enumerable structure of evaluation results.</param>
-		void OutputResultsTest(IEnumerable<Result> results)
-		{
-			using (var sw = new StreamWriter("output-test.txt"))
-			{
-				foreach (var result in results)
-				{
-					if (result.Error)
-					{
-						sw.WriteLine("ERROR");
-						sw.WriteLine("--------------");
-						continue;
-					}
-
-					for (int table = 0; table < batch.Parameters.TableCount - 1; table++)
-					{
-						sw.WriteLine("Table " + (table + 1) + ":");
-
-						for (int row = 0; row < batch.Parameters.AnswerTableRows - 1; row++)
-						{
-							for (int col = 0; col < batch.Parameters.AnswerTableColumns - 1; col++)
-							{
-								switch (result.CorrectedAnswers[table, row, col])
-								{
-									case AnswerType.Correct:
-										sw.Write("X ");
-										break;
-									case AnswerType.Incorrect:
-										sw.Write("! ");
-										break;
-									case AnswerType.Void:
-										sw.Write("  ");
-										break;
-									case AnswerType.Corrected:
-										sw.Write("O ");
-										break;
-								}
-							}
-
-							sw.WriteLine();
-						}
-
-						sw.WriteLine();
-					}
-
-					sw.WriteLine("Score: " + result.Score);
-					sw.WriteLine("--------------");
-				}
-			}
-		}
-
-		/// <summary>
 		/// Asynchronously stores results into a database described by KlokanDBContext.
 		/// </summary>
 		/// <param name="results">Any enumerable structure of evaluation results.</param>
@@ -175,7 +121,7 @@ namespace KlokanUI
 			{
 				foreach (var result in results)
 				{
-					// find out if the instance this result belongs to is new or if already exists
+					// find out if the instance this result belongs to is new or if it already exists
 					var query = from instance
 								in db.Instances
 								where instance.Year == result.Year && instance.Category == result.Category
@@ -185,7 +131,7 @@ namespace KlokanUI
 
 					if (currentInstance == default(KlokanDBInstance))
 					{
-						// try to search locally too
+						// try to search locally too (maybe the instance was added in the previous loop cycle)
 						var querylocal = from instance
 										 in db.Instances.Local
 										 where instance.Year == result.Year && instance.Category == result.Category

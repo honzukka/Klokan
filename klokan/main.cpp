@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 	bool success = false;
 	bool* successPtr = &success;
 
-	extract_answers_api(filename, params, numberArray, answersArray, successPtr);
+	extract_answers_path_api(filename, params, numberArray, answersArray, successPtr);
 
 	cout << "Number:" << endl;
 

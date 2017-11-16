@@ -201,6 +201,20 @@ namespace KlokanUI
 		}
 
 		/// <summary>
+		/// Transforms an image into an array of bytes in a specified format.
+		/// </summary>
+		/// <param name="image">The image that will be transformed.</param>
+		/// <param name="imageFormat">The format in which the image will be stored into the array.</param>
+		public static byte[] GetImageBytes(Image image, ImageFormat imageFormat)
+		{
+			using (var memoryStream = new MemoryStream())
+			{
+				image.Save(memoryStream, imageFormat);
+				return memoryStream.ToArray();
+			}
+		}
+
+		/// <summary>
 		/// Transforms an array of bytes into an image.
 		/// </summary>
 		/// <param name="image">The array of bytes forming the image.</param>

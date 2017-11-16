@@ -10,6 +10,8 @@ using System.Drawing.Imaging;
 
 namespace KlokanUI
 {
+	// TODO: watch out for memory leaks!
+
 	static class Program
 	{
 		/// <summary>

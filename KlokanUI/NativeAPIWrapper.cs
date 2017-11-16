@@ -8,11 +8,14 @@ using System.Runtime.InteropServices;
 
 namespace KlokanUI
 {
+	// unsafe!!!
 	class NativeAPIWrapper
 	{
-		// unsafe!!!
 		[DllImport("klokan.dll")]
-		public unsafe static extern void extract_answers_api(string filename, Parameters parameters, bool* number, bool* answers, bool* success);
+		public unsafe static extern void extract_answers_path_api(string filename, Parameters parameters, bool* number, bool* answers, bool* success);
+
+		[DllImport("klokan.dll")]
+		public unsafe static extern void extract_answers_image_api(byte* imageBytes, int rows, int cols, Parameters parameters, bool* number, bool* answers, bool* success);
 	}
 
 	// unsafe!!!
