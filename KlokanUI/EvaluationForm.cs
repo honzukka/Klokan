@@ -185,7 +185,7 @@ namespace KlokanUI
 
 		private void editParamsButton_Click(object sender, EventArgs e)
 		{
-			ParameterEditForm form = new ParameterEditForm(chosenParameters);
+			ParameterEditForm form = new ParameterEditForm(chosenParameters, "Klokan - Evaluation - Parameters");
 			form.StartPosition = FormStartPosition.CenterScreen;
 
 			if (form.ShowDialog() == DialogResult.OK)

@@ -29,20 +29,20 @@
 		private void InitializeComponent()
 		{
 			this.dataView = new System.Windows.Forms.DataGridView();
+			this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.studentNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.year = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.category = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.points = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.yearLabel = new System.Windows.Forms.Label();
 			this.yearComboBox = new System.Windows.Forms.ComboBox();
 			this.categoryLabel = new System.Windows.Forms.Label();
 			this.categoryComboBox = new System.Windows.Forms.ComboBox();
 			this.viewButton = new System.Windows.Forms.Button();
 			this.detailButton = new System.Windows.Forms.Button();
-			this.exportAllButton = new System.Windows.Forms.Button();
 			this.exportSelectionButton = new System.Windows.Forms.Button();
 			this.saveFileDialogExport = new System.Windows.Forms.SaveFileDialog();
-			this.importButton = new System.Windows.Forms.Button();
 			this.openDBDialog = new System.Windows.Forms.OpenFileDialog();
-			this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.studentNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.points = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -58,23 +58,55 @@
 			this.dataView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
             this.studentNumber,
+            this.year,
+            this.category,
             this.points});
 			this.dataView.Location = new System.Drawing.Point(48, 86);
 			this.dataView.MultiSelect = false;
 			this.dataView.Name = "dataView";
 			this.dataView.ReadOnly = true;
-			this.dataView.Size = new System.Drawing.Size(383, 483);
+			this.dataView.Size = new System.Drawing.Size(546, 483);
 			this.dataView.TabIndex = 0;
 			this.dataView.Click += new System.EventHandler(this.dataView_Click);
+			// 
+			// id
+			// 
+			this.id.HeaderText = "ID";
+			this.id.Name = "id";
+			this.id.ReadOnly = true;
+			// 
+			// studentNumber
+			// 
+			this.studentNumber.HeaderText = "Student Number";
+			this.studentNumber.Name = "studentNumber";
+			this.studentNumber.ReadOnly = true;
+			// 
+			// year
+			// 
+			this.year.HeaderText = "Year";
+			this.year.Name = "year";
+			this.year.ReadOnly = true;
+			// 
+			// category
+			// 
+			this.category.HeaderText = "Category";
+			this.category.Name = "category";
+			this.category.ReadOnly = true;
+			// 
+			// points
+			// 
+			this.points.HeaderText = "Points";
+			this.points.Name = "points";
+			this.points.ReadOnly = true;
 			// 
 			// yearLabel
 			// 
 			this.yearLabel.AutoSize = true;
 			this.yearLabel.Location = new System.Drawing.Point(48, 13);
 			this.yearLabel.Name = "yearLabel";
-			this.yearLabel.Size = new System.Drawing.Size(72, 13);
+			this.yearLabel.Size = new System.Drawing.Size(63, 13);
 			this.yearLabel.TabIndex = 1;
-			this.yearLabel.Text = "Select a year:";
+			this.yearLabel.Text = "Select year:";
 			// 
 			// yearComboBox
 			// 
@@ -89,9 +121,9 @@
 			this.categoryLabel.AutoSize = true;
 			this.categoryLabel.Location = new System.Drawing.Point(190, 13);
 			this.categoryLabel.Name = "categoryLabel";
-			this.categoryLabel.Size = new System.Drawing.Size(93, 13);
+			this.categoryLabel.Size = new System.Drawing.Size(84, 13);
 			this.categoryLabel.TabIndex = 3;
-			this.categoryLabel.Text = "Select a category:";
+			this.categoryLabel.Text = "Select category:";
 			// 
 			// categoryComboBox
 			// 
@@ -104,11 +136,11 @@
 			// viewButton
 			// 
 			this.viewButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.viewButton.Location = new System.Drawing.Point(472, 26);
+			this.viewButton.Location = new System.Drawing.Point(631, 26);
 			this.viewButton.Name = "viewButton";
 			this.viewButton.Size = new System.Drawing.Size(108, 23);
 			this.viewButton.TabIndex = 5;
-			this.viewButton.Text = "View";
+			this.viewButton.Text = "View Selection";
 			this.viewButton.UseVisualStyleBackColor = true;
 			this.viewButton.Click += new System.EventHandler(this.viewButton_Click);
 			// 
@@ -116,7 +148,7 @@
 			// 
 			this.detailButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.detailButton.Enabled = false;
-			this.detailButton.Location = new System.Drawing.Point(472, 86);
+			this.detailButton.Location = new System.Drawing.Point(631, 86);
 			this.detailButton.Name = "detailButton";
 			this.detailButton.Size = new System.Drawing.Size(108, 23);
 			this.detailButton.TabIndex = 6;
@@ -124,21 +156,10 @@
 			this.detailButton.UseVisualStyleBackColor = true;
 			this.detailButton.Click += new System.EventHandler(this.detailButton_Click);
 			// 
-			// exportAllButton
-			// 
-			this.exportAllButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.exportAllButton.Location = new System.Drawing.Point(472, 546);
-			this.exportAllButton.Name = "exportAllButton";
-			this.exportAllButton.Size = new System.Drawing.Size(108, 23);
-			this.exportAllButton.TabIndex = 7;
-			this.exportAllButton.Text = "Export All";
-			this.exportAllButton.UseVisualStyleBackColor = true;
-			this.exportAllButton.Click += new System.EventHandler(this.exportAllButton_Click);
-			// 
 			// exportSelectionButton
 			// 
 			this.exportSelectionButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.exportSelectionButton.Location = new System.Drawing.Point(472, 517);
+			this.exportSelectionButton.Location = new System.Drawing.Point(631, 546);
 			this.exportSelectionButton.Name = "exportSelectionButton";
 			this.exportSelectionButton.Size = new System.Drawing.Size(108, 23);
 			this.exportSelectionButton.TabIndex = 8;
@@ -150,43 +171,12 @@
 			// 
 			this.saveFileDialogExport.Filter = "CSV File|*.csv";
 			// 
-			// importButton
-			// 
-			this.importButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.importButton.Location = new System.Drawing.Point(472, 488);
-			this.importButton.Name = "importButton";
-			this.importButton.Size = new System.Drawing.Size(108, 23);
-			this.importButton.TabIndex = 9;
-			this.importButton.Text = "Import Database";
-			this.importButton.UseVisualStyleBackColor = true;
-			this.importButton.Click += new System.EventHandler(this.importButton_Click);
-			// 
-			// id
-			// 
-			this.id.HeaderText = "ID";
-			this.id.Name = "id";
-			this.id.ReadOnly = true;
-			// 
-			// studentNumber
-			// 
-			this.studentNumber.HeaderText = "Student Number";
-			this.studentNumber.Name = "studentNumber";
-			this.studentNumber.ReadOnly = true;
-			// 
-			// points
-			// 
-			this.points.HeaderText = "Points";
-			this.points.Name = "points";
-			this.points.ReadOnly = true;
-			// 
 			// DatabaseForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(610, 601);
-			this.Controls.Add(this.importButton);
+			this.ClientSize = new System.Drawing.Size(769, 601);
 			this.Controls.Add(this.exportSelectionButton);
-			this.Controls.Add(this.exportAllButton);
 			this.Controls.Add(this.detailButton);
 			this.Controls.Add(this.viewButton);
 			this.Controls.Add(this.categoryComboBox);
@@ -194,7 +184,7 @@
 			this.Controls.Add(this.yearComboBox);
 			this.Controls.Add(this.yearLabel);
 			this.Controls.Add(this.dataView);
-			this.MinimumSize = new System.Drawing.Size(513, 327);
+			this.MinimumSize = new System.Drawing.Size(785, 640);
 			this.Name = "DatabaseForm";
 			this.Text = "Klokan - Database";
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).EndInit();
@@ -212,13 +202,13 @@
 		private System.Windows.Forms.ComboBox categoryComboBox;
 		private System.Windows.Forms.Button viewButton;
 		private System.Windows.Forms.Button detailButton;
-		private System.Windows.Forms.Button exportAllButton;
 		private System.Windows.Forms.Button exportSelectionButton;
 		private System.Windows.Forms.SaveFileDialog saveFileDialogExport;
-		private System.Windows.Forms.Button importButton;
 		private System.Windows.Forms.OpenFileDialog openDBDialog;
 		private System.Windows.Forms.DataGridViewTextBoxColumn id;
 		private System.Windows.Forms.DataGridViewTextBoxColumn studentNumber;
+		private System.Windows.Forms.DataGridViewTextBoxColumn year;
+		private System.Windows.Forms.DataGridViewTextBoxColumn category;
 		private System.Windows.Forms.DataGridViewTextBoxColumn points;
 	}
 }

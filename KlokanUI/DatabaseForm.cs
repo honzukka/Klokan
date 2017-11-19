@@ -10,12 +10,13 @@ using System.Windows.Forms;
 
 using System.IO;
 using System.Data.SQLite;
+using System.Linq.Expressions;
 
 namespace KlokanUI
 {
 	public partial class DatabaseForm : Form
 	{
-		List<int> yearList;
+		List<string> yearList;
 		List<string> categoryList;
 
 		public DatabaseForm()
@@ -23,15 +24,17 @@ namespace KlokanUI
 			InitializeComponent();
 
 			// initialize the year combo box with a list of years
-			yearList = new List<int>();
+			yearList = new List<string>();
+			yearList.Add("--All--");
 			for (int year = DateTime.Now.Year; year >= 2000; year--)
 			{
-				yearList.Add(year);
+				yearList.Add(year.ToString());
 			}
 			yearComboBox.DataSource = yearList;
 
 			// intialize the catgory combo box with a list of categories
 			categoryList = new List<string>();
+			categoryList.Add("--All--");
 			foreach (var category in Enum.GetValues(typeof(Category)))
 			{
 				categoryList.Add(category.ToString());
@@ -39,38 +42,9 @@ namespace KlokanUI
 			categoryComboBox.DataSource = categoryList;
 		}
 
-		private void PopulateDataView(int year, string category)
-		{
-			dataView.Rows.Clear();
-
-			using (var db = new KlokanDBContext())
-			{
-				var instanceQuery = from instance in db.Instances
-									where instance.Year == year && instance.Category == category
-									select instance;
-
-				KlokanDBInstance currentInstance = instanceQuery.FirstOrDefault();
-
-				// if this instance exits
-				if (currentInstance != default(KlokanDBInstance))
-				{
-					var answerSheetQuery = from sheet in db.AnswerSheets
-										   where sheet.Instance.InstanceId == currentInstance.InstanceId
-										   orderby sheet.Points descending
-										   select new { sheet.AnswerSheetId, sheet.StudentNumber, sheet.Points };
-
-					foreach (var item in answerSheetQuery)
-					{
-						dataView.Rows.Add(item.AnswerSheetId, item.StudentNumber, item.Points);
-					}
-				}
-			}
-		}
-
 		private void viewButton_Click(object sender, EventArgs e)
 		{
-			// TODO: make this asynchronous!
-			PopulateDataView((int)yearComboBox.SelectedItem, (string)categoryComboBox.SelectedItem);
+			PopulateDataView();
 		}
 
 		private void detailButton_Click(object sender, EventArgs e)
@@ -81,10 +55,34 @@ namespace KlokanUI
 				return;
 			}
 
+			var dataViewSortedColumn = dataView.SortedColumn;
+			var dataViewSortOrder = dataView.SortOrder;
+
 			// multiselect is set to false for this data view
 			DatabaseDetailForm form = new DatabaseDetailForm((int)(dataView.SelectedRows[0].Cells[0].Value));
 			form.StartPosition = FormStartPosition.CenterScreen;
 			form.ShowDialog();
+
+			PopulateDataView();
+
+			// if the data view was sorted before
+			if (dataViewSortedColumn != null)
+			{
+				ListSortDirection dataViewSortDirection;
+
+				if (dataViewSortOrder == SortOrder.Ascending)
+				{
+					dataViewSortDirection = ListSortDirection.Ascending;
+				}
+				// dataViewSortOrder of "None" can't happen because now we know that it was sorted
+				else
+				{
+					dataViewSortDirection = ListSortDirection.Descending;
+				}
+
+				// sort the data view as it was before
+				dataView.Sort(dataViewSortedColumn, dataViewSortDirection);
+			}
 		}
 
 		private void dataView_Click(object sender, EventArgs e)
@@ -99,20 +97,6 @@ namespace KlokanUI
 			}
 		}
 
-		private void importButton_Click(object sender, EventArgs e)
-		{
-			var dialogResult = openDBDialog.ShowDialog();
-
-			if (dialogResult == DialogResult.OK)
-			{
-				string importFilePath = openDBDialog.FileName;
-				string externalConnectionString = "Data Source=" + importFilePath + ";Pooling=True";
-				var externalConnection = new SQLiteConnection(externalConnectionString);
-
-				ImportDB(externalConnection);
-			}
-		}
-
 		private void exportSelectionButton_Click(object sender, EventArgs e)
 		{
 			var dialogResult = saveFileDialogExport.ShowDialog();
@@ -123,119 +107,132 @@ namespace KlokanUI
 
 				using (var file = new StreamWriter(saveFilePath, false))
 				{
-					ExportSelection(file, (int)yearComboBox.SelectedItem, (string)categoryComboBox.SelectedItem);
-				}
-			}
-		}
+					int selectedYear;
+					string selectedCategory = (string)categoryComboBox.SelectedItem;
 
-		private void exportAllButton_Click(object sender, EventArgs e)
-		{
-			var dialogResult = saveFileDialogExport.ShowDialog();
-
-			if (dialogResult == DialogResult.OK)
-			{
-				string saveFilePath = saveFileDialogExport.FileName;
-
-				using (var file = new StreamWriter(saveFilePath, false))
-				{
-					ExportAll(file);
-				}
-			}
-		}
-
-		private void ImportDB(SQLiteConnection externalConnection)
-		{
-			using (var internalDB = new KlokanDBContext())
-			using (var externalDB = new KlokanDBContext(externalConnection))
-			{
-				// load the whole external database
-				// (only one instance of a dbcontext can be tracked at a time and this one won't be modified anyway...)
-				var externalInstanceQuery = externalDB.Instances
-												.Include("AnswerSheets.ChosenAnswers")
-												.Include("CorrectAnswers").AsNoTracking();	
-
-				// import new instances
-				foreach (var externalInstance in externalInstanceQuery)
-				{
-					var internalInstanceQuery = from internalInstance in internalDB.Instances
-								where internalInstance.Category == externalInstance.Category &&
-										internalInstance.Year == externalInstance.Year
-								select internalInstance;
-
-					// if the external instance is new, insert it into the internal table
-					if (internalInstanceQuery.Count() == 0)
+					// a specific year was selected
+					if (int.TryParse((string)yearComboBox.SelectedItem, out selectedYear))
 					{
-						internalDB.Instances.Add(externalInstance);
+						// all categories were selected
+						if (selectedCategory == "--All--")
+						{
+							ExportSelection(file, (KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Year == selectedYear);
+						}
+						// a specific category was selected
+						else
+						{
+							ExportSelection(file, (KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Year == selectedYear && answerSheet.Instance.Category == selectedCategory);
+						}
 					}
-
-					// TODO: new answer sheets can also be imported 
-					// but only once a set of columns that differentiates them 
-					// is determined (student number + school number???)
+					// all years were selected
+					else
+					{
+						// all categories were selected
+						if (selectedCategory == "--All--")
+						{
+							ExportSelection(file, (KlokanDBAnswerSheet answerSheet) => true);
+						}
+						// a specific category was selected
+						else
+						{
+							ExportSelection(file, (KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Category == selectedCategory);
+						}
+					}
 				}
+			}
+		}
 
-				// TODO: asynchronous?
-				internalDB.SaveChanges();
+		private void PopulateDataView()
+		{
+			// TODO: make this asynchronous!
+
+			int selectedYear;
+			string selectedCategory = (string)categoryComboBox.SelectedItem;
+
+			// a specific year was selected
+			if (int.TryParse((string)yearComboBox.SelectedItem, out selectedYear))
+			{
+				// all categories were selected
+				if (selectedCategory == "--All--")
+				{
+					ShowAnswerSheets((KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Year == selectedYear);
+				}
+				// a specific category was selected
+				else
+				{
+					ShowAnswerSheets((KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Year == selectedYear && answerSheet.Instance.Category == selectedCategory);
+				}
+			}
+			// all years were selected
+			else
+			{
+				// all categories were selected
+				if (selectedCategory == "--All--")
+				{
+					ShowAnswerSheets((KlokanDBAnswerSheet answerSheet) => true);
+				}
+				// a specific category was selected
+				else
+				{
+					ShowAnswerSheets((KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Category == selectedCategory);
+				}
+			}
+		}
+
+		private void ShowAnswerSheets(Expression<Func<KlokanDBAnswerSheet, bool>> answerSheetSelector)
+		{
+			dataView.Rows.Clear();
+
+			using (var db = new KlokanDBContext())
+			{
+				var answerSheetQuery = db.AnswerSheets.Where(answerSheetSelector);
+
+				foreach (var answerSheet in answerSheetQuery)
+				{
+					dataView.Rows.Add(answerSheet.AnswerSheetId, answerSheet.StudentNumber, answerSheet.Instance.Year, answerSheet.Instance.Category, answerSheet.Points);
+				}
 			}
 		}
 
 		// selects only answer sheets with specific year and category and outputs them
-		private void ExportSelection(StreamWriter sw, int year, string category)
+		private void ExportSelection(StreamWriter sw, Expression<Func<KlokanDBAnswerSheet, bool>> answerSheetSelector)
 		{
 			OutputHeader(sw);
 
 			using (var db = new KlokanDBContext())
 			{
-				// select everything except for scans
-				var answerSheetQuery = from answerSheet in db.AnswerSheets
-									   where answerSheet.Instance.Year == year && answerSheet.Instance.Category == category
-									   select new AnswerSheetSelection
-									   {
-										   AnswerSheetId = answerSheet.AnswerSheetId,
-										   StudentNumber = answerSheet.StudentNumber,
-										   Points = answerSheet.Points,
-										   Instance = answerSheet.Instance,
-										   ChosenAnswers = answerSheet.ChosenAnswers
-									   };
+				// find the suitable answer sheets
+				var answerSheetQuery = db.AnswerSheets.Where(answerSheetSelector);
 
-				OutputAnswerSheetSelection(sw, answerSheetQuery);
-			}
-		}
+				// select everything from them except for scans
+				var answerSheetSelectionQuery = from answerSheet in answerSheetQuery
+												select new AnswerSheetSelection
+												{
+													AnswerSheetId = answerSheet.AnswerSheetId,
+													StudentNumber = answerSheet.StudentNumber,
+													Points = answerSheet.Points,
+													Instance = answerSheet.Instance,
+													ChosenAnswers = answerSheet.ChosenAnswers
+												};
 
-		// selects all answer sheets and outputs them
-		private void ExportAll(StreamWriter sw)
-		{
-			OutputHeader(sw);
-
-			using (var db = new KlokanDBContext())
-			{
-				// select everything except for scans
-				var answerSheetQuery = from answerSheet in db.AnswerSheets
-									   select new AnswerSheetSelection {
-										   AnswerSheetId = answerSheet.AnswerSheetId,
-										   StudentNumber = answerSheet.StudentNumber,
-										   Points = answerSheet.Points,
-										   Instance = answerSheet.Instance,
-										   ChosenAnswers = answerSheet.ChosenAnswers
-									   };
-
-				OutputAnswerSheetSelection(sw, answerSheetQuery);
+				OutputAnswerSheetSelection(sw, answerSheetSelectionQuery);
 			}
 		}
 
 		// outputs answer sheet selection in csv format delimited by a semicolon
-		private void OutputAnswerSheetSelection(StreamWriter sw, IQueryable<AnswerSheetSelection> answerSheetSelection)
+		private void OutputAnswerSheetSelection(StreamWriter sw, IQueryable<AnswerSheetSelection> answerSheetSelectionQuery)
 		{
-			foreach (var answerSheet in answerSheetSelection)
+			foreach (var answerSheetSelection in answerSheetSelectionQuery)
 			{
-				KlokanDBInstance currentInstance = answerSheet.Instance;
-				List<KlokanDBChosenAnswer> chosenAnswers = new List<KlokanDBChosenAnswer>(answerSheet.ChosenAnswers);
+				KlokanDBInstance currentInstance = answerSheetSelection.Instance;
+				List<KlokanDBChosenAnswer> chosenAnswers = new List<KlokanDBChosenAnswer>(answerSheetSelection.ChosenAnswers);
 				List<KlokanDBCorrectAnswer> correctAnswers = new List<KlokanDBCorrectAnswer>(currentInstance.CorrectAnswers);
 
-				sw.Write(answerSheet.AnswerSheetId + ";");
-				sw.Write(answerSheet.StudentNumber + ";");
+				sw.Write(answerSheetSelection.AnswerSheetId + ";");
+				sw.Write(answerSheetSelection.StudentNumber + ";");
 				sw.Write(currentInstance.Year + ";");
 				sw.Write(currentInstance.Category + ";");
-				sw.Write(answerSheet.Points + ";");
+				sw.Write(answerSheetSelection.Points + ";");
 
 				// relies on the order of answers in the database...
 				for (int i = 0; i < 24; i++)
@@ -272,5 +269,42 @@ namespace KlokanUI
 			public KlokanDBInstance Instance { get; set; }
 			public ICollection<KlokanDBChosenAnswer> ChosenAnswers { get; set; }
 		}
+
+		/*
+		private void ImportDB(SQLiteConnection externalConnection)
+		{
+			using (var internalDB = new KlokanDBContext())
+			using (var externalDB = new KlokanDBContext(externalConnection))
+			{
+				// load the whole external database
+				// (only one instance of a dbcontext can be tracked at a time and this one won't be modified anyway...)
+				var externalInstanceQuery = externalDB.Instances
+												.Include("AnswerSheets.ChosenAnswers")
+												.Include("CorrectAnswers").AsNoTracking();	
+
+				// import new instances
+				foreach (var externalInstance in externalInstanceQuery)
+				{
+					var internalInstanceQuery = from internalInstance in internalDB.Instances
+								where internalInstance.Category == externalInstance.Category &&
+										internalInstance.Year == externalInstance.Year
+								select internalInstance;
+
+					// if the external instance is new, insert it into the internal table
+					if (internalInstanceQuery.Count() == 0)
+					{
+						internalDB.Instances.Add(externalInstance);
+					}
+
+					// (TODO) new answer sheets can also be imported 
+					// but only once a set of columns that differentiates them 
+					// is determined (student number + school number???)
+				}
+
+				// (TODO) asynchronous?
+				internalDB.SaveChanges();
+			}
+		}
+		*/
 	}
 }

@@ -49,6 +49,7 @@
 			this.table2PictureBox = new System.Windows.Forms.PictureBox();
 			this.table1PictureBox = new System.Windows.Forms.PictureBox();
 			this.scanPictureBox = new System.Windows.Forms.PictureBox();
+			this.studentNumberTextBox = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.table3PictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.table2PictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.table1PictureBox)).BeginInit();
@@ -94,36 +95,40 @@
 			// idValueLabel
 			// 
 			this.idValueLabel.AutoSize = true;
+			this.idValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.idValueLabel.Location = new System.Drawing.Point(176, 59);
 			this.idValueLabel.Name = "idValueLabel";
-			this.idValueLabel.Size = new System.Drawing.Size(68, 13);
+			this.idValueLabel.Size = new System.Drawing.Size(80, 13);
 			this.idValueLabel.TabIndex = 4;
 			this.idValueLabel.Text = "idValueLabel";
 			// 
 			// yearValueLabel
 			// 
 			this.yearValueLabel.AutoSize = true;
+			this.yearValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.yearValueLabel.Location = new System.Drawing.Point(176, 84);
 			this.yearValueLabel.Name = "yearValueLabel";
-			this.yearValueLabel.Size = new System.Drawing.Size(80, 13);
+			this.yearValueLabel.Size = new System.Drawing.Size(94, 13);
 			this.yearValueLabel.TabIndex = 5;
 			this.yearValueLabel.Text = "yearValueLabel";
 			// 
 			// categoryValueLabel
 			// 
 			this.categoryValueLabel.AutoSize = true;
+			this.categoryValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.categoryValueLabel.Location = new System.Drawing.Point(176, 109);
 			this.categoryValueLabel.Name = "categoryValueLabel";
-			this.categoryValueLabel.Size = new System.Drawing.Size(101, 13);
+			this.categoryValueLabel.Size = new System.Drawing.Size(119, 13);
 			this.categoryValueLabel.TabIndex = 6;
 			this.categoryValueLabel.Text = "categoryValueLabel";
 			// 
 			// pointsValueLabel
 			// 
 			this.pointsValueLabel.AutoSize = true;
+			this.pointsValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.pointsValueLabel.Location = new System.Drawing.Point(176, 135);
 			this.pointsValueLabel.Name = "pointsValueLabel";
-			this.pointsValueLabel.Size = new System.Drawing.Size(88, 13);
+			this.pointsValueLabel.Size = new System.Drawing.Size(104, 13);
 			this.pointsValueLabel.TabIndex = 7;
 			this.pointsValueLabel.Text = "pointsValueLabel";
 			// 
@@ -149,7 +154,7 @@
 			// editButton
 			// 
 			this.editButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.editButton.Location = new System.Drawing.Point(41, 387);
+			this.editButton.Location = new System.Drawing.Point(41, 385);
 			this.editButton.Name = "editButton";
 			this.editButton.Size = new System.Drawing.Size(107, 23);
 			this.editButton.TabIndex = 16;
@@ -161,7 +166,7 @@
 			// 
 			this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.applyButton.Enabled = false;
-			this.applyButton.Location = new System.Drawing.Point(61, 416);
+			this.applyButton.Location = new System.Drawing.Point(61, 414);
 			this.applyButton.Name = "applyButton";
 			this.applyButton.Size = new System.Drawing.Size(107, 23);
 			this.applyButton.TabIndex = 17;
@@ -173,7 +178,7 @@
 			// 
 			this.discardButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.discardButton.Enabled = false;
-			this.discardButton.Location = new System.Drawing.Point(174, 416);
+			this.discardButton.Location = new System.Drawing.Point(174, 414);
 			this.discardButton.Name = "discardButton";
 			this.discardButton.Size = new System.Drawing.Size(107, 23);
 			this.discardButton.TabIndex = 18;
@@ -185,7 +190,7 @@
 			// 
 			this.reevaluateButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.reevaluateButton.Enabled = false;
-			this.reevaluateButton.Location = new System.Drawing.Point(41, 468);
+			this.reevaluateButton.Location = new System.Drawing.Point(41, 466);
 			this.reevaluateButton.Name = "reevaluateButton";
 			this.reevaluateButton.Size = new System.Drawing.Size(107, 23);
 			this.reevaluateButton.TabIndex = 19;
@@ -197,7 +202,7 @@
 			// 
 			this.updateDatabaseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.updateDatabaseButton.Enabled = false;
-			this.updateDatabaseButton.Location = new System.Drawing.Point(41, 498);
+			this.updateDatabaseButton.Location = new System.Drawing.Point(41, 496);
 			this.updateDatabaseButton.Name = "updateDatabaseButton";
 			this.updateDatabaseButton.Size = new System.Drawing.Size(107, 23);
 			this.updateDatabaseButton.TabIndex = 20;
@@ -217,9 +222,10 @@
 			// studentNumberValueLabel
 			// 
 			this.studentNumberValueLabel.AutoSize = true;
+			this.studentNumberValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.studentNumberValueLabel.Location = new System.Drawing.Point(174, 35);
 			this.studentNumberValueLabel.Name = "studentNumberValueLabel";
-			this.studentNumberValueLabel.Size = new System.Drawing.Size(132, 13);
+			this.studentNumberValueLabel.Size = new System.Drawing.Size(155, 13);
 			this.studentNumberValueLabel.TabIndex = 22;
 			this.studentNumberValueLabel.Text = "studentNumberValueLabel";
 			// 
@@ -269,16 +275,24 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.scanPictureBox.Location = new System.Drawing.Point(324, 60);
 			this.scanPictureBox.Name = "scanPictureBox";
-			this.scanPictureBox.Size = new System.Drawing.Size(329, 461);
+			this.scanPictureBox.Size = new System.Drawing.Size(329, 459);
 			this.scanPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.scanPictureBox.TabIndex = 9;
 			this.scanPictureBox.TabStop = false;
+			// 
+			// studentNumberTextBox
+			// 
+			this.studentNumberTextBox.Location = new System.Drawing.Point(174, 32);
+			this.studentNumberTextBox.Name = "studentNumberTextBox";
+			this.studentNumberTextBox.Size = new System.Drawing.Size(100, 20);
+			this.studentNumberTextBox.TabIndex = 23;
 			// 
 			// DatabaseDetailForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1195, 545);
+			this.ClientSize = new System.Drawing.Size(1195, 543);
+			this.Controls.Add(this.studentNumberTextBox);
 			this.Controls.Add(this.studentNumberValueLabel);
 			this.Controls.Add(this.studentNumberLabel);
 			this.Controls.Add(this.updateDatabaseButton);
@@ -300,7 +314,7 @@
 			this.Controls.Add(this.categoryLabel);
 			this.Controls.Add(this.yearLabel);
 			this.Controls.Add(this.idLabel);
-			this.MinimumSize = new System.Drawing.Size(1211, 584);
+			this.MinimumSize = new System.Drawing.Size(1211, 582);
 			this.Name = "DatabaseDetailForm";
 			this.Text = "Klokan - Database - Detail";
 			((System.ComponentModel.ISupportInitialize)(this.table3PictureBox)).EndInit();
@@ -335,5 +349,6 @@
 		private System.Windows.Forms.Button updateDatabaseButton;
 		private System.Windows.Forms.Label studentNumberLabel;
 		private System.Windows.Forms.Label studentNumberValueLabel;
+		private System.Windows.Forms.TextBox studentNumberTextBox;
 	}
 }

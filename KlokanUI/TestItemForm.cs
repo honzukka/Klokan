@@ -176,6 +176,7 @@ namespace KlokanUI
 					// assign new expected answers
 					var oldScanItem = oldScanItemQuery.FirstOrDefault();
 					oldScanItem.ExpectedValues = scanItem.ExpectedValues;
+					oldScanItem.Correctness = -1;
 				}
 				else
 				{

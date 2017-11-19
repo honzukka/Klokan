@@ -20,9 +20,14 @@ namespace KlokanUI
 		{
 			InitializeComponent();
 
+			viewItemButton.Enabled = false;
+			removeItemButton.Enabled = false;
+
 			PopulateDataView();
 
 			chosenParameters = Parameters.CreateDefaultParameters();
+
+			ShowAverageCorrectness();
 		}
 
 		private void PopulateDataView()
@@ -41,16 +46,71 @@ namespace KlokanUI
 			}
 		}
 
+		// gets data from the data view!
+		private float GetAverageCorrectness()
+		{
+			// no test items available
+			if (dataView.Rows.Count == 0)
+			{
+				return -1;
+			}
+
+			float correctnessSum = 0;
+
+			foreach (DataGridViewRow row in dataView.Rows)
+			{
+				float itemCorrectness = (float)(row.Cells[1].Value);
+
+				// correctness data not complete, evaluation needed
+				if (itemCorrectness == -1)
+				{
+					return -1;
+				}
+
+				correctnessSum += itemCorrectness;
+			}
+
+			float averageCorrectness = correctnessSum / dataView.Rows.Count;
+
+			return averageCorrectness;
+		}
+
+		// gets data from the data view!
+		private void ShowAverageCorrectness()
+		{
+			float averageCorrectness = GetAverageCorrectness();
+
+			// if all test items have been evaluated
+			if (averageCorrectness != -1)
+			{
+				averageCorrectnessValueLabel.Text = GetAverageCorrectness().ToString();
+
+				averageCorrectnessLabel.Show();
+				averageCorrectnessValueLabel.Show();
+			}
+			else
+			{
+				averageCorrectnessLabel.Hide();
+				averageCorrectnessValueLabel.Hide();
+			}
+		}
+
 		public void EnableGoButton()
 		{
 			if (evaluateButton.InvokeRequired)
 			{
 				evaluateButton.BeginInvoke(new Action(
-					() => { evaluateButton.Enabled = true; }
+					() => {
+						PopulateDataView();
+						ShowAverageCorrectness();
+						evaluateButton.Enabled = true;
+					}
 				));
 			}
 			else
 			{
+				PopulateDataView();
+				ShowAverageCorrectness();
 				evaluateButton.Enabled = true;
 			}
 		}
@@ -62,19 +122,22 @@ namespace KlokanUI
 				this.BeginInvoke(new Action(
 					() => {
 						MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-						PopulateDataView();
 					}
 				));
 			}
 			else
 			{
 				MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-				PopulateDataView();
 			}
 		}
 
 		private void evaluateButton_Click(object sender, EventArgs e)
 		{
+			if (MessageBox.Show("Do you you want to start evaluation?", "Evaluation Start", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+			{
+				return;
+			}
+
 			evaluateButton.Enabled = false;
 
 			List<TestKlokanInstance> testInstances = new List<TestKlokanInstance>();
@@ -121,6 +184,8 @@ namespace KlokanUI
 			testAddItemForm.StartPosition = FormStartPosition.CenterScreen;
 			testAddItemForm.ShowDialog();
 
+			averageCorrectnessLabel.Hide();
+			averageCorrectnessValueLabel.Hide();
 			PopulateDataView();
 		}
 
@@ -154,6 +219,8 @@ namespace KlokanUI
 					testDB.SaveChanges();
 				}
 			}
+
+			ShowAverageCorrectness();
 		}
 
 		private void viewItemButton_Click(object sender, EventArgs e)
@@ -191,16 +258,31 @@ namespace KlokanUI
 			form.ShowDialog();
 
 			PopulateDataView();
+			ShowAverageCorrectness();
 		}
 
 		private void editParamsButton_Click(object sender, EventArgs e)
 		{
-			ParameterEditForm form = new ParameterEditForm(chosenParameters);
+			ParameterEditForm form = new ParameterEditForm(chosenParameters, "Klokan - Test - Parameters");
 			form.StartPosition = FormStartPosition.CenterScreen;
 
 			if (form.ShowDialog() == DialogResult.OK)
 			{
 				chosenParameters = form.Parameters;
+			}
+		}
+
+		private void dataView_Click(object sender, EventArgs e)
+		{
+			if (dataView.SelectedRows.Count == 1)
+			{
+				viewItemButton.Enabled = true;
+				removeItemButton.Enabled = true;
+			}
+			else
+			{
+				viewItemButton.Enabled = false;
+				removeItemButton.Enabled = false;
 			}
 		}
 	}

@@ -36,6 +36,8 @@
 			this.editParamsButton = new System.Windows.Forms.Button();
 			this.evaluateButton = new System.Windows.Forms.Button();
 			this.viewItemButton = new System.Windows.Forms.Button();
+			this.averageCorrectnessLabel = new System.Windows.Forms.Label();
+			this.averageCorrectnessValueLabel = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -51,12 +53,13 @@
 			this.dataView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idColumn,
             this.correctnessColumn});
-			this.dataView.Location = new System.Drawing.Point(43, 92);
+			this.dataView.Location = new System.Drawing.Point(43, 111);
 			this.dataView.MultiSelect = false;
 			this.dataView.Name = "dataView";
 			this.dataView.ReadOnly = true;
 			this.dataView.Size = new System.Drawing.Size(289, 385);
 			this.dataView.TabIndex = 0;
+			this.dataView.Click += new System.EventHandler(this.dataView_Click);
 			// 
 			// idColumn
 			// 
@@ -73,7 +76,7 @@
 			// addItemButton
 			// 
 			this.addItemButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.addItemButton.Location = new System.Drawing.Point(360, 92);
+			this.addItemButton.Location = new System.Drawing.Point(360, 111);
 			this.addItemButton.Name = "addItemButton";
 			this.addItemButton.Size = new System.Drawing.Size(86, 23);
 			this.addItemButton.TabIndex = 1;
@@ -84,7 +87,7 @@
 			// removeItemButton
 			// 
 			this.removeItemButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.removeItemButton.Location = new System.Drawing.Point(360, 121);
+			this.removeItemButton.Location = new System.Drawing.Point(360, 169);
 			this.removeItemButton.Name = "removeItemButton";
 			this.removeItemButton.Size = new System.Drawing.Size(86, 23);
 			this.removeItemButton.TabIndex = 2;
@@ -116,7 +119,7 @@
 			// viewItemButton
 			// 
 			this.viewItemButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.viewItemButton.Location = new System.Drawing.Point(360, 150);
+			this.viewItemButton.Location = new System.Drawing.Point(360, 140);
 			this.viewItemButton.Name = "viewItemButton";
 			this.viewItemButton.Size = new System.Drawing.Size(86, 23);
 			this.viewItemButton.TabIndex = 5;
@@ -124,11 +127,31 @@
 			this.viewItemButton.UseVisualStyleBackColor = true;
 			this.viewItemButton.Click += new System.EventHandler(this.viewItemButton_Click);
 			// 
+			// averageCorrectnessLabel
+			// 
+			this.averageCorrectnessLabel.AutoSize = true;
+			this.averageCorrectnessLabel.Location = new System.Drawing.Point(43, 76);
+			this.averageCorrectnessLabel.Name = "averageCorrectnessLabel";
+			this.averageCorrectnessLabel.Size = new System.Drawing.Size(109, 13);
+			this.averageCorrectnessLabel.TabIndex = 6;
+			this.averageCorrectnessLabel.Text = "Average Correctness:";
+			// 
+			// averageCorrectnessValueLabel
+			// 
+			this.averageCorrectnessValueLabel.AutoSize = true;
+			this.averageCorrectnessValueLabel.Location = new System.Drawing.Point(158, 76);
+			this.averageCorrectnessValueLabel.Name = "averageCorrectnessValueLabel";
+			this.averageCorrectnessValueLabel.Size = new System.Drawing.Size(155, 13);
+			this.averageCorrectnessValueLabel.TabIndex = 7;
+			this.averageCorrectnessValueLabel.Text = "averageCorrectnessValueLabel";
+			// 
 			// TestForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(492, 532);
+			this.Controls.Add(this.averageCorrectnessValueLabel);
+			this.Controls.Add(this.averageCorrectnessLabel);
 			this.Controls.Add(this.viewItemButton);
 			this.Controls.Add(this.evaluateButton);
 			this.Controls.Add(this.editParamsButton);
@@ -140,6 +163,7 @@
 			this.Text = "Klokan - Test";
 			((System.ComponentModel.ISupportInitialize)(this.dataView)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -153,5 +177,7 @@
 		private System.Windows.Forms.Button editParamsButton;
 		private System.Windows.Forms.Button evaluateButton;
 		private System.Windows.Forms.Button viewItemButton;
+		private System.Windows.Forms.Label averageCorrectnessLabel;
+		private System.Windows.Forms.Label averageCorrectnessValueLabel;
 	}
 }

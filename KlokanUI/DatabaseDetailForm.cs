@@ -20,6 +20,10 @@ namespace KlokanUI
 		bool[,,] chosenAnswers;
 		bool[,,] chosenAnswersTemp;
 		bool[,,] correctAnswers;
+
+		int studentNumber;
+		int studentNumberTemp;
+
 		int points;
 
 		public DatabaseDetailForm(int answerSheetId)
@@ -27,10 +31,17 @@ namespace KlokanUI
 			InitializeComponent();
 
 			this.answerSheetId = answerSheetId;
+
 			chosenAnswers = null;
 			chosenAnswersTemp = null;
 			correctAnswers = null;
+
+			studentNumber = 0;
+			studentNumberTemp = 0;
+
 			points = -1;
+
+			studentNumberTextBox.Hide();
 
 			PopulateForm();
 		}
@@ -44,9 +55,14 @@ namespace KlokanUI
 			reevaluateButton.Enabled = false;
 			updateDatabaseButton.Enabled = false;
 
+			// make the student number field editable
+			studentNumberTextBox.Text = studentNumber.ToString();
+			studentNumberValueLabel.Hide();
+			studentNumberTextBox.Show();
+
 			// draw only chosen answers as only those can be edited
 			ResetTableImages();
-			//HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
+			
 			HelperFunctions.DrawAnswers(table1PictureBox, chosenAnswers, 0, HelperFunctions.DrawCross, Color.Black);
 			HelperFunctions.DrawAnswers(table2PictureBox, chosenAnswers, 1, HelperFunctions.DrawCross, Color.Black);
 			HelperFunctions.DrawAnswers(table3PictureBox, chosenAnswers, 2, HelperFunctions.DrawCross, Color.Black);
@@ -58,11 +74,28 @@ namespace KlokanUI
 
 		private void applyButton_Click(object sender, EventArgs e)
 		{
+			if (int.TryParse(studentNumberTextBox.Text, out studentNumberTemp) == false)
+			{
+				MessageBox.Show("Invalid student number format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			if (studentNumberTemp < 0 || studentNumberTemp > 99999)
+			{
+				MessageBox.Show("Student number out of range.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
 			applyButton.Enabled = false;
 			discardButton.Enabled = false;
 			editButton.Enabled = true;
 			reevaluateButton.Enabled = true;
 
+			studentNumberTextBox.Hide();
+			studentNumberValueLabel.Text = studentNumberTemp.ToString();
+			studentNumberValueLabel.Show();
+
+			studentNumber = studentNumberTemp;
 			chosenAnswers = chosenAnswersTemp;
 		}
 
@@ -72,12 +105,19 @@ namespace KlokanUI
 			discardButton.Enabled = false;
 			editButton.Enabled = true;
 
+			studentNumberTextBox.Hide();
+			studentNumberValueLabel.Show();
+
 			// draw the original answers
 			ResetTableImages();
-			//HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
+
 			HelperFunctions.DrawAnswers(table1PictureBox, chosenAnswers, 0, HelperFunctions.DrawCross, Color.Black);
 			HelperFunctions.DrawAnswers(table2PictureBox, chosenAnswers, 1, HelperFunctions.DrawCross, Color.Black);
 			HelperFunctions.DrawAnswers(table3PictureBox, chosenAnswers, 2, HelperFunctions.DrawCross, Color.Black);
+
+			HelperFunctions.DrawAnswers(table1PictureBox, correctAnswers, 0, HelperFunctions.DrawCircle, Color.Red);
+			HelperFunctions.DrawAnswers(table2PictureBox, correctAnswers, 1, HelperFunctions.DrawCircle, Color.Red);
+			HelperFunctions.DrawAnswers(table3PictureBox, correctAnswers, 2, HelperFunctions.DrawCircle, Color.Red);
 		}
 
 		private void reevaluateButton_Click(object sender, EventArgs e)
@@ -90,8 +130,7 @@ namespace KlokanUI
 
 			// draw both chosen and correct answers again
 			ResetTableImages();
-			//HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
-			//HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, HelperFunctions.DrawCircle, Color.Red);
+
 			HelperFunctions.DrawAnswers(table1PictureBox, chosenAnswers, 0, HelperFunctions.DrawCross, Color.Black);
 			HelperFunctions.DrawAnswers(table2PictureBox, chosenAnswers, 1, HelperFunctions.DrawCross, Color.Black);
 			HelperFunctions.DrawAnswers(table3PictureBox, chosenAnswers, 2, HelperFunctions.DrawCross, Color.Black);
@@ -131,7 +170,7 @@ namespace KlokanUI
 				List<KlokanDBChosenAnswer> blah = new List<KlokanDBChosenAnswer>(answerSheet.ChosenAnswers);
 
 				KlokanDBAnswerSheet updatedAnswerSheet = new KlokanDBAnswerSheet {
-					StudentNumber = answerSheet.StudentNumber,
+					StudentNumber = studentNumber,
 					Points = newPoints,
 					Scan = answerSheet.Scan,
 					InstanceId = answerSheet.InstanceId,
@@ -191,6 +230,8 @@ namespace KlokanUI
 
 				KlokanDBInstance currentInstance = instanceQuery.FirstOrDefault();
 
+				studentNumber = answerSheet.StudentNumber;
+
 				studentNumberValueLabel.Text = answerSheet.StudentNumber.ToString();
 				idValueLabel.Text = answerSheet.AnswerSheetId.ToString();
 				yearValueLabel.Text = currentInstance.Year.ToString();
@@ -206,7 +247,7 @@ namespace KlokanUI
 								   select chosenAnswer;
 
 				HelperFunctions.DbSetToAnswers(chosenAnswersQuery.ToList(), out chosenAnswers);
-				//HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, chosenAnswers, HelperFunctions.DrawCross, Color.Black);
+				
 				HelperFunctions.DrawAnswers(table1PictureBox, chosenAnswers, 0, HelperFunctions.DrawCross, Color.Black);
 				HelperFunctions.DrawAnswers(table2PictureBox, chosenAnswers, 1, HelperFunctions.DrawCross, Color.Black);
 				HelperFunctions.DrawAnswers(table3PictureBox, chosenAnswers, 2, HelperFunctions.DrawCross, Color.Black);
@@ -216,7 +257,7 @@ namespace KlokanUI
 										  select correctAnswer;
 
 				HelperFunctions.DbSetToAnswers(correctAnswersQuery.ToList(), out correctAnswers);
-				//HelperFunctions.DrawAnswers(table1PictureBox, table2PictureBox, table3PictureBox, correctAnswers, HelperFunctions.DrawCircle, Color.Red);
+				
 				HelperFunctions.DrawAnswers(table1PictureBox, correctAnswers, 0, HelperFunctions.DrawCircle, Color.Red);
 				HelperFunctions.DrawAnswers(table2PictureBox, correctAnswers, 1, HelperFunctions.DrawCircle, Color.Red);
 				HelperFunctions.DrawAnswers(table3PictureBox, correctAnswers, 2, HelperFunctions.DrawCircle, Color.Red);

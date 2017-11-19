@@ -15,9 +15,11 @@ namespace KlokanUI
 		ToolTip toolTip;
 		internal Parameters Parameters { get; set; }
 
-		internal ParameterEditForm(Parameters currentParameters)
+		internal ParameterEditForm(Parameters currentParameters, string formText)
 		{
 			InitializeComponent();
+
+			this.Text = formText;
 
 			Parameters = currentParameters;
 			FillTextBoxes();
