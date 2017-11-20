@@ -139,9 +139,10 @@
 			// averageCorrectnessValueLabel
 			// 
 			this.averageCorrectnessValueLabel.AutoSize = true;
+			this.averageCorrectnessValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.averageCorrectnessValueLabel.Location = new System.Drawing.Point(158, 76);
 			this.averageCorrectnessValueLabel.Name = "averageCorrectnessValueLabel";
-			this.averageCorrectnessValueLabel.Size = new System.Drawing.Size(155, 13);
+			this.averageCorrectnessValueLabel.Size = new System.Drawing.Size(183, 13);
 			this.averageCorrectnessValueLabel.TabIndex = 7;
 			this.averageCorrectnessValueLabel.Text = "averageCorrectnessValueLabel";
 			// 

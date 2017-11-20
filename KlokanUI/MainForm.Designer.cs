@@ -35,31 +35,31 @@
 			// 
 			// evaluateButton
 			// 
-			this.evaluateButton.Location = new System.Drawing.Point(52, 37);
+			this.evaluateButton.Location = new System.Drawing.Point(118, 110);
 			this.evaluateButton.Name = "evaluateButton";
 			this.evaluateButton.Size = new System.Drawing.Size(118, 23);
 			this.evaluateButton.TabIndex = 0;
-			this.evaluateButton.Text = "Evaluate Sheets";
+			this.evaluateButton.Text = "Evaluation Module";
 			this.evaluateButton.UseVisualStyleBackColor = true;
 			this.evaluateButton.Click += new System.EventHandler(this.evaluateButton_Click);
 			// 
 			// databaseButton
 			// 
-			this.databaseButton.Location = new System.Drawing.Point(52, 67);
+			this.databaseButton.Location = new System.Drawing.Point(118, 139);
 			this.databaseButton.Name = "databaseButton";
 			this.databaseButton.Size = new System.Drawing.Size(118, 23);
 			this.databaseButton.TabIndex = 1;
-			this.databaseButton.Text = "View Database";
+			this.databaseButton.Text = "Database Module";
 			this.databaseButton.UseVisualStyleBackColor = true;
 			this.databaseButton.Click += new System.EventHandler(this.databaseButton_Click);
 			// 
 			// testButton
 			// 
-			this.testButton.Location = new System.Drawing.Point(52, 96);
+			this.testButton.Location = new System.Drawing.Point(118, 168);
 			this.testButton.Name = "testButton";
 			this.testButton.Size = new System.Drawing.Size(118, 23);
 			this.testButton.TabIndex = 2;
-			this.testButton.Text = "Test Algorithm";
+			this.testButton.Text = "Test Module";
 			this.testButton.UseVisualStyleBackColor = true;
 			this.testButton.Click += new System.EventHandler(this.testButton_Click);
 			// 
@@ -71,6 +71,8 @@
 			this.Controls.Add(this.testButton);
 			this.Controls.Add(this.databaseButton);
 			this.Controls.Add(this.evaluateButton);
+			this.MaximumSize = new System.Drawing.Size(377, 357);
+			this.MinimumSize = new System.Drawing.Size(377, 357);
 			this.Name = "MainForm";
 			this.Text = "Klokan";
 			this.ResumeLayout(false);

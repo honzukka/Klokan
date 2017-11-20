@@ -22,6 +22,9 @@ namespace KlokanUI
 		bool[,,] chosenValuesStudentTable;
 		bool[,,] chosenValuesAnswerTable;
 
+		bool[,,] chosenValuesStudentTableTemp;
+		bool[,,] chosenValuesAnswerTableTemp;
+
 		public TestItemForm(KlokanTestDBScan scanItem, bool viewMode)
 		{
 			InitializeComponent();
@@ -39,15 +42,20 @@ namespace KlokanUI
 			chosenValuesStudentTable = new bool[1, 5, 10];
 			chosenValuesAnswerTable = new bool[3, 8, 5];
 
+			chosenValuesStudentTableTemp = new bool[1, 5, 10];
+			chosenValuesAnswerTableTemp = new bool[3, 8, 5];
+
 			if (viewMode)
 			{
 				chooseFileButton.Enabled = false;
 				applyButton.Enabled = false;
+				discardButton.Enabled = false;
 				PopulateForm();
 			}
 			else
 			{
 				editButton.Hide();
+				discardButton.Hide();
 			}
 		}
 
@@ -68,7 +76,7 @@ namespace KlokanUI
 		{
 			if (!viewMode)
 			{
-				HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, studentTablePictureBox, 0, chosenValuesStudentTable);
+				HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, studentTablePictureBox, 0, chosenValuesStudentTableTemp);
 			}
 		}
 
@@ -76,7 +84,7 @@ namespace KlokanUI
 		{
 			if (!viewMode)
 			{
-				HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, answerTable1PictureBox, 0, chosenValuesAnswerTable);
+				HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, answerTable1PictureBox, 0, chosenValuesAnswerTableTemp);
 			}
 		}
 
@@ -84,7 +92,7 @@ namespace KlokanUI
 		{
 			if (!viewMode)
 			{
-				HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, answerTable2PictureBox, 1, chosenValuesAnswerTable);
+				HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, answerTable2PictureBox, 1, chosenValuesAnswerTableTemp);
 			}
 		}
 
@@ -92,7 +100,7 @@ namespace KlokanUI
 		{
 			if (!viewMode)
 			{
-				HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, answerTable3PictureBox, 2, chosenValuesAnswerTable);
+				HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, answerTable3PictureBox, 2, chosenValuesAnswerTableTemp);
 			}
 		}
 
@@ -100,6 +108,24 @@ namespace KlokanUI
 		{
 			viewMode = false;
 			applyButton.Enabled = true;
+			discardButton.Enabled = true;
+			updateButton.Enabled = false;
+			editButton.Enabled = false;
+
+			ResetTableImages();
+
+			// draw only the expected answers because only those can be edited
+			HelperFunctions.DrawAnswers(studentTablePictureBox, chosenValuesStudentTable, 0, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(answerTable1PictureBox, chosenValuesAnswerTable, 0, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(answerTable2PictureBox, chosenValuesAnswerTable, 1, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(answerTable3PictureBox, chosenValuesAnswerTable, 2, HelperFunctions.DrawCross, Color.Black);
+
+			// create a copy of currently chosen answers for editing
+			chosenValuesStudentTableTemp = new bool[1, 5, 10];
+			Array.Copy(chosenValuesStudentTable, chosenValuesStudentTableTemp, 1 * 5 * 10);
+
+			chosenValuesAnswerTableTemp = new bool[3, 8, 5];
+			Array.Copy(chosenValuesAnswerTable, chosenValuesAnswerTableTemp, 3 * 8 * 5);
 		}
 
 		private void applyButton_Click(object sender, EventArgs e)
@@ -110,7 +136,7 @@ namespace KlokanUI
 				return;
 			}
 
-			if (!HelperFunctions.CheckAnswers(chosenValuesStudentTable, 0))
+			if (!HelperFunctions.CheckAnswers(chosenValuesStudentTableTemp, 0))
 			{
 				MessageBox.Show("Student number has not been properly selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
@@ -118,12 +144,71 @@ namespace KlokanUI
 
 			for (int i = 0; i < 3; i++)
 			{
-				if (!HelperFunctions.CheckAnswers(chosenValuesAnswerTable, i))
+				if (!HelperFunctions.CheckAnswers(chosenValuesAnswerTableTemp, i))
 				{
 					MessageBox.Show("Expected answers have not been properly selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
 				}
 			}
+
+			chosenValuesStudentTable = chosenValuesStudentTableTemp;
+			chosenValuesAnswerTable = chosenValuesAnswerTableTemp;
+
+			// draw the computed answers for comparison
+			bool[,,] computedValuesStudentTable;
+			bool[,,] computedValuesAnswerTable;
+
+			List<KlokanTestDBComputedAnswer> computedValues = new List<KlokanTestDBComputedAnswer>(scanItem.ComputedValues);
+			HelperFunctions.DbSetToAnswers(computedValues, out computedValuesStudentTable, out computedValuesAnswerTable);
+
+			HelperFunctions.DrawAnswers(studentTablePictureBox, computedValuesStudentTable, 0, HelperFunctions.DrawCircle, Color.Red);
+			HelperFunctions.DrawAnswers(answerTable1PictureBox, computedValuesAnswerTable, 0, HelperFunctions.DrawCircle, Color.Red);
+			HelperFunctions.DrawAnswers(answerTable2PictureBox, computedValuesAnswerTable, 1, HelperFunctions.DrawCircle, Color.Red);
+			HelperFunctions.DrawAnswers(answerTable3PictureBox, computedValuesAnswerTable, 2, HelperFunctions.DrawCircle, Color.Red);
+
+			updateButton.Enabled = true;
+			editButton.Enabled = true;
+			applyButton.Enabled = false;
+			discardButton.Enabled = false;
+			viewMode = true;
+		}
+
+		private void discardButton_Click(object sender, EventArgs e)
+		{
+			ResetTableImages();
+			
+			// draw the original answers
+			HelperFunctions.DrawAnswers(studentTablePictureBox, chosenValuesStudentTable, 0, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(answerTable1PictureBox, chosenValuesAnswerTable, 0, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(answerTable2PictureBox, chosenValuesAnswerTable, 1, HelperFunctions.DrawCross, Color.Black);
+			HelperFunctions.DrawAnswers(answerTable3PictureBox, chosenValuesAnswerTable, 2, HelperFunctions.DrawCross, Color.Black);
+
+			bool[,,] computedValuesStudentTable;
+			bool[,,] computedValuesAnswerTable;
+
+			List<KlokanTestDBComputedAnswer> computedValues = new List<KlokanTestDBComputedAnswer>(scanItem.ComputedValues);
+			HelperFunctions.DbSetToAnswers(computedValues, out computedValuesStudentTable, out computedValuesAnswerTable);
+
+			HelperFunctions.DrawAnswers(studentTablePictureBox, computedValuesStudentTable, 0, HelperFunctions.DrawCircle, Color.Red);
+			HelperFunctions.DrawAnswers(answerTable1PictureBox, computedValuesAnswerTable, 0, HelperFunctions.DrawCircle, Color.Red);
+			HelperFunctions.DrawAnswers(answerTable2PictureBox, computedValuesAnswerTable, 1, HelperFunctions.DrawCircle, Color.Red);
+			HelperFunctions.DrawAnswers(answerTable3PictureBox, computedValuesAnswerTable, 2, HelperFunctions.DrawCircle, Color.Red);
+
+			editButton.Enabled = true;
+			applyButton.Enabled = false;
+			discardButton.Enabled = false;
+			viewMode = true;
+		}
+
+		private void updateButton_Click(object sender, EventArgs e)
+		{
+			var dialogResult = MessageBox.Show("Are you sure you want to update the database?", "Database Change", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			if (dialogResult == DialogResult.No)
+			{
+				return;
+			}
+
+			updateButton.Enabled = false;
 
 			// prepare the DbSet of chosen expected answers
 			List<KlokanTestDBExpectedAnswer> expectedAnswers = new List<KlokanTestDBExpectedAnswer>();
@@ -137,22 +222,9 @@ namespace KlokanUI
 			{
 				scanItem.Image = HelperFunctions.GetImageBytes(scanFilePath, ImageFormat.Png);
 			}
-			
+
 			scanItem.ExpectedValues = expectedAnswers;
 			scanItem.Correctness = -1;      // correctness will only have a valid value once the evaluation is run
-
-			updateButton.Enabled = true;
-		}
-
-		private void updateButton_Click(object sender, EventArgs e)
-		{
-			var dialogResult = MessageBox.Show("Are you sure you want to update the database?", "Database Change", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-			if (dialogResult == DialogResult.No)
-			{
-				return;
-			}
-
-			updateButton.Enabled = false;
 
 			using (var testDB = new KlokanTestDBContext())
 			{
@@ -193,6 +265,13 @@ namespace KlokanUI
 				
 				testDB.SaveChanges();
 			}
+
+			if (addMode)
+			{
+				this.Close();
+			}
+
+			PopulateForm();
 		}
 
 		private void PopulateForm()
@@ -219,6 +298,30 @@ namespace KlokanUI
 			HelperFunctions.DrawAnswers(answerTable1PictureBox, computedValuesAnswerTable, 0, HelperFunctions.DrawCircle, Color.Red);
 			HelperFunctions.DrawAnswers(answerTable2PictureBox, computedValuesAnswerTable, 1, HelperFunctions.DrawCircle, Color.Red);
 			HelperFunctions.DrawAnswers(answerTable3PictureBox, computedValuesAnswerTable, 2, HelperFunctions.DrawCircle, Color.Red);
+		}
+
+		private void ResetTableImages()
+		{
+			List<Image> oldImages = new List<Image>();
+			oldImages.Add(studentTablePictureBox.Image);
+			oldImages.Add(answerTable1PictureBox.Image);
+			oldImages.Add(answerTable2PictureBox.Image);
+			oldImages.Add(answerTable3PictureBox.Image);
+
+			foreach (var oldImage in oldImages)
+			{
+				if (oldImage != null) oldImage.Dispose();
+			}
+
+			studentTablePictureBox.Image = Properties.Resources.studentTableImage;
+			answerTable1PictureBox.Image = Properties.Resources.answerTable1Image;
+			answerTable2PictureBox.Image = Properties.Resources.answerTable2Image;
+			answerTable3PictureBox.Image = Properties.Resources.answerTable3Image;
+
+			studentTablePictureBox.Refresh();
+			answerTable1PictureBox.Refresh();
+			answerTable2PictureBox.Refresh();
+			answerTable3PictureBox.Refresh();
 		}
 	}
 }

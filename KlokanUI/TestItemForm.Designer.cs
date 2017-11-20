@@ -40,6 +40,7 @@
 			this.studentTablePictureBox = new System.Windows.Forms.PictureBox();
 			this.editButton = new System.Windows.Forms.Button();
 			this.updateButton = new System.Windows.Forms.Button();
+			this.discardButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.answerTable3PictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.answerTable2PictureBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.answerTable1PictureBox)).BeginInit();
@@ -73,11 +74,11 @@
 			// applyButton
 			// 
 			this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.applyButton.Location = new System.Drawing.Point(807, 687);
+			this.applyButton.Location = new System.Drawing.Point(888, 617);
 			this.applyButton.Name = "applyButton";
-			this.applyButton.Size = new System.Drawing.Size(75, 23);
+			this.applyButton.Size = new System.Drawing.Size(112, 23);
 			this.applyButton.TabIndex = 17;
-			this.applyButton.Text = "Apply";
+			this.applyButton.Text = "Apply Changes";
 			this.applyButton.UseVisualStyleBackColor = true;
 			this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
 			// 
@@ -167,11 +168,23 @@
 			this.updateButton.UseVisualStyleBackColor = true;
 			this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
 			// 
+			// discardButton
+			// 
+			this.discardButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.discardButton.Location = new System.Drawing.Point(888, 646);
+			this.discardButton.Name = "discardButton";
+			this.discardButton.Size = new System.Drawing.Size(112, 23);
+			this.discardButton.TabIndex = 23;
+			this.discardButton.Text = "Discard Changes";
+			this.discardButton.UseVisualStyleBackColor = true;
+			this.discardButton.Click += new System.EventHandler(this.discardButton_Click);
+			// 
 			// TestItemForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1040, 750);
+			this.Controls.Add(this.discardButton);
 			this.Controls.Add(this.updateButton);
 			this.Controls.Add(this.editButton);
 			this.Controls.Add(this.studentTablePictureBox);
@@ -208,5 +221,6 @@
 		private System.Windows.Forms.PictureBox studentTablePictureBox;
 		private System.Windows.Forms.Button editButton;
 		private System.Windows.Forms.Button updateButton;
+		private System.Windows.Forms.Button discardButton;
 	}
 }

@@ -32,8 +32,9 @@ namespace KlokanUI
 			int rowClicked = mouseEvent.Y / cellHeight;
 			int columnClicked = mouseEvent.X / cellWidth;
 
-			// if the area designated for answers was clicked
-			if (rowClicked != 0 && columnClicked != 0)
+			// if the area designated for answers was clicked 
+			// (the third and fourth condition is true when the very edge of the table image is clicked)
+			if (rowClicked != 0 && columnClicked != 0 && rowClicked < tableRows && columnClicked < tableColumns)
 			{
 				Image tableImage = pictureBox.Image;
 

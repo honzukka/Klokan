@@ -208,6 +208,7 @@ namespace KlokanUI
 					// assign new computed values
 					KlokanTestDBScan correspondingScan = scanQuery.FirstOrDefault();
 
+					// TODO: reflection used in batch processing
 					var computedValuesDbSet = new List<KlokanTestDBComputedAnswer>();
 					computedValuesDbSet.AddRange(HelperFunctions.AnswersToDbSet<KlokanTestDBComputedAnswer>(testResult.StudentComputedValues, 0, true));
 					for (int i = 0; i < 3; i++)
