@@ -17,9 +17,25 @@ namespace KlokanUI
 			public bool isIncluded;
 		}
 
+		/// <summary>
+		/// Batch of answer sheets and additional to be evaluated.
+		/// </summary>
 		KlokanBatch klokanBatch;
+
+		/// <summary>
+		/// Dropdown data.
+		/// </summary>
 		List<int> yearList;
+
+		/// <summary>
+		/// For each category, this contains a category batch 
+		/// and information on whether it should be included in the final klokan batch or not.
+		/// </summary>
 		Dictionary<string, CategoryBatchConfig> categoryConfigurations;
+
+		/// <summary>
+		/// Parameters to be used in the evaluation process.
+		/// </summary>
 		Parameters chosenParameters;
 
 		public EvaluationForm()
@@ -41,7 +57,6 @@ namespace KlokanUI
 			}
 			yearComboBox.DataSource = yearList;
 
-			// assign default parameters to the batch
 			chosenParameters = Parameters.CreateDefaultParameters();
 
 			klokanBatch = new KlokanBatch();
@@ -50,33 +65,7 @@ namespace KlokanUI
 			categoryConfigurations = new Dictionary<string, CategoryBatchConfig>();
 		}
 
-		public void EnableGoButton()
-		{
-			if (evaluateButton.InvokeRequired)
-			{
-				evaluateButton.BeginInvoke(new Action(
-					() => { evaluateButton.Enabled = true; }
-				));
-			}
-			else
-			{
-				evaluateButton.Enabled = true;
-			}
-		}
-
-		public void ShowMessageBoxInfo(string message, string caption)
-		{
-			if (this.InvokeRequired)
-			{
-				this.BeginInvoke(new Action(
-					() => { MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information); }	
-				));
-			}
-			else
-			{
-				MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
-		}
+		#region UI Functions
 
 		private void evaluateButton_Click(object sender, EventArgs e)
 		{
@@ -122,42 +111,42 @@ namespace KlokanUI
 
 		private void benjaminCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			checkBoxHandle("Benjamin", benjaminCheckBox, benjaminEditButton);
+			CheckBoxHandle("Benjamin", benjaminCheckBox, benjaminEditButton);
 		}
 
 		private void benjaminEditButton_Click(object sender, EventArgs e)
 		{
-			editButtonHandle("Benjamin");
+			EditButtonHandle("Benjamin");
 		}
 
 		private void kadetCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			checkBoxHandle("Kadet", kadetCheckBox, kadetEditButton);
+			CheckBoxHandle("Kadet", kadetCheckBox, kadetEditButton);
 		}
 
 		private void kadetEditButton_Click(object sender, EventArgs e)
 		{
-			editButtonHandle("Kadet");
+			EditButtonHandle("Kadet");
 		}
 
 		private void juniorCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			checkBoxHandle("Junior", juniorCheckBox, juniorEditButton);
+			CheckBoxHandle("Junior", juniorCheckBox, juniorEditButton);
 		}
 
 		private void juniorEditButton_Click(object sender, EventArgs e)
 		{
-			editButtonHandle("Junior");
+			EditButtonHandle("Junior");
 		}
 
 		private void studentCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			checkBoxHandle("Student", studentCheckBox, studentEditButton);
+			CheckBoxHandle("Student", studentCheckBox, studentEditButton);
 		}
 
 		private void studentEditButton_Click(object sender, EventArgs e)
 		{
-			editButtonHandle("Student");
+			EditButtonHandle("Student");
 		}
 
 		private void defaultParamsRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -191,6 +180,10 @@ namespace KlokanUI
 			}
 		}
 
+		#endregion
+
+		#region Helper Functions
+
 		/// <summary>
 		/// Handles the checkBox_CheckedChanged event for all checkboxes in this form.
 		/// Makes sure that a category is always configured when added into a selection.
@@ -198,7 +191,7 @@ namespace KlokanUI
 		/// <param name="categoryName">Name of the category.</param>
 		/// <param name="checkBox">A checkbox belonging to the category.</param>
 		/// <param name="editButton">An edit button belonging to the category.</param>
-		private void checkBoxHandle(string categoryName, CheckBox checkBox, Button editButton)
+		private void CheckBoxHandle(string categoryName, CheckBox checkBox, Button editButton)
 		{
 			// checkbox was checked
 			if (checkBox.Checked)
@@ -239,10 +232,10 @@ namespace KlokanUI
 		/// <summary>
 		/// Handles the editButton_Clicked event for all category edit buttons in this form.
 		/// Makes sure that correct data is displayed in the configuration form 
-		/// and also saves a configuration in case an empty one is being edited.
+		/// and also saves all new configurations.
 		/// </summary>
 		/// <param name="categoryName"></param>
-		private void editButtonHandle(string categoryName)
+		private void EditButtonHandle(string categoryName)
 		{
 			KlokanCategoryBatch categoryBatch;
 			bool isAdd = false;
@@ -259,7 +252,7 @@ namespace KlokanUI
 				isAdd = true;
 			}
 
-			// open a configuration form in the form of a dialog
+			// open a configuration form as a dialog
 			CategoryEditForm form = new CategoryEditForm(categoryBatch);
 			form.StartPosition = FormStartPosition.CenterScreen;
 			var dialogResult = form.ShowDialog();
@@ -270,5 +263,43 @@ namespace KlokanUI
 				categoryConfigurations[categoryName] = new CategoryBatchConfig { batch = categoryBatch, isIncluded = true };
 			}
 		}
+
+		/// <summary>
+		/// Enables the evaluation button again.
+		/// Can be called from any thread.
+		/// </summary>
+		public void EnableGoButton()
+		{
+			if (evaluateButton.InvokeRequired)
+			{
+				evaluateButton.BeginInvoke(new Action(
+					() => { evaluateButton.Enabled = true; }
+				));
+			}
+			else
+			{
+				evaluateButton.Enabled = true;
+			}
+		}
+
+		/// <summary>
+		/// Shows a custom informative message.
+		/// Can be called from any thread.
+		/// </summary>
+		public void ShowMessageBoxInfo(string message, string caption)
+		{
+			if (this.InvokeRequired)
+			{
+				this.BeginInvoke(new Action(
+					() => { MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information); }
+				));
+			}
+			else
+			{
+				MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+		}
+
+		#endregion
 	}
 }

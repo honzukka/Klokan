@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -11,6 +7,9 @@ namespace KlokanUI
 {
 	class Evaluator
 	{
+		/// <summary>
+		/// Parameters to be used in this evaluation instance.
+		/// </summary>
 		Parameters parameters;
 
 		public Evaluator(Parameters parameters)
@@ -19,14 +18,13 @@ namespace KlokanUI
 		}
 
 		/// <summary>
-		/// Evaluates answers contained in an image of an answer sheet.
+		/// Evaluates answers contained in an image of an answer sheet against a set of correct answers.
 		/// </summary>
 		/// <param name="sheetFilename">The path to the image containing answers to be evaluated.</param>
 		/// <param name="correctAnswers">Correct answers to evaluate against.</param>
 		/// <param name="category">The category this sheet belongs to.</param>
 		/// <param name="year">The year this sheet belongs to.</param>
 		/// <exception cref="InvalidOperationException">Thrown when the correct answers haven't been loaded prior to the execution of this function.</exception>
-		/// <returns></returns>
 		public Result Evaluate(string sheetFilename, bool[,,] correctAnswers, string category, int year)
 		{
 			if (correctAnswers == null)
@@ -45,15 +43,20 @@ namespace KlokanUI
 			// get the student number
 			int studentNumber = StudentTableToNumber(studentNumberAnswers);
 
-			// correct them
-			AnswerType[,,] correctedAnswers = CorrectAnswers(answers, correctAnswers);
-
 			// count the score
-			int score = CountScore(correctedAnswers);
+			int score = HelperFunctions.CountScore(answers, correctAnswers);
 
-			return new Result(year, category, studentNumber, correctedAnswers, score, sheetFilename,  false);
+			return new Result(year, category, studentNumber, answers, correctAnswers, score, sheetFilename, false);
 		}
-		
+
+		/// <summary>
+		/// Evaluates the similarity between answers in an answer sheet (a scan) and a set of expected answers.
+		/// </summary>
+		/// <param name="scanId">Id of the scan entry in the database.</param>
+		/// <param name="sheetImage">Scan image bytes.</param>
+		/// <param name="studentExpectedValues">A set of expected answers (values) for the student number table.</param>
+		/// <param name="answerExpectedValues">A set of expected answers (values) for the answer tables.</param>
+		/// <exception cref="InvalidOperationException">Thrown when the expected value arrays are not set.</exception>
 		public TestResult EvaluateTest(int scanId, byte[] sheetImage, bool[,,] studentExpectedValues, bool[,,] answerExpectedValues)
 		{
 			if (studentExpectedValues == null || answerExpectedValues == null)
@@ -64,7 +67,6 @@ namespace KlokanUI
 			// get the answers from the sheet
 			bool[,,] studentComputedValues;
 			bool[,,] answerComputedValues;
-
 			if (ExtractAnswers(sheetImage, out studentComputedValues, out answerComputedValues) == false)
 			{
 				return new TestResult(true);
@@ -78,9 +80,10 @@ namespace KlokanUI
 		
 		/// <summary>
 		/// Uses a native library to load an image and extract answers from it.
+		/// Works with both image bytes as well as just an image file path.
 		/// This method is unsafe.
 		/// </summary>
-		/// <param name="sheetFilename">The path to the image containing answers to be extracted.</param>
+		/// <param name="sheet">The path to the image containing answers to be extracted as a string or an array of image bytes.</param>
 		/// <param name="studentNumberAnswers">This parameter will contain the student number answers extracted from the student number table.</param>
 		/// <param name="extractedAnswers">This parameter will contain the answers extracted from the answer tables.</param>
 		/// <returns>True if the process has succeeded and false otherwise.</returns>
@@ -105,7 +108,6 @@ namespace KlokanUI
 				bool* answersPtr = answerWrapper.answers;
 				bool* successPtr = &success;
 
-				// call into the native library
 				string sheetFilename;
 				byte[] sheetImageBytes;
 
@@ -117,7 +119,7 @@ namespace KlokanUI
 				// if the sheet has been passed as image bytes
 				else if ((sheetImageBytes = sheet as byte[]) != null)
 				{
-					// the image is saved in PNG so we need to convert it to BMP which the library can read
+					// the image is saved in PNG (or another format) so we need to convert it to BMP which the library can read
 					Image sheetImage = HelperFunctions.GetBitmap(sheetImageBytes);
 					int imageRows = sheetImage.Height;
 					int imageCols = sheetImage.Width;
@@ -140,7 +142,7 @@ namespace KlokanUI
 					return false;
 				}
 
-				// convert the number from a C-style array of answers to a C# multi-dimensional array
+				// convert the student number values from a C-style array of answers to a C# multi-dimensional array
 				for (int row = 0; row < studentNumberRows; row++)
 				{
 					for (int col = 0; col < studentNumberColumns; col++)
@@ -156,7 +158,7 @@ namespace KlokanUI
 					}
 				}
 
-				// convert the answers from a C-style array to a C# multi-dimensional array
+				// convert the answer table values from a C-style array to a C# multi-dimensional array
 				for (int table = 0; table < parameters.TableCount - 1; table++)
 				{
 					for (int row = 0; row < answerRows; row++)
@@ -180,112 +182,23 @@ namespace KlokanUI
 		}
 
 		/// <summary>
-		/// Checks the answers in the input against the set of correct answers stored in the object
-		/// and outputs the corrections in the form of a multi-dimensional array of AnswerType.
+		/// Converts the answers in the student number table into an actual number.
 		/// </summary>
-		/// <param name="answers">Answers to be checked.</param>
-		/// <param name="correctAnswers">The set of correct answers to check against.</param>
-		/// <returns>A multi-dimensional array of corrected answers (AnswerType).</returns>
-		AnswerType[,,] CorrectAnswers(bool[,,] answers, bool[,,] correctAnswers)
+		/// <returns>Returns -1 if the conversion failed.</returns>
+		private int StudentTableToNumber(bool[,,] studentTableValues)
 		{
-			AnswerType[,,] correctedAnswers = new AnswerType[3,8,5];
-
-			for (int table = 0; table < parameters.TableCount - 1; table++)
-			{
-				// the first row and the first column of the original table were removed as they do not contain any answers
-				for (int row = 0; row < parameters.AnswerTableRows - 1; row++)
-				{
-					for (int col = 0; col < parameters.AnswerTableColumns - 1; col++)
-					{
-						// if the answer is no and correct
-						if (answers[table, row, col] == false && correctAnswers[table, row, col] == false)
-							correctedAnswers[table, row, col] = AnswerType.Void;
-
-						// if the answer is yes and correct
-						else if (answers[table, row, col] == true && correctAnswers[table, row, col] == true)
-							correctedAnswers[table, row, col] = AnswerType.Correct;
-
-						// if the answer is yes and incorrect
-						else if (answers[table, row, col] == true && correctAnswers[table, row, col] == false)
-							correctedAnswers[table, row, col] = AnswerType.Incorrect;
-
-						// if the answer is no and incorrect
-						else if (answers[table, row, col] == false && correctAnswers[table, row, col] == true)
-							correctedAnswers[table, row, col] = AnswerType.Corrected;
-					}
-				}
-			}
-
-			return correctedAnswers;
-		}
-
-		/// <summary>
-		/// Counts the score based on corrected answers according to the standard rules of the Mathematical Kangaroo
-		/// </summary>
-		/// <param name="correctedAnswers">Corrected answers to be rated.</param>
-		/// <returns>The score.</returns>
-		int CountScore(AnswerType[,,] correctedAnswers)
-		{
-			int score = 24;
-
-			for (int table = 0; table < parameters.TableCount - 1; table++)
-			{
-				// the first row and the first column of the original table were removed as they do not contain any answers
-				for (int row = 0; row < parameters.AnswerTableRows - 1; row++)
-				{
-					int correctAnswersCount = 0;
-					int incorrectAnswersCount = 0;
-
-					// count the types of answers necessary to assign points
-					for (int col = 0; col < parameters.AnswerTableColumns - 1; col++)
-					{
-						switch (correctedAnswers[table, row, col])
-						{
-							case AnswerType.Correct: correctAnswersCount++; break;
-							case AnswerType.Incorrect: incorrectAnswersCount++; break;
-							default: break;
-						}
-					}
-
-					// assign points for the question (row)
-					// if it's correct
-					// NOTE: here we test if only one question has been selected!!!
-					if (correctAnswersCount == 1 && incorrectAnswersCount == 0)
-					{
-						switch (table)
-						{
-							case 0: score += 3; break;
-							case 1: score += 4; break;
-							case 2: score += 5; break;
-						}
-					}
-					// if it's incorrect
-					else if (incorrectAnswersCount > 0)
-					{
-						score--;
-					}
-					// otherwise the score doesn't change
-				}
-			}
-
-			return score;
-		}
-
-		private int StudentTableToNumber(bool[,,] studentTable)
-		{
-			int tableRows = studentTable.GetUpperBound(1) + 1;
-			int tableColumns = studentTable.GetUpperBound(2) + 1;
+			int tableRows = studentTableValues.GetUpperBound(1) + 1;
+			int tableColumns = studentTableValues.GetUpperBound(2) + 1;
 
 			int studentNumber = 0;
 
-			// convert the number from a C-style array of answers to an actual number
 			for (int row = 0; row < tableRows; row++)
 			{
 				bool numberInRow = false;
 
 				for (int col = 0; col < tableColumns; col++)
 				{
-					if (studentTable[0, row, col] == true)
+					if (studentTableValues[0, row, col] == true)
 					{
 						// if a row contains two numbers (answers)
 						if (numberInRow == true)
@@ -309,6 +222,9 @@ namespace KlokanUI
 			return studentNumber;
 		}
 
+		/// <summary>
+		/// Computes a ratio of correctly identified answers (values) among all answers from an answer sheet.
+		/// </summary>
 		private float ComputeCorrectness(bool[,,] studentExpectedValues, bool[,,] studentComputedValues, bool[,,] answerExpectedValues, bool[,,] answerComputedValues)
 		{
 			int studentTableRows = studentExpectedValues.GetUpperBound(1) + 1;

@@ -152,7 +152,7 @@ namespace KlokanUI
 			reevaluateButton.Enabled = false;
 			updateDatabaseButton.Enabled = true;
 
-			points = ReevaluateAnswers();
+			points = HelperFunctions.CountScore(chosenAnswers, correctAnswers);
 			pointsValueLabel.Text = points.ToString();
 
 			// draw both chosen and correct answers again
@@ -354,53 +354,6 @@ namespace KlokanUI
 			table1PictureBox.Refresh();
 			table2PictureBox.Refresh();
 			table3PictureBox.Refresh();
-		}
-
-		private int ReevaluateAnswers()
-		{
-			int newPoints = 24;
-
-			for (int table = 0; table < 3; table++)
-			{
-				for (int row = 0; row < 8; row++)
-				{
-					int correctAnswerCount = 0;
-					int incorrectAnswerCount = 0;
-
-					for (int col = 0; col < 5; col++)
-					{
-						if (chosenAnswers[table, row, col] == true && correctAnswers[table, row, col] == true)
-						{
-							correctAnswerCount++;
-						}
-						else if (chosenAnswers[table, row, col] == true && correctAnswers[table, row, col] == false)
-						{
-							incorrectAnswerCount++;
-						}
-					}
-
-					// assign points for the question (row)
-					// if it's correct
-					// NOTE: here we test if only one question has been selected!!!
-					if (correctAnswerCount == 1 && incorrectAnswerCount == 0)
-					{
-						switch (table)
-						{
-							case 0: newPoints += 3; break;
-							case 1: newPoints += 4; break;
-							case 2: newPoints += 5; break;
-						}
-					}
-					// if it's incorrect
-					else if (incorrectAnswerCount > 0)
-					{
-						newPoints--;
-					}
-					// otherwise the score doesn't change
-				}
-			}
-
-			return newPoints;
 		}
 
 		#endregion

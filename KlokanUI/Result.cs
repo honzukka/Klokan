@@ -11,17 +11,20 @@ namespace KlokanUI
 		public int Year { get; }
 		public string Category { get; }
 		public int StudentNumber { get; }
-		public AnswerType[,,] CorrectedAnswers { get; }
+		public bool[,,] ChosenAnswers { get; }
+		public bool[,,] CorrectAnswers { get; }
 		public int Score { get; }
 		public string SheetFilename { get; }
 		public bool Error { get; }
 
-		public Result(int year, string category, int studentNumber, AnswerType[,,] correctedAnswers, int score, string sheetFilename, bool error)
+		public Result(int year, string category, int studentNumber, bool[,,] chosenAnswers, bool[,,] correctAnswers, 
+			int score, string sheetFilename, bool error)
 		{
 			Year = year;
 			Category = category;
 			StudentNumber = studentNumber;
-			CorrectedAnswers = correctedAnswers;
+			ChosenAnswers = chosenAnswers;
+			CorrectAnswers = correctAnswers;
 			Score = score;
 			SheetFilename = sheetFilename;
 			Error = error;
@@ -32,7 +35,8 @@ namespace KlokanUI
 			Year = 0;
 			Category = null;
 			StudentNumber = -1;
-			CorrectedAnswers = null;
+			ChosenAnswers = null;
+			CorrectAnswers = null;
 			Score = -1;
 			SheetFilename = null;
 			Error = error;

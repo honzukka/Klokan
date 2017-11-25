@@ -166,21 +166,33 @@ namespace KlokanUI
 					// if the instance doesn't exist locally either
 					if (currentInstance == default(KlokanDBInstance))
 					{
+						List<KlokanDBCorrectAnswer> correctAnswers = new List<KlokanDBCorrectAnswer>();
+						for (int i = 0; i < 3; i++)
+						{
+							correctAnswers.AddRange(HelperFunctions.AnswersToDbSet<KlokanDBCorrectAnswer>(result.CorrectAnswers, i, false));
+						}
+
 						currentInstance = new KlokanDBInstance
 						{
 							Year = result.Year,
 							Category = result.Category,
-							CorrectAnswers = GetCorrectAnswers(result.CorrectedAnswers)
+							CorrectAnswers = correctAnswers
 						};
 
 						db.Instances.Add(currentInstance);
+					}
+
+					List<KlokanDBChosenAnswer> chosenAnswers = new List<KlokanDBChosenAnswer>();
+					for (int i = 0; i < 3; i++)
+					{
+						chosenAnswers.AddRange(HelperFunctions.AnswersToDbSet<KlokanDBChosenAnswer>(result.ChosenAnswers, i, false));
 					}
 
 					var answerSheet = new KlokanDBAnswerSheet
 					{
 						StudentNumber = result.StudentNumber,
 						Points = result.Score,
-						ChosenAnswers = GetChosenAnswers(result.CorrectedAnswers),
+						ChosenAnswers = chosenAnswers,
 						Scan = HelperFunctions.GetImageBytes(result.SheetFilename, ImageFormat.Png)
 					};
 
@@ -235,6 +247,7 @@ namespace KlokanUI
 			}
 		}
 
+		/*
 		/// <summary>
 		/// Transform the "table view" of the answers (multidimensional array) into a list of objects 
 		/// which correspond to a database record described in the Answer class.
@@ -281,7 +294,9 @@ namespace KlokanUI
 
 			return chosenAnswers;
 		}
+		*/
 
+		/*
 		/// <summary>
 		/// Transform the "table view" of the correct answers (multidimensional array) into a list of objects 
 		/// which correspond to a database record described in the CorrectAnswer class.
@@ -320,6 +335,7 @@ namespace KlokanUI
 
 			return correctAnswers;
 		}
+		*/
 
 		/// <summary>
 		/// Notifies the evaluation form that the job has ended.

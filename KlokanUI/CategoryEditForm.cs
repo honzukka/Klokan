@@ -59,6 +59,8 @@ namespace KlokanUI
 			}			
 		}
 
+		#region UI Functions
+
 		// a file dialog (multiselect) for adding answer sheets to be evaluated
 		private void addButton_Click(object sender, EventArgs e)
 		{
@@ -133,14 +135,6 @@ namespace KlokanUI
 			this.Close();
 		}
 
-		private void UpdateListBox()
-		{
-			answerSheetsListBox.DataSource = null;
-			answerSheetsListBox.DataSource = answerSheetFilenames;
-
-			sheetLabel.Text = "Answers Sheets (" + answerSheetFilenames.Count + "):";
-		}
-
 		private void table1PictureBox_Click(object sender, EventArgs e)
 		{
 			HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, table1PictureBox, 0, correctAnswers);
@@ -154,6 +148,16 @@ namespace KlokanUI
 		private void table3PictureBox_Click(object sender, EventArgs e)
 		{
 			HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, table3PictureBox, 2, correctAnswers);
+		}
+
+		#endregion
+
+		private void UpdateListBox()
+		{
+			answerSheetsListBox.DataSource = null;
+			answerSheetsListBox.DataSource = answerSheetFilenames;
+
+			sheetLabel.Text = "Answers Sheets (" + answerSheetFilenames.Count + "):";
 		}
 	}
 }
