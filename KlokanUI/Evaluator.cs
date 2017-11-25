@@ -44,7 +44,7 @@ namespace KlokanUI
 			int studentNumber = StudentTableToNumber(studentNumberAnswers);
 
 			// count the score
-			int score = HelperFunctions.CountScore(answers, correctAnswers);
+			int score = TableArrayHandling.CountScore(answers, correctAnswers);
 
 			return new Result(year, category, studentNumber, answers, correctAnswers, score, sheetFilename, false);
 		}
@@ -120,11 +120,11 @@ namespace KlokanUI
 				else if ((sheetImageBytes = sheet as byte[]) != null)
 				{
 					// the image is saved in PNG (or another format) so we need to convert it to BMP which the library can read
-					Image sheetImage = HelperFunctions.GetBitmap(sheetImageBytes);
+					Image sheetImage = ImageHandling.GetBitmap(sheetImageBytes);
 					int imageRows = sheetImage.Height;
 					int imageCols = sheetImage.Width;
 
-					byte[] sheetImageBitmapBytes = HelperFunctions.GetImageBytes(sheetImage, ImageFormat.Bmp);
+					byte[] sheetImageBitmapBytes = ImageHandling.GetImageBytes(sheetImage, ImageFormat.Bmp);
 					sheetImage.Dispose();
 
 					fixed (byte* imageBitmapBytesPtr = sheetImageBitmapBytes)

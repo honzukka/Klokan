@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-using System.Threading;
-using System.IO;
-using System.Drawing;
 using System.Drawing.Imaging;
-using System.Windows.Forms;
 
 namespace KlokanUI
 {
@@ -169,7 +164,7 @@ namespace KlokanUI
 						List<KlokanDBCorrectAnswer> correctAnswers = new List<KlokanDBCorrectAnswer>();
 						for (int i = 0; i < 3; i++)
 						{
-							correctAnswers.AddRange(HelperFunctions.AnswersToDbSet<KlokanDBCorrectAnswer>(result.CorrectAnswers, i, false));
+							correctAnswers.AddRange(TableArrayHandling.AnswersToDbSet<KlokanDBCorrectAnswer>(result.CorrectAnswers, i, false));
 						}
 
 						currentInstance = new KlokanDBInstance
@@ -185,7 +180,7 @@ namespace KlokanUI
 					List<KlokanDBChosenAnswer> chosenAnswers = new List<KlokanDBChosenAnswer>();
 					for (int i = 0; i < 3; i++)
 					{
-						chosenAnswers.AddRange(HelperFunctions.AnswersToDbSet<KlokanDBChosenAnswer>(result.ChosenAnswers, i, false));
+						chosenAnswers.AddRange(TableArrayHandling.AnswersToDbSet<KlokanDBChosenAnswer>(result.ChosenAnswers, i, false));
 					}
 
 					var answerSheet = new KlokanDBAnswerSheet
@@ -193,7 +188,7 @@ namespace KlokanUI
 						StudentNumber = result.StudentNumber,
 						Points = result.Score,
 						ChosenAnswers = chosenAnswers,
-						Scan = HelperFunctions.GetImageBytes(result.SheetFilename, ImageFormat.Png)
+						Scan = ImageHandling.GetImageBytes(result.SheetFilename, ImageFormat.Png)
 					};
 
 					currentInstance.AnswerSheets.Add(answerSheet);
@@ -233,10 +228,10 @@ namespace KlokanUI
 
 					// TODO: reflection used in batch processing
 					var computedValuesDbSet = new List<KlokanTestDBComputedAnswer>();
-					computedValuesDbSet.AddRange(HelperFunctions.AnswersToDbSet<KlokanTestDBComputedAnswer>(testResult.StudentComputedValues, 0, true));
+					computedValuesDbSet.AddRange(TableArrayHandling.AnswersToDbSet<KlokanTestDBComputedAnswer>(testResult.StudentComputedValues, 0, true));
 					for (int i = 0; i < 3; i++)
 					{
-						computedValuesDbSet.AddRange(HelperFunctions.AnswersToDbSet<KlokanTestDBComputedAnswer>(testResult.AnswerComputedValues, i, false));
+						computedValuesDbSet.AddRange(TableArrayHandling.AnswersToDbSet<KlokanTestDBComputedAnswer>(testResult.AnswerComputedValues, i, false));
 					}
 
 					correspondingScan.ComputedValues = computedValuesDbSet;
@@ -246,96 +241,6 @@ namespace KlokanUI
 				}
 			}
 		}
-
-		/*
-		/// <summary>
-		/// Transform the "table view" of the answers (multidimensional array) into a list of objects 
-		/// which correspond to a database record described in the Answer class.
-		/// </summary>
-		/// <param name="correctedAnswers">Answers as stored in the Result structure.</param>
-		List<KlokanDBChosenAnswer> GetChosenAnswers(AnswerType[,,] correctedAnswers)
-		{
-			List<KlokanDBChosenAnswer> chosenAnswers = new List<KlokanDBChosenAnswer>();
-
-			for (int table = 0; table < batch.Parameters.TableCount - 1; table++)
-			{
-				// the first row and the first column of the original table were removed as they do not contain any answers
-				for (int row = 0; row < batch.Parameters.AnswerTableRows - 1; row++)
-				{
-					char enteredValue = '\0';
-					
-					// find out the entered value (entered value can stay '\0' in case the question wasn't answered)
-					// the first row and the first column of the original table were removed as they do not contain any answers
-					for (int col = 0; col < batch.Parameters.AnswerTableColumns - 1; col++)
-					{
-						int numberOfSelectedAnswers = 0;
-
-						if (correctedAnswers[table, row, col] == AnswerType.Correct ||
-							correctedAnswers[table, row, col] == AnswerType.Incorrect)
-						{
-							enteredValue = (char)('a' + col);
-							numberOfSelectedAnswers++;
-						}
-
-						// keep in mind that more answers can be selected
-						if (numberOfSelectedAnswers > 1)
-						{
-							enteredValue = 'x';
-						}
-					}
-
-					chosenAnswers.Add(new KlokanDBChosenAnswer
-					{
-						QuestionNumber = (row + 1) + (table * (batch.Parameters.AnswerTableRows - 1)),
-						Value = new String(enteredValue, 1)
-					});
-				}
-			}
-
-			return chosenAnswers;
-		}
-		*/
-
-		/*
-		/// <summary>
-		/// Transform the "table view" of the correct answers (multidimensional array) into a list of objects 
-		/// which correspond to a database record described in the CorrectAnswer class.
-		/// </summary>
-		/// <param name="correctedAnswers">Answers as stored in the Result structure.</param>
-		List<KlokanDBCorrectAnswer> GetCorrectAnswers(AnswerType[,,] correctedAnswers)
-		{
-			List<KlokanDBCorrectAnswer> correctAnswers = new List<KlokanDBCorrectAnswer>();
-
-			for (int table = 0; table < batch.Parameters.TableCount - 1; table++)
-			{
-				// the first row and the first column of the original table were removed as they do not contain any answers
-				for (int row = 0; row < batch.Parameters.AnswerTableRows - 1; row++)
-				{
-					char correctValue = '\0';
-
-					// find out the entered and correct value (entered value can stay '\0' in case the question wasn't answered)
-					// the first row and the first column of the original table were removed as they do not contain any answers
-					for (int col = 0; col < batch.Parameters.AnswerTableColumns - 1; col++)
-					{
-						if (correctedAnswers[table, row, col] == AnswerType.Correct ||
-							correctedAnswers[table, row, col] == AnswerType.Corrected)
-						{
-							correctValue = (char)('a' + col);
-							break;		// only one answer can be selected as correct thanks to the category edit form
-						}
-					}
-
-					correctAnswers.Add(new KlokanDBCorrectAnswer
-					{
-						QuestionNumber = (row + 1) + (table * (batch.Parameters.AnswerTableRows - 1)),
-						Value = new string(correctValue, 1)
-					});
-				}
-			}
-
-			return correctAnswers;
-		}
-		*/
 
 		/// <summary>
 		/// Notifies the evaluation form that the job has ended.

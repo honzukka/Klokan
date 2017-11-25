@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using System.Drawing.Imaging;
-using System.Security;
 
 namespace KlokanUI
 {
-	static class HelperFunctions
+	static class FormTableHandling
 	{
 		/// <summary>
 		/// Handles clicks for table images, stores chosen answers in a data structure 
@@ -46,7 +42,7 @@ namespace KlokanUI
 					if (answers[tableIndex, rowClicked - 1, columnClicked - 1] == true)
 					{
 						answers[tableIndex, rowClicked - 1, columnClicked - 1] = false;
-						HelperFunctions.RemoveCellContent(rowClicked, columnClicked, cellWidth, cellHeight, graphics);
+						RemoveCellContent(rowClicked, columnClicked, cellWidth, cellHeight, graphics);
 					}
 					// else unselect all other answers in this row and select this one instead
 					else
@@ -57,12 +53,12 @@ namespace KlokanUI
 							if (answers[tableIndex, rowClicked - 1, i] == true)
 							{
 								answers[tableIndex, rowClicked - 1, i] = false;
-								HelperFunctions.RemoveCellContent(rowClicked, i + 1, cellWidth, cellHeight, graphics);
+								RemoveCellContent(rowClicked, i + 1, cellWidth, cellHeight, graphics);
 							}
 						}
 
 						answers[tableIndex, rowClicked - 1, columnClicked - 1] = true;
-						HelperFunctions.DrawCross(rowClicked, columnClicked, cellWidth, cellHeight, graphics, blackPen);
+						DrawCross(rowClicked, columnClicked, cellWidth, cellHeight, graphics, blackPen);
 					}
 				}
 
@@ -95,7 +91,7 @@ namespace KlokanUI
 			{
 				return;
 			}
-			
+
 			// the table images have one extra column and one extra row that doesn't contain answers but annotations
 			int tableRows = answers.GetUpperBound(1) + 2;
 			int tableColumns = answers.GetUpperBound(2) + 2;
@@ -140,10 +136,10 @@ namespace KlokanUI
 			Point lowerLeft = new Point(upperLeft.X, upperLeft.Y + cellHeight);
 			Point lowerRight = new Point(upperLeft.X + cellWidth, upperLeft.Y + cellHeight);
 
-			upperLeft.X += crossOffset;		upperLeft.Y += crossOffset;
-			upperRight.X -= crossOffset;	upperRight.Y += crossOffset;
-			lowerLeft.X += crossOffset;		lowerLeft.Y -= crossOffset;
-			lowerRight.X -= crossOffset;	lowerRight.Y -= crossOffset;
+			upperLeft.X += crossOffset; upperLeft.Y += crossOffset;
+			upperRight.X -= crossOffset; upperRight.Y += crossOffset;
+			lowerLeft.X += crossOffset; lowerLeft.Y -= crossOffset;
+			lowerRight.X -= crossOffset; lowerRight.Y -= crossOffset;
 
 			graphics.DrawLine(pen, upperLeft, lowerRight);
 			graphics.DrawLine(pen, upperRight, lowerLeft);
@@ -181,12 +177,15 @@ namespace KlokanUI
 
 			Rectangle cell = new Rectangle(column * cellWidth, row * cellHeight, cellWidth, cellHeight);
 
-			cell.X += contentOffset;			cell.Y += contentOffset;
-			cell.Width -= (contentOffset * 2);	cell.Height -= (contentOffset * 2);
+			cell.X += contentOffset; cell.Y += contentOffset;
+			cell.Width -= (contentOffset * 2); cell.Height -= (contentOffset * 2);
 
 			graphics.FillRectangle(Brushes.White, cell);
 		}
+	}
 
+	static class ImageHandling
+	{
 		/// <summary>
 		/// Transforms an image into an array of bytes in a specified format.
 		/// </summary>
@@ -226,7 +225,10 @@ namespace KlokanUI
 			Bitmap bmp = (Bitmap)imageConverter.ConvertFrom(image);
 			return bmp;
 		}
+	}
 
+	static class TableArrayHandling
+	{
 		/// <summary>
 		/// Checks whether an answer is selected in each row.
 		/// (there can't be two or more answers selected thanks to the implementation of HandlePictureBoxClicks() )
@@ -405,6 +407,9 @@ namespace KlokanUI
 			DbSetToAnswers(dbSet, out tempArray, out answers);
 		}
 
+		/// <summary>
+		/// Compares the chosen answers against the correct answers and counts the score.
+		/// </summary>
 		public static int CountScore(bool[,,] chosenAnswers, bool[,,] correctAnswers)
 		{
 			int newPoints = 24;

@@ -38,9 +38,9 @@ namespace KlokanUI
 			{
 				correctAnswers = categoryBatch.CorrectAnswers;
 
-				HelperFunctions.DrawAnswers(table1PictureBox, correctAnswers, 0, HelperFunctions.DrawCross, Color.Black);
-				HelperFunctions.DrawAnswers(table2PictureBox, correctAnswers, 1, HelperFunctions.DrawCross, Color.Black);
-				HelperFunctions.DrawAnswers(table3PictureBox, correctAnswers, 2, HelperFunctions.DrawCross, Color.Black);
+				FormTableHandling.DrawAnswers(table1PictureBox, correctAnswers, 0, FormTableHandling.DrawCross, Color.Black);
+				FormTableHandling.DrawAnswers(table2PictureBox, correctAnswers, 1, FormTableHandling.DrawCross, Color.Black);
+				FormTableHandling.DrawAnswers(table3PictureBox, correctAnswers, 2, FormTableHandling.DrawCross, Color.Black);
 			}
 			// otherwise initialize default values
 			else
@@ -115,7 +115,7 @@ namespace KlokanUI
 		{
 			for (int i = 0; i < 3; i++)
 			{
-				if (!HelperFunctions.CheckAnswers(correctAnswers, i))
+				if (!TableArrayHandling.CheckAnswers(correctAnswers, i))
 				{
 					MessageBox.Show("Correct answers have not been properly selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
@@ -137,17 +137,17 @@ namespace KlokanUI
 
 		private void table1PictureBox_Click(object sender, EventArgs e)
 		{
-			HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, table1PictureBox, 0, correctAnswers);
+			FormTableHandling.HandleTableImageClicks(e as MouseEventArgs, table1PictureBox, 0, correctAnswers);
 		}
 
 		private void table2PictureBox_Click(object sender, EventArgs e)
 		{
-			HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, table2PictureBox, 1, correctAnswers);
+			FormTableHandling.HandleTableImageClicks(e as MouseEventArgs, table2PictureBox, 1, correctAnswers);
 		}
 
 		private void table3PictureBox_Click(object sender, EventArgs e)
 		{
-			HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, table3PictureBox, 2, correctAnswers);
+			FormTableHandling.HandleTableImageClicks(e as MouseEventArgs, table3PictureBox, 2, correctAnswers);
 		}
 
 		#endregion

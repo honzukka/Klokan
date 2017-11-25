@@ -76,7 +76,7 @@ namespace KlokanUI
 		{
 			if (!viewMode)
 			{
-				HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, studentTablePictureBox, 0, chosenValuesStudentTableTemp);
+				FormTableHandling.HandleTableImageClicks(e as MouseEventArgs, studentTablePictureBox, 0, chosenValuesStudentTableTemp);
 			}
 		}
 
@@ -84,7 +84,7 @@ namespace KlokanUI
 		{
 			if (!viewMode)
 			{
-				HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, answerTable1PictureBox, 0, chosenValuesAnswerTableTemp);
+				FormTableHandling.HandleTableImageClicks(e as MouseEventArgs, answerTable1PictureBox, 0, chosenValuesAnswerTableTemp);
 			}
 		}
 
@@ -92,7 +92,7 @@ namespace KlokanUI
 		{
 			if (!viewMode)
 			{
-				HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, answerTable2PictureBox, 1, chosenValuesAnswerTableTemp);
+				FormTableHandling.HandleTableImageClicks(e as MouseEventArgs, answerTable2PictureBox, 1, chosenValuesAnswerTableTemp);
 			}
 		}
 
@@ -100,7 +100,7 @@ namespace KlokanUI
 		{
 			if (!viewMode)
 			{
-				HelperFunctions.HandleTableImageClicks(e as MouseEventArgs, answerTable3PictureBox, 2, chosenValuesAnswerTableTemp);
+				FormTableHandling.HandleTableImageClicks(e as MouseEventArgs, answerTable3PictureBox, 2, chosenValuesAnswerTableTemp);
 			}
 		}
 
@@ -115,10 +115,10 @@ namespace KlokanUI
 			ResetTableImages();
 
 			// draw only the expected answers because only those can be edited
-			HelperFunctions.DrawAnswers(studentTablePictureBox, chosenValuesStudentTable, 0, HelperFunctions.DrawCross, Color.Black);
-			HelperFunctions.DrawAnswers(answerTable1PictureBox, chosenValuesAnswerTable, 0, HelperFunctions.DrawCross, Color.Black);
-			HelperFunctions.DrawAnswers(answerTable2PictureBox, chosenValuesAnswerTable, 1, HelperFunctions.DrawCross, Color.Black);
-			HelperFunctions.DrawAnswers(answerTable3PictureBox, chosenValuesAnswerTable, 2, HelperFunctions.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(studentTablePictureBox, chosenValuesStudentTable, 0, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable1PictureBox, chosenValuesAnswerTable, 0, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable2PictureBox, chosenValuesAnswerTable, 1, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable3PictureBox, chosenValuesAnswerTable, 2, FormTableHandling.DrawCross, Color.Black);
 
 			// create a copy of currently chosen answers for editing
 			chosenValuesStudentTableTemp = new bool[1, 5, 10];
@@ -136,7 +136,7 @@ namespace KlokanUI
 				return;
 			}
 
-			if (!HelperFunctions.CheckAnswers(chosenValuesStudentTableTemp, 0))
+			if (!TableArrayHandling.CheckAnswers(chosenValuesStudentTableTemp, 0))
 			{
 				MessageBox.Show("Student number has not been properly selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
@@ -144,7 +144,7 @@ namespace KlokanUI
 
 			for (int i = 0; i < 3; i++)
 			{
-				if (!HelperFunctions.CheckAnswers(chosenValuesAnswerTableTemp, i))
+				if (!TableArrayHandling.CheckAnswers(chosenValuesAnswerTableTemp, i))
 				{
 					MessageBox.Show("Expected answers have not been properly selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
@@ -159,12 +159,12 @@ namespace KlokanUI
 			bool[,,] computedValuesAnswerTable;
 
 			List<KlokanTestDBComputedAnswer> computedValues = new List<KlokanTestDBComputedAnswer>(scanItem.ComputedValues);
-			HelperFunctions.DbSetToAnswers(computedValues, out computedValuesStudentTable, out computedValuesAnswerTable);
+			TableArrayHandling.DbSetToAnswers(computedValues, out computedValuesStudentTable, out computedValuesAnswerTable);
 
-			HelperFunctions.DrawAnswers(studentTablePictureBox, computedValuesStudentTable, 0, HelperFunctions.DrawCircle, Color.Red);
-			HelperFunctions.DrawAnswers(answerTable1PictureBox, computedValuesAnswerTable, 0, HelperFunctions.DrawCircle, Color.Red);
-			HelperFunctions.DrawAnswers(answerTable2PictureBox, computedValuesAnswerTable, 1, HelperFunctions.DrawCircle, Color.Red);
-			HelperFunctions.DrawAnswers(answerTable3PictureBox, computedValuesAnswerTable, 2, HelperFunctions.DrawCircle, Color.Red);
+			FormTableHandling.DrawAnswers(studentTablePictureBox, computedValuesStudentTable, 0, FormTableHandling.DrawCircle, Color.Red);
+			FormTableHandling.DrawAnswers(answerTable1PictureBox, computedValuesAnswerTable, 0, FormTableHandling.DrawCircle, Color.Red);
+			FormTableHandling.DrawAnswers(answerTable2PictureBox, computedValuesAnswerTable, 1, FormTableHandling.DrawCircle, Color.Red);
+			FormTableHandling.DrawAnswers(answerTable3PictureBox, computedValuesAnswerTable, 2, FormTableHandling.DrawCircle, Color.Red);
 
 			updateButton.Enabled = true;
 			editButton.Enabled = true;
@@ -176,23 +176,23 @@ namespace KlokanUI
 		private void discardButton_Click(object sender, EventArgs e)
 		{
 			ResetTableImages();
-			
+
 			// draw the original answers
-			HelperFunctions.DrawAnswers(studentTablePictureBox, chosenValuesStudentTable, 0, HelperFunctions.DrawCross, Color.Black);
-			HelperFunctions.DrawAnswers(answerTable1PictureBox, chosenValuesAnswerTable, 0, HelperFunctions.DrawCross, Color.Black);
-			HelperFunctions.DrawAnswers(answerTable2PictureBox, chosenValuesAnswerTable, 1, HelperFunctions.DrawCross, Color.Black);
-			HelperFunctions.DrawAnswers(answerTable3PictureBox, chosenValuesAnswerTable, 2, HelperFunctions.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(studentTablePictureBox, chosenValuesStudentTable, 0, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable1PictureBox, chosenValuesAnswerTable, 0, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable2PictureBox, chosenValuesAnswerTable, 1, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable3PictureBox, chosenValuesAnswerTable, 2, FormTableHandling.DrawCross, Color.Black);
 
 			bool[,,] computedValuesStudentTable;
 			bool[,,] computedValuesAnswerTable;
 
 			List<KlokanTestDBComputedAnswer> computedValues = new List<KlokanTestDBComputedAnswer>(scanItem.ComputedValues);
-			HelperFunctions.DbSetToAnswers(computedValues, out computedValuesStudentTable, out computedValuesAnswerTable);
+			TableArrayHandling.DbSetToAnswers(computedValues, out computedValuesStudentTable, out computedValuesAnswerTable);
 
-			HelperFunctions.DrawAnswers(studentTablePictureBox, computedValuesStudentTable, 0, HelperFunctions.DrawCircle, Color.Red);
-			HelperFunctions.DrawAnswers(answerTable1PictureBox, computedValuesAnswerTable, 0, HelperFunctions.DrawCircle, Color.Red);
-			HelperFunctions.DrawAnswers(answerTable2PictureBox, computedValuesAnswerTable, 1, HelperFunctions.DrawCircle, Color.Red);
-			HelperFunctions.DrawAnswers(answerTable3PictureBox, computedValuesAnswerTable, 2, HelperFunctions.DrawCircle, Color.Red);
+			FormTableHandling.DrawAnswers(studentTablePictureBox, computedValuesStudentTable, 0, FormTableHandling.DrawCircle, Color.Red);
+			FormTableHandling.DrawAnswers(answerTable1PictureBox, computedValuesAnswerTable, 0, FormTableHandling.DrawCircle, Color.Red);
+			FormTableHandling.DrawAnswers(answerTable2PictureBox, computedValuesAnswerTable, 1, FormTableHandling.DrawCircle, Color.Red);
+			FormTableHandling.DrawAnswers(answerTable3PictureBox, computedValuesAnswerTable, 2, FormTableHandling.DrawCircle, Color.Red);
 
 			editButton.Enabled = true;
 			applyButton.Enabled = false;
@@ -212,15 +212,15 @@ namespace KlokanUI
 
 			// prepare the DbSet of chosen expected answers
 			List<KlokanTestDBExpectedAnswer> expectedAnswers = new List<KlokanTestDBExpectedAnswer>();
-			expectedAnswers.AddRange(HelperFunctions.AnswersToDbSet<KlokanTestDBExpectedAnswer>(chosenValuesStudentTable, 0, true));
+			expectedAnswers.AddRange(TableArrayHandling.AnswersToDbSet<KlokanTestDBExpectedAnswer>(chosenValuesStudentTable, 0, true));
 			for (int i = 0; i < 3; i++)
 			{
-				expectedAnswers.AddRange(HelperFunctions.AnswersToDbSet<KlokanTestDBExpectedAnswer>(chosenValuesAnswerTable, i, false));
+				expectedAnswers.AddRange(TableArrayHandling.AnswersToDbSet<KlokanTestDBExpectedAnswer>(chosenValuesAnswerTable, i, false));
 			}
 
 			if (addMode)
 			{
-				scanItem.Image = HelperFunctions.GetImageBytes(scanFilePath, ImageFormat.Png);
+				scanItem.Image = ImageHandling.GetImageBytes(scanFilePath, ImageFormat.Png);
 			}
 
 			scanItem.ExpectedValues = expectedAnswers;
@@ -277,27 +277,27 @@ namespace KlokanUI
 		private void PopulateForm()
 		{
 			// load scan
-			scanPictureBox.Image = HelperFunctions.GetBitmap(scanItem.Image);
+			scanPictureBox.Image = ImageHandling.GetBitmap(scanItem.Image);
 
 			// load the answers
 			List<KlokanTestDBExpectedAnswer> expectedValues = new List<KlokanTestDBExpectedAnswer>(scanItem.ExpectedValues);
-			HelperFunctions.DbSetToAnswers(expectedValues, out chosenValuesStudentTable, out chosenValuesAnswerTable);
+			TableArrayHandling.DbSetToAnswers(expectedValues, out chosenValuesStudentTable, out chosenValuesAnswerTable);
 
-			HelperFunctions.DrawAnswers(studentTablePictureBox, chosenValuesStudentTable, 0, HelperFunctions.DrawCross, Color.Black);
-			HelperFunctions.DrawAnswers(answerTable1PictureBox, chosenValuesAnswerTable, 0, HelperFunctions.DrawCross, Color.Black);
-			HelperFunctions.DrawAnswers(answerTable2PictureBox, chosenValuesAnswerTable, 1, HelperFunctions.DrawCross, Color.Black);
-			HelperFunctions.DrawAnswers(answerTable3PictureBox, chosenValuesAnswerTable, 2, HelperFunctions.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(studentTablePictureBox, chosenValuesStudentTable, 0, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable1PictureBox, chosenValuesAnswerTable, 0, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable2PictureBox, chosenValuesAnswerTable, 1, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable3PictureBox, chosenValuesAnswerTable, 2, FormTableHandling.DrawCross, Color.Black);
 
 			bool[,,] computedValuesStudentTable;
 			bool[,,] computedValuesAnswerTable;
 
 			List<KlokanTestDBComputedAnswer> computedValues = new List<KlokanTestDBComputedAnswer>(scanItem.ComputedValues);
-			HelperFunctions.DbSetToAnswers(computedValues, out computedValuesStudentTable, out computedValuesAnswerTable);
+			TableArrayHandling.DbSetToAnswers(computedValues, out computedValuesStudentTable, out computedValuesAnswerTable);
 
-			HelperFunctions.DrawAnswers(studentTablePictureBox, computedValuesStudentTable, 0, HelperFunctions.DrawCircle, Color.Red);
-			HelperFunctions.DrawAnswers(answerTable1PictureBox, computedValuesAnswerTable, 0, HelperFunctions.DrawCircle, Color.Red);
-			HelperFunctions.DrawAnswers(answerTable2PictureBox, computedValuesAnswerTable, 1, HelperFunctions.DrawCircle, Color.Red);
-			HelperFunctions.DrawAnswers(answerTable3PictureBox, computedValuesAnswerTable, 2, HelperFunctions.DrawCircle, Color.Red);
+			FormTableHandling.DrawAnswers(studentTablePictureBox, computedValuesStudentTable, 0, FormTableHandling.DrawCircle, Color.Red);
+			FormTableHandling.DrawAnswers(answerTable1PictureBox, computedValuesAnswerTable, 0, FormTableHandling.DrawCircle, Color.Red);
+			FormTableHandling.DrawAnswers(answerTable2PictureBox, computedValuesAnswerTable, 1, FormTableHandling.DrawCircle, Color.Red);
+			FormTableHandling.DrawAnswers(answerTable3PictureBox, computedValuesAnswerTable, 2, FormTableHandling.DrawCircle, Color.Red);
 		}
 
 		private void ResetTableImages()

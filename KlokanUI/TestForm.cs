@@ -151,7 +151,7 @@ namespace KlokanUI
 				{
 					bool[,,] studentExpectedValues;
 					bool[,,] answerExpectedValues;
-					HelperFunctions.DbSetToAnswers(new List<KlokanTestDBExpectedAnswer>(scan.ExpectedValues), out studentExpectedValues, out answerExpectedValues);
+					TableArrayHandling.DbSetToAnswers(new List<KlokanTestDBExpectedAnswer>(scan.ExpectedValues), out studentExpectedValues, out answerExpectedValues);
 					
 					TestKlokanInstance testInstance = new TestKlokanInstance {
 						ScanId = scan.ScanId,

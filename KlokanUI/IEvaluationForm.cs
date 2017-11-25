@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KlokanUI
+﻿namespace KlokanUI
 {
+	/// <summary>
+	/// Every form that performs evaluation needs to implement this interface, 
+	/// so that the evaluation process can correctly communicate with the form.
+	/// </summary>
 	interface IEvaluationForm
 	{
 		void EnableGoButton();
