@@ -35,7 +35,7 @@
 			// 
 			// evaluateButton
 			// 
-			this.evaluateButton.Location = new System.Drawing.Point(118, 110);
+			this.evaluateButton.Location = new System.Drawing.Point(118, 67);
 			this.evaluateButton.Name = "evaluateButton";
 			this.evaluateButton.Size = new System.Drawing.Size(118, 23);
 			this.evaluateButton.TabIndex = 0;
@@ -55,7 +55,7 @@
 			// 
 			// testButton
 			// 
-			this.testButton.Location = new System.Drawing.Point(118, 168);
+			this.testButton.Location = new System.Drawing.Point(118, 210);
 			this.testButton.Name = "testButton";
 			this.testButton.Size = new System.Drawing.Size(118, 23);
 			this.testButton.TabIndex = 2;

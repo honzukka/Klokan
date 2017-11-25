@@ -2,21 +2,36 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.IO;
-using System.Data.SQLite;
 using System.Linq.Expressions;
 
 namespace KlokanUI
 {
 	public partial class DatabaseForm : Form
 	{
+		/// <summary>
+		/// Helper class for data export.
+		/// </summary>
+		class AnswerSheetSelection
+		{
+			public int AnswerSheetId { get; set; }
+			public int StudentNumber { get; set; }
+			public int Points { get; set; }
+			public KlokanDBInstance Instance { get; set; }
+			public ICollection<KlokanDBChosenAnswer> ChosenAnswers { get; set; }
+		}
+
+		/// <summary>
+		/// Dropdown data.
+		/// </summary>
 		List<string> yearList;
+
+		/// <summary>
+		/// Dropdown data.
+		/// </summary>
 		List<string> categoryList;
 
 		public DatabaseForm()
@@ -42,6 +57,8 @@ namespace KlokanUI
 			categoryComboBox.DataSource = categoryList;
 		}
 
+		#region UI Functions
+
 		private void viewButton_Click(object sender, EventArgs e)
 		{
 			PopulateDataView();
@@ -55,14 +72,18 @@ namespace KlokanUI
 				return;
 			}
 
+			// remember the sorting for future reference
 			var dataViewSortedColumn = dataView.SortedColumn;
 			var dataViewSortOrder = dataView.SortOrder;
 
 			// multiselect is set to false for this data view
 			DatabaseDetailForm form = new DatabaseDetailForm((int)(dataView.SelectedRows[0].Cells[0].Value));
 			form.StartPosition = FormStartPosition.CenterScreen;
+
+			// show the detail window
 			form.ShowDialog();
 
+			// load and show updated data
 			PopulateDataView();
 
 			// if the data view was sorted before
@@ -107,80 +128,28 @@ namespace KlokanUI
 
 				using (var file = new StreamWriter(saveFilePath, false))
 				{
-					int selectedYear;
-					string selectedCategory = (string)categoryComboBox.SelectedItem;
+					var answerSheetSelector = CreateSelector();
 
-					// a specific year was selected
-					if (int.TryParse((string)yearComboBox.SelectedItem, out selectedYear))
-					{
-						// all categories were selected
-						if (selectedCategory == "--All--")
-						{
-							ExportSelection(file, (KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Year == selectedYear);
-						}
-						// a specific category was selected
-						else
-						{
-							ExportSelection(file, (KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Year == selectedYear && answerSheet.Instance.Category == selectedCategory);
-						}
-					}
-					// all years were selected
-					else
-					{
-						// all categories were selected
-						if (selectedCategory == "--All--")
-						{
-							ExportSelection(file, (KlokanDBAnswerSheet answerSheet) => true);
-						}
-						// a specific category was selected
-						else
-						{
-							ExportSelection(file, (KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Category == selectedCategory);
-						}
-					}
+					ExportSelection(file, answerSheetSelector);
+
+					// TODO: notify the user that it's ready
 				}
 			}
 		}
 
+		#endregion
+
+		#region Helper Functions
+
+		/// <summary>
+		/// Load answer sheet data based on the user-chosen filter and show it.
+		/// </summary>
 		private void PopulateDataView()
 		{
 			// TODO: make this asynchronous!
 
-			int selectedYear;
-			string selectedCategory = (string)categoryComboBox.SelectedItem;
+			var answerSheetSelector = CreateSelector();
 
-			// a specific year was selected
-			if (int.TryParse((string)yearComboBox.SelectedItem, out selectedYear))
-			{
-				// all categories were selected
-				if (selectedCategory == "--All--")
-				{
-					ShowAnswerSheets((KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Year == selectedYear);
-				}
-				// a specific category was selected
-				else
-				{
-					ShowAnswerSheets((KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Year == selectedYear && answerSheet.Instance.Category == selectedCategory);
-				}
-			}
-			// all years were selected
-			else
-			{
-				// all categories were selected
-				if (selectedCategory == "--All--")
-				{
-					ShowAnswerSheets((KlokanDBAnswerSheet answerSheet) => true);
-				}
-				// a specific category was selected
-				else
-				{
-					ShowAnswerSheets((KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Category == selectedCategory);
-				}
-			}
-		}
-
-		private void ShowAnswerSheets(Expression<Func<KlokanDBAnswerSheet, bool>> answerSheetSelector)
-		{
 			dataView.Rows.Clear();
 
 			using (var db = new KlokanDBContext())
@@ -194,7 +163,9 @@ namespace KlokanUI
 			}
 		}
 
-		// selects only answer sheets with specific year and category and outputs them
+		/// <summary>
+		/// Load answer sheet data based on the selector and output it.
+		/// </summary>
 		private void ExportSelection(StreamWriter sw, Expression<Func<KlokanDBAnswerSheet, bool>> answerSheetSelector)
 		{
 			OutputHeader(sw);
@@ -219,7 +190,28 @@ namespace KlokanUI
 			}
 		}
 
-		// outputs answer sheet selection in csv format delimited by a semicolon
+		/// <summary>
+		/// Outputs a header for the answer sheet selection in csv format delimited by a semicolon.
+		/// </summary>
+		private void OutputHeader(StreamWriter sw)
+		{
+			sw.Write("Answer Sheet ID;");
+			sw.Write("Student Number;");
+			sw.Write("Year;");
+			sw.Write("Category;");
+			sw.Write("Points;");
+
+			for (int i = 1; i <= 24; i++)
+			{
+				sw.Write(i + " (Chosen);" + i + " (Correct);");
+			}
+
+			sw.WriteLine();
+		}
+
+		/// <summary>
+		/// Outputs answer sheet selection in csv format delimited by a semicolon.
+		/// </summary>
 		private void OutputAnswerSheetSelection(StreamWriter sw, IQueryable<AnswerSheetSelection> answerSheetSelectionQuery)
 		{
 			foreach (var answerSheetSelection in answerSheetSelectionQuery)
@@ -244,31 +236,46 @@ namespace KlokanUI
 			}
 		}
 
-		// outputs a header for the answer sheet selection in csv format delimited by a semicolon
-		private void OutputHeader(StreamWriter sw)
+		/// <summary>
+		/// Creates a selector based on the user-chosen filter.
+		/// </summary>
+		/// <returns></returns>
+		Expression<Func<KlokanDBAnswerSheet, bool>> CreateSelector()
 		{
-			sw.Write("Answer Sheet ID;");
-			sw.Write("Student Number;");
-			sw.Write("Year;");
-			sw.Write("Category;");
-			sw.Write("Points;");
+			int selectedYear;
+			string selectedCategory = (string)categoryComboBox.SelectedItem;
 
-			for (int i = 1; i <= 24; i++)
+			// a specific year was selected
+			if (int.TryParse((string)yearComboBox.SelectedItem, out selectedYear))
 			{
-				sw.Write(i + " (Chosen);" + i + " (Correct);");
+				// all categories were selected
+				if (selectedCategory == "--All--")
+				{
+					return (KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Year == selectedYear;
+				}
+				// a specific category was selected
+				else
+				{
+					return (KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Year == selectedYear && answerSheet.Instance.Category == selectedCategory;
+				}
 			}
-
-			sw.WriteLine();
+			// all years were selected
+			else
+			{
+				// all categories were selected
+				if (selectedCategory == "--All--")
+				{
+					return (KlokanDBAnswerSheet answerSheet) => true;
+				}
+				// a specific category was selected
+				else
+				{
+					return (KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Category == selectedCategory;
+				}
+			}
 		}
 
-		class AnswerSheetSelection
-		{
-			public int AnswerSheetId { get; set; }
-			public int StudentNumber { get; set; }
-			public int Points { get; set; }
-			public KlokanDBInstance Instance { get; set; }
-			public ICollection<KlokanDBChosenAnswer> ChosenAnswers { get; set; }
-		}
+		#endregion
 
 		/*
 		private void ImportDB(SQLiteConnection externalConnection)

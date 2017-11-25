@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KlokanUI
 {
 	internal partial class CategoryEditForm : Form
 	{
-		// temporary containers for configuration data
-		bool[,,] correctAnswers;
-		List<string> answerSheetFilenames;
-
-		// a reference to the batch that's being edited in this form
+		/// <summary>
+		/// A reference to a category batch being edited in this form
+		/// </summary>
 		KlokanCategoryBatch categoryBatch;
+
+		/// <summary>
+		/// A temporary container for editing category batch answers
+		/// </summary>
+		bool[,,] correctAnswers;
+
+		/// <summary>
+		/// A temporary container for editing category batch filenames
+		/// </summary>
+		List<string> answerSheetFilenames;
 
 		/// <param name="categoryBatch">
 		/// The batch needs to have a name set, so that it can be displayed in this form.
@@ -31,7 +34,6 @@ namespace KlokanUI
 			this.categoryBatch = categoryBatch;
 
 			// show the content of the batch if there is something there already,
-			// otherwise initialize default values
 			if (categoryBatch.CorrectAnswers != null)
 			{
 				correctAnswers = categoryBatch.CorrectAnswers;
@@ -40,12 +42,13 @@ namespace KlokanUI
 				HelperFunctions.DrawAnswers(table2PictureBox, correctAnswers, 1, HelperFunctions.DrawCross, Color.Black);
 				HelperFunctions.DrawAnswers(table3PictureBox, correctAnswers, 2, HelperFunctions.DrawCross, Color.Black);
 			}
+			// otherwise initialize default values
 			else
 			{
 				correctAnswers = new bool[3, 8, 5];
 			}
 
-			if (categoryBatch.SheetFilenames != null)
+			if (categoryBatch.SheetFilenames != null && categoryBatch.SheetFilenames.Count > 0)
 			{
 				answerSheetFilenames = categoryBatch.SheetFilenames;
 				answerSheetsListBox.DataSource = answerSheetFilenames;
@@ -59,9 +62,9 @@ namespace KlokanUI
 		// a file dialog (multiselect) for adding answer sheets to be evaluated
 		private void addButton_Click(object sender, EventArgs e)
 		{
-			var dialogResult = openFilesDialog.ShowDialog();
 			bool duplicateFilenames = false;
-
+			
+			var dialogResult = openFilesDialog.ShowDialog();
 			if (dialogResult == DialogResult.OK)
 			{
 				// for each filename that was chosen in the dialog

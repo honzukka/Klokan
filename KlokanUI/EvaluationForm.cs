@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Threading;
@@ -14,6 +8,9 @@ namespace KlokanUI
 {
 	public partial class EvaluationForm : Form, IEvaluationForm
 	{
+		/// <summary>
+		/// Helper class for evaluation batch configuration.
+		/// </summary>
 		class CategoryBatchConfig
 		{
 			public KlokanCategoryBatch batch;

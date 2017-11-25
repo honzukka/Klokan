@@ -69,7 +69,7 @@
 			// 
 			// openFileDialog
 			// 
-			this.openFileDialog.Filter = "JPEG Files|(*.jpg;*.jpeg;*JPG;*.JPEG)";
+			this.openFileDialog.Filter = "JPEG Files|*.jpg;*.jpeg;*JPG;*.JPEG|PNG Files|*.png;*.PNG";
 			// 
 			// applyButton
 			// 

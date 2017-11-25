@@ -121,6 +121,12 @@ namespace KlokanUI
 			{
 				foreach (var result in results)
 				{
+					// TODO: let the user know that it failed
+					if (result.Error == true)
+					{
+						continue;
+					}
+					
 					// find out if the instance this result belongs to is new or if it already exists
 					var query = from instance
 								in db.Instances
@@ -191,6 +197,11 @@ namespace KlokanUI
 			{
 				foreach (var testResult in testResults)
 				{
+					if (testResult.Error == true)
+					{
+						continue;
+					}
+
 					var scanQuery = from scan in testDB.Scans
 									where scan.ScanId == testResult.ScanId
 									select scan;

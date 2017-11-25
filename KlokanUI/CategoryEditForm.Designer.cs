@@ -89,7 +89,7 @@
 			// 
 			// openFilesDialog
 			// 
-			this.openFilesDialog.Filter = "JPEG Files|(*.jpg;*.jpeg;*JPG;*.JPEG)|All Files|*.*";
+			this.openFilesDialog.Filter = "JPEG Files|*.jpg;*.jpeg;*JPG;*.JPEG|PNG Files|*.png;*.PNG";
 			this.openFilesDialog.Multiselect = true;
 			// 
 			// saveButton

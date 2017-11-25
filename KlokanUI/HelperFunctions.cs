@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using System.Drawing.Imaging;
+using System.Security;
 
 namespace KlokanUI
 {
