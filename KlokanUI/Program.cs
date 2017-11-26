@@ -4,6 +4,7 @@ using System.Windows.Forms;
 namespace KlokanUI
 {
 	// TODO: watch out for memory leaks!
+	// TODO: handle database exceptions when saving changes!
 
 	static class Program
 	{

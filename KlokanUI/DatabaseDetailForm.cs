@@ -335,6 +335,9 @@ namespace KlokanUI
 			return true;
 		}
 
+		/// <summary>
+		/// Resets all picture boxes in this form which get rid of all answer drawings that had been made.
+		/// </summary>
 		private void ResetTableImages()
 		{
 			List<Image> oldImages = new List<Image>();

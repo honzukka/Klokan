@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Drawing.Imaging;
@@ -14,16 +11,51 @@ namespace KlokanUI
 {
 	public partial class TestItemForm : Form
 	{
+		#region Fields
+
+		/// <summary>
+		/// A test item in its DbSet form which is shown and can be edited in this form.
+		/// </summary>
 		KlokanTestDBScan scanItem;
+
+		/// <summary>
+		/// Filename of the answer sheet image which is to be added to a scan item.
+		/// </summary>
 		string scanFilePath;
+
+		/// <summary>
+		/// Is this form in a view mode? (= item data cannot be edited)
+		/// </summary>
 		bool viewMode;
+
+		/// <summary>
+		/// Is this form in an add mode? (= a new answer sheet image can be added to a scan item)
+		/// </summary>
 		bool addMode;
 
-		bool[,,] chosenValuesStudentTable;
-		bool[,,] chosenValuesAnswerTable;
+		/// <summary>
+		/// A set of answers (values) which are expected in the student number table in a scan item.
+		/// </summary>
+		bool[,,] expectedValuesStudentTable;
 
-		bool[,,] chosenValuesStudentTableTemp;
-		bool[,,] chosenValuesAnswerTableTemp;
+		/// <summary>
+		/// A set of answers (value) which are expected in the answer table in a scan item.
+		/// </summary>
+		bool[,,] expectedValuesAnswerTable;
+
+		/// <summary>
+		/// A temporary set of answers (value) which are expected in the student number table.
+		/// Result of changes made in this form.
+		/// </summary>
+		bool[,,] expectedValuesStudentTableTemp;
+
+		/// <summary>
+		/// A temporary set of answers (values) which are expected in the answer table.
+		/// Result of changes made in this form.
+		/// </summary>
+		bool[,,] expectedValuesAnswerTableTemp;
+
+		#endregion
 
 		public TestItemForm(KlokanTestDBScan scanItem, bool viewMode)
 		{
@@ -39,11 +71,11 @@ namespace KlokanUI
 
 			// this array is effectively two-dimensional; this is a trick to help make the code cleaner and faster
 			// (I want to work with multi-dimensional arrays as opposed to jagged arrays)
-			chosenValuesStudentTable = new bool[1, 5, 10];
-			chosenValuesAnswerTable = new bool[3, 8, 5];
+			expectedValuesStudentTable = new bool[1, 5, 10];
+			expectedValuesAnswerTable = new bool[3, 8, 5];
 
-			chosenValuesStudentTableTemp = new bool[1, 5, 10];
-			chosenValuesAnswerTableTemp = new bool[3, 8, 5];
+			expectedValuesStudentTableTemp = new bool[1, 5, 10];
+			expectedValuesAnswerTableTemp = new bool[3, 8, 5];
 
 			if (viewMode)
 			{
@@ -59,6 +91,8 @@ namespace KlokanUI
 			}
 		}
 
+		#region UI Functions
+
 		private void chooseFileButton_Click(object sender, EventArgs e)
 		{
 			if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -68,6 +102,13 @@ namespace KlokanUI
 				filePathLabel.Text = scanFilePath;
 
 				Image scanImage = new Bitmap(scanFilePath);
+
+				Image oldImage = scanPictureBox.Image;
+				if (oldImage != null)
+				{
+					oldImage.Dispose();
+				}
+
 				scanPictureBox.Image = scanImage;
 			}
 		}
@@ -76,7 +117,7 @@ namespace KlokanUI
 		{
 			if (!viewMode)
 			{
-				FormTableHandling.HandleTableImageClicks(e as MouseEventArgs, studentTablePictureBox, 0, chosenValuesStudentTableTemp);
+				FormTableHandling.HandleTableImageClicks(e as MouseEventArgs, studentTablePictureBox, 0, expectedValuesStudentTableTemp);
 			}
 		}
 
@@ -84,7 +125,7 @@ namespace KlokanUI
 		{
 			if (!viewMode)
 			{
-				FormTableHandling.HandleTableImageClicks(e as MouseEventArgs, answerTable1PictureBox, 0, chosenValuesAnswerTableTemp);
+				FormTableHandling.HandleTableImageClicks(e as MouseEventArgs, answerTable1PictureBox, 0, expectedValuesAnswerTableTemp);
 			}
 		}
 
@@ -92,7 +133,7 @@ namespace KlokanUI
 		{
 			if (!viewMode)
 			{
-				FormTableHandling.HandleTableImageClicks(e as MouseEventArgs, answerTable2PictureBox, 1, chosenValuesAnswerTableTemp);
+				FormTableHandling.HandleTableImageClicks(e as MouseEventArgs, answerTable2PictureBox, 1, expectedValuesAnswerTableTemp);
 			}
 		}
 
@@ -100,7 +141,7 @@ namespace KlokanUI
 		{
 			if (!viewMode)
 			{
-				FormTableHandling.HandleTableImageClicks(e as MouseEventArgs, answerTable3PictureBox, 2, chosenValuesAnswerTableTemp);
+				FormTableHandling.HandleTableImageClicks(e as MouseEventArgs, answerTable3PictureBox, 2, expectedValuesAnswerTableTemp);
 			}
 		}
 
@@ -115,17 +156,17 @@ namespace KlokanUI
 			ResetTableImages();
 
 			// draw only the expected answers because only those can be edited
-			FormTableHandling.DrawAnswers(studentTablePictureBox, chosenValuesStudentTable, 0, FormTableHandling.DrawCross, Color.Black);
-			FormTableHandling.DrawAnswers(answerTable1PictureBox, chosenValuesAnswerTable, 0, FormTableHandling.DrawCross, Color.Black);
-			FormTableHandling.DrawAnswers(answerTable2PictureBox, chosenValuesAnswerTable, 1, FormTableHandling.DrawCross, Color.Black);
-			FormTableHandling.DrawAnswers(answerTable3PictureBox, chosenValuesAnswerTable, 2, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(studentTablePictureBox, expectedValuesStudentTable, 0, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable1PictureBox, expectedValuesAnswerTable, 0, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable2PictureBox, expectedValuesAnswerTable, 1, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable3PictureBox, expectedValuesAnswerTable, 2, FormTableHandling.DrawCross, Color.Black);
 
 			// create a copy of currently chosen answers for editing
-			chosenValuesStudentTableTemp = new bool[1, 5, 10];
-			Array.Copy(chosenValuesStudentTable, chosenValuesStudentTableTemp, 1 * 5 * 10);
+			expectedValuesStudentTableTemp = new bool[1, 5, 10];
+			Array.Copy(expectedValuesStudentTable, expectedValuesStudentTableTemp, 1 * 5 * 10);
 
-			chosenValuesAnswerTableTemp = new bool[3, 8, 5];
-			Array.Copy(chosenValuesAnswerTable, chosenValuesAnswerTableTemp, 3 * 8 * 5);
+			expectedValuesAnswerTableTemp = new bool[3, 8, 5];
+			Array.Copy(expectedValuesAnswerTable, expectedValuesAnswerTableTemp, 3 * 8 * 5);
 		}
 
 		private void applyButton_Click(object sender, EventArgs e)
@@ -136,7 +177,7 @@ namespace KlokanUI
 				return;
 			}
 
-			if (!TableArrayHandling.CheckAnswers(chosenValuesStudentTableTemp, 0))
+			if (!TableArrayHandling.CheckAnswers(expectedValuesStudentTableTemp, 0))
 			{
 				MessageBox.Show("Student number has not been properly selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
@@ -144,17 +185,18 @@ namespace KlokanUI
 
 			for (int i = 0; i < 3; i++)
 			{
-				if (!TableArrayHandling.CheckAnswers(chosenValuesAnswerTableTemp, i))
+				if (!TableArrayHandling.CheckAnswers(expectedValuesAnswerTableTemp, i))
 				{
 					MessageBox.Show("Expected answers have not been properly selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
 				}
 			}
 
-			chosenValuesStudentTable = chosenValuesStudentTableTemp;
-			chosenValuesAnswerTable = chosenValuesAnswerTableTemp;
+			// apply the changes
+			expectedValuesStudentTable = expectedValuesStudentTableTemp;
+			expectedValuesAnswerTable = expectedValuesAnswerTableTemp;
 
-			// draw the computed answers for comparison
+			// draw the computed answers for comparison (if there are any)
 			bool[,,] computedValuesStudentTable;
 			bool[,,] computedValuesAnswerTable;
 
@@ -178,10 +220,10 @@ namespace KlokanUI
 			ResetTableImages();
 
 			// draw the original answers
-			FormTableHandling.DrawAnswers(studentTablePictureBox, chosenValuesStudentTable, 0, FormTableHandling.DrawCross, Color.Black);
-			FormTableHandling.DrawAnswers(answerTable1PictureBox, chosenValuesAnswerTable, 0, FormTableHandling.DrawCross, Color.Black);
-			FormTableHandling.DrawAnswers(answerTable2PictureBox, chosenValuesAnswerTable, 1, FormTableHandling.DrawCross, Color.Black);
-			FormTableHandling.DrawAnswers(answerTable3PictureBox, chosenValuesAnswerTable, 2, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(studentTablePictureBox, expectedValuesStudentTable, 0, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable1PictureBox, expectedValuesAnswerTable, 0, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable2PictureBox, expectedValuesAnswerTable, 1, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable3PictureBox, expectedValuesAnswerTable, 2, FormTableHandling.DrawCross, Color.Black);
 
 			bool[,,] computedValuesStudentTable;
 			bool[,,] computedValuesAnswerTable;
@@ -212,10 +254,10 @@ namespace KlokanUI
 
 			// prepare the DbSet of chosen expected answers
 			List<KlokanTestDBExpectedAnswer> expectedAnswers = new List<KlokanTestDBExpectedAnswer>();
-			expectedAnswers.AddRange(TableArrayHandling.AnswersToDbSet<KlokanTestDBExpectedAnswer>(chosenValuesStudentTable, 0, true));
+			expectedAnswers.AddRange(TableArrayHandling.AnswersToDbSet<KlokanTestDBExpectedAnswer>(expectedValuesStudentTable, 0, true));
 			for (int i = 0; i < 3; i++)
 			{
-				expectedAnswers.AddRange(TableArrayHandling.AnswersToDbSet<KlokanTestDBExpectedAnswer>(chosenValuesAnswerTable, i, false));
+				expectedAnswers.AddRange(TableArrayHandling.AnswersToDbSet<KlokanTestDBExpectedAnswer>(expectedValuesAnswerTable, i, false));
 			}
 
 			if (addMode)
@@ -266,14 +308,18 @@ namespace KlokanUI
 				testDB.SaveChanges();
 			}
 
-			if (addMode)
-			{
-				this.Close();
-			}
-
 			PopulateForm();
+
+			MessageBox.Show("Database updated.", "Database Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
+		#endregion
+
+		#region Helper Functions
+
+		/// <summary>
+		/// Gets data from the scan item field and shows it.
+		/// </summary>
 		private void PopulateForm()
 		{
 			// load scan
@@ -281,12 +327,12 @@ namespace KlokanUI
 
 			// load the answers
 			List<KlokanTestDBExpectedAnswer> expectedValues = new List<KlokanTestDBExpectedAnswer>(scanItem.ExpectedValues);
-			TableArrayHandling.DbSetToAnswers(expectedValues, out chosenValuesStudentTable, out chosenValuesAnswerTable);
+			TableArrayHandling.DbSetToAnswers(expectedValues, out expectedValuesStudentTable, out expectedValuesAnswerTable);
 
-			FormTableHandling.DrawAnswers(studentTablePictureBox, chosenValuesStudentTable, 0, FormTableHandling.DrawCross, Color.Black);
-			FormTableHandling.DrawAnswers(answerTable1PictureBox, chosenValuesAnswerTable, 0, FormTableHandling.DrawCross, Color.Black);
-			FormTableHandling.DrawAnswers(answerTable2PictureBox, chosenValuesAnswerTable, 1, FormTableHandling.DrawCross, Color.Black);
-			FormTableHandling.DrawAnswers(answerTable3PictureBox, chosenValuesAnswerTable, 2, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(studentTablePictureBox, expectedValuesStudentTable, 0, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable1PictureBox, expectedValuesAnswerTable, 0, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable2PictureBox, expectedValuesAnswerTable, 1, FormTableHandling.DrawCross, Color.Black);
+			FormTableHandling.DrawAnswers(answerTable3PictureBox, expectedValuesAnswerTable, 2, FormTableHandling.DrawCross, Color.Black);
 
 			bool[,,] computedValuesStudentTable;
 			bool[,,] computedValuesAnswerTable;
@@ -300,6 +346,9 @@ namespace KlokanUI
 			FormTableHandling.DrawAnswers(answerTable3PictureBox, computedValuesAnswerTable, 2, FormTableHandling.DrawCircle, Color.Red);
 		}
 
+		/// <summary>
+		/// Resets all picture boxes in this form which get rid of all answer drawings that had been made.
+		/// </summary>
 		private void ResetTableImages()
 		{
 			List<Image> oldImages = new List<Image>();
@@ -323,5 +372,7 @@ namespace KlokanUI
 			answerTable2PictureBox.Refresh();
 			answerTable3PictureBox.Refresh();
 		}
+
+		#endregion
 	}
 }

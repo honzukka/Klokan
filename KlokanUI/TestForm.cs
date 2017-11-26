@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Threading;
@@ -14,6 +10,9 @@ namespace KlokanUI
 {
 	public partial class TestForm : Form, IEvaluationForm
 	{
+		/// <summary>
+		/// Parameters to be used in the evaluation process.
+		/// </summary>
 		Parameters chosenParameters;
 
 		public TestForm()
@@ -30,110 +29,11 @@ namespace KlokanUI
 			ShowAverageCorrectness();
 		}
 
-		private void PopulateDataView()
-		{
-			dataView.Rows.Clear();
-
-			using (var testDB = new KlokanTestDBContext())
-			{
-				var scanQuery = from scan in testDB.Scans
-								select new { scan.ScanId, scan.Correctness };
-
-				foreach (var scanInfo in scanQuery)
-				{
-					dataView.Rows.Add(scanInfo.ScanId, scanInfo.Correctness);
-				}
-			}
-		}
-
-		// gets data from the data view!
-		private float GetAverageCorrectness()
-		{
-			// no test items available
-			if (dataView.Rows.Count == 0)
-			{
-				return -1;
-			}
-
-			float correctnessSum = 0;
-
-			foreach (DataGridViewRow row in dataView.Rows)
-			{
-				float itemCorrectness = (float)(row.Cells[1].Value);
-
-				// correctness data not complete, evaluation needed
-				if (itemCorrectness == -1)
-				{
-					return -1;
-				}
-
-				correctnessSum += itemCorrectness;
-			}
-
-			float averageCorrectness = correctnessSum / dataView.Rows.Count;
-
-			return averageCorrectness;
-		}
-
-		// gets data from the data view!
-		private void ShowAverageCorrectness()
-		{
-			float averageCorrectness = GetAverageCorrectness();
-
-			// if all test items have been evaluated
-			if (averageCorrectness != -1)
-			{
-				averageCorrectnessValueLabel.Text = GetAverageCorrectness().ToString();
-
-				averageCorrectnessLabel.Show();
-				averageCorrectnessValueLabel.Show();
-			}
-			else
-			{
-				averageCorrectnessLabel.Hide();
-				averageCorrectnessValueLabel.Hide();
-			}
-		}
-
-		public void EnableGoButton()
-		{
-			if (evaluateButton.InvokeRequired)
-			{
-				evaluateButton.BeginInvoke(new Action(
-					() => {
-						PopulateDataView();
-						ShowAverageCorrectness();
-						evaluateButton.Enabled = true;
-					}
-				));
-			}
-			else
-			{
-				PopulateDataView();
-				ShowAverageCorrectness();
-				evaluateButton.Enabled = true;
-			}
-		}
-
-		public void ShowMessageBoxInfo(string message, string caption)
-		{
-			if (this.InvokeRequired)
-			{
-				this.BeginInvoke(new Action(
-					() => {
-						MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-					}
-				));
-			}
-			else
-			{
-				MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
-		}
+		#region UI Functions
 
 		private void evaluateButton_Click(object sender, EventArgs e)
 		{
-			if (MessageBox.Show("Do you you want to start evaluation?", "Evaluation Start", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+			if (MessageBox.Show("Do you want to start evaluation?", "Evaluation Start", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
 			{
 				return;
 			}
@@ -142,6 +42,7 @@ namespace KlokanUI
 
 			List<TestKlokanInstance> testInstances = new List<TestKlokanInstance>();
 
+			// get all available test instances
 			using (var testDB = new KlokanTestDBContext())
 			{
 				var allScansQuery = from scan in testDB.Scans
@@ -164,6 +65,12 @@ namespace KlokanUI
 				}
 			}
 
+			if (testInstances.Count == 0)
+			{
+				MessageBox.Show("There are no test items to evaluate.", "No test items", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
+
 			TestKlokanBatch testBatch = new TestKlokanBatch {
 				Parameters = chosenParameters,
 				TestInstances = testInstances
@@ -182,6 +89,8 @@ namespace KlokanUI
 			KlokanTestDBScan newScanItem = new KlokanTestDBScan();
 			TestItemForm testAddItemForm = new TestItemForm(newScanItem, false);
 			testAddItemForm.StartPosition = FormStartPosition.CenterScreen;
+
+			// the new scan item will either be set up and added into the database or not
 			testAddItemForm.ShowDialog();
 
 			averageCorrectnessLabel.Hide();
@@ -255,6 +164,8 @@ namespace KlokanUI
 
 			TestItemForm form = new TestItemForm(scanItemToView, true);
 			form.StartPosition = FormStartPosition.CenterScreen;
+
+			// all potential changes to the scan item will be saved into the database if the user chooses to do so
 			form.ShowDialog();
 
 			PopulateDataView();
@@ -285,5 +196,130 @@ namespace KlokanUI
 				removeItemButton.Enabled = false;
 			}
 		}
+
+		#endregion
+
+		#region Helper Functions
+
+		/// <summary>
+		/// Loads test items from the database and shows them in the data view.
+		/// </summary>
+		private void PopulateDataView()
+		{
+			dataView.Rows.Clear();
+
+			using (var testDB = new KlokanTestDBContext())
+			{
+				var scanQuery = from scan in testDB.Scans
+								select new { scan.ScanId, scan.Correctness };
+
+				foreach (var scanInfo in scanQuery)
+				{
+					dataView.Rows.Add(scanInfo.ScanId, scanInfo.Correctness);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Computes the average correctness of test items based on the data available in the data view 
+		/// (so that one database query is saved).
+		/// </summary>
+		/// <returns>Returns -1 if average correctness cannot be determined.</returns>
+		private float GetAverageCorrectness()
+		{
+			// no test items available
+			if (dataView.Rows.Count == 0)
+			{
+				return -1;
+			}
+
+			float correctnessSum = 0;
+
+			foreach (DataGridViewRow row in dataView.Rows)
+			{
+				float itemCorrectness = (float)(row.Cells[1].Value);
+
+				// correctness data not complete, evaluation needed
+				if (itemCorrectness == -1)
+				{
+					return -1;
+				}
+
+				correctnessSum += itemCorrectness;
+			}
+
+			float averageCorrectness = correctnessSum / dataView.Rows.Count;
+
+			return averageCorrectness;
+		}
+
+		/// <summary>
+		/// Uses the GetAverageCorrectness() function to get the value and 
+		/// the shows it properly in the appropriate label.
+		/// </summary>
+		private void ShowAverageCorrectness()
+		{
+			float averageCorrectness = GetAverageCorrectness();
+
+			// if all test items have been evaluated
+			if (averageCorrectness != -1)
+			{
+				averageCorrectnessValueLabel.Text = GetAverageCorrectness().ToString();
+
+				averageCorrectnessLabel.Show();
+				averageCorrectnessValueLabel.Show();
+			}
+			else
+			{
+				averageCorrectnessLabel.Hide();
+				averageCorrectnessValueLabel.Hide();
+			}
+		}
+
+		/// <summary>
+		/// Enables the evaluation button again.
+		/// Can be called from any thread.
+		/// </summary>
+		public void EnableGoButton()
+		{
+			if (evaluateButton.InvokeRequired)
+			{
+				evaluateButton.BeginInvoke(new Action(
+					() => {
+						PopulateDataView();
+						ShowAverageCorrectness();
+						evaluateButton.Enabled = true;
+					}
+				));
+			}
+			else
+			{
+				PopulateDataView();
+				ShowAverageCorrectness();
+				evaluateButton.Enabled = true;
+			}
+		}
+
+		/// <summary>
+		/// Shows a custom informative message.
+		/// Can be called from any thread.
+		/// </summary>
+		public void ShowMessageBoxInfo(string message, string caption)
+		{
+			if (this.InvokeRequired)
+			{
+				this.BeginInvoke(new Action(
+					() => {
+						MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+					}
+				));
+			}
+			else
+			{
+				MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+		}
+
+		#endregion
 	}
 }

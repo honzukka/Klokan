@@ -75,6 +75,11 @@ namespace KlokanUI
 				return;
 			}
 
+			if (MessageBox.Show("Do you want to start evaluation?", "Evaluation Start", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+			{
+				return;
+			}
+
 			// reset the category batches in the final klokan batch
 			klokanBatch.CategoryBatches = new Dictionary<string, KlokanCategoryBatch>();
 
