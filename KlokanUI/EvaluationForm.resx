@@ -117,4 +117,462 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="&gt;&gt;juniorEditButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="studentCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="evaluateButton.Text" xml:space="preserve">
+    <value>Evaluate</value>
+  </data>
+  <data name="&gt;&gt;studentCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="studentCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 109</value>
+  </data>
+  <data name="&gt;&gt;benjaminCheckBox.Name" xml:space="preserve">
+    <value>benjaminCheckBox</value>
+  </data>
+  <data name="&gt;&gt;yearComboBox.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;categoryLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;juniorCheckBox.Name" xml:space="preserve">
+    <value>juniorCheckBox</value>
+  </data>
+  <data name="juniorCheckBox.Text" xml:space="preserve">
+    <value>Junior</value>
+  </data>
+  <data name="&gt;&gt;benjaminEditButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;yearComboBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;benjaminEditButton.Name" xml:space="preserve">
+    <value>benjaminEditButton</value>
+  </data>
+  <data name="&gt;&gt;juniorEditButton.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="benjaminEditButton.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;parameterLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;defaultParamsRadioButton.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="studentCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 17</value>
+  </data>
+  <data name="juniorEditButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="yearLabel.Text" xml:space="preserve">
+    <value>Choose a year:</value>
+  </data>
+  <data name="&gt;&gt;editParamsButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;customParamsRadioButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;editParamsButton.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;studentEditButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="kadetCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="kadetEditButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>122, 132</value>
+  </data>
+  <data name="&gt;&gt;kadetEditButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="juniorCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 17</value>
+  </data>
+  <data name="studentCheckBox.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;yearComboBox.Name" xml:space="preserve">
+    <value>yearComboBox</value>
+  </data>
+  <data name="defaultParamsRadioButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>59, 17</value>
+  </data>
+  <data name="categoryLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>38, 77</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="&gt;&gt;customParamsRadioButton.Name" xml:space="preserve">
+    <value>customParamsRadioButton</value>
+  </data>
+  <data name="yearLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>38, 32</value>
+  </data>
+  <data name="evaluateButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>42, 256</value>
+  </data>
+  <data name="customParamsRadioButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 186</value>
+  </data>
+  <data name="&gt;&gt;evaluateButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="defaultParamsRadioButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 186</value>
+  </data>
+  <data name="kadetEditButton.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="&gt;&gt;studentEditButton.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
+    <value>413, 349</value>
+  </data>
+  <data name="&gt;&gt;customParamsRadioButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="customParamsRadioButton.Text" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="evaluateButton.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="editParamsButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="evaluateButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;yearLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="juniorCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="juniorCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>203, 109</value>
+  </data>
+  <data name="studentEditButton.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="categoryLabel.Text" xml:space="preserve">
+    <value>Configure categories:</value>
+  </data>
+  <data name="&gt;&gt;juniorEditButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="studentEditButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>284, 132</value>
+  </data>
+  <data name="categoryLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;parameterLabel.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="defaultParamsRadioButton.TabIndex" type="System.Int32, mscorlib">
+    <value>22</value>
+  </data>
+  <data name="&gt;&gt;benjaminCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="kadetEditButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>EvaluationForm</value>
+  </data>
+  <data name="&gt;&gt;defaultParamsRadioButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;evaluateButton.ZOrder" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="yearLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="benjaminCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 17</value>
+  </data>
+  <data name="customParamsRadioButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>413, 349</value>
+  </data>
+  <data name="parameterLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>39, 186</value>
+  </data>
+  <data name="&gt;&gt;kadetCheckBox.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;kadetCheckBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="kadetCheckBox.Text" xml:space="preserve">
+    <value>Kadet</value>
+  </data>
+  <data name="juniorCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="juniorEditButton.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="kadetCheckBox.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="parameterLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+  </data>
+  <data name="customParamsRadioButton.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="parameterLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="parameterLabel.Text" xml:space="preserve">
+    <value>Set parameters:</value>
+  </data>
+  <data name="defaultParamsRadioButton.Text" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="juniorEditButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>203, 132</value>
+  </data>
+  <data name="&gt;&gt;yearComboBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;evaluateButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="yearComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 21</value>
+  </data>
+  <data name="benjaminCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="benjaminCheckBox.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="evaluateButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
+  </data>
+  <data name="juniorEditButton.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="&gt;&gt;kadetEditButton.Name" xml:space="preserve">
+    <value>kadetEditButton</value>
+  </data>
+  <data name="customParamsRadioButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 17</value>
+  </data>
+  <data name="&gt;&gt;juniorCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;studentEditButton.Name" xml:space="preserve">
+    <value>studentEditButton</value>
+  </data>
+  <data name="&gt;&gt;yearLabel.Name" xml:space="preserve">
+    <value>yearLabel</value>
+  </data>
+  <data name="&gt;&gt;studentCheckBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Klokan - Evaluation</value>
+  </data>
+  <data name="&gt;&gt;studentCheckBox.Name" xml:space="preserve">
+    <value>studentCheckBox</value>
+  </data>
+  <data name="&gt;&gt;categoryLabel.Name" xml:space="preserve">
+    <value>categoryLabel</value>
+  </data>
+  <data name="defaultParamsRadioButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="editParamsButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>285, 209</value>
+  </data>
+  <data name="yearComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 29</value>
+  </data>
+  <data name="&gt;&gt;yearLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="kadetEditButton.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="&gt;&gt;kadetEditButton.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="editParamsButton.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="studentCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="kadetCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 17</value>
+  </data>
+  <data name="yearLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;benjaminEditButton.ZOrder" xml:space="preserve">
+    <value>12</value>
+  </data>
+  <data name="kadetCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>122, 109</value>
+  </data>
+  <data name="&gt;&gt;juniorCheckBox.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;benjaminCheckBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;juniorCheckBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;yearLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="studentEditButton.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="&gt;&gt;editParamsButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="yearComboBox.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="benjaminCheckBox.Text" xml:space="preserve">
+    <value>Benjamin</value>
+  </data>
+  <data name="parameterLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 13</value>
+  </data>
+  <data name="&gt;&gt;editParamsButton.Name" xml:space="preserve">
+    <value>editParamsButton</value>
+  </data>
+  <data name="kadetCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;defaultParamsRadioButton.Name" xml:space="preserve">
+    <value>defaultParamsRadioButton</value>
+  </data>
+  <data name="yearLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+  </data>
+  <data name="&gt;&gt;parameterLabel.Name" xml:space="preserve">
+    <value>parameterLabel</value>
+  </data>
+  <data name="&gt;&gt;categoryLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;parameterLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;kadetCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>397, 310</value>
+  </data>
+  <data name="categoryLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 13</value>
+  </data>
+  <data name="benjaminEditButton.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="categoryLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;kadetCheckBox.Name" xml:space="preserve">
+    <value>kadetCheckBox</value>
+  </data>
+  <data name="&gt;&gt;benjaminCheckBox.ZOrder" xml:space="preserve">
+    <value>13</value>
+  </data>
+  <data name="&gt;&gt;evaluateButton.Name" xml:space="preserve">
+    <value>evaluateButton</value>
+  </data>
+  <data name="juniorCheckBox.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="benjaminEditButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="benjaminEditButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>41, 132</value>
+  </data>
+  <data name="&gt;&gt;categoryLabel.ZOrder" xml:space="preserve">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;juniorEditButton.Name" xml:space="preserve">
+    <value>juniorEditButton</value>
+  </data>
+  <data name="&gt;&gt;defaultParamsRadioButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="benjaminCheckBox.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;kadetEditButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;customParamsRadioButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RadioButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="categoryLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+  </data>
+  <data name="editParamsButton.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="parameterLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;studentEditButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="yearLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 13</value>
+  </data>
+  <data name="benjaminCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>41, 109</value>
+  </data>
+  <data name="&gt;&gt;benjaminEditButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="studentCheckBox.Text" xml:space="preserve">
+    <value>Student</value>
+  </data>
+  <data name="&gt;&gt;studentCheckBox.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="studentEditButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

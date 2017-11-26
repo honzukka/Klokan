@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using System.Threading;
+using System.Globalization;
+using System.ComponentModel;
+
 namespace KlokanUI
 {
 	public partial class MainForm : Form
@@ -8,6 +12,15 @@ namespace KlokanUI
 		public MainForm()
 		{
 			InitializeComponent();
+
+			if (Thread.CurrentThread.CurrentUICulture.Name == "cs-CZ")
+			{
+				czechRadioButton.Checked = true;
+			}
+			else
+			{
+				englishRadioButton.Checked = true;
+			}
 		}
 
 		/// <summary>
@@ -47,6 +60,38 @@ namespace KlokanUI
 			testForm.FormClosed += delegate { this.Show(); };
 			testForm.Show();
 			this.Hide();
+		}
+
+		private void englishRadioButton_CheckedChanged(object sender, EventArgs e)
+		{
+			if (englishRadioButton.Checked == true)
+			{
+				// there is no localization for en-GB, so this will fall back to default (which is in English...)
+				Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-GB");
+				UpdateUIControls();
+			}
+		}
+
+		private void czechRadioButton_CheckedChanged(object sender, EventArgs e)
+		{
+			if (czechRadioButton.Checked == true)
+			{
+				Thread.CurrentThread.CurrentUICulture = new CultureInfo("cs-CZ");
+				UpdateUIControls();
+			}
+		}
+
+		/// <summary>
+		/// Re-applies resources to all controls ensuring proper localization according to the current UI culture.
+		/// </summary>
+		private void UpdateUIControls()
+		{
+			ComponentResourceManager resourceManager = new ComponentResourceManager(typeof(MainForm));
+
+			foreach (Control control in this.Controls)
+			{
+				resourceManager.ApplyResources(control, control.Name);
+			}
 		}
 	}
 }
