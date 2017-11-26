@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace KlokanUI
 {
+	/// <summary>
+	/// Batch data structure to be fed to the evaluator.
+	/// </summary>
 	class KlokanBatch
 	{
 		public Parameters Parameters { get; set; }
@@ -13,6 +12,10 @@ namespace KlokanUI
 		public int Year { get; set; }
 	}
 
+	/// <summary>
+	/// Batch data for one Klokan category.
+	/// Consists of one correct answer sheet and multiple answer sheets to be evaluated.
+	/// </summary>
 	class KlokanCategoryBatch
 	{
 		public string CategoryName { get; set; }

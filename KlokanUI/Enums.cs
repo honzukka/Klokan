@@ -1,13 +1,5 @@
 ﻿namespace KlokanUI
 {
-	enum AnswerType
-	{
-		Correct,
-		Incorrect,
-		Void,
-		Corrected
-	}
-
 	enum Category
 	{
 		Benjamin,

@@ -9,7 +9,16 @@ namespace KlokanUI
 {
 	class JobScheduler
 	{
+		#region Fields
+
+		/// <summary>
+		/// Batch data for evaluation.
+		/// </summary>
 		KlokanBatch batch;
+
+		/// <summary>
+		/// Batch data for test evaluation.
+		/// </summary>
 		TestKlokanBatch testBatch;
 		
 		/// <summary>
@@ -17,9 +26,22 @@ namespace KlokanUI
 		/// </summary>
 		IEvaluationForm callingForm;
 
-		// just for information
+		/// <summary>
+		/// Used for measuring the time of evaluation.
+		/// </summary>
 		DateTime evaluationStartTime;
+		
+		/// <summary>
+		/// Used for measuring the time of evaluation.
+		/// </summary>
 		DateTime evaluationEndTime;
+
+		/// <summary>
+		/// Information about the result of the evaluation.
+		/// </summary>
+		string evaluationSummary;
+
+		#endregion
 
 		public JobScheduler(KlokanBatch batch, IEvaluationForm callingForm)
 		{
@@ -36,7 +58,7 @@ namespace KlokanUI
 		}
 
 		/// <summary>
-		/// This method takes the batch saved in the JobScheduler and runs an asynchronous method
+		/// This method takes the batch (either normal or test) saved in the JobScheduler and runs an asynchronous method
 		/// which plans and then starts the processing.
 		/// </summary>
 		public void Run()
@@ -55,7 +77,7 @@ namespace KlokanUI
 		/// <summary>
 		/// Creates and starts a task for each sheet in the batch.
 		/// Results of those tasks are awaited and later outputted. 
-		/// The evaluation form is notified that the process was completed.
+		/// The calling form is notified that the process was completed.
 		/// </summary>
 		async void ProcessBatchAsync()
 		{
@@ -68,13 +90,16 @@ namespace KlokanUI
 			{
 				foreach (var sheetFilename in categoryBatch.SheetFilenames)
 				{
-					Task<Result> sheetTask = new Task<Result>(() => evaluator.Evaluate(sheetFilename, categoryBatch.CorrectAnswers, categoryBatch.CategoryName, batch.Year));
+					Task<Result> sheetTask = new Task<Result>(
+						() => evaluator.Evaluate(sheetFilename, categoryBatch.CorrectAnswers, categoryBatch.CategoryName, batch.Year)
+					);
 					tasks.Add(sheetTask);
 					sheetTask.Start();
 				}
 			}
 
 			Result[] results = await Task.WhenAll(tasks);
+
 			evaluationEndTime = DateTime.Now;
 
 			await OutputResultsDB(results);
@@ -82,6 +107,11 @@ namespace KlokanUI
 			FinishJob();
 		}
 
+		/// <summary>
+		/// Creates and starts a task for each sheet in the test batch.
+		/// Results of those tasks are awaited and later outputted. 
+		/// The calling form is notified that the process was completed.
+		/// </summary>
 		async void ProcessTestBatchAsync()
 		{
 			evaluationStartTime = DateTime.Now;
@@ -91,15 +121,17 @@ namespace KlokanUI
 
 			foreach (var testInstance in testBatch.TestInstances)
 			{
-				Task<TestResult> instanceTask = new Task<TestResult>(() => evaluator.EvaluateTest(testInstance.ScanId, testInstance.Image, testInstance.StudentExpectedValues, testInstance.AnswerExpectedValues));
+				Task<TestResult> instanceTask = new Task<TestResult>(
+					() => evaluator.EvaluateTest(testInstance.ScanId, testInstance.Image, testInstance.StudentExpectedValues, testInstance.AnswerExpectedValues)
+				);
 				tasks.Add(instanceTask);
 				instanceTask.Start();
 			}
 
 			TestResult[] testResults = await Task.WhenAll(tasks);
+
 			evaluationEndTime = DateTime.Now;
 
-			// output results
 			await OutputTestResultsDB(testResults);
 
 			FinishJob();
@@ -107,18 +139,21 @@ namespace KlokanUI
 
 		/// <summary>
 		/// Asynchronously stores results into a database described by KlokanDBContext.
+		/// Instances that already exist in the database are rewritten.
 		/// </summary>
 		/// <param name="results">Any enumerable structure of evaluation results.</param>
 		/// <returns>A void task.</returns>
 		async Task OutputResultsDB(IEnumerable<Result> results)
 		{
+			int failedSheets = 0;
+
 			using (var db = new KlokanDBContext())
 			{
 				foreach (var result in results)
 				{
-					// TODO: let the user know that it failed
 					if (result.Error == true)
 					{
+						failedSheets++;
 						continue;
 					}
 					
@@ -196,16 +231,38 @@ namespace KlokanUI
 
 				await db.SaveChangesAsync();
 			}
+
+			if (failedSheets == 0)
+			{
+				evaluationSummary = "Evaluation was successful.";
+			}
+			else if (failedSheets == 1)
+			{
+				evaluationSummary = failedSheets + " sheet was not evaluated because of an error.";
+			}
+			else
+			{
+				evaluationSummary = failedSheets + " sheets were not evaluated because of an error.";
+			}
 		}
 
+		/// <summary>
+		/// Asynchronously stores test results into a database described by KlokanTestDBContext.
+		/// Results that already exist in the database are rewritten.
+		/// </summary>
+		/// <param name="results">Any enumerable structure of evaluation test results.</param>
+		/// <returns>A void task.</returns>
 		async Task OutputTestResultsDB(IEnumerable<TestResult> testResults)
 		{
+			int failedScans = 0;
+
 			using (var testDB = new KlokanTestDBContext())
 			{
 				foreach (var testResult in testResults)
 				{
 					if (testResult.Error == true)
 					{
+						failedScans++;
 						continue;
 					}
 
@@ -240,6 +297,19 @@ namespace KlokanUI
 					await testDB.SaveChangesAsync();
 				}
 			}
+
+			if (failedScans == 0)
+			{
+				evaluationSummary = "Evaluation was successful.";
+			}
+			else if (failedScans == 1)
+			{
+				evaluationSummary = failedScans + " scan was not evaluated because of an error.";
+			}
+			else
+			{
+				evaluationSummary = failedScans + " scans were not evaluated because of an error.";
+			}
 		}
 
 		/// <summary>
@@ -248,7 +318,8 @@ namespace KlokanUI
 		/// </summary>
 		void FinishJob()
 		{
-			callingForm.ShowMessageBoxInfo("Evaluation finished in " + (evaluationEndTime - evaluationStartTime).TotalSeconds + " seconds.\r\n" +
+			callingForm.ShowMessageBoxInfo(evaluationSummary + "\r\n\r\n" +
+				"Evaluation finished in " + (evaluationEndTime - evaluationStartTime).TotalSeconds + " seconds.\r\n" +
 				"Results saved in " + (DateTime.Now - evaluationEndTime).TotalSeconds + " seconds.", "Evaluation Completed"
 			);
 			callingForm.EnableGoButton();

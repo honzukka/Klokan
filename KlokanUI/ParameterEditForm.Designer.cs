@@ -103,6 +103,7 @@
 			// 
 			// tableCountTextBox
 			// 
+			this.tableCountTextBox.Enabled = false;
 			this.tableCountTextBox.Location = new System.Drawing.Point(317, 108);
 			this.tableCountTextBox.Name = "tableCountTextBox";
 			this.tableCountTextBox.Size = new System.Drawing.Size(100, 20);
@@ -151,6 +152,7 @@
 			// 
 			// answerTableRowsTextBox
 			// 
+			this.answerTableRowsTextBox.Enabled = false;
 			this.answerTableRowsTextBox.Location = new System.Drawing.Point(317, 251);
 			this.answerTableRowsTextBox.Name = "answerTableRowsTextBox";
 			this.answerTableRowsTextBox.Size = new System.Drawing.Size(100, 20);
@@ -167,6 +169,7 @@
 			// 
 			// answerTableColumnsTextBox
 			// 
+			this.answerTableColumnsTextBox.Enabled = false;
 			this.answerTableColumnsTextBox.Location = new System.Drawing.Point(317, 281);
 			this.answerTableColumnsTextBox.Name = "answerTableColumnsTextBox";
 			this.answerTableColumnsTextBox.Size = new System.Drawing.Size(100, 20);
@@ -330,6 +333,7 @@
 			// 
 			// studentTableRowsTextBox
 			// 
+			this.studentTableRowsTextBox.Enabled = false;
 			this.studentTableRowsTextBox.Location = new System.Drawing.Point(317, 191);
 			this.studentTableRowsTextBox.Name = "studentTableRowsTextBox";
 			this.studentTableRowsTextBox.Size = new System.Drawing.Size(100, 20);
@@ -346,6 +350,7 @@
 			// 
 			// studentTableColumnsTextBox
 			// 
+			this.studentTableColumnsTextBox.Enabled = false;
 			this.studentTableColumnsTextBox.Location = new System.Drawing.Point(317, 222);
 			this.studentTableColumnsTextBox.Name = "studentTableColumnsTextBox";
 			this.studentTableColumnsTextBox.Size = new System.Drawing.Size(100, 20);
@@ -427,7 +432,9 @@
 			this.Controls.Add(this.blackWhiteThresholdLabel);
 			this.Controls.Add(this.defaultSheetWidthTextBox);
 			this.Controls.Add(this.defaultSheetWidthLabel);
-			this.MinimumSize = new System.Drawing.Size(485, 548);
+			this.MaximizeBox = false;
+			this.MaximumSize = new System.Drawing.Size(485, 750);
+			this.MinimumSize = new System.Drawing.Size(485, 750);
 			this.Name = "ParameterEditForm";
 			this.Text = "Klokan - Evaluation - Parameter Edit";
 			this.ResumeLayout(false);

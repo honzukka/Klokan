@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace KlokanUI
@@ -30,7 +23,6 @@ namespace KlokanUI
 
 		private void SetToolTips()
 		{
-			// labels
 			toolTip.SetToolTip(defaultSheetWidthLabel, "Every sheet will be resized accordingly (preserving aspect ratio) before the tables are extracted.");
 			toolTip.SetToolTip(blackWhiteThresholdLabel, "How bright a shade of grey can be to be recognized as black (the rest will be white).");
 
@@ -112,7 +104,7 @@ namespace KlokanUI
 
 			if (!Int32.TryParse(defaultSheetWidthTextBox.Text, out defaultSheetWidth))
 			{
-				MessageBox.Show("Default Sheet Width has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("Default Sheet Width has incorrect format or is out of range!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
@@ -122,6 +114,7 @@ namespace KlokanUI
 				return;
 			}
 
+			// DISABLED
 			if (!Int32.TryParse(tableCountTextBox.Text, out tableCount))
 			{
 				MessageBox.Show("Table Count has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -140,24 +133,28 @@ namespace KlokanUI
 				return;
 			}
 
+			// DISABLED
 			if (!Int32.TryParse(studentTableRowsTextBox.Text, out studentTableRows))
 			{
 				MessageBox.Show("Student Table Rows has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
+			// DISABLED
 			if (!Int32.TryParse(studentTableColumnsTextBox.Text, out studentTableColumns))
 			{
 				MessageBox.Show("Student Table Columns has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
+			// DISABLED
 			if (!Int32.TryParse(answerTableRowsTextBox.Text, out answerTableRows))
 			{
 				MessageBox.Show("Answer Table Rows has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
+			// DISABLED
 			if (!Int32.TryParse(answerTableColumnsTextBox.Text, out answerTableColumns))
 			{
 				MessageBox.Show("Answer Table Columns has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

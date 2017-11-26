@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using System.Runtime.InteropServices;
 
@@ -33,6 +29,120 @@ namespace KlokanUI
 	[StructLayout(LayoutKind.Sequential, Pack = 8)]
 	struct Parameters
 	{
+		#region Parameters used to prepare a sheet image for processing
+
+		/// <summary>
+		/// Every sheet will be resized accordingly (preserving aspect ratio) before the tables are extracted.
+		/// </summary>
+		public int DefaultSheetWidth { get; }
+
+		/// <summary>
+		/// How bright a shade of grey can be to be recognized as black (the rest will be white).
+		/// </summary>
+		public int BlackWhiteThreshold { get; }
+
+		#endregion
+
+		#region Parameters of the table & cell extraction process
+
+		/// <summary>
+		/// The number of table in the answer sheet.
+		/// </summary>
+		public int TableCount { get; }
+
+		/// <summary>
+		/// How slanted a line can be to be recognized as either horizontal or vertical (in radians).
+		/// </summary>
+		public float TableLineEccentricityLimit { get; }
+
+		/// <summary>
+		/// How curved a line can be to still be recognized as a straight line (1 is minimum).
+		/// </summary>
+		public int TableLineCurvatureLimit { get; }
+
+		/// <summary>
+		/// The number of rows in the student number table.
+		/// </summary>
+		public int StudentTableRows { get; }
+
+		/// <summary>
+		/// The number of columns in the student number table.
+		/// </summary>
+		public int StudentTableColumns { get; }
+
+		/// <summary>
+		/// The number of rows in the answer table.
+		/// </summary>
+		public int AnswerTableRows { get; }
+
+		/// <summary>
+		/// The number of columns in the answer table.
+		/// </summary>
+		public int AnswerTableColumns { get; }
+
+		/// <summary>
+		/// This is the width of a cell after the sheet has been resized (see default_sheet_width).
+		/// </summary>
+		public int ResizedCellWidth { get; }
+
+		/// <summary>
+		/// This is the height of a cell after the sheet has been resized (see default_sheet_height).
+		/// </summary>
+		public int ResizedCellHeight { get; }
+
+		#endregion
+
+		#region Parameters of the cell evaluation process
+
+		/// <summary>
+		/// Every cell will be resized to have this width.
+		/// </summary>
+		public int DefaultCellWidth { get; }
+
+		/// <summary>
+		/// Every cell will be resized to have this height.
+		/// </summary>
+		public int DefaultCellHeight { get; }
+
+		/// <summary>
+		/// TRUE - shape recognition; FALSE - pixel ratio
+		/// </summary>
+		public bool CellEvaluationType { get; }
+
+		#endregion
+
+		#region Parameters for shape recognition
+
+		/// <summary>
+		/// The length of lines to be detected.
+		/// </summary>
+		public int CrossLineLength { get; }
+
+		/// <summary>
+		/// How curved a line can be to still be recognized as a straight line (1 is minimum).
+		/// </summary>
+		public int CrossLineCurvatureLimit { get; }
+
+		/// <summary>
+		/// Amount of lines that don't form a cross that will be ignored and not considered as a correction.
+		/// </summary>
+		public int RubbishLinesLimit { get; }
+
+		#endregion
+
+		#region Parameters for pixel ratio
+
+		/// <summary>
+		/// If the ratio of pixels representing student input in the whole cell is lower than this, answer was not chosen.
+		/// </summary>
+		public float LowerThreshold { get; }
+
+		/// <summary>
+		/// </summary>
+		public float UpperThreshold { get; }
+
+		#endregion
+
 		/// <param name="defaultSheetWidth">Every sheet will be resized accordingly (preserving aspect ratio) before the tables are extracted.</param>
 		/// <param name="blackWhiteThreshold">How bright a shade of grey can be to be recognized as black (the rest will be white).</param>
 		/// <param name="tableCount">The number of table in the answer sheet.</param>
@@ -84,35 +194,6 @@ namespace KlokanUI
 			LowerThreshold = lowerThreshold;
 			UpperThreshold = upperThreshold;
 		}
-		
-		// parameters used to prepare a sheet image for processing
-		public int DefaultSheetWidth { get; }
-		public int BlackWhiteThreshold { get; }
-
-		// parameters of the table & cell extraction process
-		public int TableCount { get; }
-		public float TableLineEccentricityLimit { get; }
-		public int TableLineCurvatureLimit { get; }
-		public int StudentTableRows { get; }
-		public int StudentTableColumns { get; }
-		public int AnswerTableRows { get; }
-		public int AnswerTableColumns { get; }
-		public int ResizedCellWidth { get; }
-		public int ResizedCellHeight { get; }
-
-		// parameters of the cell evaluation process
-		public int DefaultCellWidth { get; }
-		public int DefaultCellHeight { get; }
-		public bool CellEvaluationType { get; }
-
-		// parameters for shape recognition
-		public int CrossLineLength { get; } 
-		public int CrossLineCurvatureLimit { get; }
-		public int RubbishLinesLimit { get; }
-
-		// parameters for pixel ratio
-		public float LowerThreshold { get; }
-		public float UpperThreshold { get; }
 
 		public static Parameters CreateDefaultParameters()
 		{
