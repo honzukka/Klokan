@@ -457,4 +457,30 @@ namespace KlokanUI
 			return newPoints;
 		}
 	}
+
+	static class EvaluationHandling
+	{
+		/// <summary>
+		/// Creates a summary message of the evaluation.
+		/// </summary>
+		/// <param name="failedSheets">How many sheets failed to be evaluated.</param>
+		/// <param name="evaluationTime">How long the evaluation process took in seconds.</param>
+		/// <param name="databaseTime">How long the database update tookin seconds.</param>
+		public static string CreateSummaryMessage(int failedSheets, double evaluationTime, double databaseTime)
+		{
+			string evaluationSummary;
+			if (failedSheets == 0)
+				evaluationSummary = Properties.Resources.SummaryTextEvaluationSuccessful;
+			else if (failedSheets == 1)
+				evaluationSummary = failedSheets + " " + Properties.Resources.SummaryTextFailedSheetPart2;
+			else
+				evaluationSummary = failedSheets + " " + Properties.Resources.SummaryTextFailedSheetsPart2;
+
+			string message = evaluationSummary + "\r\n\r\n" +
+				Properties.Resources.SummaryTextEvaluationTimePart1 + " " + evaluationTime + " " + Properties.Resources.SummaryTextDatabaseTimePart3 + "\r\n" +
+				Properties.Resources.SummaryTextDatabaseTimePart1 + " " + databaseTime + " " + Properties.Resources.SummaryTextDatabaseTimePart3;
+
+			return message;
+		}
+	}
 }

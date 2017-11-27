@@ -37,9 +37,9 @@ namespace KlokanUI
 		DateTime evaluationEndTime;
 
 		/// <summary>
-		/// Information about the result of the evaluation.
+		/// Used to create a summary of the evaluation.
 		/// </summary>
-		string evaluationSummary;
+		int failedSheets;
 
 		#endregion
 
@@ -145,8 +145,6 @@ namespace KlokanUI
 		/// <returns>A void task.</returns>
 		async Task OutputResultsDB(IEnumerable<Result> results)
 		{
-			int failedSheets = 0;
-
 			using (var db = new KlokanDBContext())
 			{
 				foreach (var result in results)
@@ -231,19 +229,6 @@ namespace KlokanUI
 
 				await db.SaveChangesAsync();
 			}
-
-			if (failedSheets == 0)
-			{
-				evaluationSummary = Properties.Resources.SummaryTextEvaluationSuccessful;
-			}
-			else if (failedSheets == 1)
-			{
-				evaluationSummary = failedSheets + " " + Properties.Resources.SummaryTextFailedSheetPart2;
-			}
-			else
-			{
-				evaluationSummary = failedSheets + " " + Properties.Resources.SummaryTextFailedSheetsPart2;
-			}
 		}
 
 		/// <summary>
@@ -254,15 +239,13 @@ namespace KlokanUI
 		/// <returns>A void task.</returns>
 		async Task OutputTestResultsDB(IEnumerable<TestResult> testResults)
 		{
-			int failedScans = 0;
-
 			using (var testDB = new KlokanTestDBContext())
 			{
 				foreach (var testResult in testResults)
 				{
 					if (testResult.Error == true)
 					{
-						failedScans++;
+						failedSheets++;
 						continue;
 					}
 
@@ -297,19 +280,6 @@ namespace KlokanUI
 					await testDB.SaveChangesAsync();
 				}
 			}
-
-			if (failedScans == 0)
-			{
-				evaluationSummary = Properties.Resources.SummaryTextEvaluationSuccessful;
-			}
-			else if (failedScans == 1)
-			{
-				evaluationSummary = failedScans + " " + Properties.Resources.SummaryTextFailedSheetPart2;
-			}
-			else
-			{
-				evaluationSummary = failedScans + " " + Properties.Resources.SummaryTextFailedSheetsPart2;
-			}
 		}
 
 		/// <summary>
@@ -318,11 +288,7 @@ namespace KlokanUI
 		/// </summary>
 		void FinishJob()
 		{
-			callingForm.ShowMessageBoxInfo(evaluationSummary + "\r\n\r\n" +
-				Properties.Resources.SummaryTextEvaluationTimePart1 + " " + (evaluationEndTime - evaluationStartTime).TotalSeconds + " " + Properties.Resources.SummaryTextDatabaseTimePart3 + "\r\n" +
-				Properties.Resources.SummaryTextDatabaseTimePart1 + " " + (DateTime.Now - evaluationEndTime).TotalSeconds + " " + Properties.Resources.SummaryTextDatabaseTimePart3,
-				Properties.Resources.SummaryCaption
-			);
+			callingForm.ShowMessageBoxInfo(failedSheets, (evaluationEndTime - evaluationStartTime).TotalSeconds, (DateTime.Now - evaluationEndTime).TotalSeconds);
 			callingForm.EnableGoButton();
 		}
 	}

@@ -292,19 +292,26 @@ namespace KlokanUI
 
 		/// <summary>
 		/// Shows a custom informative message.
-		/// Can be called from any thread.
+		/// Can be called from any thread and will be executed in the context of the UI thread.
 		/// </summary>
-		public void ShowMessageBoxInfo(string message, string caption)
+		public void ShowMessageBoxInfo(int failedSheets, double evaluationTime, double databaseTime)
 		{
 			if (this.InvokeRequired)
 			{
 				this.BeginInvoke(new Action(
-					() => { MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information); }
+					() =>
+					{
+						string message = EvaluationHandling.CreateSummaryMessage(failedSheets, evaluationTime, databaseTime);
+
+						MessageBox.Show(message, Properties.Resources.SummaryCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+					}	
 				));
 			}
 			else
 			{
-				MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+				string message = EvaluationHandling.CreateSummaryMessage(failedSheets, evaluationTime, databaseTime);
+
+				MessageBox.Show(message, Properties.Resources.SummaryCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 		}
 

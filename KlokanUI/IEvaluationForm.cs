@@ -7,6 +7,6 @@
 	interface IEvaluationForm
 	{
 		void EnableGoButton();
-		void ShowMessageBoxInfo(string message, string caption);
+		void ShowMessageBoxInfo(int failedSheets, double evaluationTime, double databaseTime);
 	}
 }
