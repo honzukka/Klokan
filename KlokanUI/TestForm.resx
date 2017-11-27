@@ -117,10 +117,268 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>479, 372</value>
+  </data>
+  <data name="viewItemButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 23</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>492, 532</value>
+  </data>
+  <data name="removeItemButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>360, 169</value>
+  </data>
+  <data name="viewItemButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>360, 140</value>
+  </data>
+  <data name="&gt;&gt;removeItemButton.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="evaluateButton.Text" xml:space="preserve">
+    <value>Evaluate</value>
+  </data>
+  <data name="&gt;&gt;evaluateButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="editParamsButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>43, 34</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="addItemButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="averageCorrectnessLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 13</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>TestForm</value>
+  </data>
+  <data name="averageCorrectnessValueLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 13</value>
+  </data>
+  <data name="viewItemButton.Text" xml:space="preserve">
+    <value>View Item</value>
+  </data>
+  <data name="dataView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>43, 111</value>
+  </data>
+  <data name="&gt;&gt;editParamsButton.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;evaluateButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;dataView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="evaluateButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 23</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="averageCorrectnessLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;evaluateButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;removeItemButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="evaluateButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>360, 34</value>
+  </data>
+  <data name="&gt;&gt;dataView.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;dataView.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="evaluateButton.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;addItemButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="removeItemButton.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;averageCorrectnessValueLabel.Name" xml:space="preserve">
+    <value>averageCorrectnessValueLabel</value>
+  </data>
+  <data name="editParamsButton.Text" xml:space="preserve">
+    <value>Edit Parameters</value>
+  </data>
+  <data name="&gt;&gt;viewItemButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;removeItemButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="removeItemButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 23</value>
+  </data>
+  <data name="editParamsButton.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;addItemButton.Name" xml:space="preserve">
+    <value>addItemButton</value>
+  </data>
+  <data name="addItemButton.Text" xml:space="preserve">
+    <value>Add Item</value>
+  </data>
+  <data name="averageCorrectnessValueLabel.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+  </data>
+  <data name="evaluateButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="&gt;&gt;correctnessColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dataView.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;averageCorrectnessValueLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="removeItemButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="averageCorrectnessLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="addItemButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 23</value>
+  </data>
+  <data name="&gt;&gt;addItemButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="addItemButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>360, 111</value>
+  </data>
+  <data name="idColumn.HeaderText" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="&gt;&gt;dataView.Name" xml:space="preserve">
+    <value>dataView</value>
+  </data>
+  <data name="removeItemButton.Text" xml:space="preserve">
+    <value>Remove Item</value>
+  </data>
+  <data name="viewItemButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="&gt;&gt;evaluateButton.Name" xml:space="preserve">
+    <value>evaluateButton</value>
+  </data>
+  <data name="dataView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>289, 385</value>
+  </data>
+  <data name="averageCorrectnessValueLabel.Text" xml:space="preserve">
+    <value>averageCorrectnessValueLabel</value>
+  </data>
+  <data name="&gt;&gt;addItemButton.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;averageCorrectnessLabel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;correctnessColumn.Name" xml:space="preserve">
+    <value>correctnessColumn</value>
+  </data>
+  <data name="&gt;&gt;editParamsButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="correctnessColumn.HeaderText" xml:space="preserve">
+    <value>Correctness</value>
+  </data>
+  <data name="averageCorrectnessLabel.Text" xml:space="preserve">
+    <value>Average Correctness:</value>
+  </data>
+  <data name="&gt;&gt;editParamsButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dataView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;averageCorrectnessValueLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Klokan - Test</value>
+  </data>
+  <data name="&gt;&gt;editParamsButton.Name" xml:space="preserve">
+    <value>editParamsButton</value>
+  </data>
+  <data name="viewItemButton.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;averageCorrectnessValueLabel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;removeItemButton.Name" xml:space="preserve">
+    <value>removeItemButton</value>
+  </data>
+  <data name="&gt;&gt;averageCorrectnessLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="addItemButton.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;averageCorrectnessLabel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;viewItemButton.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;idColumn.Name" xml:space="preserve">
+    <value>idColumn</value>
+  </data>
+  <data name="&gt;&gt;viewItemButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="editParamsButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 23</value>
+  </data>
+  <data name="averageCorrectnessLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>43, 76</value>
+  </data>
+  <data name="averageCorrectnessValueLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;idColumn.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;viewItemButton.Name" xml:space="preserve">
+    <value>viewItemButton</value>
+  </data>
+  <data name="averageCorrectnessValueLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 76</value>
+  </data>
+  <data name="averageCorrectnessValueLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;averageCorrectnessLabel.Name" xml:space="preserve">
+    <value>averageCorrectnessLabel</value>
+  </data>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>cs-CZ</value>
+  </metadata>
+  <metadata name="correctnessColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <metadata name="idColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="correctnessColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
 </root>

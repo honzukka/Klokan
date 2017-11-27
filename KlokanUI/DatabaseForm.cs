@@ -40,7 +40,7 @@ namespace KlokanUI
 
 			// initialize the year combo box with a list of years
 			yearList = new List<string>();
-			yearList.Add("--All--");
+			yearList.Add(Properties.Resources.DropdownTextAll);
 			for (int year = DateTime.Now.Year; year >= 2000; year--)
 			{
 				yearList.Add(year.ToString());
@@ -49,7 +49,7 @@ namespace KlokanUI
 
 			// intialize the catgory combo box with a list of categories
 			categoryList = new List<string>();
-			categoryList.Add("--All--");
+			categoryList.Add(Properties.Resources.DropdownTextAll);
 			foreach (var category in Enum.GetValues(typeof(Category)))
 			{
 				categoryList.Add(category.ToString());
@@ -68,7 +68,8 @@ namespace KlokanUI
 		{
 			if (dataView.SelectedRows.Count == 0)
 			{
-				MessageBox.Show("No row has been selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextNoRowSelected, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
@@ -195,15 +196,16 @@ namespace KlokanUI
 		/// </summary>
 		private void OutputHeader(StreamWriter sw)
 		{
-			sw.Write("Answer Sheet ID;");
-			sw.Write("Student Number;");
-			sw.Write("Year;");
-			sw.Write("Category;");
-			sw.Write("Points;");
+			sw.Write(Properties.Resources.OutputTextAnswerSheetID + ";");
+			sw.Write(Properties.Resources.OutputTextStudentNumber + ";");
+			sw.Write(Properties.Resources.OutputTextYear + ";");
+			sw.Write(Properties.Resources.OutputTextCategory + ";");
+			sw.Write(Properties.Resources.OutputTextPoints + ";");
 
 			for (int i = 1; i <= 24; i++)
 			{
-				sw.Write(i + " (Chosen);" + i + " (Correct);");
+				sw.Write(i + " (" + Properties.Resources.OutputTextChosen + ");" + 
+					i + " (" + Properties.Resources.OutputTextCorrect + ");");
 			}
 
 			sw.WriteLine();
@@ -249,7 +251,7 @@ namespace KlokanUI
 			if (int.TryParse((string)yearComboBox.SelectedItem, out selectedYear))
 			{
 				// all categories were selected
-				if (selectedCategory == "--All--")
+				if (selectedCategory == Properties.Resources.DropdownTextAll)
 				{
 					return (KlokanDBAnswerSheet answerSheet) => answerSheet.Instance.Year == selectedYear;
 				}
@@ -263,7 +265,7 @@ namespace KlokanUI
 			else
 			{
 				// all categories were selected
-				if (selectedCategory == "--All--")
+				if (selectedCategory == Properties.Resources.DropdownTextAll)
 				{
 					return (KlokanDBAnswerSheet answerSheet) => true;
 				}

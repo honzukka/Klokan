@@ -234,15 +234,15 @@ namespace KlokanUI
 
 			if (failedSheets == 0)
 			{
-				evaluationSummary = "Evaluation was successful.";
+				evaluationSummary = Properties.Resources.SummaryTextEvaluationSuccessful;
 			}
 			else if (failedSheets == 1)
 			{
-				evaluationSummary = failedSheets + " sheet was not evaluated because of an error.";
+				evaluationSummary = failedSheets + " " + Properties.Resources.SummaryTextFailedSheetPart2;
 			}
 			else
 			{
-				evaluationSummary = failedSheets + " sheets were not evaluated because of an error.";
+				evaluationSummary = failedSheets + " " + Properties.Resources.SummaryTextFailedSheetsPart2;
 			}
 		}
 
@@ -300,15 +300,15 @@ namespace KlokanUI
 
 			if (failedScans == 0)
 			{
-				evaluationSummary = "Evaluation was successful.";
+				evaluationSummary = Properties.Resources.SummaryTextEvaluationSuccessful;
 			}
 			else if (failedScans == 1)
 			{
-				evaluationSummary = failedScans + " scan was not evaluated because of an error.";
+				evaluationSummary = failedScans + " " + Properties.Resources.SummaryTextFailedSheetPart2;
 			}
 			else
 			{
-				evaluationSummary = failedScans + " scans were not evaluated because of an error.";
+				evaluationSummary = failedScans + " " + Properties.Resources.SummaryTextFailedSheetsPart2;
 			}
 		}
 
@@ -319,8 +319,9 @@ namespace KlokanUI
 		void FinishJob()
 		{
 			callingForm.ShowMessageBoxInfo(evaluationSummary + "\r\n\r\n" +
-				"Evaluation finished in " + (evaluationEndTime - evaluationStartTime).TotalSeconds + " seconds.\r\n" +
-				"Results saved in " + (DateTime.Now - evaluationEndTime).TotalSeconds + " seconds.", "Evaluation Completed"
+				Properties.Resources.SummaryTextEvaluationTimePart1 + " " + (evaluationEndTime - evaluationStartTime).TotalSeconds + " " + Properties.Resources.SummaryTextDatabaseTimePart3 + "\r\n" +
+				Properties.Resources.SummaryTextDatabaseTimePart1 + " " + (DateTime.Now - evaluationEndTime).TotalSeconds + " " + Properties.Resources.SummaryTextDatabaseTimePart3,
+				Properties.Resources.SummaryCaption
 			);
 			callingForm.EnableGoButton();
 		}

@@ -173,13 +173,15 @@ namespace KlokanUI
 		{
 			if (addMode && (scanFilePath == null || scanFilePath == ""))
 			{
-				MessageBox.Show("No file has been selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextNoFileSelected, Properties.Resources.ErrorCaptionGeneral,
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			if (!TableArrayHandling.CheckAnswers(expectedValuesStudentTableTemp, 0))
 			{
-				MessageBox.Show("Student number has not been properly selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextStudentNumberNotSelected, Properties.Resources.ErrorCaptionGeneral,
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
@@ -187,7 +189,8 @@ namespace KlokanUI
 			{
 				if (!TableArrayHandling.CheckAnswers(expectedValuesAnswerTableTemp, i))
 				{
-					MessageBox.Show("Expected answers have not been properly selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(Properties.Resources.ErrorTextExpectedAnswersNotSelected, Properties.Resources.ErrorCaptionGeneral,
+						MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
 				}
 			}
@@ -244,7 +247,8 @@ namespace KlokanUI
 
 		private void updateButton_Click(object sender, EventArgs e)
 		{
-			var dialogResult = MessageBox.Show("Are you sure you want to update the database?", "Database Change", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			var dialogResult = MessageBox.Show(Properties.Resources.PromptTextDatabaseUpdate, Properties.Resources.PromptCaptionDatabaseUpdate,
+				MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 			if (dialogResult == DialogResult.No)
 			{
 				return;
@@ -310,7 +314,8 @@ namespace KlokanUI
 
 			PopulateForm();
 
-			MessageBox.Show("Database updated.", "Database Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			MessageBox.Show(Properties.Resources.InfoTextDatabaseUpdated, Properties.Resources.InfoCaptionDatabaseUpdated,
+				MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 		#endregion

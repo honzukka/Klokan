@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ParameterEditForm));
 			this.defaultSheetWidthLabel = new System.Windows.Forms.Label();
 			this.defaultSheetWidthTextBox = new System.Windows.Forms.TextBox();
 			this.blackWhiteThresholdLabel = new System.Windows.Forms.Label();
@@ -71,328 +72,205 @@
 			// 
 			// defaultSheetWidthLabel
 			// 
-			this.defaultSheetWidthLabel.AutoSize = true;
-			this.defaultSheetWidthLabel.Location = new System.Drawing.Point(31, 36);
+			resources.ApplyResources(this.defaultSheetWidthLabel, "defaultSheetWidthLabel");
 			this.defaultSheetWidthLabel.Name = "defaultSheetWidthLabel";
-			this.defaultSheetWidthLabel.Size = new System.Drawing.Size(106, 13);
-			this.defaultSheetWidthLabel.TabIndex = 0;
-			this.defaultSheetWidthLabel.Text = "Default Sheet Width:";
 			// 
 			// defaultSheetWidthTextBox
 			// 
-			this.defaultSheetWidthTextBox.Location = new System.Drawing.Point(317, 33);
+			resources.ApplyResources(this.defaultSheetWidthTextBox, "defaultSheetWidthTextBox");
 			this.defaultSheetWidthTextBox.Name = "defaultSheetWidthTextBox";
-			this.defaultSheetWidthTextBox.Size = new System.Drawing.Size(100, 20);
-			this.defaultSheetWidthTextBox.TabIndex = 1;
 			// 
 			// blackWhiteThresholdLabel
 			// 
-			this.blackWhiteThresholdLabel.AutoSize = true;
-			this.blackWhiteThresholdLabel.Location = new System.Drawing.Point(31, 62);
+			resources.ApplyResources(this.blackWhiteThresholdLabel, "blackWhiteThresholdLabel");
 			this.blackWhiteThresholdLabel.Name = "blackWhiteThresholdLabel";
-			this.blackWhiteThresholdLabel.Size = new System.Drawing.Size(139, 13);
-			this.blackWhiteThresholdLabel.TabIndex = 2;
-			this.blackWhiteThresholdLabel.Text = "Black and White Threshold:";
 			// 
 			// blackWhiteThresholdTextBox
 			// 
-			this.blackWhiteThresholdTextBox.Location = new System.Drawing.Point(317, 59);
+			resources.ApplyResources(this.blackWhiteThresholdTextBox, "blackWhiteThresholdTextBox");
 			this.blackWhiteThresholdTextBox.Name = "blackWhiteThresholdTextBox";
-			this.blackWhiteThresholdTextBox.Size = new System.Drawing.Size(100, 20);
-			this.blackWhiteThresholdTextBox.TabIndex = 3;
 			// 
 			// tableCountTextBox
 			// 
-			this.tableCountTextBox.Enabled = false;
-			this.tableCountTextBox.Location = new System.Drawing.Point(317, 108);
+			resources.ApplyResources(this.tableCountTextBox, "tableCountTextBox");
 			this.tableCountTextBox.Name = "tableCountTextBox";
-			this.tableCountTextBox.Size = new System.Drawing.Size(100, 20);
-			this.tableCountTextBox.TabIndex = 4;
 			// 
 			// tableCountLabel
 			// 
-			this.tableCountLabel.AutoSize = true;
-			this.tableCountLabel.Location = new System.Drawing.Point(31, 111);
+			resources.ApplyResources(this.tableCountLabel, "tableCountLabel");
 			this.tableCountLabel.Name = "tableCountLabel";
-			this.tableCountLabel.Size = new System.Drawing.Size(68, 13);
-			this.tableCountLabel.TabIndex = 5;
-			this.tableCountLabel.Text = "Table Count:";
 			// 
 			// tableLineEccentricityLimitTextBox
 			// 
-			this.tableLineEccentricityLimitTextBox.Location = new System.Drawing.Point(317, 136);
+			resources.ApplyResources(this.tableLineEccentricityLimitTextBox, "tableLineEccentricityLimitTextBox");
 			this.tableLineEccentricityLimitTextBox.Name = "tableLineEccentricityLimitTextBox";
-			this.tableLineEccentricityLimitTextBox.Size = new System.Drawing.Size(100, 20);
-			this.tableLineEccentricityLimitTextBox.TabIndex = 8;
 			// 
 			// tableLineEccetricityLimitLabel
 			// 
-			this.tableLineEccetricityLimitLabel.AutoSize = true;
-			this.tableLineEccetricityLimitLabel.Location = new System.Drawing.Point(31, 139);
+			resources.ApplyResources(this.tableLineEccetricityLimitLabel, "tableLineEccetricityLimitLabel");
 			this.tableLineEccetricityLimitLabel.Name = "tableLineEccetricityLimitLabel";
-			this.tableLineEccetricityLimitLabel.Size = new System.Drawing.Size(142, 13);
-			this.tableLineEccetricityLimitLabel.TabIndex = 9;
-			this.tableLineEccetricityLimitLabel.Text = "Table Line Eccentricity Limit:";
 			// 
 			// tableLineCurvatureLimitTextBox
 			// 
-			this.tableLineCurvatureLimitTextBox.Location = new System.Drawing.Point(317, 163);
+			resources.ApplyResources(this.tableLineCurvatureLimitTextBox, "tableLineCurvatureLimitTextBox");
 			this.tableLineCurvatureLimitTextBox.Name = "tableLineCurvatureLimitTextBox";
-			this.tableLineCurvatureLimitTextBox.Size = new System.Drawing.Size(100, 20);
-			this.tableLineCurvatureLimitTextBox.TabIndex = 10;
 			// 
 			// tableLineCurvatureLimitLabel
 			// 
-			this.tableLineCurvatureLimitLabel.AutoSize = true;
-			this.tableLineCurvatureLimitLabel.Location = new System.Drawing.Point(31, 166);
+			resources.ApplyResources(this.tableLineCurvatureLimitLabel, "tableLineCurvatureLimitLabel");
 			this.tableLineCurvatureLimitLabel.Name = "tableLineCurvatureLimitLabel";
-			this.tableLineCurvatureLimitLabel.Size = new System.Drawing.Size(133, 13);
-			this.tableLineCurvatureLimitLabel.TabIndex = 11;
-			this.tableLineCurvatureLimitLabel.Text = "Table Line Curvature Limit:";
 			// 
 			// answerTableRowsTextBox
 			// 
-			this.answerTableRowsTextBox.Enabled = false;
-			this.answerTableRowsTextBox.Location = new System.Drawing.Point(317, 251);
+			resources.ApplyResources(this.answerTableRowsTextBox, "answerTableRowsTextBox");
 			this.answerTableRowsTextBox.Name = "answerTableRowsTextBox";
-			this.answerTableRowsTextBox.Size = new System.Drawing.Size(100, 20);
-			this.answerTableRowsTextBox.TabIndex = 12;
 			// 
 			// answerTableRowsLabel
 			// 
-			this.answerTableRowsLabel.AutoSize = true;
-			this.answerTableRowsLabel.Location = new System.Drawing.Point(31, 254);
+			resources.ApplyResources(this.answerTableRowsLabel, "answerTableRowsLabel");
 			this.answerTableRowsLabel.Name = "answerTableRowsLabel";
-			this.answerTableRowsLabel.Size = new System.Drawing.Size(105, 13);
-			this.answerTableRowsLabel.TabIndex = 13;
-			this.answerTableRowsLabel.Text = "Answer Table Rows:";
 			// 
 			// answerTableColumnsTextBox
 			// 
-			this.answerTableColumnsTextBox.Enabled = false;
-			this.answerTableColumnsTextBox.Location = new System.Drawing.Point(317, 281);
+			resources.ApplyResources(this.answerTableColumnsTextBox, "answerTableColumnsTextBox");
 			this.answerTableColumnsTextBox.Name = "answerTableColumnsTextBox";
-			this.answerTableColumnsTextBox.Size = new System.Drawing.Size(100, 20);
-			this.answerTableColumnsTextBox.TabIndex = 14;
 			// 
 			// answerTableColumnsLabel
 			// 
-			this.answerTableColumnsLabel.AutoSize = true;
-			this.answerTableColumnsLabel.Location = new System.Drawing.Point(31, 284);
+			resources.ApplyResources(this.answerTableColumnsLabel, "answerTableColumnsLabel");
 			this.answerTableColumnsLabel.Name = "answerTableColumnsLabel";
-			this.answerTableColumnsLabel.Size = new System.Drawing.Size(118, 13);
-			this.answerTableColumnsLabel.TabIndex = 15;
-			this.answerTableColumnsLabel.Text = "Answer Table Columns:";
 			// 
 			// defaultCellWidthTextBox
 			// 
-			this.defaultCellWidthTextBox.Location = new System.Drawing.Point(317, 391);
+			resources.ApplyResources(this.defaultCellWidthTextBox, "defaultCellWidthTextBox");
 			this.defaultCellWidthTextBox.Name = "defaultCellWidthTextBox";
-			this.defaultCellWidthTextBox.Size = new System.Drawing.Size(100, 20);
-			this.defaultCellWidthTextBox.TabIndex = 16;
 			// 
 			// defaultCellWidthLabel
 			// 
-			this.defaultCellWidthLabel.AutoSize = true;
-			this.defaultCellWidthLabel.Location = new System.Drawing.Point(31, 394);
+			resources.ApplyResources(this.defaultCellWidthLabel, "defaultCellWidthLabel");
 			this.defaultCellWidthLabel.Name = "defaultCellWidthLabel";
-			this.defaultCellWidthLabel.Size = new System.Drawing.Size(95, 13);
-			this.defaultCellWidthLabel.TabIndex = 17;
-			this.defaultCellWidthLabel.Text = "Default Cell Width:";
 			// 
 			// defaultCellHeightTextBox
 			// 
-			this.defaultCellHeightTextBox.Location = new System.Drawing.Point(317, 418);
+			resources.ApplyResources(this.defaultCellHeightTextBox, "defaultCellHeightTextBox");
 			this.defaultCellHeightTextBox.Name = "defaultCellHeightTextBox";
-			this.defaultCellHeightTextBox.Size = new System.Drawing.Size(100, 20);
-			this.defaultCellHeightTextBox.TabIndex = 18;
 			// 
 			// defaultCellHeightLabel
 			// 
-			this.defaultCellHeightLabel.AutoSize = true;
-			this.defaultCellHeightLabel.Location = new System.Drawing.Point(31, 421);
+			resources.ApplyResources(this.defaultCellHeightLabel, "defaultCellHeightLabel");
 			this.defaultCellHeightLabel.Name = "defaultCellHeightLabel";
-			this.defaultCellHeightLabel.Size = new System.Drawing.Size(98, 13);
-			this.defaultCellHeightLabel.TabIndex = 19;
-			this.defaultCellHeightLabel.Text = "Default Cell Height:";
 			// 
 			// crossLineLengthTextBox
 			// 
-			this.crossLineLengthTextBox.Location = new System.Drawing.Point(317, 492);
+			resources.ApplyResources(this.crossLineLengthTextBox, "crossLineLengthTextBox");
 			this.crossLineLengthTextBox.Name = "crossLineLengthTextBox";
-			this.crossLineLengthTextBox.Size = new System.Drawing.Size(100, 20);
-			this.crossLineLengthTextBox.TabIndex = 20;
 			// 
 			// crossLineLengthLabel
 			// 
-			this.crossLineLengthLabel.AutoSize = true;
-			this.crossLineLengthLabel.Location = new System.Drawing.Point(31, 495);
+			resources.ApplyResources(this.crossLineLengthLabel, "crossLineLengthLabel");
 			this.crossLineLengthLabel.Name = "crossLineLengthLabel";
-			this.crossLineLengthLabel.Size = new System.Drawing.Size(95, 13);
-			this.crossLineLengthLabel.TabIndex = 21;
-			this.crossLineLengthLabel.Text = "Cross Line Length:";
 			// 
 			// crossLineCurvatureLimitTextBox
 			// 
-			this.crossLineCurvatureLimitTextBox.Location = new System.Drawing.Point(317, 519);
+			resources.ApplyResources(this.crossLineCurvatureLimitTextBox, "crossLineCurvatureLimitTextBox");
 			this.crossLineCurvatureLimitTextBox.Name = "crossLineCurvatureLimitTextBox";
-			this.crossLineCurvatureLimitTextBox.Size = new System.Drawing.Size(100, 20);
-			this.crossLineCurvatureLimitTextBox.TabIndex = 22;
 			// 
 			// crossLineCurvatureLimitLabel
 			// 
-			this.crossLineCurvatureLimitLabel.AutoSize = true;
-			this.crossLineCurvatureLimitLabel.Location = new System.Drawing.Point(31, 522);
+			resources.ApplyResources(this.crossLineCurvatureLimitLabel, "crossLineCurvatureLimitLabel");
 			this.crossLineCurvatureLimitLabel.Name = "crossLineCurvatureLimitLabel";
-			this.crossLineCurvatureLimitLabel.Size = new System.Drawing.Size(132, 13);
-			this.crossLineCurvatureLimitLabel.TabIndex = 23;
-			this.crossLineCurvatureLimitLabel.Text = "Cross Line Curvature Limit:";
 			// 
 			// rubbishLinesLimitTextBox
 			// 
-			this.rubbishLinesLimitTextBox.Location = new System.Drawing.Point(317, 546);
+			resources.ApplyResources(this.rubbishLinesLimitTextBox, "rubbishLinesLimitTextBox");
 			this.rubbishLinesLimitTextBox.Name = "rubbishLinesLimitTextBox";
-			this.rubbishLinesLimitTextBox.Size = new System.Drawing.Size(100, 20);
-			this.rubbishLinesLimitTextBox.TabIndex = 24;
 			// 
 			// rubbishLinesLimitLabel
 			// 
-			this.rubbishLinesLimitLabel.AutoSize = true;
-			this.rubbishLinesLimitLabel.Location = new System.Drawing.Point(31, 549);
+			resources.ApplyResources(this.rubbishLinesLimitLabel, "rubbishLinesLimitLabel");
 			this.rubbishLinesLimitLabel.Name = "rubbishLinesLimitLabel";
-			this.rubbishLinesLimitLabel.Size = new System.Drawing.Size(101, 13);
-			this.rubbishLinesLimitLabel.TabIndex = 25;
-			this.rubbishLinesLimitLabel.Text = "Rubbish Lines Limit:";
 			// 
 			// saveButton
 			// 
-			this.saveButton.Location = new System.Drawing.Point(187, 672);
+			resources.ApplyResources(this.saveButton, "saveButton");
 			this.saveButton.Name = "saveButton";
-			this.saveButton.Size = new System.Drawing.Size(75, 23);
-			this.saveButton.TabIndex = 26;
-			this.saveButton.Text = "Save";
 			this.saveButton.UseVisualStyleBackColor = true;
 			this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
 			// 
 			// cellEvaluationTypeLabel
 			// 
-			this.cellEvaluationTypeLabel.AutoSize = true;
-			this.cellEvaluationTypeLabel.Location = new System.Drawing.Point(31, 447);
+			resources.ApplyResources(this.cellEvaluationTypeLabel, "cellEvaluationTypeLabel");
 			this.cellEvaluationTypeLabel.Name = "cellEvaluationTypeLabel";
-			this.cellEvaluationTypeLabel.Size = new System.Drawing.Size(107, 13);
-			this.cellEvaluationTypeLabel.TabIndex = 27;
-			this.cellEvaluationTypeLabel.Text = "Cell Evaluation Type:";
 			// 
 			// cellEvaluationTypeTextBox
 			// 
-			this.cellEvaluationTypeTextBox.Location = new System.Drawing.Point(317, 445);
+			resources.ApplyResources(this.cellEvaluationTypeTextBox, "cellEvaluationTypeTextBox");
 			this.cellEvaluationTypeTextBox.Name = "cellEvaluationTypeTextBox";
-			this.cellEvaluationTypeTextBox.Size = new System.Drawing.Size(100, 20);
-			this.cellEvaluationTypeTextBox.TabIndex = 28;
 			// 
 			// lowerThresholdLabel
 			// 
-			this.lowerThresholdLabel.AutoSize = true;
-			this.lowerThresholdLabel.Location = new System.Drawing.Point(31, 596);
+			resources.ApplyResources(this.lowerThresholdLabel, "lowerThresholdLabel");
 			this.lowerThresholdLabel.Name = "lowerThresholdLabel";
-			this.lowerThresholdLabel.Size = new System.Drawing.Size(89, 13);
-			this.lowerThresholdLabel.TabIndex = 29;
-			this.lowerThresholdLabel.Text = "Lower Threshold:";
 			// 
 			// lowerThresholdTextBox
 			// 
-			this.lowerThresholdTextBox.Location = new System.Drawing.Point(317, 593);
+			resources.ApplyResources(this.lowerThresholdTextBox, "lowerThresholdTextBox");
 			this.lowerThresholdTextBox.Name = "lowerThresholdTextBox";
-			this.lowerThresholdTextBox.Size = new System.Drawing.Size(100, 20);
-			this.lowerThresholdTextBox.TabIndex = 30;
 			// 
 			// upperThresholdLabel
 			// 
-			this.upperThresholdLabel.AutoSize = true;
-			this.upperThresholdLabel.Location = new System.Drawing.Point(31, 622);
+			resources.ApplyResources(this.upperThresholdLabel, "upperThresholdLabel");
 			this.upperThresholdLabel.Name = "upperThresholdLabel";
-			this.upperThresholdLabel.Size = new System.Drawing.Size(89, 13);
-			this.upperThresholdLabel.TabIndex = 31;
-			this.upperThresholdLabel.Text = "Upper Threshold:";
 			// 
 			// upperThresholdTextBox
 			// 
-			this.upperThresholdTextBox.Location = new System.Drawing.Point(317, 619);
+			resources.ApplyResources(this.upperThresholdTextBox, "upperThresholdTextBox");
 			this.upperThresholdTextBox.Name = "upperThresholdTextBox";
-			this.upperThresholdTextBox.Size = new System.Drawing.Size(100, 20);
-			this.upperThresholdTextBox.TabIndex = 32;
 			// 
 			// studentTableRowsLabel
 			// 
-			this.studentTableRowsLabel.AutoSize = true;
-			this.studentTableRowsLabel.Location = new System.Drawing.Point(31, 194);
+			resources.ApplyResources(this.studentTableRowsLabel, "studentTableRowsLabel");
 			this.studentTableRowsLabel.Name = "studentTableRowsLabel";
-			this.studentTableRowsLabel.Size = new System.Drawing.Size(107, 13);
-			this.studentTableRowsLabel.TabIndex = 33;
-			this.studentTableRowsLabel.Text = "Student Table Rows:";
 			// 
 			// studentTableRowsTextBox
 			// 
-			this.studentTableRowsTextBox.Enabled = false;
-			this.studentTableRowsTextBox.Location = new System.Drawing.Point(317, 191);
+			resources.ApplyResources(this.studentTableRowsTextBox, "studentTableRowsTextBox");
 			this.studentTableRowsTextBox.Name = "studentTableRowsTextBox";
-			this.studentTableRowsTextBox.Size = new System.Drawing.Size(100, 20);
-			this.studentTableRowsTextBox.TabIndex = 34;
 			// 
 			// studentTableColumnsLabel
 			// 
-			this.studentTableColumnsLabel.AutoSize = true;
-			this.studentTableColumnsLabel.Location = new System.Drawing.Point(31, 225);
+			resources.ApplyResources(this.studentTableColumnsLabel, "studentTableColumnsLabel");
 			this.studentTableColumnsLabel.Name = "studentTableColumnsLabel";
-			this.studentTableColumnsLabel.Size = new System.Drawing.Size(120, 13);
-			this.studentTableColumnsLabel.TabIndex = 35;
-			this.studentTableColumnsLabel.Text = "Student Table Columns:";
 			// 
 			// studentTableColumnsTextBox
 			// 
-			this.studentTableColumnsTextBox.Enabled = false;
-			this.studentTableColumnsTextBox.Location = new System.Drawing.Point(317, 222);
+			resources.ApplyResources(this.studentTableColumnsTextBox, "studentTableColumnsTextBox");
 			this.studentTableColumnsTextBox.Name = "studentTableColumnsTextBox";
-			this.studentTableColumnsTextBox.Size = new System.Drawing.Size(100, 20);
-			this.studentTableColumnsTextBox.TabIndex = 36;
 			// 
 			// resizedCellWidthLabel
 			// 
-			this.resizedCellWidthLabel.AutoSize = true;
-			this.resizedCellWidthLabel.Location = new System.Drawing.Point(31, 314);
+			resources.ApplyResources(this.resizedCellWidthLabel, "resizedCellWidthLabel");
 			this.resizedCellWidthLabel.Name = "resizedCellWidthLabel";
-			this.resizedCellWidthLabel.Size = new System.Drawing.Size(99, 13);
-			this.resizedCellWidthLabel.TabIndex = 37;
-			this.resizedCellWidthLabel.Text = "Resized Cell Width:";
 			// 
 			// resizedCellWidthTextBox
 			// 
-			this.resizedCellWidthTextBox.Location = new System.Drawing.Point(317, 311);
+			resources.ApplyResources(this.resizedCellWidthTextBox, "resizedCellWidthTextBox");
 			this.resizedCellWidthTextBox.Name = "resizedCellWidthTextBox";
-			this.resizedCellWidthTextBox.Size = new System.Drawing.Size(100, 20);
-			this.resizedCellWidthTextBox.TabIndex = 38;
 			// 
 			// resizedCellHeightLabel
 			// 
-			this.resizedCellHeightLabel.AutoSize = true;
-			this.resizedCellHeightLabel.Location = new System.Drawing.Point(31, 343);
+			resources.ApplyResources(this.resizedCellHeightLabel, "resizedCellHeightLabel");
 			this.resizedCellHeightLabel.Name = "resizedCellHeightLabel";
-			this.resizedCellHeightLabel.Size = new System.Drawing.Size(102, 13);
-			this.resizedCellHeightLabel.TabIndex = 39;
-			this.resizedCellHeightLabel.Text = "Resized Cell Height:";
 			// 
 			// resizedCellHeightTextBox
 			// 
-			this.resizedCellHeightTextBox.Location = new System.Drawing.Point(317, 340);
+			resources.ApplyResources(this.resizedCellHeightTextBox, "resizedCellHeightTextBox");
 			this.resizedCellHeightTextBox.Name = "resizedCellHeightTextBox";
-			this.resizedCellHeightTextBox.Size = new System.Drawing.Size(100, 20);
-			this.resizedCellHeightTextBox.TabIndex = 40;
 			// 
 			// ParameterEditForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(469, 711);
 			this.Controls.Add(this.resizedCellHeightTextBox);
 			this.Controls.Add(this.resizedCellHeightLabel);
 			this.Controls.Add(this.resizedCellWidthTextBox);
@@ -433,10 +311,7 @@
 			this.Controls.Add(this.defaultSheetWidthTextBox);
 			this.Controls.Add(this.defaultSheetWidthLabel);
 			this.MaximizeBox = false;
-			this.MaximumSize = new System.Drawing.Size(485, 750);
-			this.MinimumSize = new System.Drawing.Size(485, 750);
 			this.Name = "ParameterEditForm";
-			this.Text = "Klokan - Evaluation - Parameter Edit";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

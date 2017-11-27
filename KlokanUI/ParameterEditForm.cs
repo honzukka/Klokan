@@ -23,29 +23,29 @@ namespace KlokanUI
 
 		private void SetToolTips()
 		{
-			toolTip.SetToolTip(defaultSheetWidthLabel, "Every sheet will be resized accordingly (preserving aspect ratio) before the tables are extracted.");
-			toolTip.SetToolTip(blackWhiteThresholdLabel, "How bright a shade of grey can be to be recognized as black (the rest will be white).");
+			toolTip.SetToolTip(defaultSheetWidthLabel, Properties.Resources.ToolTipDefaultSheetWidth);
+			toolTip.SetToolTip(blackWhiteThresholdLabel, Properties.Resources.ToolTipBlackWhiteThreshold);
 
-			toolTip.SetToolTip(tableCountLabel, "The number of table in the answer sheet.");
-			toolTip.SetToolTip(tableLineEccetricityLimitLabel, "How slanted a line can be to be recognized as either horizontal or vertical (in radians).");
-			toolTip.SetToolTip(tableLineCurvatureLimitLabel, "How curved a line can be to still be recognized as a straight line (1 is minimum).");
-			toolTip.SetToolTip(studentTableRowsLabel, "The number of rows in the student number table.");
-			toolTip.SetToolTip(studentTableColumnsLabel, "The number of columns in the student number table.");
-			toolTip.SetToolTip(answerTableRowsLabel, "The number of rows in an answer table.");
-			toolTip.SetToolTip(answerTableColumnsLabel, "The number of columns in an answer table.");
-			toolTip.SetToolTip(resizedCellWidthLabel, "This is the width of a cell after the sheet has been resized (see default_sheet_width).");
-			toolTip.SetToolTip(resizedCellHeightLabel, "This is the height of a cell after the sheet has been resized (see default_sheet_height).");
+			toolTip.SetToolTip(tableCountLabel, Properties.Resources.ToolTipTableCount);
+			toolTip.SetToolTip(tableLineEccetricityLimitLabel, Properties.Resources.ToolTipTableLineEccentricityLimit);
+			toolTip.SetToolTip(tableLineCurvatureLimitLabel, Properties.Resources.ToolTipTableLineCurvatureLimit);
+			toolTip.SetToolTip(studentTableRowsLabel, Properties.Resources.ToolTipStudentTableRows);
+			toolTip.SetToolTip(studentTableColumnsLabel, Properties.Resources.ToolTipStudentTableColumns);
+			toolTip.SetToolTip(answerTableRowsLabel, Properties.Resources.ToolTipAnswerTableRows);
+			toolTip.SetToolTip(answerTableColumnsLabel, Properties.Resources.ToolTipAnswerTableColumns);
+			toolTip.SetToolTip(resizedCellWidthLabel, Properties.Resources.ToolTipResizedCellWidth);
+			toolTip.SetToolTip(resizedCellHeightLabel, Properties.Resources.ToolTipResizedCellHeight);
 
-			toolTip.SetToolTip(defaultCellWidthLabel, "Every cell will be resized to have this width.");
-			toolTip.SetToolTip(defaultCellHeightLabel, "Every cell will be resized to have this height.");
-			toolTip.SetToolTip(cellEvaluationTypeLabel, "TRUE - shape recognition; FALSE - pixel ratio");
+			toolTip.SetToolTip(defaultCellWidthLabel, Properties.Resources.ToolTipDefaultCellWidth);
+			toolTip.SetToolTip(defaultCellHeightLabel, Properties.Resources.ToolTipDefaultCellHeight);
+			toolTip.SetToolTip(cellEvaluationTypeLabel, Properties.Resources.ToolTipCellEvaluationType);
 
-			toolTip.SetToolTip(crossLineLengthLabel, "The length of lines to be detected.");
-			toolTip.SetToolTip(crossLineCurvatureLimitLabel, "How curved a line can be to still be recognized as a straight line (1 is minimum).");
-			toolTip.SetToolTip(rubbishLinesLimitLabel, "Amount of lines that don't form a cross that will be ignored and not considered as a correction.");
+			toolTip.SetToolTip(crossLineLengthLabel, Properties.Resources.ToolTipCrossLineLength);
+			toolTip.SetToolTip(crossLineCurvatureLimitLabel, Properties.Resources.ToolTipCrossLineCurvatureLimit);
+			toolTip.SetToolTip(rubbishLinesLimitLabel, Properties.Resources.ToolTipRubbishLinesLimit);
 
-			toolTip.SetToolTip(lowerThresholdLabel, "If the ratio of pixels representing student input in the whole cell is lower than this, answer was not chosen.");
-			toolTip.SetToolTip(upperThresholdLabel, "If the ratio of pixels representing student input in the whole cell is higher than this, answer was invalidated.");
+			toolTip.SetToolTip(lowerThresholdLabel, Properties.Resources.ToolTipLowerThreshold);
+			toolTip.SetToolTip(upperThresholdLabel, Properties.Resources.ToolTipUpperThreshold);
 		}
 
 		private void FillTextBoxes()
@@ -104,120 +104,139 @@ namespace KlokanUI
 
 			if (!Int32.TryParse(defaultSheetWidthTextBox.Text, out defaultSheetWidth))
 			{
-				MessageBox.Show("Default Sheet Width has incorrect format or is out of range!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextDefaultSheetWidthFormat, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			if (!Int32.TryParse(blackWhiteThresholdTextBox.Text, out blackWhiteThreshold))
 			{
-				MessageBox.Show("Black and White Threshold has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextBlackWhiteThresholdFormat, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			// DISABLED
 			if (!Int32.TryParse(tableCountTextBox.Text, out tableCount))
 			{
-				MessageBox.Show("Table Count has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextTableCountFormat, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			if (!float.TryParse(tableLineEccentricityLimitTextBox.Text, out tableLineEccentricityLimit))
 			{
-				MessageBox.Show("Table Line Eccentricity Limit has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextTableLineEccentricityLimitFormat, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			if (!Int32.TryParse(tableLineCurvatureLimitTextBox.Text, out tableLineCurvatureLimit))
 			{
-				MessageBox.Show("Table Line Curvature Limit has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextTableLineCurvatureLimitFormat, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			// DISABLED
 			if (!Int32.TryParse(studentTableRowsTextBox.Text, out studentTableRows))
 			{
-				MessageBox.Show("Student Table Rows has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextStudentTableRowsFormat, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			// DISABLED
 			if (!Int32.TryParse(studentTableColumnsTextBox.Text, out studentTableColumns))
 			{
-				MessageBox.Show("Student Table Columns has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextStudentTableColumnsFormat, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			// DISABLED
 			if (!Int32.TryParse(answerTableRowsTextBox.Text, out answerTableRows))
 			{
-				MessageBox.Show("Answer Table Rows has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextAnswerTableRowsFormat, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			// DISABLED
 			if (!Int32.TryParse(answerTableColumnsTextBox.Text, out answerTableColumns))
 			{
-				MessageBox.Show("Answer Table Columns has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextAnswerTableColumnsFormat, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			if (!Int32.TryParse(resizedCellWidthTextBox.Text, out resizedCellWidth))
 			{
-				MessageBox.Show("Resized Cell Width has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextResizedCellWidthFormat, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			if (!Int32.TryParse(resizedCellHeightTextBox.Text, out resizedCellHeight))
 			{
-				MessageBox.Show("Resized Cell Height has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextResizedCellHeightFormat, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			if (!Int32.TryParse(defaultCellWidthTextBox.Text, out defaultCellWidth))
 			{
-				MessageBox.Show("Default Cell Width has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrotTextDefaultCellWidthFormat, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			if (!Int32.TryParse(defaultCellHeightTextBox.Text, out defaultCellHeight))
 			{
-				MessageBox.Show("Default Cell Height has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextDefaultCellHeightFormat, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			if (!bool.TryParse(cellEvaluationTypeTextBox.Text, out cellEvaluationType))
 			{
-				MessageBox.Show("Cell Evaluation Type has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextCellEvaluationTypeFormat, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			if (!Int32.TryParse(crossLineLengthTextBox.Text, out crossLineLength))
 			{
-				MessageBox.Show("Cross Line Length has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextCrossLineLengthFormat, Properties.Resources.ErrorCaptionGeneral,
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			if (!Int32.TryParse(crossLineCurvatureLimitTextBox.Text, out crossLineCurvatureLimit))
 			{
-				MessageBox.Show("Cross Line Curvature Limit has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextCrossLineCurvatureLimitFormat, Properties.Resources.ErrorCaptionGeneral,
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			if (!Int32.TryParse(rubbishLinesLimitTextBox.Text, out rubbishLinesLimit))
 			{
-				MessageBox.Show("Rubbish Lines Limit has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextRubbishLinesLimitFormat, Properties.Resources.ErrorCaptionGeneral,
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			if (!float.TryParse(lowerThresholdTextBox.Text, out lowerThreshold))
 			{
-				MessageBox.Show("Lower Threshold has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextLowerThresholdFormat, Properties.Resources.ErrorCaptionGeneral,
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			if (!float.TryParse(upperThresholdTextBox.Text, out upperThreshold))
 			{
-				MessageBox.Show("Upper Threshold has incorrect format!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextUpperThresholdFormat, Properties.Resources.ErrorCaptionGeneral,
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 

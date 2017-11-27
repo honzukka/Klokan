@@ -131,11 +131,20 @@
     </Compile>
     <Compile Include="TestKlokanBatch.cs" />
     <Compile Include="TestResult.cs" />
+    <EmbeddedResource Include="CategoryEditForm.cs-CZ.resx">
+      <DependentUpon>CategoryEditForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CategoryEditForm.resx">
       <DependentUpon>CategoryEditForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DatabaseDetailForm.cs-CZ.resx">
+      <DependentUpon>DatabaseDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DatabaseDetailForm.resx">
       <DependentUpon>DatabaseDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DatabaseForm.cs-CZ.resx">
+      <DependentUpon>DatabaseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DatabaseForm.resx">
       <DependentUpon>DatabaseForm.cs</DependentUpon>
@@ -152,9 +161,13 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ParameterEditForm.cs-CZ.resx">
+      <DependentUpon>ParameterEditForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ParameterEditForm.resx">
       <DependentUpon>ParameterEditForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.cs-CZ.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -165,6 +178,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TestForm.cs-CZ.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestItemForm.cs-CZ.resx">
+      <DependentUpon>TestItemForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TestItemForm.resx">
       <DependentUpon>TestItemForm.cs</DependentUpon>
     </EmbeddedResource>

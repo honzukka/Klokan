@@ -117,266 +117,244 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="answerTable1Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\answerTable1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="answerTable2Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\answerTable2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="answerTable3Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\answerTable3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="DropdownTextAll" xml:space="preserve">
-    <value>--All--</value>
+    <value>--Vše--</value>
   </data>
   <data name="ErrorCaptionGeneral" xml:space="preserve">
-    <value>Error</value>
+    <value>Chyba</value>
   </data>
   <data name="ErrorTextAnswerTableColumnsFormat" xml:space="preserve">
-    <value>Answer Table Columns has incorrect format!</value>
+    <value>Počet sloupců odpovědní tabulky je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextAnswerTableRowsFormat" xml:space="preserve">
-    <value>Answer Table Rows has incorrect format!</value>
+    <value>Počet řádků odpovědní tabulky je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextBlackWhiteThresholdFormat" xml:space="preserve">
-    <value>Black and White Threshold has incorrect format!</value>
+    <value>Černobílý práh je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextCellEvaluationTypeFormat" xml:space="preserve">
-    <value>Cell Evaluation Type has incorrect format!</value>
+    <value>Druh vyhodnocování buňky je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextCorrectAnswersNotSelected" xml:space="preserve">
-    <value>Correct answers have not been properly selected!</value>
+    <value>Správné odpovědi nejsou korektně vybrány!</value>
   </data>
   <data name="ErrorTextCrossLineCurvatureLimitFormat" xml:space="preserve">
-    <value>Cross Line Curvature Limit has incorrect format!</value>
+    <value>Maximální křivost čáry v křížku je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextCrossLineLengthFormat" xml:space="preserve">
-    <value>Cross Line Length has incorrect format!</value>
+    <value>Délka čáry ve křížku je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextDefaultCellHeightFormat" xml:space="preserve">
-    <value>Default Cell Height has incorrect format!</value>
+    <value>Výchozí výška buňky je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextDefaultSheetWidthFormat" xml:space="preserve">
-    <value>Default Sheet Width has incorrect format!</value>
+    <value>Výchozí šířka archu je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextExpectedAnswersNotSelected" xml:space="preserve">
-    <value>Expected answers have not been properly selected!</value>
+    <value>Očekávané odpovědi nebyly korektně vybrány!</value>
   </data>
   <data name="ErrorTextInvalidStudentNumber" xml:space="preserve">
-    <value>Invalid student number format.</value>
+    <value>Špatný formát čísla studenta.</value>
   </data>
   <data name="ErrorTextLowerThresholdFormat" xml:space="preserve">
-    <value>Lower Threshold has incorrect format!</value>
+    <value>Spodní práh je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextNoAnswerSheetsSelected" xml:space="preserve">
-    <value>No answer sheets selected!</value>
+    <value>Nejsou vybrány žádné odpovědní archy!</value>
   </data>
   <data name="ErrorTextNoCategoriesConfigured" xml:space="preserve">
-    <value>No categories configured!</value>
+    <value>Nejsou nastaveny žádné kategorie!</value>
   </data>
   <data name="ErrorTextNoCategoriesSelected" xml:space="preserve">
-    <value>No categories selected!</value>
+    <value>Nejsou vybrány žádné kategorie!</value>
   </data>
   <data name="ErrorTextNoFileSelected" xml:space="preserve">
-    <value>No file has been selected!</value>
+    <value>Není vybrán žádný soubor!</value>
   </data>
   <data name="ErrorTextNoRowSelected" xml:space="preserve">
-    <value>No row has been selected!</value>
+    <value>Není vybrán žádný řádek!</value>
   </data>
   <data name="ErrorTextResizedCellHeightFormat" xml:space="preserve">
-    <value>Resized Cell Height has incorrect format!</value>
+    <value>Výška přeškálované buňky je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextResizedCellWidthFormat" xml:space="preserve">
-    <value>Resized Cell Width has incorrect format!</value>
+    <value>Šířka přeškálované buňky je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextRubbishLinesLimitFormat" xml:space="preserve">
-    <value>Rubbish Lines Limit has incorrect format!</value>
+    <value>Maximální počet špatných čar je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextSheetNotFoundInDatabase" xml:space="preserve">
-    <value>Required answer sheet not found in the database!</value>
+    <value>Požadovaný odpovědní arch nebyl nalezen v databázi!</value>
   </data>
   <data name="ErrorTextStudentNumberNotSelected" xml:space="preserve">
-    <value>Student number has not been properly selected!</value>
+    <value>Číslo studenta nebylo korektně vybráno!</value>
   </data>
   <data name="ErrorTextStudentNumberOutOfRange" xml:space="preserve">
-    <value>Student number out of range.</value>
+    <value>Číslo studenta je mimo rozsah hodnot.</value>
   </data>
   <data name="ErrorTextStudentTableColumnsFormat" xml:space="preserve">
-    <value>Student Table Columns has incorrect format!</value>
+    <value>Počet sloupců studentské tabulky je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextStudentTableRowsFormat" xml:space="preserve">
-    <value>Student Table Rows has incorrect format!</value>
+    <value>Počet řádku studentské tabulky je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextTableCountFormat" xml:space="preserve">
-    <value>Table Count has incorrect format!</value>
+    <value>Počet tabulkeje ve špatném formátu!</value>
   </data>
   <data name="ErrorTextTableLineCurvatureLimitFormat" xml:space="preserve">
-    <value>Table Line Curvature Limit has incorrect format!</value>
+    <value>Maximální křivost hrany tabulky je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextTableLineEccentricityLimitFormat" xml:space="preserve">
-    <value>Table Line Eccentricity Limit has incorrect format!</value>
+    <value>Maximální sklon hrany tabulky je ve špatném formátu!</value>
   </data>
   <data name="ErrorTextUpperThresholdFormat" xml:space="preserve">
-    <value>Upper Threshold has incorrect format!</value>
+    <value>Horní práh je ve špatném formátu!</value>
   </data>
   <data name="ErrotTextDefaultCellWidthFormat" xml:space="preserve">
-    <value>Default Cell Width has incorrect format!</value>
+    <value>Výchozí šířka buňky je ve špatném formátu!</value>
   </data>
   <data name="ExceptionTextCorrectAnswersNotLoaded" xml:space="preserve">
-    <value>Correct answers have not been loaded!</value>
+    <value>Správné odpovědi nebyly nahrány!</value>
   </data>
   <data name="ExceptionTextExpectedAnswersNotLoaded" xml:space="preserve">
-    <value>Expected answers have not been loaded!</value>
+    <value>Očekávané odpovědi nebyly nahrány!</value>
   </data>
   <data name="FormCaptionParameterEditEval" xml:space="preserve">
-    <value>Klokan - Evaluation - Parameters</value>
+    <value>Klokan - Vyhodnocování - Parametry</value>
   </data>
   <data name="FormCaptionParameterEditTest" xml:space="preserve">
-    <value>Klokan - Test - Parameters</value>
+    <value>Klokan - Test - Parametry</value>
   </data>
   <data name="InfoCaptionDatabaseUpdated" xml:space="preserve">
-    <value>Database Update</value>
+    <value>Aktualizace databáze</value>
   </data>
   <data name="InfoCaptionDuplicateFilenames" xml:space="preserve">
-    <value>Duplicate Filenames</value>
+    <value>Duplicitní jména souborů</value>
   </data>
   <data name="InfoCaptionNoTestItems" xml:space="preserve">
-    <value>No Test Items</value>
+    <value>Chybí testovací položky</value>
   </data>
   <data name="InfoTextDatabaseUpdated" xml:space="preserve">
-    <value>Database updated.</value>
+    <value>Databáze byla aktualizována-</value>
   </data>
   <data name="InfoTextDuplicateFilenames" xml:space="preserve">
-    <value>One or more files were already present in the list, so they were not added.</value>
+    <value>Některé soubory jsou již přidány, a tak byly ignorovány.</value>
   </data>
   <data name="InfoTextNoTestItems" xml:space="preserve">
-    <value>There are no test items to evaluate.</value>
+    <value>Chybí testovací položky k vyhodnocení.</value>
   </data>
   <data name="OutputTextAnswerSheetID" xml:space="preserve">
-    <value>Answer Sheet ID</value>
+    <value>Identifikátor archu</value>
   </data>
   <data name="OutputTextCategory" xml:space="preserve">
-    <value>Category</value>
+    <value>Kategorie</value>
   </data>
   <data name="OutputTextChosen" xml:space="preserve">
-    <value>Chosen</value>
+    <value>Vybráno</value>
   </data>
   <data name="OutputTextCorrect" xml:space="preserve">
-    <value>Correct</value>
+    <value>Správně</value>
   </data>
   <data name="OutputTextPoints" xml:space="preserve">
-    <value>Points</value>
+    <value>Body</value>
   </data>
   <data name="OutputTextStudentNumber" xml:space="preserve">
-    <value>Student Number</value>
+    <value>Číslo studenta</value>
   </data>
   <data name="OutputTextYear" xml:space="preserve">
-    <value>Year</value>
+    <value>Rok</value>
   </data>
   <data name="PromptCaptionDatabaseUpdate" xml:space="preserve">
-    <value>Database Update</value>
+    <value>Aktualizace databáze</value>
   </data>
   <data name="PromptCaptionEvaluationStart" xml:space="preserve">
-    <value>Evaluation Start</value>
+    <value>Spuštění vyhodnocení</value>
   </data>
   <data name="PromptTextDatabaseUpdate" xml:space="preserve">
-    <value>Are you sure you want to update the database?</value>
+    <value>Opravdu chceš aktualizovat databázi?</value>
   </data>
   <data name="PromptTextEvaluationStart" xml:space="preserve">
-    <value>Do you really want to start evaluation?</value>
-  </data>
-  <data name="studentTableImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\studentTable.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>Opravdu chceš spustit vyhodnocení?</value>
   </data>
   <data name="SummaryCaption" xml:space="preserve">
-    <value>Evaluation Completed</value>
+    <value>Vyhodnocení dokončeno</value>
   </data>
   <data name="SummaryTextDatabaseTimePart1" xml:space="preserve">
-    <value>Results saved in</value>
+    <value>Výsledky byly uloženy za</value>
   </data>
   <data name="SummaryTextDatabaseTimePart3" xml:space="preserve">
-    <value>seconds.</value>
+    <value>sekund.</value>
   </data>
   <data name="SummaryTextEvaluationSuccessful" xml:space="preserve">
-    <value>Evaluation was successful.</value>
+    <value>Vyhodnocení bylo úspěšné.</value>
   </data>
   <data name="SummaryTextEvaluationTimePart1" xml:space="preserve">
-    <value>Evaluation finished in</value>
+    <value>Vyhodnocení bylo dokončeno za</value>
   </data>
   <data name="SummaryTextEvaluationTimePart3" xml:space="preserve">
-    <value>seconds.</value>
+    <value>sekund.</value>
   </data>
   <data name="SummaryTextFailedSheetPart2" xml:space="preserve">
-    <value>sheet was not evaluated because of an error.</value>
+    <value>arch nebyl vyhodnocen kvůli chybě.</value>
   </data>
   <data name="SummaryTextFailedSheetsPart2" xml:space="preserve">
-    <value>sheets were not evaluated because of an error.</value>
-  </data>
-  <data name="table1Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\table1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="table2Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\table2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="table3Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\table3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>archů nebylo vyhodnoceno kvůli chybě.</value>
   </data>
   <data name="ToolTipAnswerTableColumns" xml:space="preserve">
-    <value>The number of columns in an answer table.</value>
+    <value>Počet sloupců v odpovědní tabulce.</value>
   </data>
   <data name="ToolTipAnswerTableRows" xml:space="preserve">
-    <value>The number of rows in an answer table.</value>
+    <value>Počet řádků v odpovědní tabulce.</value>
   </data>
   <data name="ToolTipBlackWhiteThreshold" xml:space="preserve">
-    <value>How bright a shade of grey can be to be recognized as black (the rest will be white).</value>
+    <value>Udává, jak světlý musí být odstín šedé, aby byl považován za bílou (zbytek bude černý).</value>
   </data>
   <data name="ToolTipCellEvaluationType" xml:space="preserve">
-    <value>TRUE - shape recognition; FALSE - pixel ratio</value>
+    <value>TRUE - rozpoznávání tvarů; FALSE - poměr pixelů</value>
   </data>
   <data name="ToolTipCrossLineCurvatureLimit" xml:space="preserve">
-    <value>How curved a line can be to still be recognized as a straight line (1 is minimum).</value>
+    <value>Udává, jak křivá může být čára, aby ještě byla považována za rovnou (1 je minimum).</value>
   </data>
   <data name="ToolTipCrossLineLength" xml:space="preserve">
-    <value>The length of lines to be detected.</value>
+    <value>Délka čáry v křížku, která bude rozpoznána.</value>
   </data>
   <data name="ToolTipDefaultCellHeight" xml:space="preserve">
-    <value>Every cell will be resized to have this height.</value>
+    <value>Každá buňka bude přeškálována tak, aby měla tuto výšku.</value>
   </data>
   <data name="ToolTipDefaultCellWidth" xml:space="preserve">
-    <value>Every cell will be resized to have this width.</value>
+    <value>Každá buňka bude přeškálována tak, aby měla tuto šířku.</value>
   </data>
   <data name="ToolTipDefaultSheetWidth" xml:space="preserve">
-    <value>Every sheet will be resized accordingly (preserving aspect ratio) before the tables are extracted.</value>
+    <value>Každý arch bude přeškálován tak, aby měl tuto šířku (poměr stran bude zachován) před zahájením rozpoznávání.</value>
   </data>
   <data name="ToolTipLowerThreshold" xml:space="preserve">
-    <value>If the ratio of pixels representing student input in the whole cell is lower than this, answer was not chosen.</value>
+    <value>Pokud poměr černých pixelů v buňce (po prahování) bude nižší než tato hodnota, bude buňka považována za prázdnou.</value>
   </data>
   <data name="ToolTipResizedCellHeight" xml:space="preserve">
-    <value>This is the height of a cell after the sheet has been resized (see default_sheet_height).</value>
+    <value>Toto je výška buňky poté, co byl arch přeškálován (viz Výchozí šířka archu).</value>
   </data>
   <data name="ToolTipResizedCellWidth" xml:space="preserve">
-    <value>This is the width of a cell after the sheet has been resized (see default_sheet_width).</value>
+    <value>Toto je šířka buňky poté, co byl arch přeškálován (viz Výchozí šířka archu).</value>
   </data>
   <data name="ToolTipRubbishLinesLimit" xml:space="preserve">
-    <value>Amount of lines that don't form a cross that will be ignored and not considered as a correction.</value>
+    <value>Množství čar, které netvoří křížek a které budou ignorovány a nepovažovány za opravu odpovědi.</value>
   </data>
   <data name="ToolTipStudentTableColumns" xml:space="preserve">
-    <value>The number of columns in the student number table.</value>
+    <value>Počet sloupců ve studentské tabulce.</value>
   </data>
   <data name="ToolTipStudentTableRows" xml:space="preserve">
-    <value>The number of rows in the student number table.</value>
+    <value>Počet řádků ve studentské tabulce.</value>
   </data>
   <data name="ToolTipTableCount" xml:space="preserve">
-    <value>The number of tables in the answer sheet.</value>
+    <value>Celkový počet tabulek v odpovědním archu.</value>
   </data>
   <data name="ToolTipTableLineCurvatureLimit" xml:space="preserve">
-    <value>How curved a line can be to still be recognized as a straight line (1 is minimum).</value>
+    <value>Udává, jak křivá může být hrana tabulky, aby ještě byla považována za rovnou (1 je minimum).</value>
   </data>
   <data name="ToolTipTableLineEccentricityLimit" xml:space="preserve">
-    <value>How slanted a line can be to be recognized as either horizontal or vertical (in radians).</value>
+    <value>Udává, jak skloněná může být hrana tabulky, aby byla ještě považována za horizontální (resp. vertikální). (v radiánech)</value>
   </data>
   <data name="ToolTipUpperThreshold" xml:space="preserve">
-    <value>If the ratio of pixels representing student input in the whole cell is higher than this, answer was invalidated.</value>
+    <value>Pokud poměr černých pixelů v buňce (po prahování) bude vyšší než tato hodnota, bude buňka považována za opravenou.</value>
   </data>
 </root>

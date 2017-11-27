@@ -29,7 +29,7 @@ namespace KlokanUI
 		{
 			if (correctAnswers == null)
 			{
-				throw new InvalidOperationException("Correct answers haven't been loaded!");
+				throw new InvalidOperationException(Properties.Resources.ExceptionTextCorrectAnswersNotLoaded);
 			}
 
 			// get the answers from the sheet
@@ -61,7 +61,7 @@ namespace KlokanUI
 		{
 			if (studentExpectedValues == null || answerExpectedValues == null)
 			{
-				throw new InvalidOperationException("Expected answers haven't been loaded!");
+				throw new InvalidOperationException(Properties.Resources.ExceptionTextExpectedAnswersNotLoaded);
 			}
 
 			// get the answers from the sheet

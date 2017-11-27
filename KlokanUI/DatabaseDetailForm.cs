@@ -103,13 +103,15 @@ namespace KlokanUI
 		{
 			if (int.TryParse(studentNumberTextBox.Text, out studentNumberTemp) == false)
 			{
-				MessageBox.Show("Invalid student number format.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextInvalidStudentNumber, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
 			if (studentNumberTemp < 0 || studentNumberTemp > 99999)
 			{
-				MessageBox.Show("Student number out of range.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextStudentNumberOutOfRange, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
@@ -171,7 +173,8 @@ namespace KlokanUI
 		{
 			updateDatabaseButton.Enabled = false;
 
-			var dialogResult = MessageBox.Show("Are you sure you want to update the database?", "Database Change", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			var dialogResult = MessageBox.Show(Properties.Resources.PromptTextDatabaseUpdate, Properties.Resources.PromptCaptionDatabaseUpdate, 
+				MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 			if (dialogResult == DialogResult.No)
 			{
 				return;
@@ -195,7 +198,8 @@ namespace KlokanUI
 				KlokanDBAnswerSheet answerSheet = query.FirstOrDefault();
 				if (answerSheet == null)
 				{
-					MessageBox.Show("Corresponding answer sheet not found in the database!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(Properties.Resources.ErrorTextSheetNotFoundInDatabase, Properties.Resources.ErrorCaptionGeneral, 
+						MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
 				}
 
@@ -269,7 +273,8 @@ namespace KlokanUI
 				KlokanDBAnswerSheet answerSheet = sheetQuery.FirstOrDefault();
 				if (answerSheet == null)
 				{
-					MessageBox.Show("Corresponding answer sheet not found in the database!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(Properties.Resources.ErrorTextSheetNotFoundInDatabase, Properties.Resources.ErrorCaptionGeneral, 
+						MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return false;
 				}
 
@@ -280,7 +285,8 @@ namespace KlokanUI
 				KlokanDBInstance currentInstance = instanceQuery.FirstOrDefault();
 				if (answerSheet == null)
 				{
-					MessageBox.Show("Corresponding instance not found in the database!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(Properties.Resources.ErrorTextSheetNotFoundInDatabase, Properties.Resources.ErrorCaptionGeneral,
+						MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return false;
 				}
 
@@ -304,7 +310,8 @@ namespace KlokanUI
 				var chosenAnswersList = chosenAnswersQuery.ToList();
 				if (chosenAnswersList.Count == 0)
 				{
-					MessageBox.Show("Answer sheet data not found in the database!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(Properties.Resources.ErrorTextSheetNotFoundInDatabase, Properties.Resources.ErrorCaptionGeneral, 
+						MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return false;
 				}
 
@@ -321,7 +328,8 @@ namespace KlokanUI
 				var correctAnswersList = correctAnswersQuery.ToList();
 				if (correctAnswersList.Count == 0)
 				{
-					MessageBox.Show("Answer sheet data not found in the database!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(Properties.Resources.ErrorTextSheetNotFoundInDatabase, Properties.Resources.ErrorCaptionGeneral,
+						MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return false;
 				}
 

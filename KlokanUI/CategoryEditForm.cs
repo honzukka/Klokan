@@ -7,6 +7,8 @@ namespace KlokanUI
 {
 	internal partial class CategoryEditForm : Form
 	{
+		#region Fields
+
 		/// <summary>
 		/// A reference to a category batch being edited in this form
 		/// </summary>
@@ -22,6 +24,20 @@ namespace KlokanUI
 		/// </summary>
 		List<string> answerSheetFilenames;
 
+		/// <summary>
+		/// Base text displayed as a caption of this form.
+		/// Further information is later appended to this base.
+		/// </summary>
+		string formCaptionBase;
+
+		/// <summary>
+		/// Base text displayed as label of the answers sheet list.
+		/// Further information is later appended to this base.
+		/// </summary>
+		string sheetLabelTextBase;
+
+		#endregion
+
 		/// <param name="categoryBatch">
 		/// The batch needs to have a name set, so that it can be displayed in this form.
 		/// The batch is then going to be edited in this form and changes will be saved if the DialogResult is OK.
@@ -30,7 +46,12 @@ namespace KlokanUI
 		{
 			InitializeComponent();
 
-			this.Text = "Klokan - Category Edit (" + categoryBatch.CategoryName + ")";
+			formCaptionBase = this.Text;
+			sheetLabelTextBase = sheetLabel.Text;
+
+			this.Text = formCaptionBase + " (" + categoryBatch.CategoryName + ")";
+			sheetLabel.Text = sheetLabelTextBase + " (0):";
+
 			this.categoryBatch = categoryBatch;
 
 			// show the content of the batch if there is something there already,
@@ -89,7 +110,8 @@ namespace KlokanUI
 				// inform the user that duplicate filenames were not added
 				if (duplicateFilenames)
 				{
-					MessageBox.Show("One or more files were already present in the list, so they were not added.", "Duplicate Filenames", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					MessageBox.Show(Properties.Resources.InfoTextDuplicateFilenames, Properties.Resources.InfoCaptionDuplicateFilenames, 
+						MessageBoxButtons.OK, MessageBoxIcon.Information);
 					duplicateFilenames = false;
 				}
 			}
@@ -117,14 +139,16 @@ namespace KlokanUI
 			{
 				if (!TableArrayHandling.CheckAnswers(correctAnswers, i))
 				{
-					MessageBox.Show("Correct answers have not been properly selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(Properties.Resources.ErrorTextCorrectAnswersNotSelected, Properties.Resources.ErrorCaptionGeneral, 
+						MessageBoxButtons.OK, MessageBoxIcon.Error);
 					return;
 				}
 			}
 
 			if (answerSheetFilenames.Count == 0)
 			{
-				MessageBox.Show("No answer sheets selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextNoAnswerSheetsSelected, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
@@ -157,7 +181,7 @@ namespace KlokanUI
 			answerSheetsListBox.DataSource = null;
 			answerSheetsListBox.DataSource = answerSheetFilenames;
 
-			sheetLabel.Text = "Answers Sheets (" + answerSheetFilenames.Count + "):";
+			sheetLabel.Text = sheetLabelTextBase + " (" + answerSheetFilenames.Count + "):";
 		}
 	}
 }

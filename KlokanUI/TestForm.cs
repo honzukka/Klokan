@@ -33,7 +33,8 @@ namespace KlokanUI
 
 		private void evaluateButton_Click(object sender, EventArgs e)
 		{
-			if (MessageBox.Show("Do you want to start evaluation?", "Evaluation Start", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+			if (MessageBox.Show(Properties.Resources.PromptTextEvaluationStart, Properties.Resources.PromptCaptionEvaluationStart,
+				MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
 			{
 				return;
 			}
@@ -67,7 +68,8 @@ namespace KlokanUI
 
 			if (testInstances.Count == 0)
 			{
-				MessageBox.Show("There are no test items to evaluate.", "No test items", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show(Properties.Resources.InfoTextNoTestItems, Properties.Resources.InfoCaptionNoTestItems,
+					MessageBoxButtons.OK, MessageBoxIcon.Information);
 				return;
 			}
 
@@ -102,7 +104,8 @@ namespace KlokanUI
 		{
 			if (dataView.SelectedRows.Count == 0)
 			{
-				MessageBox.Show("No row has been selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextNoRowSelected, Properties.Resources.ErrorCaptionGeneral,
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
@@ -136,7 +139,8 @@ namespace KlokanUI
 		{
 			if (dataView.SelectedRows.Count == 0)
 			{
-				MessageBox.Show("No row has been selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextNoRowSelected, Properties.Resources.ErrorCaptionGeneral,
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
@@ -174,7 +178,7 @@ namespace KlokanUI
 
 		private void editParamsButton_Click(object sender, EventArgs e)
 		{
-			ParameterEditForm form = new ParameterEditForm(chosenParameters, "Klokan - Test - Parameters");
+			ParameterEditForm form = new ParameterEditForm(chosenParameters, Properties.Resources.FormCaptionParameterEditTest);
 			form.StartPosition = FormStartPosition.CenterScreen;
 
 			if (form.ShowDialog() == DialogResult.OK)

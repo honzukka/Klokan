@@ -71,11 +71,13 @@ namespace KlokanUI
 		{
 			if (categoryConfigurations.Count == 0)
 			{
-				MessageBox.Show("No categories configured!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextNoCategoriesConfigured, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
-			if (MessageBox.Show("Do you want to start evaluation?", "Evaluation Start", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+			if (MessageBox.Show(Properties.Resources.PromptTextEvaluationStart, Properties.Resources.PromptCaptionEvaluationStart, 
+				MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
 			{
 				return;
 			}
@@ -94,7 +96,8 @@ namespace KlokanUI
 
 			if (klokanBatch.CategoryBatches.Count == 0)
 			{
-				MessageBox.Show("No categories selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show(Properties.Resources.ErrorTextNoCategoriesSelected, Properties.Resources.ErrorCaptionGeneral, 
+					MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
