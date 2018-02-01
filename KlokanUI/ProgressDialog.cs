@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Threading;
@@ -20,7 +13,6 @@ namespace KlokanUI
 
 		object tasksCompletedLock;
 
-		// TODO: cts.Cancel() on form exit too!
 		public ProgressDialog(CancellationTokenSource cts)
 		{
 			InitializeComponent();
@@ -33,23 +25,22 @@ namespace KlokanUI
 			totalTasks = -1;
 			tasksCompletedLock = new object();
 
-			FormClosing += ProgressDialog_FormClosing;
+			FormClosing += (object sender, FormClosingEventArgs e) => cts.Cancel();
 		}
 
-		private void ProgressDialog_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			if (!cts.IsCancellationRequested)
-			{
-				cts.Cancel();
-			}
-		}
-
+		/// <summary>
+		/// Returns a cancellation token which is tied to the form's controls.
+		/// </summary>
 		public CancellationToken GetCancellationToken()
 		{
 			return cts.Token;
 		}
 
-		// this method isn't thread-safe!
+		/// <summary>
+		/// Initialized the progress bar so that its maximum corresponds to the total number of tasks.
+		/// This method is NOT thread-safe!
+		/// </summary>
+		/// <param name="value">The total number of tasks</param>
 		public void SetTotalTasks(int value)
 		{
 			if (value < 1)
@@ -58,9 +49,22 @@ namespace KlokanUI
 			}
 
 			totalTasks = value;
-			progressBar.Maximum = totalTasks;
+
+			if (progressBar.InvokeRequired)
+			{
+				progressBar.BeginInvoke(new Action(
+					() => { progressBar.Maximum = totalTasks; }
+				));
+			}
+			else
+			{
+				progressBar.Maximum = totalTasks;
+			}
 		}
 
+		/// <summary>
+		/// A thread-safe method which generates a UI event to increment the progress bar by one.
+		/// </summary>
 		public void IncrementProgressBarValue()
 		{
 			if (totalTasks == -1)
@@ -91,20 +95,77 @@ namespace KlokanUI
 			}
 		}
 
-		public void SetProgressLabel(string text)
+		public void SetProgressLabel(ProgressBarState state)
 		{
 			if (progressLabel.InvokeRequired)
 			{
 				progressLabel.BeginInvoke(new Action(
-					() => { progressLabel.Text = text; }	
+					() => {
+						string text = "";
+
+						// resources have to be accessed here because they need to suit the UI thread
+						switch (state)
+						{
+							case ProgressBarState.Evaluating:
+								text = Properties.Resources.ProgressBarLabelEvaluating;
+								break;
+							case ProgressBarState.Cancelling:
+								text = Properties.Resources.ProgressBarLabelCancelling;
+								break;
+							case ProgressBarState.Saving:
+								text = Properties.Resources.ProgressBarLabelSaving;
+								break;
+							case ProgressBarState.SavingTest:
+								text = Properties.Resources.ProgressBarLabelSavingTest;
+								break;
+							case ProgressBarState.Done:
+								text = Properties.Resources.ProgressBarLabelDone;
+								break;
+							case ProgressBarState.Cancelled:
+								text = Properties.Resources.ProgressBarLabelCancelled;
+								break;
+						}
+
+						progressLabel.Text = text;
+					}	
 				));
 			}
 			else
 			{
+				string text = "";
+
+				switch (state)
+				{
+					case ProgressBarState.Evaluating:
+						text = Properties.Resources.ProgressBarLabelEvaluating;
+						break;
+					case ProgressBarState.Cancelling:
+						text = Properties.Resources.ProgressBarLabelCancelling;
+						break;
+					case ProgressBarState.Saving:
+						text = Properties.Resources.ProgressBarLabelSaving;
+						break;
+					case ProgressBarState.SavingTest:
+						text = Properties.Resources.ProgressBarLabelSavingTest;
+						break;
+					case ProgressBarState.Done:
+						text = Properties.Resources.ProgressBarLabelDone;
+						break;
+					case ProgressBarState.Cancelled:
+						text = Properties.Resources.ProgressBarLabelCancelled;
+						break;
+				}
+
 				progressLabel.Text = text;
 			}
 		}
 
+		/// <summary>
+		/// In case the operation was successful, this method sets the result label to contain information about the operation.
+		/// </summary>
+		/// <param name="failedSheets">The number of sheets which failed to be evaluated.</param>
+		/// <param name="evaluationTime">The duration of the evaluation in seconds.</param>
+		/// <param name="databaseTime">The duration of the saving of results in seconds.</param>
 		public void SetResultLabel(int failedSheets, double evaluationTime, double databaseTime)
 		{
 			if (resultLabel.InvokeRequired)
@@ -123,20 +184,23 @@ namespace KlokanUI
 			}
 		}
 
+		/// <summary>
+		/// In case the operation failed, this method sets the result label to state just that.
+		/// </summary>
 		public void SetResultLabel()
 		{
 			if (resultLabel.InvokeRequired)
 			{
 				resultLabel.BeginInvoke(new Action(
 					() => {
-						string message = "Evaluation was cancelled.\r\nResults were not saved.";
+						string message = Properties.Resources.SummaryTextEvaluationCancelled;
 						resultLabel.Text = message;
 					}
 				));
 			}
 			else
 			{
-				string message = "Evaluation was cancelled.\r\nResults were not saved.";
+				string message = Properties.Resources.SummaryTextEvaluationCancelled;
 				resultLabel.Text = message;
 			}
 		}
@@ -171,14 +235,13 @@ namespace KlokanUI
 
 		private void cancelButton_Click(object sender, EventArgs e)
 		{
-			progressLabel.Text = "Cancelling operation...";
+			progressLabel.Text = Properties.Resources.ProgressBarLabelCancelling;
 			cts.Cancel();
 			cancelButton.Enabled = false;
 		}
 
 		private void okButton_Click(object sender, EventArgs e)
 		{
-			DialogResult = DialogResult.OK;
 			this.Close();
 		}
 	}

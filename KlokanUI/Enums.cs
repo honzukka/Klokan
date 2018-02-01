@@ -7,4 +7,14 @@
 		Junior,
 		Student
 	}
+
+	public enum ProgressBarState
+	{
+		Evaluating,
+		Cancelling,
+		Saving,
+		SavingTest,
+		Done,
+		Cancelled
+	}
 }

@@ -77,19 +77,14 @@ namespace KlokanUI
 		/// <summary>
 		/// Creates and starts a task for each sheet in the batch.
 		/// Results of those tasks are awaited and later outputted. 
-		/// The calling form is notified that the process was completed.
+		/// The progress dialog monitors the process and is able to cancel it too.
 		/// </summary>
 		async void ProcessBatchAsync()
 		{
 			evaluationStartTime = DateTime.Now;
 
 			// initialize the progress dialog
-			int totalTasks = 0;
-			foreach (var categoryBatch in batch.CategoryBatches.Values)
-			{
-				totalTasks += categoryBatch.SheetFilenames.Count;
-			}
-			progressDialog.SetTotalTasks(totalTasks);
+			progressDialog.SetTotalTasks(GetNumberOfSheetsInBatch());
 
 			Evaluator evaluator = new Evaluator(batch.Parameters);
 			List<Task<Result>> tasks = new List<Task<Result>>();
@@ -116,7 +111,7 @@ namespace KlokanUI
 				Result[] results = await Task.WhenAll(tasks);
 
 				evaluationEndTime = DateTime.Now;
-				progressDialog.SetProgressLabel("Saving results to database...");
+				progressDialog.SetProgressLabel(ProgressBarState.Saving);
 
 				await OutputResultsDB(results);
 
@@ -135,11 +130,14 @@ namespace KlokanUI
 		/// <summary>
 		/// Creates and starts a task for each sheet in the test batch.
 		/// Results of those tasks are awaited and later outputted. 
-		/// The calling form is notified that the process was completed.
+		/// The progress dialog monitors the process and is able to cancel it too.
 		/// </summary>
 		async void ProcessTestBatchAsync()
 		{
 			evaluationStartTime = DateTime.Now;
+
+			// initialize the progress dialog
+			progressDialog.SetTotalTasks(testBatch.TestInstances.Count);
 
 			Evaluator evaluator = new Evaluator(testBatch.Parameters);
 			List<Task<TestResult>> tasks = new List<Task<TestResult>>();
@@ -147,19 +145,36 @@ namespace KlokanUI
 			foreach (var testInstance in testBatch.TestInstances)
 			{
 				Task<TestResult> instanceTask = new Task<TestResult>(
-					() => evaluator.EvaluateTest(testInstance.ScanId, testInstance.Image, testInstance.StudentExpectedValues, testInstance.AnswerExpectedValues)
+					() => {
+						var result = evaluator.EvaluateTest(testInstance.ScanId, testInstance.Image, testInstance.StudentExpectedValues, testInstance.AnswerExpectedValues);
+						progressDialog.IncrementProgressBarValue();
+						return result;
+					},
+					progressDialog.GetCancellationToken()
 				);
 				tasks.Add(instanceTask);
 				instanceTask.Start();
 			}
 
-			TestResult[] testResults = await Task.WhenAll(tasks);
+			try
+			{
+				TestResult[] testResults = await Task.WhenAll(tasks);
 
-			evaluationEndTime = DateTime.Now;
+				evaluationEndTime = DateTime.Now;
+				progressDialog.SetProgressLabel(ProgressBarState.SavingTest);
 
-			await OutputTestResultsDB(testResults);
+				await OutputTestResultsDB(testResults);
 
-			FinishJob(false);
+				FinishJob(false);
+			}
+			catch (TaskCanceledException)
+			{
+				FinishJob(true);
+			}
+			catch (OperationCanceledException)
+			{
+				FinishJob(true);
+			}
 		}
 
 		/// <summary>
@@ -302,7 +317,7 @@ namespace KlokanUI
 					correspondingScan.ComputedValues = computedValuesDbSet;
 					correspondingScan.Correctness = testResult.Correctness;
 
-					await testDB.SaveChangesAsync();
+					await testDB.SaveChangesAsync(progressDialog.GetCancellationToken());
 				}
 			}
 		}
@@ -317,16 +332,27 @@ namespace KlokanUI
 
 			if (wasCancelled)
 			{
-				progressDialog.SetProgressLabel("Operation cancelled.");
+				progressDialog.SetProgressLabel(ProgressBarState.Cancelled);
 				progressDialog.SetResultLabel();
 			}
 			else
 			{
-				progressDialog.SetProgressLabel("Done!");
+				progressDialog.SetProgressLabel(ProgressBarState.Done);
 				progressDialog.SetResultLabel(failedSheets, (evaluationEndTime - evaluationStartTime).TotalSeconds, (DateTime.Now - evaluationEndTime).TotalSeconds);
 			}
 
 			progressDialog.EnableOkButton();
+		}
+
+		private int GetNumberOfSheetsInBatch()
+		{
+			int totalTasks = 0;
+			foreach (var categoryBatch in batch.CategoryBatches.Values)
+			{
+				totalTasks += categoryBatch.SheetFilenames.Count;
+			}
+
+			return totalTasks;
 		}
 	}
 }
