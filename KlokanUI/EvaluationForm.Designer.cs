@@ -151,8 +151,8 @@
 			// 
 			// yearComboBox
 			// 
-			resources.ApplyResources(this.yearComboBox, "yearComboBox");
 			this.yearComboBox.FormattingEnabled = true;
+			resources.ApplyResources(this.yearComboBox, "yearComboBox");
 			this.yearComboBox.Name = "yearComboBox";
 			// 
 			// EvaluationForm

@@ -370,4 +370,25 @@
   <data name="ToolTipUpperThreshold" xml:space="preserve">
     <value>If the ratio of pixels representing student input in the whole cell is higher than this, answer was invalidated.</value>
   </data>
+  <data name="ProgressBarLabelCancelled" xml:space="preserve">
+    <value>Operation was cancelled.</value>
+  </data>
+  <data name="ProgressBarLabelCancelling" xml:space="preserve">
+    <value>Cancelling operation...</value>
+  </data>
+  <data name="ProgressBarLabelDone" xml:space="preserve">
+    <value>Done!</value>
+  </data>
+  <data name="ProgressBarLabelEvaluating" xml:space="preserve">
+    <value>Evaluating sheets...</value>
+  </data>
+  <data name="ProgressBarLabelSaving" xml:space="preserve">
+    <value>Saving results to database...</value>
+  </data>
+  <data name="ProgressBarLabelSavingTest" xml:space="preserve">
+    <value>Saving test results to database...</value>
+  </data>
+  <data name="SummaryTextEvaluationCancelled" xml:space="preserve">
+    <value>Evaluation was cancelled, results were not saved.</value>
+  </data>
 </root>

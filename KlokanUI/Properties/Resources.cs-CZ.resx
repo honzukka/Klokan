@@ -264,6 +264,24 @@
   <data name="OutputTextYear" xml:space="preserve">
     <value>Rok</value>
   </data>
+  <data name="ProgressBarLabelCancelled" xml:space="preserve">
+    <value>Operace byla zrušena.</value>
+  </data>
+  <data name="ProgressBarLabelCancelling" xml:space="preserve">
+    <value>Rušení operace...</value>
+  </data>
+  <data name="ProgressBarLabelDone" xml:space="preserve">
+    <value>Hotovo!</value>
+  </data>
+  <data name="ProgressBarLabelEvaluating" xml:space="preserve">
+    <value>Vyhodnocování odpovědí...</value>
+  </data>
+  <data name="ProgressBarLabelSaving" xml:space="preserve">
+    <value>Ukládání výsledků do databáze...</value>
+  </data>
+  <data name="ProgressBarLabelSavingTest" xml:space="preserve">
+    <value>Ukládání testovacích výsledků do databáze...</value>
+  </data>
   <data name="PromptCaptionDatabaseUpdate" xml:space="preserve">
     <value>Aktualizace databáze</value>
   </data>
@@ -284,6 +302,9 @@
   </data>
   <data name="SummaryTextDatabaseTimePart3" xml:space="preserve">
     <value>sekund.</value>
+  </data>
+  <data name="SummaryTextEvaluationCancelled" xml:space="preserve">
+    <value>Vyhodnocení bylo zrušeno, výsledky nebyly uloženy.</value>
   </data>
   <data name="SummaryTextEvaluationSuccessful" xml:space="preserve">
     <value>Vyhodnocení bylo úspěšné.</value>

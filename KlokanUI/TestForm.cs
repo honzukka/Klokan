@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace KlokanUI
 {
-	public partial class TestForm : Form, IEvaluationForm
+	public partial class TestForm : Form
 	{
 		/// <summary>
 		/// Parameters to be used in the evaluation process.
@@ -38,8 +38,6 @@ namespace KlokanUI
 			{
 				return;
 			}
-
-			evaluateButton.Enabled = false;
 
 			List<TestKlokanInstance> testInstances = new List<TestKlokanInstance>();
 
@@ -78,12 +76,21 @@ namespace KlokanUI
 				TestInstances = testInstances
 			};
 
-			var jobScheduler = new JobScheduler(testBatch, this);
+			ProgressDialog progressDialog = new ProgressDialog(new CancellationTokenSource());
+			progressDialog.SetProgressLabel(ProgressBarState.Evaluating);
+
+			var jobScheduler = new JobScheduler(testBatch, progressDialog);
 
 			// new thread created, so that all tasks in it are planned in the threadpool and not in the WinForms synchronization context
 			Thread thread = new Thread(jobScheduler.Run);
 			thread.IsBackground = true;
 			thread.Start();
+
+			progressDialog.StartPosition = FormStartPosition.CenterScreen;
+			progressDialog.ShowDialog();
+
+			PopulateDataView();
+			ShowAverageCorrectness();
 		}
 
 		private void addItemButton_Click(object sender, EventArgs e)
@@ -277,55 +284,6 @@ namespace KlokanUI
 			{
 				averageCorrectnessLabel.Hide();
 				averageCorrectnessValueLabel.Hide();
-			}
-		}
-
-		/// <summary>
-		/// Enables the evaluation button again.
-		/// Can be called from any thread.
-		/// </summary>
-		public void EnableGoButton()
-		{
-			if (evaluateButton.InvokeRequired)
-			{
-				evaluateButton.BeginInvoke(new Action(
-					() => {
-						PopulateDataView();
-						ShowAverageCorrectness();
-						evaluateButton.Enabled = true;
-					}
-				));
-			}
-			else
-			{
-				PopulateDataView();
-				ShowAverageCorrectness();
-				evaluateButton.Enabled = true;
-			}
-		}
-
-		/// <summary>
-		/// Shows a custom informative message.
-		/// Can be called from any thread and will be executed in the context of the UI thread.
-		/// </summary>
-		public void ShowMessageBoxInfo(int failedSheets, double evaluationTime, double databaseTime)
-		{
-			if (this.InvokeRequired)
-			{
-				this.BeginInvoke(new Action(
-					() =>
-					{
-						string message = EvaluationHandling.CreateSummaryMessage(failedSheets, evaluationTime, databaseTime);
-
-						MessageBox.Show(message, Properties.Resources.SummaryCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-					}
-				));
-			}
-			else
-			{
-				string message = EvaluationHandling.CreateSummaryMessage(failedSheets, evaluationTime, databaseTime);
-
-				MessageBox.Show(message, Properties.Resources.SummaryCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 		}
 

@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace KlokanUI
 {
-	public partial class EvaluationForm : Form, IEvaluationForm
+	public partial class EvaluationForm : Form
 	{
 		/// <summary>
 		/// Helper class for evaluation batch configuration.
@@ -107,14 +107,18 @@ namespace KlokanUI
 			// assign the chosen parameters
 			klokanBatch.Parameters = chosenParameters;
 
-			evaluateButton.Enabled = false;
+			ProgressDialog progressDialog = new ProgressDialog(new CancellationTokenSource());
+			progressDialog.SetProgressLabel(ProgressBarState.Evaluating);
 
-			var jobScheduler = new JobScheduler(klokanBatch, this);
+			var jobScheduler = new JobScheduler(klokanBatch, progressDialog);
 
 			// new thread created, so that all tasks in it are planned in the threadpool and not in the WinForms synchronization context
 			Thread thread = new Thread(jobScheduler.Run);
 			thread.IsBackground = true;
 			thread.Start();
+
+			progressDialog.StartPosition = FormStartPosition.CenterScreen;
+			progressDialog.ShowDialog();
 		}
 
 		private void benjaminCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -179,7 +183,7 @@ namespace KlokanUI
 
 		private void editParamsButton_Click(object sender, EventArgs e)
 		{
-			ParameterEditForm form = new ParameterEditForm(chosenParameters, "Klokan - Evaluation - Parameters");
+			ParameterEditForm form = new ParameterEditForm(chosenParameters, Properties.Resources.FormCaptionParameterEditTest);
 			form.StartPosition = FormStartPosition.CenterScreen;
 
 			if (form.ShowDialog() == DialogResult.OK)
@@ -269,49 +273,6 @@ namespace KlokanUI
 			{
 				// save the configuration
 				categoryConfigurations[categoryName] = new CategoryBatchConfig { batch = categoryBatch, isIncluded = true };
-			}
-		}
-
-		/// <summary>
-		/// Enables the evaluation button again.
-		/// Can be called from any thread.
-		/// </summary>
-		public void EnableGoButton()
-		{
-			if (evaluateButton.InvokeRequired)
-			{
-				evaluateButton.BeginInvoke(new Action(
-					() => { evaluateButton.Enabled = true; }
-				));
-			}
-			else
-			{
-				evaluateButton.Enabled = true;
-			}
-		}
-
-		/// <summary>
-		/// Shows a custom informative message.
-		/// Can be called from any thread and will be executed in the context of the UI thread.
-		/// </summary>
-		public void ShowMessageBoxInfo(int failedSheets, double evaluationTime, double databaseTime)
-		{
-			if (this.InvokeRequired)
-			{
-				this.BeginInvoke(new Action(
-					() =>
-					{
-						string message = EvaluationHandling.CreateSummaryMessage(failedSheets, evaluationTime, databaseTime);
-
-						MessageBox.Show(message, Properties.Resources.SummaryCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-					}	
-				));
-			}
-			else
-			{
-				string message = EvaluationHandling.CreateSummaryMessage(failedSheets, evaluationTime, databaseTime);
-
-				MessageBox.Show(message, Properties.Resources.SummaryCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 		}
 

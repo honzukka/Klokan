@@ -117,128 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="defaultSheetWidthLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 20</value>
+  <data name="cancelButton.Text" xml:space="preserve">
+    <value>Zrušit</value>
   </data>
-  <data name="defaultSheetWidthLabel.Text" xml:space="preserve">
-    <value>Výchozí šířka archu:</value>
-  </data>
-  <data name="blackWhiteThresholdLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 20</value>
-  </data>
-  <data name="blackWhiteThresholdLabel.Text" xml:space="preserve">
-    <value>Černobílý práh:</value>
-  </data>
-  <data name="tableCountLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>110, 20</value>
-  </data>
-  <data name="tableCountLabel.Text" xml:space="preserve">
-    <value>Počet tabulek:</value>
-  </data>
-  <data name="tableLineEccetricityLimitLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 20</value>
-  </data>
-  <data name="tableLineEccetricityLimitLabel.Text" xml:space="preserve">
-    <value>Maximální sklon hrany tabulky:</value>
-  </data>
-  <data name="tableLineCurvatureLimitLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>228, 20</value>
-  </data>
-  <data name="tableLineCurvatureLimitLabel.Text" xml:space="preserve">
-    <value>Maximální křivost hrany tabulky:</value>
-  </data>
-  <data name="answerTableRowsLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 20</value>
-  </data>
-  <data name="answerTableRowsLabel.Text" xml:space="preserve">
-    <value>Počet řádků v odpovědní tabulce:</value>
-  </data>
-  <data name="answerTableColumnsLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>257, 20</value>
-  </data>
-  <data name="answerTableColumnsLabel.Text" xml:space="preserve">
-    <value>Počet sloupců v odpovědní tabulce:</value>
-  </data>
-  <data name="defaultCellWidthLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>151, 20</value>
-  </data>
-  <data name="defaultCellWidthLabel.Text" xml:space="preserve">
-    <value>Výchozí šířka buňky:</value>
-  </data>
-  <data name="defaultCellHeightLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 20</value>
-  </data>
-  <data name="defaultCellHeightLabel.Text" xml:space="preserve">
-    <value>Výchozí výška buňky:</value>
-  </data>
-  <data name="crossLineLengthLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 20</value>
-  </data>
-  <data name="crossLineLengthLabel.Text" xml:space="preserve">
-    <value>Délka čáry v křížku:</value>
-  </data>
-  <data name="crossLineCurvatureLimitLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 20</value>
-  </data>
-  <data name="crossLineCurvatureLimitLabel.Text" xml:space="preserve">
-    <value>Maximální křivost čáry v křížku:</value>
-  </data>
-  <data name="rubbishLinesLimitLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 20</value>
-  </data>
-  <data name="rubbishLinesLimitLabel.Text" xml:space="preserve">
-    <value>Maximální počet špatných čar:</value>
-  </data>
-  <data name="saveButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>274, 1028</value>
-  </data>
-  <data name="saveButton.Text" xml:space="preserve">
-    <value>Uložit</value>
-  </data>
-  <data name="cellEvaluationTypeLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 20</value>
-  </data>
-  <data name="cellEvaluationTypeLabel.Text" xml:space="preserve">
-    <value>Druh vyhodnocení buňky:</value>
-  </data>
-  <data name="lowerThresholdLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 20</value>
-  </data>
-  <data name="lowerThresholdLabel.Text" xml:space="preserve">
-    <value>Spodní práh:</value>
-  </data>
-  <data name="upperThresholdLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>87, 20</value>
-  </data>
-  <data name="upperThresholdLabel.Text" xml:space="preserve">
-    <value>Horní práh:</value>
-  </data>
-  <data name="studentTableRowsLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>257, 20</value>
-  </data>
-  <data name="studentTableRowsLabel.Text" xml:space="preserve">
-    <value>Počet řádků ve studentské tabulce:</value>
-  </data>
-  <data name="studentTableColumnsLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>272, 20</value>
-  </data>
-  <data name="studentTableColumnsLabel.Text" xml:space="preserve">
-    <value>Počet sloupců ve studentské tabulce:</value>
-  </data>
-  <data name="resizedCellWidthLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 20</value>
-  </data>
-  <data name="resizedCellWidthLabel.Text" xml:space="preserve">
-    <value>Šířka přeškálované buňky:</value>
-  </data>
-  <data name="resizedCellHeightLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 20</value>
-  </data>
-  <data name="resizedCellHeightLabel.Text" xml:space="preserve">
-    <value>Výška přeškálované buňky:</value>
+  <data name="okButton.Text" xml:space="preserve">
+    <value>Hotovo</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Klokan - Vyhodnocování - Úprava parametrů</value>
+    <value>Vyhodnocení</value>
   </data>
 </root>

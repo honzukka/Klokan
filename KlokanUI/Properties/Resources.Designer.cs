@@ -532,6 +532,60 @@ namespace KlokanUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operation was cancelled..
+        /// </summary>
+        internal static string ProgressBarLabelCancelled {
+            get {
+                return ResourceManager.GetString("ProgressBarLabelCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancelling operation....
+        /// </summary>
+        internal static string ProgressBarLabelCancelling {
+            get {
+                return ResourceManager.GetString("ProgressBarLabelCancelling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Done!.
+        /// </summary>
+        internal static string ProgressBarLabelDone {
+            get {
+                return ResourceManager.GetString("ProgressBarLabelDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evaluating sheets....
+        /// </summary>
+        internal static string ProgressBarLabelEvaluating {
+            get {
+                return ResourceManager.GetString("ProgressBarLabelEvaluating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saving results to database....
+        /// </summary>
+        internal static string ProgressBarLabelSaving {
+            get {
+                return ResourceManager.GetString("ProgressBarLabelSaving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saving test results to database....
+        /// </summary>
+        internal static string ProgressBarLabelSavingTest {
+            get {
+                return ResourceManager.GetString("ProgressBarLabelSavingTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Database Update.
         /// </summary>
         internal static string PromptCaptionDatabaseUpdate {
@@ -601,6 +655,15 @@ namespace KlokanUI.Properties {
         internal static string SummaryTextDatabaseTimePart3 {
             get {
                 return ResourceManager.GetString("SummaryTextDatabaseTimePart3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evaluation was cancelled, results were not saved..
+        /// </summary>
+        internal static string SummaryTextEvaluationCancelled {
+            get {
+                return ResourceManager.GetString("SummaryTextEvaluationCancelled", resourceCulture);
             }
         }
         

@@ -126,7 +126,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="tableLineCurvatureLimitTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
   </data>
   <data name="&gt;&gt;resizedCellHeightTextBox.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -134,26 +134,33 @@
   <data name="resizedCellHeightLabel.TabIndex" type="System.Int32, mscorlib">
     <value>39</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="resizedCellWidthLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
   <data name="&gt;&gt;crossLineLengthLabel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="studentTableColumnsTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>36</value>
   </data>
-  <data name="&gt;&gt;upperThresholdTextBox.ZOrder" xml:space="preserve">
-    <value>8</value>
+  <data name="studentTableColumnsTextBox.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;tableLineEccetricityLimitLabel.Parent" xml:space="preserve">
     <value>$this</value>
+  </data>
+  <data name="cellEvaluationTypeLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="answerTableRowsLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="defaultCellWidthLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 394</value>
+    <value>46, 606</value>
   </data>
   <data name="tableCountTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 108</value>
+    <value>476, 166</value>
   </data>
   <data name="&gt;&gt;blackWhiteThresholdLabel.Name" xml:space="preserve">
     <value>blackWhiteThresholdLabel</value>
@@ -164,11 +171,14 @@
   <data name="&gt;&gt;upperThresholdLabel.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="defaultCellWidthLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;crossLineCurvatureLimitLabel.ZOrder" xml:space="preserve">
+    <value>17</value>
   </data>
-  <data name="defaultSheetWidthLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="defaultCellHeightLabel.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="defaultSheetWidthLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 20</value>
   </data>
   <data name="tableLineEccetricityLimitLabel.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -180,7 +190,7 @@
     <value>$this</value>
   </data>
   <data name="resizedCellWidthLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 314</value>
+    <value>46, 483</value>
   </data>
   <data name="resizedCellWidthTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>38</value>
@@ -195,19 +205,31 @@
     <value>$this</value>
   </data>
   <data name="cellEvaluationTypeTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
   </data>
-  <data name="blackWhiteThresholdLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="answerTableColumnsLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="defaultSheetWidthLabel.Text" xml:space="preserve">
+    <value>Default Sheet Width:</value>
   </data>
   <data name="lowerThresholdLabel.TabIndex" type="System.Int32, mscorlib">
     <value>29</value>
   </data>
+  <data name="tableCountLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="crossLineLengthLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
   <data name="blackWhiteThresholdLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>139, 13</value>
+    <value>202, 20</value>
   </data>
   <data name="answerTableColumnsLabel.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
+  </data>
+  <data name="defaultCellHeightLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="&gt;&gt;answerTableColumnsLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -215,23 +237,26 @@
   <data name="resizedCellHeightTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>40</value>
   </data>
-  <data name="&gt;&gt;defaultSheetWidthTextBox.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;cellEvaluationTypeLabel.ZOrder" xml:space="preserve">
+    <value>13</value>
   </data>
   <data name="rubbishLinesLimitTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
   </data>
   <data name="&gt;&gt;blackWhiteThresholdTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="cellEvaluationTypeLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 447</value>
+    <value>46, 688</value>
   </data>
   <data name="studentTableColumnsLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;blackWhiteThresholdLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;lowerThresholdTextBox.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="lowerThresholdTextBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 26</value>
   </data>
   <data name="&gt;&gt;tableLineCurvatureLimitLabel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -239,20 +264,20 @@
   <data name="&gt;&gt;crossLineCurvatureLimitTextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;answerTableRowsTextBox.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="saveButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="&gt;&gt;tableCountLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="resizedCellWidthTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
   </data>
   <data name="blackWhiteThresholdTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
   </data>
   <data name="lowerThresholdLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>89, 13</value>
+    <value>130, 20</value>
   </data>
   <data name="answerTableRowsLabel.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -260,8 +285,8 @@
   <data name="&gt;&gt;resizedCellWidthLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;defaultSheetWidthTextBox.ZOrder" xml:space="preserve">
-    <value>37</value>
+  <data name="&gt;&gt;tableLineEccetricityLimitLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;answerTableColumnsLabel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -273,19 +298,16 @@
     <value>$this</value>
   </data>
   <data name="defaultCellHeightTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 418</value>
+    <value>476, 643</value>
   </data>
   <data name="upperThresholdLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;tableLineEccentricityLimitTextBox.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="tableCountTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="&gt;&gt;upperThresholdLabel.Name" xml:space="preserve">
+    <value>upperThresholdLabel</value>
   </data>
   <data name="studentTableRowsTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
   </data>
   <data name="&gt;&gt;cellEvaluationTypeTextBox.Parent" xml:space="preserve">
     <value>$this</value>
@@ -297,13 +319,13 @@
     <value>defaultSheetWidthTextBox</value>
   </data>
   <data name="defaultCellHeightTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
   </data>
   <data name="crossLineLengthLabel.Text" xml:space="preserve">
     <value>Cross Line Length:</value>
   </data>
   <data name="crossLineCurvatureLimitLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>132, 13</value>
+    <value>198, 20</value>
   </data>
   <data name="&gt;&gt;lowerThresholdLabel.ZOrder" xml:space="preserve">
     <value>11</value>
@@ -313,6 +335,9 @@
   </data>
   <data name="&gt;&gt;resizedCellHeightLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="upperThresholdLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="answerTableColumnsLabel.Text" xml:space="preserve">
     <value>Answer Table Columns:</value>
@@ -333,7 +358,7 @@
     <value>38</value>
   </data>
   <data name="studentTableColumnsTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
   </data>
   <data name="&gt;&gt;crossLineCurvatureLimitTextBox.Name" xml:space="preserve">
     <value>crossLineCurvatureLimitTextBox</value>
@@ -342,7 +367,7 @@
     <value>True</value>
   </data>
   <data name="tableCountLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 13</value>
+    <value>99, 20</value>
   </data>
   <data name="&gt;&gt;lowerThresholdLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -363,7 +388,7 @@
     <value>True</value>
   </data>
   <data name="tableCountTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
   </data>
   <data name="&gt;&gt;blackWhiteThresholdLabel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -374,11 +399,14 @@
   <data name="blackWhiteThresholdLabel.Text" xml:space="preserve">
     <value>Black and White Threshold:</value>
   </data>
-  <data name="&gt;&gt;answerTableRowsTextBox.Name" xml:space="preserve">
-    <value>answerTableRowsTextBox</value>
+  <data name="tableLineCurvatureLimitLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="&gt;&gt;defaultSheetWidthTextBox.ZOrder" xml:space="preserve">
+    <value>37</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+    <value>9, 20</value>
   </data>
   <data name="&gt;&gt;defaultCellWidthLabel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -386,8 +414,8 @@
   <data name="cellEvaluationTypeLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;crossLineLengthTextBox.ZOrder" xml:space="preserve">
-    <value>20</value>
+  <data name="&gt;&gt;answerTableRowsLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;crossLineCurvatureLimitLabel.Name" xml:space="preserve">
     <value>crossLineCurvatureLimitLabel</value>
@@ -405,13 +433,19 @@
     <value>2</value>
   </data>
   <data name="tableLineEccentricityLimitTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 136</value>
+    <value>476, 209</value>
   </data>
   <data name="rubbishLinesLimitTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 546</value>
+    <value>476, 840</value>
   </data>
   <data name="rubbishLinesLimitLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="blackWhiteThresholdTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="resizedCellHeightTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -420,7 +454,7 @@
     <value>17</value>
   </data>
   <data name="defaultCellHeightLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>98, 13</value>
+    <value>146, 20</value>
   </data>
   <data name="&gt;&gt;crossLineLengthLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -435,7 +469,10 @@
     <value>7</value>
   </data>
   <data name="tableLineEccentricityLimitTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
+  </data>
+  <data name="&gt;&gt;blackWhiteThresholdLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;defaultCellWidthTextBox.ZOrder" xml:space="preserve">
     <value>24</value>
@@ -446,14 +483,20 @@
   <data name="&gt;&gt;upperThresholdTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="studentTableRowsLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 194</value>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
-  <data name="defaultSheetWidthLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 13</value>
+  <data name="studentTableRowsLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>46, 298</value>
+  </data>
+  <data name="defaultSheetWidthTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="lowerThresholdTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="cellEvaluationTypeTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 445</value>
+    <value>476, 685</value>
   </data>
   <data name="&gt;&gt;crossLineLengthLabel.ZOrder" xml:space="preserve">
     <value>19</value>
@@ -468,46 +511,58 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="upperThresholdTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 619</value>
+    <value>476, 952</value>
   </data>
   <data name="blackWhiteThresholdLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 62</value>
+    <value>46, 95</value>
   </data>
   <data name="&gt;&gt;tableLineEccentricityLimitTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="studentTableRowsTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
   <data name="&gt;&gt;studentTableColumnsTextBox.Name" xml:space="preserve">
     <value>studentTableColumnsTextBox</value>
   </data>
+  <data name="answerTableRowsTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
   <data name="tableLineCurvatureLimitLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 13</value>
+    <value>196, 20</value>
   </data>
   <data name="resizedCellHeightLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>102, 13</value>
+    <value>152, 20</value>
   </data>
   <data name="&gt;&gt;defaultSheetWidthLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="answerTableRowsTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
   </data>
   <data name="&gt;&gt;studentTableColumnsTextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
+  <data name="defaultCellWidthTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>485, 750</value>
+    <value>716, 1124</value>
   </data>
   <data name="upperThresholdLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>89, 13</value>
+    <value>131, 20</value>
   </data>
   <data name="&gt;&gt;answerTableColumnsTextBox.ZOrder" xml:space="preserve">
     <value>26</value>
   </data>
+  <data name="&gt;&gt;upperThresholdTextBox.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
   <data name="&gt;&gt;answerTableColumnsTextBox.Name" xml:space="preserve">
     <value>answerTableColumnsTextBox</value>
   </data>
-  <data name="lowerThresholdLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 596</value>
+  <data name="lowerThresholdTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
   </data>
   <data name="&gt;&gt;studentTableRowsLabel.Name" xml:space="preserve">
     <value>studentTableRowsLabel</value>
@@ -524,35 +579,32 @@
   <data name="&gt;&gt;answerTableColumnsTextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="studentTableRowsTextBox.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="lowerThresholdLabel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>46, 917</value>
   </data>
   <data name="answerTableRowsLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>105, 13</value>
+    <value>153, 20</value>
   </data>
-  <data name="&gt;&gt;defaultCellHeightTextBox.Name" xml:space="preserve">
-    <value>defaultCellHeightTextBox</value>
+  <data name="rubbishLinesLimitLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="tableCountTextBox.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;tableLineCurvatureLimitLabel.Name" xml:space="preserve">
-    <value>tableLineCurvatureLimitLabel</value>
+  <data name="tableLineEccentricityLimitTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="cellEvaluationTypeTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>28</value>
   </data>
-  <data name="&gt;&gt;defaultCellWidthLabel.Name" xml:space="preserve">
-    <value>defaultCellWidthLabel</value>
+  <data name="&gt;&gt;answerTableRowsTextBox.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="saveButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+    <value>112, 35</value>
   </data>
   <data name="&gt;&gt;answerTableRowsTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="crossLineCurvatureLimitTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 519</value>
   </data>
   <data name="answerTableColumnsLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -564,10 +616,10 @@
     <value>Default Cell Height:</value>
   </data>
   <data name="cellEvaluationTypeLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 13</value>
+    <value>155, 20</value>
   </data>
   <data name="defaultCellWidthTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
   </data>
   <data name="defaultSheetWidthLabel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -575,17 +627,23 @@
   <data name="&gt;&gt;saveButton.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
+  <data name="rubbishLinesLimitTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
   <data name="rubbishLinesLimitLabel.TabIndex" type="System.Int32, mscorlib">
     <value>25</value>
   </data>
   <data name="rubbishLinesLimitLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 549</value>
+    <value>46, 845</value>
   </data>
   <data name="tableCountLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 111</value>
+    <value>46, 171</value>
   </data>
   <data name="rubbishLinesLimitTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
+  </data>
+  <data name="answerTableRowsLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="&gt;&gt;answerTableRowsLabel.Name" xml:space="preserve">
     <value>answerTableRowsLabel</value>
@@ -605,26 +663,32 @@
   <data name="&gt;&gt;saveButton.Name" xml:space="preserve">
     <value>saveButton</value>
   </data>
+  <data name="cellEvaluationTypeLabel.Text" xml:space="preserve">
+    <value>Cell Evaluation Type:</value>
+  </data>
   <data name="&gt;&gt;tableLineCurvatureLimitTextBox.ZOrder" xml:space="preserve">
     <value>30</value>
   </data>
   <data name="crossLineLengthLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 13</value>
+    <value>142, 20</value>
   </data>
   <data name="studentTableRowsLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 13</value>
+    <value>157, 20</value>
   </data>
   <data name="&gt;&gt;rubbishLinesLimitTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="defaultSheetWidthLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 36</value>
+    <value>46, 55</value>
   </data>
   <data name="crossLineLengthTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 492</value>
+    <value>476, 757</value>
   </data>
   <data name="answerTableColumnsTextBox.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
+  </data>
+  <data name="defaultCellWidthLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>140, 20</value>
   </data>
   <data name="&gt;&gt;resizedCellHeightTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -642,7 +706,10 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="resizedCellHeightLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 343</value>
+    <value>46, 528</value>
+  </data>
+  <data name="defaultCellWidthLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="&gt;&gt;lowerThresholdTextBox.Parent" xml:space="preserve">
     <value>$this</value>
@@ -654,16 +721,19 @@
     <value>Upper Threshold:</value>
   </data>
   <data name="crossLineCurvatureLimitLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 522</value>
+    <value>46, 803</value>
+  </data>
+  <data name="blackWhiteThresholdLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="&gt;&gt;tableLineCurvatureLimitTextBox.Name" xml:space="preserve">
     <value>tableLineCurvatureLimitTextBox</value>
   </data>
   <data name="defaultCellHeightLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 421</value>
+    <value>46, 648</value>
   </data>
-  <data name="lowerThresholdTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>30</value>
+  <data name="crossLineLengthTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="blackWhiteThresholdTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -680,6 +750,9 @@
   <data name="&gt;&gt;crossLineCurvatureLimitLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;crossLineLengthTextBox.ZOrder" xml:space="preserve">
+    <value>20</value>
+  </data>
   <data name="defaultCellWidthLabel.Text" xml:space="preserve">
     <value>Default Cell Width:</value>
   </data>
@@ -693,22 +766,25 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="defaultSheetWidthTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 33</value>
+    <value>476, 51</value>
   </data>
   <data name="tableLineCurvatureLimitLabel.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
   </data>
   <data name="tableLineEccetricityLimitLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 139</value>
+    <value>46, 214</value>
   </data>
   <data name="rubbishLinesLimitLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>101, 13</value>
+    <value>151, 20</value>
+  </data>
+  <data name="crossLineCurvatureLimitTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="crossLineLengthTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
   </data>
   <data name="studentTableColumnsLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 13</value>
+    <value>179, 20</value>
   </data>
   <data name="&gt;&gt;tableCountTextBox.Name" xml:space="preserve">
     <value>tableCountTextBox</value>
@@ -722,20 +798,17 @@
   <data name="&gt;&gt;tableLineCurvatureLimitLabel.ZOrder" xml:space="preserve">
     <value>29</value>
   </data>
-  <data name="saveButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>187, 672</value>
-  </data>
-  <data name="studentTableColumnsTextBox.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="&gt;&gt;blackWhiteThresholdTextBox.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="tableLineCurvatureLimitTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 163</value>
+    <value>476, 251</value>
   </data>
   <data name="&gt;&gt;tableCountLabel.ZOrder" xml:space="preserve">
     <value>33</value>
   </data>
   <data name="resizedCellWidthLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>99, 13</value>
+    <value>146, 20</value>
   </data>
   <data name="&gt;&gt;rubbishLinesLimitLabel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -746,20 +819,32 @@
   <data name="tableLineCurvatureLimitTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
   </data>
-  <data name="resizedCellWidthTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 311</value>
+  <data name="&gt;&gt;defaultSheetWidthTextBox.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="answerTableColumnsTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="&gt;&gt;studentTableRowsTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="answerTableColumnsLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 13</value>
+    <value>175, 20</value>
   </data>
   <data name="answerTableRowsTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 251</value>
+    <value>476, 386</value>
   </data>
   <data name="&gt;&gt;crossLineLengthTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tableCountLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="tableLineCurvatureLimitTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Klokan - Evaluation - Parameters</value>
   </data>
   <data name="&gt;&gt;resizedCellWidthTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -774,7 +859,16 @@
     <value>ParameterEditForm</value>
   </data>
   <data name="answerTableRowsLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 254</value>
+    <value>46, 391</value>
+  </data>
+  <data name="upperThresholdTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
+  <data name="tableLineEccetricityLimitLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="defaultSheetWidthTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="studentTableRowsLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -782,17 +876,17 @@
   <data name="upperThresholdTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>32</value>
   </data>
-  <data name="crossLineLengthLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="saveButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>280, 1034</value>
   </data>
   <data name="upperThresholdLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 622</value>
+    <value>46, 957</value>
   </data>
   <data name="&gt;&gt;blackWhiteThresholdTextBox.Name" xml:space="preserve">
     <value>blackWhiteThresholdTextBox</value>
   </data>
   <data name="studentTableRowsTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 191</value>
+    <value>476, 294</value>
   </data>
   <data name="studentTableColumnsLabel.Text" xml:space="preserve">
     <value>Student Table Columns:</value>
@@ -801,7 +895,7 @@
     <value>$this</value>
   </data>
   <data name="answerTableColumnsTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 281</value>
+    <value>476, 432</value>
   </data>
   <data name="upperThresholdLabel.TabIndex" type="System.Int32, mscorlib">
     <value>31</value>
@@ -812,8 +906,8 @@
   <data name="&gt;&gt;lowerThresholdLabel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="lowerThresholdTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+  <data name="blackWhiteThresholdLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="tableLineEccentricityLimitTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -824,14 +918,11 @@
   <data name="&gt;&gt;upperThresholdLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="defaultSheetWidthLabel.Text" xml:space="preserve">
-    <value>Default Sheet Width:</value>
-  </data>
   <data name="&gt;&gt;resizedCellWidthTextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;studentTableColumnsTextBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="lowerThresholdLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="&gt;&gt;tableCountLabel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -842,17 +933,14 @@
   <data name="&gt;&gt;resizedCellWidthLabel.Name" xml:space="preserve">
     <value>resizedCellWidthLabel</value>
   </data>
-  <data name="&gt;&gt;answerTableRowsLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tableCountTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="crossLineCurvatureLimitTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>22</value>
   </data>
   <data name="&gt;&gt;cellEvaluationTypeLabel.Parent" xml:space="preserve">
     <value>$this</value>
-  </data>
-  <data name="&gt;&gt;answerTableColumnsLabel.ZOrder" xml:space="preserve">
-    <value>25</value>
   </data>
   <data name="defaultCellHeightLabel.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -863,8 +951,8 @@
   <data name="&gt;&gt;studentTableColumnsLabel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="blackWhiteThresholdTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 59</value>
+  <data name="studentTableRowsLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="rubbishLinesLimitLabel.Text" xml:space="preserve">
     <value>Rubbish Lines Limit:</value>
@@ -878,6 +966,9 @@
   <data name="&gt;&gt;defaultCellWidthTextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
+  <data name="defaultCellHeightTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
+  </data>
   <data name="lowerThresholdLabel.Text" xml:space="preserve">
     <value>Lower Threshold:</value>
   </data>
@@ -885,10 +976,10 @@
     <value>$this</value>
   </data>
   <data name="crossLineLengthTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
   </data>
   <data name="upperThresholdTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
   </data>
   <data name="&gt;&gt;rubbishLinesLimitLabel.ZOrder" xml:space="preserve">
     <value>15</value>
@@ -896,20 +987,20 @@
   <data name="&gt;&gt;defaultCellWidthTextBox.Name" xml:space="preserve">
     <value>defaultCellWidthTextBox</value>
   </data>
-  <data name="&gt;&gt;tableLineEccetricityLimitLabel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="defaultCellWidthLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="defaultCellHeightLabel.TabIndex" type="System.Int32, mscorlib">
-    <value>19</value>
+  <data name="&gt;&gt;tableLineEccentricityLimitTextBox.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="cellEvaluationTypeLabel.Text" xml:space="preserve">
-    <value>Cell Evaluation Type:</value>
+  <data name="cellEvaluationTypeTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="&gt;&gt;resizedCellWidthLabel.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
   <data name="answerTableColumnsLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 284</value>
+    <value>46, 437</value>
   </data>
   <data name="&gt;&gt;upperThresholdLabel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -930,16 +1021,19 @@
     <value>$this</value>
   </data>
   <data name="crossLineLengthLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 495</value>
+    <value>46, 762</value>
   </data>
-  <data name="&gt;&gt;upperThresholdLabel.Name" xml:space="preserve">
-    <value>upperThresholdLabel</value>
+  <data name="blackWhiteThresholdTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>476, 91</value>
   </data>
   <data name="&gt;&gt;tableLineCurvatureLimitTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="blackWhiteThresholdLabel.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
+  </data>
+  <data name="resizedCellHeightLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="&gt;&gt;studentTableRowsLabel.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -950,11 +1044,14 @@
   <data name="&gt;&gt;defaultSheetWidthTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;studentTableRowsTextBox.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="defaultSheetWidthLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
-  <data name="tableCountLabel.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;defaultCellHeightTextBox.Name" xml:space="preserve">
+    <value>defaultCellHeightTextBox</value>
+  </data>
+  <data name="tableCountTextBox.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="saveButton.TabIndex" type="System.Int32, mscorlib">
     <value>26</value>
@@ -969,13 +1066,13 @@
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="lowerThresholdTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 593</value>
+    <value>476, 912</value>
   </data>
   <data name="tableCountLabel.Text" xml:space="preserve">
     <value>Table Count:</value>
   </data>
   <data name="answerTableColumnsTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
   </data>
   <data name="tableLineCurvatureLimitLabel.Text" xml:space="preserve">
     <value>Table Line Curvature Limit:</value>
@@ -984,7 +1081,7 @@
     <value>$this</value>
   </data>
   <data name="tableLineCurvatureLimitLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 166</value>
+    <value>46, 255</value>
   </data>
   <data name="&gt;&gt;resizedCellHeightLabel.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -995,17 +1092,26 @@
   <data name="resizedCellHeightLabel.Text" xml:space="preserve">
     <value>Resized Cell Height:</value>
   </data>
+  <data name="&gt;&gt;studentTableRowsTextBox.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
   <data name="&gt;&gt;cellEvaluationTypeLabel.Name" xml:space="preserve">
     <value>cellEvaluationTypeLabel</value>
   </data>
-  <data name="&gt;&gt;blackWhiteThresholdTextBox.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;answerTableColumnsLabel.ZOrder" xml:space="preserve">
+    <value>25</value>
   </data>
   <data name="studentTableColumnsLabel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>31, 225</value>
+    <value>46, 346</value>
+  </data>
+  <data name="resizedCellWidthTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>469, 711</value>
+    <value>694, 1068</value>
+  </data>
+  <data name="crossLineCurvatureLimitLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="&gt;&gt;answerTableRowsLabel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -1013,47 +1119,53 @@
   <data name="&gt;&gt;answerTableColumnsTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="defaultCellWidthLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 13</value>
+  <data name="crossLineCurvatureLimitTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>476, 798</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Klokan - Evaluation - Parameters</value>
+  <data name="crossLineLengthLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="studentTableColumnsTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 222</value>
+    <value>476, 342</value>
   </data>
   <data name="defaultCellWidthTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 391</value>
+    <value>476, 602</value>
   </data>
   <data name="&gt;&gt;crossLineLengthTextBox.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;crossLineCurvatureLimitLabel.ZOrder" xml:space="preserve">
-    <value>17</value>
+  <data name="&gt;&gt;tableLineCurvatureLimitLabel.Name" xml:space="preserve">
+    <value>tableLineCurvatureLimitLabel</value>
   </data>
   <data name="&gt;&gt;crossLineLengthTextBox.Name" xml:space="preserve">
     <value>crossLineLengthTextBox</value>
   </data>
-  <data name="&gt;&gt;cellEvaluationTypeLabel.ZOrder" xml:space="preserve">
-    <value>13</value>
+  <data name="studentTableRowsTextBox.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="crossLineCurvatureLimitTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
+  </data>
+  <data name="studentTableColumnsLabel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
   </data>
   <data name="resizedCellHeightTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>317, 340</value>
+    <value>476, 523</value>
   </data>
   <data name="&gt;&gt;rubbishLinesLimitLabel.Name" xml:space="preserve">
     <value>rubbishLinesLimitLabel</value>
   </data>
-  <data name="defaultSheetWidthTextBox.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+  <data name="defaultSheetWidthLabel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="resizedCellWidthTextBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>476, 478</value>
   </data>
   <data name="&gt;&gt;resizedCellHeightTextBox.Name" xml:space="preserve">
     <value>resizedCellHeightTextBox</value>
   </data>
   <data name="$this.MaximumSize" type="System.Drawing.Size, System.Drawing">
-    <value>485, 750</value>
+    <value>716, 1124</value>
   </data>
   <data name="studentTableRowsLabel.Text" xml:space="preserve">
     <value>Student Table Rows:</value>
@@ -1067,26 +1179,35 @@
   <data name="&gt;&gt;defaultCellHeightLabel.ZOrder" xml:space="preserve">
     <value>21</value>
   </data>
+  <data name="&gt;&gt;defaultCellWidthLabel.Name" xml:space="preserve">
+    <value>defaultCellWidthLabel</value>
+  </data>
   <data name="&gt;&gt;defaultCellHeightLabel.Name" xml:space="preserve">
     <value>defaultCellHeightLabel</value>
   </data>
   <data name="tableLineEccetricityLimitLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>142, 13</value>
+    <value>208, 20</value>
   </data>
   <data name="resizedCellHeightTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
   </data>
   <data name="&gt;&gt;defaultSheetWidthLabel.Name" xml:space="preserve">
     <value>defaultSheetWidthLabel</value>
   </data>
-  <data name="&gt;&gt;lowerThresholdTextBox.ZOrder" xml:space="preserve">
-    <value>10</value>
+  <data name="&gt;&gt;studentTableColumnsTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="studentTableColumnsTextBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 5, 4, 5</value>
   </data>
   <data name="&gt;&gt;cellEvaluationTypeTextBox.Name" xml:space="preserve">
     <value>cellEvaluationTypeTextBox</value>
   </data>
   <data name="defaultSheetWidthTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
+    <value>148, 26</value>
+  </data>
+  <data name="&gt;&gt;answerTableRowsTextBox.Name" xml:space="preserve">
+    <value>answerTableRowsTextBox</value>
   </data>
   <data name="&gt;&gt;crossLineLengthLabel.Name" xml:space="preserve">
     <value>crossLineLengthLabel</value>
