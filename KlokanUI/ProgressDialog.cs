@@ -32,6 +32,21 @@ namespace KlokanUI
 			tasksCompleted = 0;
 			totalTasks = -1;
 			tasksCompletedLock = new object();
+
+			FormClosing += ProgressDialog_FormClosing;
+		}
+
+		private void ProgressDialog_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (!cts.IsCancellationRequested)
+			{
+				cts.Cancel();
+			}
+		}
+
+		public CancellationToken GetCancellationToken()
+		{
+			return cts.Token;
 		}
 
 		// this method isn't thread-safe!
@@ -43,6 +58,7 @@ namespace KlokanUI
 			}
 
 			totalTasks = value;
+			progressBar.Maximum = totalTasks;
 		}
 
 		public void IncrementProgressBarValue()
@@ -107,6 +123,24 @@ namespace KlokanUI
 			}
 		}
 
+		public void SetResultLabel()
+		{
+			if (resultLabel.InvokeRequired)
+			{
+				resultLabel.BeginInvoke(new Action(
+					() => {
+						string message = "Evaluation was cancelled.\r\nResults were not saved.";
+						resultLabel.Text = message;
+					}
+				));
+			}
+			else
+			{
+				string message = "Evaluation was cancelled.\r\nResults were not saved.";
+				resultLabel.Text = message;
+			}
+		}
+
 		public void EnableOkButton()
 		{
 			if (okButton.InvokeRequired)
@@ -137,7 +171,9 @@ namespace KlokanUI
 
 		private void cancelButton_Click(object sender, EventArgs e)
 		{
+			progressLabel.Text = "Cancelling operation...";
 			cts.Cancel();
+			cancelButton.Enabled = false;
 		}
 
 		private void okButton_Click(object sender, EventArgs e)

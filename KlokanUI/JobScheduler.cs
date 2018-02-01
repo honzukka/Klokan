@@ -103,22 +103,33 @@ namespace KlokanUI
 							var result = evaluator.Evaluate(sheetFilename, categoryBatch.CorrectAnswers, categoryBatch.CategoryName, batch.Year);
 							progressDialog.IncrementProgressBarValue();
 							return result;
-						}
+						}, 
+						progressDialog.GetCancellationToken()
 					);
 					tasks.Add(sheetTask);
 					sheetTask.Start();
 				}
 			}
 
-			Result[] results = await Task.WhenAll(tasks);
+			try
+			{
+				Result[] results = await Task.WhenAll(tasks);
 
-			evaluationEndTime = DateTime.Now;
+				evaluationEndTime = DateTime.Now;
+				progressDialog.SetProgressLabel("Saving results to database...");
 
-			progressDialog.SetProgressLabel("Saving results to database...");
+				await OutputResultsDB(results);
 
-			await OutputResultsDB(results);
-
-			FinishJob();
+				FinishJob(false);
+			}
+			catch (TaskCanceledException)
+			{
+				FinishJob(true);
+			}
+			catch (OperationCanceledException)
+			{
+				FinishJob(true);
+			}
 		}
 
 		/// <summary>
@@ -148,7 +159,7 @@ namespace KlokanUI
 
 			await OutputTestResultsDB(testResults);
 
-			FinishJob();
+			FinishJob(false);
 		}
 
 		/// <summary>
@@ -201,7 +212,7 @@ namespace KlokanUI
 						}
 
 						db.Instances.Remove(currentInstance);
-						await db.SaveChangesAsync();
+						await db.SaveChangesAsync(progressDialog.GetCancellationToken());
 						currentInstance = null;
 					}
 
@@ -241,7 +252,7 @@ namespace KlokanUI
 					currentInstance.AnswerSheets.Add(answerSheet);
 				}
 
-				await db.SaveChangesAsync();
+				await db.SaveChangesAsync(progressDialog.GetCancellationToken());
 			}
 		}
 
@@ -300,10 +311,21 @@ namespace KlokanUI
 		/// Notifies the evaluation form that the job has ended.
 		/// Additional information about the job's completion is displayed in a message box.
 		/// </summary>
-		void FinishJob()
+		void FinishJob(bool wasCancelled)
 		{
 			progressDialog.DisableCancelButton();
-			progressDialog.SetResultLabel(failedSheets, (evaluationEndTime - evaluationStartTime).TotalSeconds, (DateTime.Now - evaluationEndTime).TotalSeconds);
+
+			if (wasCancelled)
+			{
+				progressDialog.SetProgressLabel("Operation cancelled.");
+				progressDialog.SetResultLabel();
+			}
+			else
+			{
+				progressDialog.SetProgressLabel("Done!");
+				progressDialog.SetResultLabel(failedSheets, (evaluationEndTime - evaluationStartTime).TotalSeconds, (DateTime.Now - evaluationEndTime).TotalSeconds);
+			}
+
 			progressDialog.EnableOkButton();
 		}
 	}
