@@ -107,14 +107,18 @@ namespace KlokanUI
 			// assign the chosen parameters
 			klokanBatch.Parameters = chosenParameters;
 
-			evaluateButton.Enabled = false;
+			ProgressDialog progressDialog = new ProgressDialog(new CancellationTokenSource());
+			progressDialog.SetProgressLabel("Evaluating sheets...");
 
-			var jobScheduler = new JobScheduler(klokanBatch, this);
+			var jobScheduler = new JobScheduler(klokanBatch, progressDialog);
 
 			// new thread created, so that all tasks in it are planned in the threadpool and not in the WinForms synchronization context
 			Thread thread = new Thread(jobScheduler.Run);
 			thread.IsBackground = true;
 			thread.Start();
+
+			progressDialog.StartPosition = FormStartPosition.CenterScreen;
+			progressDialog.ShowDialog();
 		}
 
 		private void benjaminCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -271,6 +275,8 @@ namespace KlokanUI
 				categoryConfigurations[categoryName] = new CategoryBatchConfig { batch = categoryBatch, isIncluded = true };
 			}
 		}
+
+		// TODO: remove these
 
 		/// <summary>
 		/// Enables the evaluation button again.

@@ -78,7 +78,8 @@ namespace KlokanUI
 				TestInstances = testInstances
 			};
 
-			var jobScheduler = new JobScheduler(testBatch, this);
+			// TODO: update here
+			var jobScheduler = new JobScheduler(testBatch, null);
 
 			// new thread created, so that all tasks in it are planned in the threadpool and not in the WinForms synchronization context
 			Thread thread = new Thread(jobScheduler.Run);

@@ -20,11 +20,11 @@ namespace KlokanUI
 		/// Batch data for test evaluation.
 		/// </summary>
 		TestKlokanBatch testBatch;
-		
+
 		/// <summary>
-		/// A reference to the evaluation form, so that new events can be added to its event loop.
+		/// A reference to a progress dialog which informs about the job and also contains a cancel button.
 		/// </summary>
-		IEvaluationForm callingForm;
+		ProgressDialog progressDialog;
 
 		/// <summary>
 		/// Used for measuring the time of evaluation.
@@ -43,18 +43,18 @@ namespace KlokanUI
 
 		#endregion
 
-		public JobScheduler(KlokanBatch batch, IEvaluationForm callingForm)
+		public JobScheduler(KlokanBatch batch, ProgressDialog progressDialog)
 		{
 			this.batch = batch;
 			testBatch = null;
-			this.callingForm = callingForm;
+			this.progressDialog = progressDialog;
 		}
 
-		public JobScheduler(TestKlokanBatch testBatch, IEvaluationForm callingForm)
+		public JobScheduler(TestKlokanBatch testBatch, ProgressDialog progressDialog)
 		{
 			batch = null;
 			this.testBatch = testBatch;
-			this.callingForm = callingForm;
+			this.progressDialog = progressDialog;
 		}
 
 		/// <summary>
@@ -83,6 +83,14 @@ namespace KlokanUI
 		{
 			evaluationStartTime = DateTime.Now;
 
+			// initialize the progress dialog
+			int totalTasks = 0;
+			foreach (var categoryBatch in batch.CategoryBatches.Values)
+			{
+				totalTasks += categoryBatch.SheetFilenames.Count;
+			}
+			progressDialog.SetTotalTasks(totalTasks);
+
 			Evaluator evaluator = new Evaluator(batch.Parameters);
 			List<Task<Result>> tasks = new List<Task<Result>>();
 
@@ -91,7 +99,11 @@ namespace KlokanUI
 				foreach (var sheetFilename in categoryBatch.SheetFilenames)
 				{
 					Task<Result> sheetTask = new Task<Result>(
-						() => evaluator.Evaluate(sheetFilename, categoryBatch.CorrectAnswers, categoryBatch.CategoryName, batch.Year)
+						() => {
+							var result = evaluator.Evaluate(sheetFilename, categoryBatch.CorrectAnswers, categoryBatch.CategoryName, batch.Year);
+							progressDialog.IncrementProgressBarValue();
+							return result;
+						}
 					);
 					tasks.Add(sheetTask);
 					sheetTask.Start();
@@ -101,6 +113,8 @@ namespace KlokanUI
 			Result[] results = await Task.WhenAll(tasks);
 
 			evaluationEndTime = DateTime.Now;
+
+			progressDialog.SetProgressLabel("Saving results to database...");
 
 			await OutputResultsDB(results);
 
@@ -288,8 +302,9 @@ namespace KlokanUI
 		/// </summary>
 		void FinishJob()
 		{
-			callingForm.ShowMessageBoxInfo(failedSheets, (evaluationEndTime - evaluationStartTime).TotalSeconds, (DateTime.Now - evaluationEndTime).TotalSeconds);
-			callingForm.EnableGoButton();
+			progressDialog.DisableCancelButton();
+			progressDialog.SetResultLabel(failedSheets, (evaluationEndTime - evaluationStartTime).TotalSeconds, (DateTime.Now - evaluationEndTime).TotalSeconds);
+			progressDialog.EnableOkButton();
 		}
 	}
 }
