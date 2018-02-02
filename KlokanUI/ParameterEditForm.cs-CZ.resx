@@ -130,12 +130,6 @@
   <data name="blackWhiteThresholdLabel.Text" xml:space="preserve">
     <value>Černobílý práh:</value>
   </data>
-  <data name="tableCountLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>110, 20</value>
-  </data>
-  <data name="tableCountLabel.Text" xml:space="preserve">
-    <value>Počet tabulek:</value>
-  </data>
   <data name="tableLineEccetricityLimitLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 20</value>
   </data>
@@ -147,18 +141,6 @@
   </data>
   <data name="tableLineCurvatureLimitLabel.Text" xml:space="preserve">
     <value>Maximální křivost hrany tabulky:</value>
-  </data>
-  <data name="answerTableRowsLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 20</value>
-  </data>
-  <data name="answerTableRowsLabel.Text" xml:space="preserve">
-    <value>Počet řádků v odpovědní tabulce:</value>
-  </data>
-  <data name="answerTableColumnsLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>257, 20</value>
-  </data>
-  <data name="answerTableColumnsLabel.Text" xml:space="preserve">
-    <value>Počet sloupců v odpovědní tabulce:</value>
   </data>
   <data name="defaultCellWidthLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>151, 20</value>
@@ -191,7 +173,7 @@
     <value>Maximální počet špatných čar:</value>
   </data>
   <data name="saveButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>274, 1028</value>
+    <value>269, 958</value>
   </data>
   <data name="saveButton.Text" xml:space="preserve">
     <value>Uložit</value>
@@ -214,18 +196,6 @@
   <data name="upperThresholdLabel.Text" xml:space="preserve">
     <value>Horní práh:</value>
   </data>
-  <data name="studentTableRowsLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>257, 20</value>
-  </data>
-  <data name="studentTableRowsLabel.Text" xml:space="preserve">
-    <value>Počet řádků ve studentské tabulce:</value>
-  </data>
-  <data name="studentTableColumnsLabel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>272, 20</value>
-  </data>
-  <data name="studentTableColumnsLabel.Text" xml:space="preserve">
-    <value>Počet sloupců ve studentské tabulce:</value>
-  </data>
   <data name="resizedCellWidthLabel.Size" type="System.Drawing.Size, System.Drawing">
     <value>193, 20</value>
   </data>
@@ -237,6 +207,42 @@
   </data>
   <data name="resizedCellHeightLabel.Text" xml:space="preserve">
     <value>Výška přeškálované buňky:</value>
+  </data>
+  <data name="preProcessingGroupLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 20</value>
+  </data>
+  <data name="preProcessingGroupLabel.Text" xml:space="preserve">
+    <value>Předzpracování archu</value>
+  </data>
+  <data name="tableExtractionGroupLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>134, 20</value>
+  </data>
+  <data name="tableExtractionGroupLabel.Text" xml:space="preserve">
+    <value>Hledání tabulek</value>
+  </data>
+  <data name="cellExtractionGroupLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 20</value>
+  </data>
+  <data name="cellExtractionGroupLabel.Text" xml:space="preserve">
+    <value>Hledání buňek</value>
+  </data>
+  <data name="cellEvaluationGroupLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 20</value>
+  </data>
+  <data name="cellEvaluationGroupLabel.Text" xml:space="preserve">
+    <value>Vyhodnocení buňek</value>
+  </data>
+  <data name="shapeRecognitionGroupLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 20</value>
+  </data>
+  <data name="shapeRecognitionGroupLabel.Text" xml:space="preserve">
+    <value>Rozpoznání tvaru</value>
+  </data>
+  <data name="pixelRatioGroupLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>111, 20</value>
+  </data>
+  <data name="pixelRatioGroupLabel.Text" xml:space="preserve">
+    <value>Poměr pixelů</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Klokan - Vyhodnocování - Úprava parametrů</value>

@@ -33,16 +33,10 @@
 			this.defaultSheetWidthTextBox = new System.Windows.Forms.TextBox();
 			this.blackWhiteThresholdLabel = new System.Windows.Forms.Label();
 			this.blackWhiteThresholdTextBox = new System.Windows.Forms.TextBox();
-			this.tableCountTextBox = new System.Windows.Forms.TextBox();
-			this.tableCountLabel = new System.Windows.Forms.Label();
 			this.tableLineEccentricityLimitTextBox = new System.Windows.Forms.TextBox();
 			this.tableLineEccetricityLimitLabel = new System.Windows.Forms.Label();
 			this.tableLineCurvatureLimitTextBox = new System.Windows.Forms.TextBox();
 			this.tableLineCurvatureLimitLabel = new System.Windows.Forms.Label();
-			this.answerTableRowsTextBox = new System.Windows.Forms.TextBox();
-			this.answerTableRowsLabel = new System.Windows.Forms.Label();
-			this.answerTableColumnsTextBox = new System.Windows.Forms.TextBox();
-			this.answerTableColumnsLabel = new System.Windows.Forms.Label();
 			this.defaultCellWidthTextBox = new System.Windows.Forms.TextBox();
 			this.defaultCellWidthLabel = new System.Windows.Forms.Label();
 			this.defaultCellHeightTextBox = new System.Windows.Forms.TextBox();
@@ -60,14 +54,16 @@
 			this.lowerThresholdTextBox = new System.Windows.Forms.TextBox();
 			this.upperThresholdLabel = new System.Windows.Forms.Label();
 			this.upperThresholdTextBox = new System.Windows.Forms.TextBox();
-			this.studentTableRowsLabel = new System.Windows.Forms.Label();
-			this.studentTableRowsTextBox = new System.Windows.Forms.TextBox();
-			this.studentTableColumnsLabel = new System.Windows.Forms.Label();
-			this.studentTableColumnsTextBox = new System.Windows.Forms.TextBox();
 			this.resizedCellWidthLabel = new System.Windows.Forms.Label();
 			this.resizedCellWidthTextBox = new System.Windows.Forms.TextBox();
 			this.resizedCellHeightLabel = new System.Windows.Forms.Label();
 			this.resizedCellHeightTextBox = new System.Windows.Forms.TextBox();
+			this.preProcessingGroupLabel = new System.Windows.Forms.Label();
+			this.tableExtractionGroupLabel = new System.Windows.Forms.Label();
+			this.cellExtractionGroupLabel = new System.Windows.Forms.Label();
+			this.cellEvaluationGroupLabel = new System.Windows.Forms.Label();
+			this.shapeRecognitionGroupLabel = new System.Windows.Forms.Label();
+			this.pixelRatioGroupLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// defaultSheetWidthLabel
@@ -90,16 +86,6 @@
 			resources.ApplyResources(this.blackWhiteThresholdTextBox, "blackWhiteThresholdTextBox");
 			this.blackWhiteThresholdTextBox.Name = "blackWhiteThresholdTextBox";
 			// 
-			// tableCountTextBox
-			// 
-			resources.ApplyResources(this.tableCountTextBox, "tableCountTextBox");
-			this.tableCountTextBox.Name = "tableCountTextBox";
-			// 
-			// tableCountLabel
-			// 
-			resources.ApplyResources(this.tableCountLabel, "tableCountLabel");
-			this.tableCountLabel.Name = "tableCountLabel";
-			// 
 			// tableLineEccentricityLimitTextBox
 			// 
 			resources.ApplyResources(this.tableLineEccentricityLimitTextBox, "tableLineEccentricityLimitTextBox");
@@ -119,26 +105,6 @@
 			// 
 			resources.ApplyResources(this.tableLineCurvatureLimitLabel, "tableLineCurvatureLimitLabel");
 			this.tableLineCurvatureLimitLabel.Name = "tableLineCurvatureLimitLabel";
-			// 
-			// answerTableRowsTextBox
-			// 
-			resources.ApplyResources(this.answerTableRowsTextBox, "answerTableRowsTextBox");
-			this.answerTableRowsTextBox.Name = "answerTableRowsTextBox";
-			// 
-			// answerTableRowsLabel
-			// 
-			resources.ApplyResources(this.answerTableRowsLabel, "answerTableRowsLabel");
-			this.answerTableRowsLabel.Name = "answerTableRowsLabel";
-			// 
-			// answerTableColumnsTextBox
-			// 
-			resources.ApplyResources(this.answerTableColumnsTextBox, "answerTableColumnsTextBox");
-			this.answerTableColumnsTextBox.Name = "answerTableColumnsTextBox";
-			// 
-			// answerTableColumnsLabel
-			// 
-			resources.ApplyResources(this.answerTableColumnsLabel, "answerTableColumnsLabel");
-			this.answerTableColumnsLabel.Name = "answerTableColumnsLabel";
 			// 
 			// defaultCellWidthTextBox
 			// 
@@ -227,26 +193,6 @@
 			resources.ApplyResources(this.upperThresholdTextBox, "upperThresholdTextBox");
 			this.upperThresholdTextBox.Name = "upperThresholdTextBox";
 			// 
-			// studentTableRowsLabel
-			// 
-			resources.ApplyResources(this.studentTableRowsLabel, "studentTableRowsLabel");
-			this.studentTableRowsLabel.Name = "studentTableRowsLabel";
-			// 
-			// studentTableRowsTextBox
-			// 
-			resources.ApplyResources(this.studentTableRowsTextBox, "studentTableRowsTextBox");
-			this.studentTableRowsTextBox.Name = "studentTableRowsTextBox";
-			// 
-			// studentTableColumnsLabel
-			// 
-			resources.ApplyResources(this.studentTableColumnsLabel, "studentTableColumnsLabel");
-			this.studentTableColumnsLabel.Name = "studentTableColumnsLabel";
-			// 
-			// studentTableColumnsTextBox
-			// 
-			resources.ApplyResources(this.studentTableColumnsTextBox, "studentTableColumnsTextBox");
-			this.studentTableColumnsTextBox.Name = "studentTableColumnsTextBox";
-			// 
 			// resizedCellWidthLabel
 			// 
 			resources.ApplyResources(this.resizedCellWidthLabel, "resizedCellWidthLabel");
@@ -267,18 +213,50 @@
 			resources.ApplyResources(this.resizedCellHeightTextBox, "resizedCellHeightTextBox");
 			this.resizedCellHeightTextBox.Name = "resizedCellHeightTextBox";
 			// 
+			// preProcessingGroupLabel
+			// 
+			resources.ApplyResources(this.preProcessingGroupLabel, "preProcessingGroupLabel");
+			this.preProcessingGroupLabel.Name = "preProcessingGroupLabel";
+			// 
+			// tableExtractionGroupLabel
+			// 
+			resources.ApplyResources(this.tableExtractionGroupLabel, "tableExtractionGroupLabel");
+			this.tableExtractionGroupLabel.Name = "tableExtractionGroupLabel";
+			// 
+			// cellExtractionGroupLabel
+			// 
+			resources.ApplyResources(this.cellExtractionGroupLabel, "cellExtractionGroupLabel");
+			this.cellExtractionGroupLabel.Name = "cellExtractionGroupLabel";
+			// 
+			// cellEvaluationGroupLabel
+			// 
+			resources.ApplyResources(this.cellEvaluationGroupLabel, "cellEvaluationGroupLabel");
+			this.cellEvaluationGroupLabel.Name = "cellEvaluationGroupLabel";
+			// 
+			// shapeRecognitionGroupLabel
+			// 
+			resources.ApplyResources(this.shapeRecognitionGroupLabel, "shapeRecognitionGroupLabel");
+			this.shapeRecognitionGroupLabel.Name = "shapeRecognitionGroupLabel";
+			// 
+			// pixelRatioGroupLabel
+			// 
+			resources.ApplyResources(this.pixelRatioGroupLabel, "pixelRatioGroupLabel");
+			this.pixelRatioGroupLabel.Name = "pixelRatioGroupLabel";
+			// 
 			// ParameterEditForm
 			// 
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.pixelRatioGroupLabel);
+			this.Controls.Add(this.shapeRecognitionGroupLabel);
+			this.Controls.Add(this.cellEvaluationGroupLabel);
+			this.Controls.Add(this.cellExtractionGroupLabel);
+			this.Controls.Add(this.tableExtractionGroupLabel);
+			this.Controls.Add(this.preProcessingGroupLabel);
 			this.Controls.Add(this.resizedCellHeightTextBox);
 			this.Controls.Add(this.resizedCellHeightLabel);
 			this.Controls.Add(this.resizedCellWidthTextBox);
 			this.Controls.Add(this.resizedCellWidthLabel);
-			this.Controls.Add(this.studentTableColumnsTextBox);
-			this.Controls.Add(this.studentTableColumnsLabel);
-			this.Controls.Add(this.studentTableRowsTextBox);
-			this.Controls.Add(this.studentTableRowsLabel);
 			this.Controls.Add(this.upperThresholdTextBox);
 			this.Controls.Add(this.upperThresholdLabel);
 			this.Controls.Add(this.lowerThresholdTextBox);
@@ -296,16 +274,10 @@
 			this.Controls.Add(this.defaultCellHeightTextBox);
 			this.Controls.Add(this.defaultCellWidthLabel);
 			this.Controls.Add(this.defaultCellWidthTextBox);
-			this.Controls.Add(this.answerTableColumnsLabel);
-			this.Controls.Add(this.answerTableColumnsTextBox);
-			this.Controls.Add(this.answerTableRowsLabel);
-			this.Controls.Add(this.answerTableRowsTextBox);
 			this.Controls.Add(this.tableLineCurvatureLimitLabel);
 			this.Controls.Add(this.tableLineCurvatureLimitTextBox);
 			this.Controls.Add(this.tableLineEccetricityLimitLabel);
 			this.Controls.Add(this.tableLineEccentricityLimitTextBox);
-			this.Controls.Add(this.tableCountLabel);
-			this.Controls.Add(this.tableCountTextBox);
 			this.Controls.Add(this.blackWhiteThresholdTextBox);
 			this.Controls.Add(this.blackWhiteThresholdLabel);
 			this.Controls.Add(this.defaultSheetWidthTextBox);
@@ -323,16 +295,10 @@
 		private System.Windows.Forms.TextBox defaultSheetWidthTextBox;
 		private System.Windows.Forms.Label blackWhiteThresholdLabel;
 		private System.Windows.Forms.TextBox blackWhiteThresholdTextBox;
-		private System.Windows.Forms.TextBox tableCountTextBox;
-		private System.Windows.Forms.Label tableCountLabel;
 		private System.Windows.Forms.TextBox tableLineEccentricityLimitTextBox;
 		private System.Windows.Forms.Label tableLineEccetricityLimitLabel;
 		private System.Windows.Forms.TextBox tableLineCurvatureLimitTextBox;
 		private System.Windows.Forms.Label tableLineCurvatureLimitLabel;
-		private System.Windows.Forms.TextBox answerTableRowsTextBox;
-		private System.Windows.Forms.Label answerTableRowsLabel;
-		private System.Windows.Forms.TextBox answerTableColumnsTextBox;
-		private System.Windows.Forms.Label answerTableColumnsLabel;
 		private System.Windows.Forms.TextBox defaultCellWidthTextBox;
 		private System.Windows.Forms.Label defaultCellWidthLabel;
 		private System.Windows.Forms.TextBox defaultCellHeightTextBox;
@@ -350,13 +316,15 @@
 		private System.Windows.Forms.TextBox lowerThresholdTextBox;
 		private System.Windows.Forms.Label upperThresholdLabel;
 		private System.Windows.Forms.TextBox upperThresholdTextBox;
-		private System.Windows.Forms.Label studentTableRowsLabel;
-		private System.Windows.Forms.TextBox studentTableRowsTextBox;
-		private System.Windows.Forms.Label studentTableColumnsLabel;
-		private System.Windows.Forms.TextBox studentTableColumnsTextBox;
 		private System.Windows.Forms.Label resizedCellWidthLabel;
 		private System.Windows.Forms.TextBox resizedCellWidthTextBox;
 		private System.Windows.Forms.Label resizedCellHeightLabel;
 		private System.Windows.Forms.TextBox resizedCellHeightTextBox;
+		private System.Windows.Forms.Label preProcessingGroupLabel;
+		private System.Windows.Forms.Label tableExtractionGroupLabel;
+		private System.Windows.Forms.Label cellExtractionGroupLabel;
+		private System.Windows.Forms.Label cellEvaluationGroupLabel;
+		private System.Windows.Forms.Label shapeRecognitionGroupLabel;
+		private System.Windows.Forms.Label pixelRatioGroupLabel;
 	}
 }

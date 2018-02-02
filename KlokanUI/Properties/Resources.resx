@@ -344,10 +344,10 @@
     <value>If the ratio of pixels representing student input in the whole cell is lower than this, answer was not chosen.</value>
   </data>
   <data name="ToolTipResizedCellHeight" xml:space="preserve">
-    <value>This is the height of a cell after the sheet has been resized (see default_sheet_height).</value>
+    <value>This is the height of a cell after the sheet has been resized (see default_sheet_height). Used to estimate table height.</value>
   </data>
   <data name="ToolTipResizedCellWidth" xml:space="preserve">
-    <value>This is the width of a cell after the sheet has been resized (see default_sheet_width).</value>
+    <value>This is the width of a cell after the sheet has been resized (see default_sheet_width). Used to estimate table width.</value>
   </data>
   <data name="ToolTipRubbishLinesLimit" xml:space="preserve">
     <value>Amount of lines that don't form a cross that will be ignored and not considered as a correction.</value>
@@ -390,5 +390,44 @@
   </data>
   <data name="SummaryTextEvaluationCancelled" xml:space="preserve">
     <value>Evaluation was cancelled, results were not saved.</value>
+  </data>
+  <data name="ErrorTextBlackWhiteThresholdValue" xml:space="preserve">
+    <value>Black and White Threshold has invalid value! (0-255)</value>
+  </data>
+  <data name="ErrorTextCrossLineCurvatureLimitValue" xml:space="preserve">
+    <value>Cross Line Curvature Limit has invalid value! (1-15)</value>
+  </data>
+  <data name="ErrorTextCrossLineLengthValue" xml:space="preserve">
+    <value>Cross Line Length has invalid value! (1-200)</value>
+  </data>
+  <data name="ErrorTextDefaultCellHeightValue" xml:space="preserve">
+    <value>Default Cell Height has invalid value! (10-100)</value>
+  </data>
+  <data name="ErrorTextDefaultSheetWidthValue" xml:space="preserve">
+    <value>Default Sheet Width has an invalid value! (1700)</value>
+  </data>
+  <data name="ErrorTextLowerThresholdValue" xml:space="preserve">
+    <value>Lower Threshold has invalid value! (0.01-0.9)</value>
+  </data>
+  <data name="ErrorTextResizedCellHeightValue" xml:space="preserve">
+    <value>Resized Cell Height has invalid value! (10-100)</value>
+  </data>
+  <data name="ErrorTextResizedCellWidthValue" xml:space="preserve">
+    <value>Resized Cell Width has invalid value! (10-100)</value>
+  </data>
+  <data name="ErrorTextRubbishLinesLimitValue" xml:space="preserve">
+    <value>Rubbish Lines Limit has invalid value! (0-100)</value>
+  </data>
+  <data name="ErrorTextTableLineCurvatureLimitValue" xml:space="preserve">
+    <value>Table Line Curvature Limit has invalid value! (1-10)</value>
+  </data>
+  <data name="ErrorTextTableLineEccentricityLimitValue" xml:space="preserve">
+    <value>Table Line Eccentricity Limit has invalid value! (0-0.7)</value>
+  </data>
+  <data name="ErrorTextUpperThresholdValue" xml:space="preserve">
+    <value>Upper Threshold has invalid value! (LowerThreshold-0.99)</value>
+  </data>
+  <data name="ErrotTextDefaultCellWidthValue" xml:space="preserve">
+    <value>Default Cell Width has invalid value! (10-100)</value>
   </data>
 </root>

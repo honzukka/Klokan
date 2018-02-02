@@ -136,6 +136,15 @@ namespace KlokanUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Black and White Threshold has invalid value! (0-255).
+        /// </summary>
+        internal static string ErrorTextBlackWhiteThresholdValue {
+            get {
+                return ResourceManager.GetString("ErrorTextBlackWhiteThresholdValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cell Evaluation Type has incorrect format!.
         /// </summary>
         internal static string ErrorTextCellEvaluationTypeFormat {
@@ -163,11 +172,29 @@ namespace KlokanUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cross Line Curvature Limit has invalid value! (1-15).
+        /// </summary>
+        internal static string ErrorTextCrossLineCurvatureLimitValue {
+            get {
+                return ResourceManager.GetString("ErrorTextCrossLineCurvatureLimitValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cross Line Length has incorrect format!.
         /// </summary>
         internal static string ErrorTextCrossLineLengthFormat {
             get {
                 return ResourceManager.GetString("ErrorTextCrossLineLengthFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cross Line Length has invalid value! (1-200).
+        /// </summary>
+        internal static string ErrorTextCrossLineLengthValue {
+            get {
+                return ResourceManager.GetString("ErrorTextCrossLineLengthValue", resourceCulture);
             }
         }
         
@@ -181,11 +208,29 @@ namespace KlokanUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default Cell Height has invalid value! (10-100).
+        /// </summary>
+        internal static string ErrorTextDefaultCellHeightValue {
+            get {
+                return ResourceManager.GetString("ErrorTextDefaultCellHeightValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default Sheet Width has incorrect format!.
         /// </summary>
         internal static string ErrorTextDefaultSheetWidthFormat {
             get {
                 return ResourceManager.GetString("ErrorTextDefaultSheetWidthFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Sheet Width has an invalid value! (1700).
+        /// </summary>
+        internal static string ErrorTextDefaultSheetWidthValue {
+            get {
+                return ResourceManager.GetString("ErrorTextDefaultSheetWidthValue", resourceCulture);
             }
         }
         
@@ -213,6 +258,15 @@ namespace KlokanUI.Properties {
         internal static string ErrorTextLowerThresholdFormat {
             get {
                 return ResourceManager.GetString("ErrorTextLowerThresholdFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lower Threshold has invalid value! (0.01-0.9).
+        /// </summary>
+        internal static string ErrorTextLowerThresholdValue {
+            get {
+                return ResourceManager.GetString("ErrorTextLowerThresholdValue", resourceCulture);
             }
         }
         
@@ -271,6 +325,15 @@ namespace KlokanUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resized Cell Height has invalid value! (10-100).
+        /// </summary>
+        internal static string ErrorTextResizedCellHeightValue {
+            get {
+                return ResourceManager.GetString("ErrorTextResizedCellHeightValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resized Cell Width has incorrect format!.
         /// </summary>
         internal static string ErrorTextResizedCellWidthFormat {
@@ -280,11 +343,29 @@ namespace KlokanUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resized Cell Width has invalid value! (10-100).
+        /// </summary>
+        internal static string ErrorTextResizedCellWidthValue {
+            get {
+                return ResourceManager.GetString("ErrorTextResizedCellWidthValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rubbish Lines Limit has incorrect format!.
         /// </summary>
         internal static string ErrorTextRubbishLinesLimitFormat {
             get {
                 return ResourceManager.GetString("ErrorTextRubbishLinesLimitFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rubbish Lines Limit has invalid value! (0-100).
+        /// </summary>
+        internal static string ErrorTextRubbishLinesLimitValue {
+            get {
+                return ResourceManager.GetString("ErrorTextRubbishLinesLimitValue", resourceCulture);
             }
         }
         
@@ -352,11 +433,29 @@ namespace KlokanUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Table Line Curvature Limit has invalid value! (1-10).
+        /// </summary>
+        internal static string ErrorTextTableLineCurvatureLimitValue {
+            get {
+                return ResourceManager.GetString("ErrorTextTableLineCurvatureLimitValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Table Line Eccentricity Limit has incorrect format!.
         /// </summary>
         internal static string ErrorTextTableLineEccentricityLimitFormat {
             get {
                 return ResourceManager.GetString("ErrorTextTableLineEccentricityLimitFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Table Line Eccentricity Limit has invalid value! (0-0.7).
+        /// </summary>
+        internal static string ErrorTextTableLineEccentricityLimitValue {
+            get {
+                return ResourceManager.GetString("ErrorTextTableLineEccentricityLimitValue", resourceCulture);
             }
         }
         
@@ -370,11 +469,29 @@ namespace KlokanUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Upper Threshold has invalid value! (LowerThreshold-0.99).
+        /// </summary>
+        internal static string ErrorTextUpperThresholdValue {
+            get {
+                return ResourceManager.GetString("ErrorTextUpperThresholdValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default Cell Width has incorrect format!.
         /// </summary>
         internal static string ErrotTextDefaultCellWidthFormat {
             get {
                 return ResourceManager.GetString("ErrotTextDefaultCellWidthFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Cell Width has invalid value! (10-100).
+        /// </summary>
+        internal static string ErrotTextDefaultCellWidthValue {
+            get {
+                return ResourceManager.GetString("ErrotTextDefaultCellWidthValue", resourceCulture);
             }
         }
         
@@ -803,7 +920,7 @@ namespace KlokanUI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This is the height of a cell after the sheet has been resized (see default_sheet_height)..
+        ///   Looks up a localized string similar to This is the height of a cell after the sheet has been resized (see default_sheet_height). Used to estimate table height..
         /// </summary>
         internal static string ToolTipResizedCellHeight {
             get {
@@ -812,7 +929,7 @@ namespace KlokanUI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This is the width of a cell after the sheet has been resized (see default_sheet_width)..
+        ///   Looks up a localized string similar to This is the width of a cell after the sheet has been resized (see default_sheet_width). Used to estimate table width..
         /// </summary>
         internal static string ToolTipResizedCellWidth {
             get {

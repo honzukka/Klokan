@@ -132,6 +132,9 @@
   <data name="ErrorTextBlackWhiteThresholdFormat" xml:space="preserve">
     <value>Černobílý práh je ve špatném formátu!</value>
   </data>
+  <data name="ErrorTextBlackWhiteThresholdValue" xml:space="preserve">
+    <value>Černobílý práh má špatnou hodnotu! (0-255)</value>
+  </data>
   <data name="ErrorTextCellEvaluationTypeFormat" xml:space="preserve">
     <value>Druh vyhodnocování buňky je ve špatném formátu!</value>
   </data>
@@ -141,14 +144,26 @@
   <data name="ErrorTextCrossLineCurvatureLimitFormat" xml:space="preserve">
     <value>Maximální křivost čáry v křížku je ve špatném formátu!</value>
   </data>
+  <data name="ErrorTextCrossLineCurvatureLimitValue" xml:space="preserve">
+    <value>Maximální křivost čáry v křížku má špatnou hodnotu! (1-15)</value>
+  </data>
   <data name="ErrorTextCrossLineLengthFormat" xml:space="preserve">
     <value>Délka čáry ve křížku je ve špatném formátu!</value>
+  </data>
+  <data name="ErrorTextCrossLineLengthValue" xml:space="preserve">
+    <value>Délka čáry ve křížku má špatnou hodnotu! (1-200)</value>
   </data>
   <data name="ErrorTextDefaultCellHeightFormat" xml:space="preserve">
     <value>Výchozí výška buňky je ve špatném formátu!</value>
   </data>
+  <data name="ErrorTextDefaultCellHeightValue" xml:space="preserve">
+    <value>Výchozí výška buňky má špatnou hodnotu! (10-100)</value>
+  </data>
   <data name="ErrorTextDefaultSheetWidthFormat" xml:space="preserve">
     <value>Výchozí šířka archu je ve špatném formátu!</value>
+  </data>
+  <data name="ErrorTextDefaultSheetWidthValue" xml:space="preserve">
+    <value>Výchozí šířka archu má špatnou hodnotu! (1700)</value>
   </data>
   <data name="ErrorTextExpectedAnswersNotSelected" xml:space="preserve">
     <value>Očekávané odpovědi nebyly korektně vybrány!</value>
@@ -158,6 +173,9 @@
   </data>
   <data name="ErrorTextLowerThresholdFormat" xml:space="preserve">
     <value>Spodní práh je ve špatném formátu!</value>
+  </data>
+  <data name="ErrorTextLowerThresholdValue" xml:space="preserve">
+    <value>Spodní práh má špatnou hodnotu! (0.01-0.9)</value>
   </data>
   <data name="ErrorTextNoAnswerSheetsSelected" xml:space="preserve">
     <value>Nejsou vybrány žádné odpovědní archy!</value>
@@ -177,11 +195,20 @@
   <data name="ErrorTextResizedCellHeightFormat" xml:space="preserve">
     <value>Výška přeškálované buňky je ve špatném formátu!</value>
   </data>
+  <data name="ErrorTextResizedCellHeightValue" xml:space="preserve">
+    <value>Výška přeškálované buňky má špatnou hodnotu! (10-100)</value>
+  </data>
   <data name="ErrorTextResizedCellWidthFormat" xml:space="preserve">
     <value>Šířka přeškálované buňky je ve špatném formátu!</value>
   </data>
+  <data name="ErrorTextResizedCellWidthValue" xml:space="preserve">
+    <value>Šířka přeškálované buňky má špatnou hodnotu! (10-100)</value>
+  </data>
   <data name="ErrorTextRubbishLinesLimitFormat" xml:space="preserve">
     <value>Maximální počet špatných čar je ve špatném formátu!</value>
+  </data>
+  <data name="ErrorTextRubbishLinesLimitValue" xml:space="preserve">
+    <value>Maximální počet špatných čar má špatnou hodnotu! (0-100)</value>
   </data>
   <data name="ErrorTextSheetNotFoundInDatabase" xml:space="preserve">
     <value>Požadovaný odpovědní arch nebyl nalezen v databázi!</value>
@@ -204,14 +231,26 @@
   <data name="ErrorTextTableLineCurvatureLimitFormat" xml:space="preserve">
     <value>Maximální křivost hrany tabulky je ve špatném formátu!</value>
   </data>
+  <data name="ErrorTextTableLineCurvatureLimitValue" xml:space="preserve">
+    <value>Maximální křivost hrany tabulky má špatnou hodnotu! (1-10)</value>
+  </data>
   <data name="ErrorTextTableLineEccentricityLimitFormat" xml:space="preserve">
     <value>Maximální sklon hrany tabulky je ve špatném formátu!</value>
+  </data>
+  <data name="ErrorTextTableLineEccentricityLimitValue" xml:space="preserve">
+    <value>Maximální sklon hrany tabulky má špatnou hodnotu! (0-0.7)</value>
   </data>
   <data name="ErrorTextUpperThresholdFormat" xml:space="preserve">
     <value>Horní práh je ve špatném formátu!</value>
   </data>
+  <data name="ErrorTextUpperThresholdValue" xml:space="preserve">
+    <value>Horní práh má špatnou hodnotu! (SpodníPráh-0.99)</value>
+  </data>
   <data name="ErrotTextDefaultCellWidthFormat" xml:space="preserve">
     <value>Výchozí šířka buňky je ve špatném formátu!</value>
+  </data>
+  <data name="ErrotTextDefaultCellWidthValue" xml:space="preserve">
+    <value>Výchozí šířka buňky má špatnou hodnotu! (10-100)</value>
   </data>
   <data name="ExceptionTextCorrectAnswersNotLoaded" xml:space="preserve">
     <value>Správné odpovědi nebyly nahrány!</value>
@@ -352,10 +391,10 @@
     <value>Pokud poměr černých pixelů v buňce (po prahování) bude nižší než tato hodnota, bude buňka považována za prázdnou.</value>
   </data>
   <data name="ToolTipResizedCellHeight" xml:space="preserve">
-    <value>Toto je výška buňky poté, co byl arch přeškálován (viz Výchozí šířka archu).</value>
+    <value>Toto je výška buňky poté, co byl arch přeškálován (viz Výchozí šířka archu). Použito pro odhadnutí výšky tabulky.</value>
   </data>
   <data name="ToolTipResizedCellWidth" xml:space="preserve">
-    <value>Toto je šířka buňky poté, co byl arch přeškálován (viz Výchozí šířka archu).</value>
+    <value>Toto je šířka buňky poté, co byl arch přeškálován (viz Výchozí šířka archu). Použito pro odhadnutí šířky tabulky.</value>
   </data>
   <data name="ToolTipRubbishLinesLimit" xml:space="preserve">
     <value>Množství čar, které netvoří křížek a které budou ignorovány a nepovažovány za opravu odpovědi.</value>
