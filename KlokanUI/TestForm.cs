@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using System.Threading;
+using System.Data.Entity.Infrastructure;
 
 namespace KlokanUI
 {
@@ -109,6 +110,13 @@ namespace KlokanUI
 
 		private void removeItemButton_Click(object sender, EventArgs e)
 		{
+			var dialogResult = MessageBox.Show(Properties.Resources.PromptTextDatabaseUpdate, Properties.Resources.PromptCaptionDatabaseUpdate,
+				MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			if (dialogResult == DialogResult.No)
+			{
+				return;
+			}
+
 			if (dataView.SelectedRows.Count == 0)
 			{
 				MessageBox.Show(Properties.Resources.ErrorTextNoRowSelected, Properties.Resources.ErrorCaptionGeneral,
@@ -135,7 +143,18 @@ namespace KlokanUI
 					var computedValues = scanToRemove.ComputedValues;
 
 					testDB.Scans.Remove(scanToRemove);
-					testDB.SaveChanges();
+
+					try
+					{
+						testDB.SaveChanges();
+
+						MessageBox.Show(Properties.Resources.InfoTextDatabaseUpdated, Properties.Resources.InfoCaptionDatabaseUpdated,
+							MessageBoxButtons.OK, MessageBoxIcon.Information);
+					}
+					catch (Exception ex) when (ex is DbUpdateException || ex is DbUpdateConcurrencyException)
+					{
+						MessageBox.Show(Properties.Resources.ErrorTextDatabase, Properties.Resources.ErrorCaptionGeneral, MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
 				}
 			}
 

@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
+using System.Data.Entity.Infrastructure;
+
 namespace KlokanUI
 {
 	public partial class DatabaseDetailForm : Form
@@ -219,10 +221,19 @@ namespace KlokanUI
 				db.AnswerSheets.Remove(answerSheet);
 				db.AnswerSheets.Add(updatedAnswerSheet);
 
-				db.SaveChanges();
-			}
+				try
+				{
+					db.SaveChanges();
 
-			// TODO: notify the user that it's ready
+					MessageBox.Show(Properties.Resources.InfoTextDatabaseUpdated, Properties.Resources.InfoCaptionDatabaseUpdated,
+						MessageBoxButtons.OK, MessageBoxIcon.Information);
+				}
+				catch (Exception ex) when (ex is DbUpdateException || ex is DbUpdateConcurrencyException)
+				{
+					MessageBox.Show(Properties.Resources.ErrorTextDatabase, Properties.Resources.ErrorCaptionGeneral, MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+
+			}
 		}
 
 		private void table1PictureBox_Click(object sender, EventArgs e)

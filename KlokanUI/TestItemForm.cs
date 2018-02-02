@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using System.Drawing.Imaging;
+using System.Data.Entity.Infrastructure;
 
 namespace KlokanUI
 {
@@ -308,14 +309,21 @@ namespace KlokanUI
 
 					testDB.Scans.Add(newScanItem);
 				}
-				
-				testDB.SaveChanges();
+
+				try
+				{
+					testDB.SaveChanges();
+
+					MessageBox.Show(Properties.Resources.InfoTextDatabaseUpdated, Properties.Resources.InfoCaptionDatabaseUpdated, 
+						MessageBoxButtons.OK, MessageBoxIcon.Information);
+				}
+				catch (Exception ex) when (ex is DbUpdateException || ex is DbUpdateConcurrencyException)
+				{
+					MessageBox.Show(Properties.Resources.ErrorTextDatabase, Properties.Resources.ErrorCaptionGeneral, MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
 			}
 
 			PopulateForm();
-
-			MessageBox.Show(Properties.Resources.InfoTextDatabaseUpdated, Properties.Resources.InfoCaptionDatabaseUpdated,
-				MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 		#endregion

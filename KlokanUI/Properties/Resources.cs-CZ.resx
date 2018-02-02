@@ -153,6 +153,9 @@
   <data name="ErrorTextCrossLineLengthValue" xml:space="preserve">
     <value>Délka čáry ve křížku má špatnou hodnotu! (1-200)</value>
   </data>
+  <data name="ErrorTextDatabase" xml:space="preserve">
+    <value>Při aktualizaci databáze nastala chyba.</value>
+  </data>
   <data name="ErrorTextDefaultCellHeightFormat" xml:space="preserve">
     <value>Výchozí výška buňky je ve špatném formátu!</value>
   </data>
@@ -274,7 +277,7 @@
     <value>Chybí testovací položky</value>
   </data>
   <data name="InfoTextDatabaseUpdated" xml:space="preserve">
-    <value>Databáze byla aktualizována-</value>
+    <value>Databáze byla aktualizována.</value>
   </data>
   <data name="InfoTextDuplicateFilenames" xml:space="preserve">
     <value>Některé soubory jsou již přidány, a tak byly ignorovány.</value>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using System.Drawing.Imaging;
+using System.Data.Entity.Infrastructure;
 
 namespace KlokanUI
 {
@@ -117,11 +118,8 @@ namespace KlokanUI
 
 				FinishJob(false);
 			}
-			catch (TaskCanceledException)
-			{
-				FinishJob(true);
-			}
-			catch (OperationCanceledException)
+			catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException ||
+										ex is DbUpdateException || ex is DbUpdateConcurrencyException)
 			{
 				FinishJob(true);
 			}
@@ -167,11 +165,8 @@ namespace KlokanUI
 
 				FinishJob(false);
 			}
-			catch (TaskCanceledException)
-			{
-				FinishJob(true);
-			}
-			catch (OperationCanceledException)
+			catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException ||
+										ex is DbUpdateException || ex is DbUpdateConcurrencyException)
 			{
 				FinishJob(true);
 			}

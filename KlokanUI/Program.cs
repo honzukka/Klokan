@@ -3,7 +3,6 @@ using System.Windows.Forms;
 
 namespace KlokanUI
 {
-	// TODO: handle database exceptions when saving changes!
 	static class Program
 	{
 		/// <summary>

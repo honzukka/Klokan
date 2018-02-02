@@ -132,8 +132,6 @@ namespace KlokanUI
 					var answerSheetSelector = CreateSelector();
 
 					ExportSelection(file, answerSheetSelector);
-
-					// TODO: notify the user that it's ready
 				}
 			}
 		}
@@ -147,8 +145,6 @@ namespace KlokanUI
 		/// </summary>
 		private void PopulateDataView()
 		{
-			// TODO: make this asynchronous!
-
 			var answerSheetSelector = CreateSelector();
 
 			dataView.Rows.Clear();

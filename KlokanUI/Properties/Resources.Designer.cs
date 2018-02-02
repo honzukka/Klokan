@@ -199,6 +199,15 @@ namespace KlokanUI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There was an error updating the database..
+        /// </summary>
+        internal static string ErrorTextDatabase {
+            get {
+                return ResourceManager.GetString("ErrorTextDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default Cell Height has incorrect format!.
         /// </summary>
         internal static string ErrorTextDefaultCellHeightFormat {
