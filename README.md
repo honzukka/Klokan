@@ -1,5 +1,5 @@
 # Klokan
-Evaluation tool for the Mathematical Kangaroo - WORK IN PROGRESS
+Evaluation tool for the Mathematical Kangaroo
 
 <h3>Technology Used:</h3>
 
