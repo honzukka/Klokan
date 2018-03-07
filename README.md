@@ -1,3 +1,5 @@
+Hello! If you are a developer looking to play with this project, go [here](#libraries-and-sdk-versions-used). If you just want to use Klokan, then read on!
+
 # Klokan
 Mathematical Kangaroo is an international competition for students of primary and secondary schools. Each student answers 24 questions by choosing one out of five possible answers. Answers sheets then have to be manually evaluated and the final score is assigned to each student. This process, however, is tedious and prone to human error.
 
@@ -79,3 +81,9 @@ Here, you can add test items, which are simply images of answer sheets along wit
 - **Cell Evaluation Type** - There are two types of cell evaluation: **Shape Recognition** and **Pixel Ratio**. **Shape Recognition** corresponds to *True* and **Pixel Ratio** to *False*.
 - **Shape Recognition** - This method recognizes lines that could form a cross in a table cell and based on that either says, that the cross is there (answers was chosen) or not. The length is tied to the **Default Cell Width & Height** and says how long a line should at least be (in pixels) to be recognized as a line. **Curvature** has already been described above and **Rubbish Lines Limit** is how many lines not forming a cross can be ignored while evaluating a cell. Setting this too low will hurt crosses which are not neat and setting it too high will take corrected answers as the true answers.
 - **Pixel Ratio** - This method simply counts the number of black pixels (see **Black and White Threshold** above) and compares it to the total number of pixels in a cell. If the ratio falls between the two thresholds, the cell contains a selected answer.
+
+## Libraries and SDK Versions Used
+- Visual Studio 2017
+- C++ Windows 10 SDK 10.0.14393.0
+- .NET Framework 4.5.2
+- OpenCV 3.1.0
