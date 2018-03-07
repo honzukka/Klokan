@@ -11,7 +11,7 @@ The answers sheet form to be printed out and filled in by students is part of th
 ### How do I evaluate the answer sheets?
 After choosing 'Evaluation' in the main menu, you will be presented with the following screen:
 
-![Evaluation Batch Setup](https://user-images.githubusercontent.com/24512922/37081844-0844095e-21eb-11e8-818b-c56863d1e094.PNG)
+<img src="https://user-images.githubusercontent.com/24512922/37081844-0844095e-21eb-11e8-818b-c56863d1e094.PNG" width="400">
 
 Here is where you can set up a batch to be evaluated. Notice that all answer sheets in the batch need to have the same year. They can have various categories, though, and you can configure these by ticking one of the checkboxes. That, and also clicking 'Edit' when the category is already configured, will take you to this screen:
 
@@ -26,7 +26,7 @@ The parameters can be set to 'Default' at first. You can find out more about the
 ### Where can I find my results?
 This is what the 'Database' module is for. This is what it looks like when there are some results available:
 
-![Database Selection View](https://user-images.githubusercontent.com/24512922/37083191-1b32784e-21ef-11e8-91ca-156eb5e90f46.PNG)
+<img src="https://user-images.githubusercontent.com/24512922/37083191-1b32784e-21ef-11e8-91ca-156eb5e90f46.PNG" width="700">
 
 The two dropdowns at the top can help you find the specific results you're interested in (you can also choose to view all results). Once you click 'View Selection', all available results corresponding to the chosen year and category will be displayed.
 
@@ -43,11 +43,11 @@ One option is to correct them manually in the 'Database Detail' screen shown abo
 
 Another option is to use the 'Test' module:
 
-![Test Module](https://user-images.githubusercontent.com/24512922/37083984-80eb1bda-21f1-11e8-8ff6-5516a67ce1a5.PNG)
+<img src="https://user-images.githubusercontent.com/24512922/37083984-80eb1bda-21f1-11e8-8ff6-5516a67ce1a5.PNG" width="400">
 
 Here, you can add test items, which are simply images of answer sheets along with manually entered answers which are present in the sheet. These will serve as a reference. Once you add your test items, you click 'Evaluate'. This will read answers in the images and compare them with your reference. The correctness will then be displayed. 100% means that all read answers correspond to your manually edited ones and therefore the program works perfectly. In case the percentage isn't what you would want to see, you can click 'Edit Parameters' and once you input new values, you can try the evaluation again.
 
-![Parameter Edit](https://user-images.githubusercontent.com/24512922/37084255-486f9064-21f2-11e8-948f-d0d479757906.PNG)
+<img src="https://user-images.githubusercontent.com/24512922/37084255-486f9064-21f2-11e8-948f-d0d479757906.PNG" width="400">
 
 Here is what the parameters mean:
 - **Black and White Threshold** - This directly tells you, how bright a shade of grey can be (from 0 - pure black to 255 - pure white) to still be considered as black. In case your students write their answers very lightly with a pencil, setting this value higher might help improve the correctness. On the other hand, it might also make the program too sensitive to certain artifacts in the image.
