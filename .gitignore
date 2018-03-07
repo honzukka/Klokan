@@ -4,6 +4,9 @@
 *.png
 *.txt
 
+# Ignore the all folders in documentation
+documentation/*/
+
 # Ignore database files:
 *.sqlite
 
