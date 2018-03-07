@@ -6,7 +6,7 @@ Mathematical Kangaroo is an international competition for students of primary an
 Klokan is an automated evaluation tool which processes images of scanned answer sheets and saves the results into a database where they can be queried or exported into Excel. It can therefore help make the evaluation of answer sheets easier in the meantime before the whole competition is digitized.
 
 ## What format should the answer sheets be in?
-The answers sheet form to be printed out and filled in by students is part of this project and can be found [here](forms/new_form2.docx). This form should then be scanned. The supported image file formats are:
+The answers sheet form to be printed out and filled in by students is part of this project and can be found [here](forms/new_form2.docx) and also in the *forms&scans* folder of the release zip package. This form should then be scanned. The supported image file formats are:
   - JPEG
   - PNG
   
