@@ -21,7 +21,7 @@ For each category, you can manually input the correct answers by clicking on the
 
 Once at least one category is configured, you can start the evaluation by clicking *Evaluate*. Ticked category configurations will be added to a batch and evaluated in a single run.
 
-The parameters can be set to *Default* for now. You can find out more about them in the [last section of this readme](#my-results-are-inaccurate-how-to-improve-them).
+The parameters can be set to *Default* for now. You can find out more about them in the [last section of this readme](#parameters-explained).
 
 ## Where can I find my results?
 This is what the *Database* module is for. This is what it looks like when there are some results available:
@@ -43,6 +43,14 @@ Clicking the description at the top of each column will sort the results accordi
 ![Database Item Detail](https://user-images.githubusercontent.com/24512922/37083623-565e3420-21f0-11e8-8c59-0d84f8f04905.PNG)
 
 Crosses represent answers read by the computer and red circles represent correct answers for the given category. There is also the original image of the answer sheet available for reference.
+
+#### To import results from a different computer:
+
+The database consists of two files located in the folder with your Klokan executable. One is called *KlokanDB.sqlite* and the other one is *KlokanTestDB.sqlite*. The first one contains your results and the second one contains test items from the [Test module](#to-change-the-parameters-of-the-evaluation).
+
+You can copy these files and transfer them to a Klokan folder on a different computer. When you lauch Klokan on that computer, you will be able to see your results.
+
+Since the database files need to have names mentioned above, **do not forget** to make a backup of your current database files before you replace them with different ones!
 
 ## My results are inaccurate. How to improve them?
 There are two ways of improving your results.
